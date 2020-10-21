@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import PlanList from './components/PlanList';
+import rallyData from './data/libel.js';
+import {createMuiTheme, ThemeProvider, responsiveFontSizes} from '@material-ui/core/styles';
+
+let appTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#0A5760',
+            contrastText:'#C1D5D7'
+        },
+        secondary: {
+            main: '#B9DFF4',
+            contrastText:'#002866'
+        },
+        error: {
+            main:'#D65248'
+        }
+    },
+});
+
+appTheme = responsiveFontSizes(appTheme, {factor:20});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <ThemeProvider theme={appTheme}>
+                <PlanList rallyData={rallyData} />
+            </ThemeProvider>
+        </div>
+    );
 }
 
 export default App;
