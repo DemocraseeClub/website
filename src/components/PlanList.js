@@ -22,7 +22,9 @@ import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-
+import TextField from '@material-ui/core/TextField';
+// import rallyData from '../data/libel.js';
+import rallyData from '../data/2020-10-26.js';
 
 const Config = {
     api: {
@@ -106,6 +108,7 @@ const formatSeconds = (sec, len) => {
     let date = new Date(null);
     date.setSeconds(sec); // specify value of SECONDS
     let time = date.toISOString().substr(11, 8);
+    if (time.indexOf('01:00:00') === 0) return '60:00';
     if (time.indexOf('00:') === 0) time = time.substr('00:'.length);
     return time;
 }
@@ -120,7 +123,8 @@ class PlanList extends React.Component {
             countScheduled:0,
             countStep : 0,
             showAll:false,
-            running:false
+            running:false,
+            notes : {}
         }
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
@@ -128,7 +132,7 @@ class PlanList extends React.Component {
 
     componentDidMount() {
         let total = 0;
-        this.props.rallyData.lineItems.forEach(o => {
+        rallyData.lineItems.forEach(o => {
             total += o.seconds
             o.countdown = o.seconds;
         });
@@ -160,7 +164,7 @@ class PlanList extends React.Component {
                 this.stopTimers();
                 return 'rally complete';
             }
-            let curStep = this.props.rallyData.lineItems[this.state.activeStep];
+            let curStep = rallyData.lineItems[this.state.activeStep];
             if (typeof curStep.countdown !== 'number') {
                 curStep.countdown = curStep.seconds;
             } else {
@@ -180,6 +184,13 @@ class PlanList extends React.Component {
         this.setState({running:false});
     }
 
+    handleNote(val, index) {
+        let notes = {...this.state.notes};
+        notes[index] = val;
+        console.log(notes);
+        this.setState({notes:notes});
+    }
+
     render() {
         const {classes} = this.props;
         const {activeStep} = this.state;
@@ -188,7 +199,7 @@ class PlanList extends React.Component {
         return (
             <div className={classes.root}>
 
-                <AppBar>
+                <AppBar position={'sticky'}>
                     <Toolbar>
                         <div style={{display:'flex', justifyContent:'space-between', alignContent:'center', width:'100%'}}>
                             <div>
@@ -213,15 +224,15 @@ class PlanList extends React.Component {
 
                 <div style={{marginTop:100, textAlign:'left', paddingLeft:10}}>
 
-                    <Grid container justify={'space-between'} alignContent={'center'} wrap='nowrap'>
+                    <Grid container justify={'space-around'} alignContent={'center'} wrap='nowrap'>
                         <Grid item>
-                            <img alt={'libel'} src={this.props.rallyData.img} style={{width:'100%', minWidth:160}} />
+                            <img alt={'libel'} src={rallyData.img} style={{width:'100%', minWidth:160, maxWidth:300}} />
                         </Grid>
                         <Grid item style={{padding:8}}>
-                            <Typography variant='h1' color={'error'}>{this.props.rallyData.title}</Typography>
-                            <Typography variant='h4' >{this.props.rallyData.start}</Typography>
-                            <Typography variant='inherit' color={'inherit'} ><a href={this.props.rallyData.videolink} target={'_blank'} rel="noopener noreferrer">
-                                {this.props.rallyData.videolink}</a>
+                            <Typography variant='h1' className={classes.title} color={'error'}>{rallyData.title}</Typography>
+                            <Typography variant='h4' >{rallyData.start}</Typography>
+                            <Typography variant='inherit' color={'inherit'} ><a href={rallyData.videolink} target={'_blank'} rel="noopener noreferrer">
+                                {rallyData.videolink}</a>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -237,15 +248,13 @@ class PlanList extends React.Component {
 
                         <Grid item>
                             <div>Moderator</div>
-                            <Avatar alt="Eli" src="https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png" />
+                            <Avatar alt={rallyData.moderators[0].name} src={rallyData.moderators[0].img} />
                         </Grid>
 
                         <Grid item>
                             <div>Speakers</div>
                             <AvatarGroup>
-                                <Avatar alt="Indy" src="https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png" />
-                                <Avatar alt="Polina" src="https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png" />
-                                <Avatar alt="Marcela" src="https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png" />
+                                {rallyData.speakers.map(r => <Avatar alt={r.name} src={r.img} />)}
                                 <Avatar alt="add" onClick={e => alert('TODO: Apply to speak')} >+</Avatar>
                             </AvatarGroup>
                         </Grid>
@@ -253,7 +262,7 @@ class PlanList extends React.Component {
                     </Grid>
 
                     <Stepper activeStep={activeStep} orientation="vertical" >
-                    {this.props.rallyData.lineItems.map((curItem, index) => {
+                    {rallyData.lineItems.map((curItem, index) => {
                         let padLeft = curItem.nest.length * 30;
                             let parent = curItem.nest[curItem.nest.length - 1];
                             if (typeof nesting[parent] === 'undefined') {
@@ -263,7 +272,7 @@ class PlanList extends React.Component {
                                 parent = null;
                             }
                             return (
-                                    <Step key={'step-' + index} active={this.state.showAll === true || activeStep === index}>
+                                    <Step key={'step-' + index} active={this.state.showAll === true || activeStep === index ? true : undefined}>
                                         {parent}
                                         <StepLabel className={classes.stepLabel}
                                                    StepIconComponent={QontoStepIcon}
@@ -283,6 +292,16 @@ class PlanList extends React.Component {
                                                                    html={curItem.html}/> :
                                                     curItem.subtitle
                                                 }
+
+                                                <div>
+                                                    <TextField
+                                                        label="Notes"
+                                                        multiline
+                                                        rowsMax={4}
+                                                        value={this.state.notes[index]}
+                                                        onChange={e => this.handleNote(e.currentTarget.value, index)}
+                                                    />
+                                                </div>
                                             </div>
                                             {
                                                 (activeStep === index) ?
@@ -302,7 +321,7 @@ class PlanList extends React.Component {
                                                                 onClick={this.handleNext}
                                                                 className={classes.button}
                                                             >
-                                                                {activeStep === this.props.rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
+                                                                {activeStep === rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
                                                             </Button>
                                                         </div>
                                                     </div> : null
@@ -316,7 +335,7 @@ class PlanList extends React.Component {
                     )}
                 </Stepper>
 
-                {activeStep === this.props.rallyData.lineItems.length && (
+                {activeStep === rallyData.lineItems.length && (
                     <Paper square elevation={0} className={classes.resetContainer}>
                         <Typography>All steps completed - you&apos;re finished</Typography>
                         <Button onClick={this.handleReset} className={classes.button}>
@@ -336,6 +355,10 @@ class PlanList extends React.Component {
 const useStyles = theme => ({
     root: {
         width: '100%',
+    },
+    title : {
+        fontSize:46,
+        fontWeight:100
     },
     button: {
         marginTop: theme.spacing(1),
