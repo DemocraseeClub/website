@@ -6,10 +6,13 @@ import Paper from '@material-ui/core/Paper';
 class Ethics extends React.Component {
 
     render() {
-        const {classes} = this.props;
+        // const {classes} = this.props;
         return (
-            <Paper className={classes.root}>
-                <p>Ethics</p>
+            <Paper style={{margin:20, padding:20}}>
+                <p>Diversity and Inclusion Policy</p>
+                <p>Content Moderation Guidelines</p>
+                <p>User Privacy Policy</p>
+                <p>Content Ownership Policy</p>
             </Paper>
         );
     }

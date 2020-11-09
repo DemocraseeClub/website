@@ -4,6 +4,7 @@ import Home from './views/Home';
 import About from './views/About';
 import Ethics from './views/Ethics';
 import City from './views/City';
+import Rallies from "./views/Rallies";
 import PlanList from './components/PlanList';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./components/Header";
@@ -18,8 +19,8 @@ function App() {
                     <Header />
                     <Switch>
 
-                        <Route path="/rallies"><City/></Route>
-                        <Route path="/cities"><City/></Route>
+                        <Route path="/rallies"><Rallies/></Route>
+                        <Route path="/cities"><City /></Route>
                         <Route path="/values"><Topics/></Route>
                         <Route path="/resources"><Resources/></Route>
 

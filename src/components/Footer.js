@@ -4,7 +4,22 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {NavLink} from "react-router-dom";
 
+import Dialog from '@material-ui/core/Dialog';
+// import Typography from '@material-ui/core/Typography';
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+
 class Footer extends React.Component {
+
+    constructor(p) {
+        super(p);
+        this.state = { dialog : false }
+        this.toggleDialog = this.toggleDialog.bind(this);
+    }
+
+    toggleDialog() {
+        this.setState({dialog:!this.state.dialog});
+    }
 
     render() {
         const {classes} = this.props;
@@ -14,31 +29,40 @@ class Footer extends React.Component {
                     <Grid item container xs={12} sm={3} direction={'column'}>
                         <Grid item container alignContent={'center'} style={{marginBottom:20}}>
                             <Grid item>
-                                <img alt={'logo'} src='/democrasee-logo-white.png' height={60} style={{marginRight: 5}}/>
+                                <img alt={'logo'} src='/democrasee_logo_white.png' height={60} style={{marginRight: 5}}/>
                             </Grid>
                             <Grid item>
                                 <div className={classes.title}>Democrasee</div>
                                 <div className={classes.slogan}>Incentivizing Civic Action</div>
                             </Grid>
                         </Grid>
-                        <Button variant={'contained'} color={'secondary'}>Subscribe</Button>
+                        <Button variant={'contained'} color={'secondary'} onClick={e => this.setState({dialog:true})}>Subscribe</Button>
+
+                        <Dialog onClose={this.toggleDialog} aria-labelledby="customized-dialog-title" open={this.state.dialog}>
+                            <DialogTitle id="customized-dialog-title" onClose={this.toggleDialog}>
+                                Subscribe
+                            </DialogTitle>
+                            <DialogContent dividers>
+
+                            </DialogContent>
+                        </Dialog>
+
                     </Grid>
                     <Grid item>
                         <h4>Citizen Up!</h4>
                         <ul className={classes.menuList}>
-                            <li><NavLink to={'/login'}>Register</NavLink></li>
+                            <li><NavLink to={'/register'}>Register</NavLink></li>
                             <li><NavLink to={'/login'}>Login</NavLink></li>
-                            <li><NavLink to={'/city/1/engage'}>Engage City Hall</NavLink></li>
                             <li><NavLink to={'/values'}>Values</NavLink></li>
                             <li><NavLink to={'/rallies'}>Rallies</NavLink></li>
-                            <li><NavLink to={'/resources'}>Resource</NavLink></li>
+                            <li><NavLink to={'/resources'}>Resources</NavLink></li>
                         </ul>
                     </Grid>
                     <Grid item>
                         <h4>Learn</h4>
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/'}>Home</NavLink></li>
-                            <li><NavLink to={'/about'}>About Us</NavLink></li>
+                            <li><NavLink to={'/about'}>Team</NavLink></li>
                             <li><NavLink to={'/ethics'}>Ethics</NavLink></li>
                         </ul>
                     </Grid>
@@ -50,7 +74,6 @@ class Footer extends React.Component {
             </footer>
         );
     }
-
 }
 
 

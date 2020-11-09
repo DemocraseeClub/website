@@ -26,7 +26,7 @@ import TextField from '@material-ui/core/TextField';
 // import rallyData from '../data/libel.js';
 import rallyData from '../data/2020-10-26.js';
 
-const Config = {
+export const Config = {
     api: {
         base: process.env.REACT_APP_API_URL, // set in .env
         client : process.env.NODE_ENV === 'production' ?  'https://clock.taylormadetraffic.com/index.html' : '//localhost:3000'
