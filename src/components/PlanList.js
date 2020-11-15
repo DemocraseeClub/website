@@ -24,7 +24,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
 // import rallyData from '../data/libel.js';
-import rallyData from '../data/2020-10-26.js';
+import MediaRecorder from "./MediaRecorder";
+import rallyData from '../data/2020-11-14.js';
+
 
 export const Config = {
     api: {
@@ -34,9 +36,9 @@ export const Config = {
     allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt', // https://www.npmjs.com/package/sanitize-html
         'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
         'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'sup', 'sub', 'center', 'button'],
+        'sup', 'sub', 'center', 'button', 'a'],
     allowedAttributes: {
-        'a': ['href'],
+        'a': ['href', 'target'],
         '*': ['id', 'style', 'data-toggle', 'data-target', 'aria-label', 'role', 'class'],
         'img': ['src', 'height', 'width']
     },
@@ -124,7 +126,8 @@ class PlanList extends React.Component {
             countStep : 0,
             showAll:false,
             running:false,
-            notes : {}
+            notes : {},
+            videoOpen:false
         }
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
@@ -154,7 +157,7 @@ class PlanList extends React.Component {
     runTimers(){
         console.log(this.state.activeStep);
         if (this.state.activeStep === -1) {
-            this.setState({activeStep: 0 , running: true}, this.runTimers)
+            this.setState({activeStep: 0 , running: true, videoOpen:true}, this.runTimers)
         } else if (this.state.running === false) {
             this.setState({running: true}, this.runTimers)
         } else {
@@ -221,14 +224,16 @@ class PlanList extends React.Component {
                         </div>
                     </Toolbar>
                 </AppBar>
+                { this.state.videoOpen === true ? <div style={{position:'absolute', width:'100%', right:0}}> <MediaRecorder /></div> : null}
 
-                <div style={{marginTop:100, textAlign:'left', paddingLeft:10}}>
 
-                    <Grid container justify={'space-around'} alignContent={'center'} wrap='nowrap'>
-                        <Grid item>
-                            <img alt={'libel'} src={rallyData.img} style={{width:'100%', minWidth:160, maxWidth:300}} />
+                <div style={{marginTop:100, textAlign:'left'}}>
+
+                    <Grid container justify={'space-around'} alignContent={'center'} >
+                        <Grid item xs={12} sm={7} md={8} >
+                            <img alt={'libel'} src={rallyData.img} style={{width:'100%'}} />
                         </Grid>
-                        <Grid item style={{padding:8}}>
+                        <Grid item style={{padding:8}} xs={12} sm={5} md={4} >
                             <Typography variant='h1' className={classes.title} color={'error'}>{rallyData.title}</Typography>
                             <Typography variant='h4' >{rallyData.start}</Typography>
                             <Typography variant='inherit' color={'inherit'} ><a href={rallyData.videolink} target={'_blank'} rel="noopener noreferrer">
@@ -263,70 +268,66 @@ class PlanList extends React.Component {
 
                     <Stepper activeStep={activeStep} orientation="vertical" >
                     {rallyData.lineItems.map((curItem, index) => {
-                        let padLeft = curItem.nest.length * 30;
+                        let padLeft = 30; // curItem.nest.length *
                             let parent = curItem.nest[curItem.nest.length - 1];
                             if (typeof nesting[parent] === 'undefined') {
                                 nesting[parent] = true;
-                                parent = <div style={{paddingLeft:padLeft + 15}} ><Typography variant='h5' className={classes.topLevelLabel} >{parent}</Typography></div>;
+                                parent = <div className={classes.stepSection} ><Typography variant='h3' className={classes.topLevelLabel} >{parent}</Typography></div>;
                             } else {
                                 parent = null;
                             }
                             return (
                                     <Step key={'step-' + index} active={this.state.showAll === true || activeStep === index ? true : undefined}>
                                         {parent}
-                                        <StepLabel className={classes.stepLabel}
+                                        <StepLabel className={classes.stepTimeBlock}
                                                    StepIconComponent={QontoStepIcon}
                                                    StepIconProps={curItem}>
-
-                                            <div style={{paddingLeft:padLeft}}>
-                                                <SanitizedHTML allowedTags={Config.allowedTags}
-                                                               allowedAttributes={Config.allowedAttributes}
-                                                               html={curItem.title} />
-                                            </div>
+                                                <Typography className={classes.stepLabel} variant={'h5'}>{curItem.title}</Typography>
                                         </StepLabel>
                                         <StepContent className={classes.stepContent}>
-                                            <div style={{paddingLeft:padLeft + 15}}>
-                                                {curItem.html ?
-                                                    <SanitizedHTML allowedTags={Config.allowedTags}
+                                            <div >
+                                                <Grid container justify={'space-between'} >
+                                                    <Grid item xs={12} sm={6} style={{fontSize:20}}>
+                                                        {curItem.desc ? <Typography variant={'h5'}>{curItem.desc}</Typography> : null}
+                                                        {curItem.html ?
+                                                            <SanitizedHTML allowedTags={Config.allowedTags}
                                                                    allowedAttributes={Config.allowedAttributes}
-                                                                   html={curItem.html}/> :
-                                                    curItem.subtitle
-                                                }
+                                                                   html={curItem.html}/> : null}
+                                                    </Grid>
+                                                    <Grid item xs={12} sm={6}>
+                                                        <TextField
+                                                            label="Notes"
+                                                            multiline
+                                                            style={{width:'100%'}}
+                                                            variant={'outlined'}
+                                                            rows={3}
+                                                            value={this.state.notes[index]}
+                                                            onChange={e => this.handleNote(e.currentTarget.value, index)}
+                                                        />
+                                                        {
+                                                            (activeStep === index) ?
+                                                                    <div className={classes.actionsContainer} >
+                                                                        {activeStep > 0 ?
+                                                                            <Button size="small" onClick={this.handleBack} className={classes.button}>
+                                                                                Back
+                                                                            </Button> : null
+                                                                        }
 
-                                                <div>
-                                                    <TextField
-                                                        label="Notes"
-                                                        multiline
-                                                        rowsMax={4}
-                                                        value={this.state.notes[index]}
-                                                        onChange={e => this.handleNote(e.currentTarget.value, index)}
-                                                    />
-                                                </div>
+                                                                        <Button
+                                                                            variant="outlined"
+                                                                            color="primary"
+                                                                            size="small"
+                                                                            endIcon={<Check />}
+                                                                            onClick={this.handleNext}
+                                                                            className={classes.button}
+                                                                        >
+                                                                            {activeStep === rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
+                                                                        </Button>
+                                                                    </div> : null
+                                                        }
+                                                    </Grid>
+                                                </Grid>
                                             </div>
-                                            {
-                                                (activeStep === index) ?
-                                                    <div className={classes.actionsContainer} style={{paddingLeft:padLeft + 15}}>
-                                                        <div>
-                                                            {activeStep > 0 ?
-                                                                <Button size="small" onClick={this.handleBack} className={classes.button}>
-                                                                    Back
-                                                                </Button> : null
-                                                            }
-
-                                                            <Button
-                                                                variant="outlined"
-                                                                color="primary"
-                                                                size="small"
-                                                                endIcon={<Check />}
-                                                                onClick={this.handleNext}
-                                                                className={classes.button}
-                                                            >
-                                                                {activeStep === rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
-                                                            </Button>
-                                                        </div>
-                                                    </div> : null
-                                            }
-
                                         </StepContent>
                                     </Step>
 
@@ -340,6 +341,9 @@ class PlanList extends React.Component {
                         <Typography>All steps completed - you&apos;re finished</Typography>
                         <Button onClick={this.handleReset} className={classes.button}>
                             Reset
+                        </Button>
+                        <Button onClick={this.handleSubmit} className={classes.button}>
+                            Handle Submit
                         </Button>
                     </Paper>
                 )}
@@ -371,17 +375,28 @@ const useStyles = theme => ({
     resetContainer: {
         padding: theme.spacing(3),
     },
+    stepSection: {
+        paddingLeft:50
+    },
+    stepTimeBlock : {
+        fontSize:19,
+    },
     stepLabel : {
-        textAlign:'left'
+        fontSize:19,
+        paddingLeft:20,
+        fontWeight:700,
     },
     stepContent : {
-        textAlign:'left'
+        paddingLeft:45,
+        paddingBottom:10,
+        borderBottom:'1px solid #ccc'
     },
     topLevelLabel : {
         backgroundColor:theme.palette.primary.main,
         color:theme.palette.primary.contrastText,
-        textAlign:'right',
-        padding:8,
+        textAlign:'left',
+        padding:10,
+        fontSize:26,
         fontWeight:900,
         borderRadius:'5px 5px 0 5px'
     }

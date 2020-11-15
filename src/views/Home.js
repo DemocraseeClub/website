@@ -97,7 +97,7 @@ class Home extends React.Component {
                         <p className={classes.paragraph}>Rally your friends and foes for the change you want to see. Use our Meeting tools to guide conversations towards a productive purpose.</p>
                     </Grid>
                     <Grid item xs={4}>
-                        <p className={classes.paragraph}>Spend your <a href={"#coin"} className={classes.primaryDark} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</p>
+                        <p className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryDark} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</p>
                     </Grid>
                 </Grid>
 
