@@ -1,14 +1,13 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Axios from "axios";
+// import Axios from "axios";
 
 class Topics extends React.Component {
 
     componentDidMount() {
         // '/?rest_route=/wp/v2/demo_topics';
     }
-
 
     render() {
         const {classes} = this.props;

@@ -31,6 +31,7 @@ function App() {
                         <Route path="/form/city/create"><City/></Route>
                         <Route path="/form/city/:cid/update"><City/></Route>
 
+                        <Route path="/rally/:rid/meeting/:mid"><PlanList /></Route>
                         <Route path="/rally/:rid"><PlanList /></Route>
                         <Route path="/form/rally/create"><PlanList /></Route>
                         <Route path="/form/rally/:rid/update"><PlanList /></Route>

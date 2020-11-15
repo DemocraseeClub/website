@@ -4,8 +4,14 @@
   "img":"https://democrasee.club/wp-content/uploads/2020/10/libel-150x150.jpg",
   "videolink":"https://meet.google.com/btm-hovc-tds",
   "city":"Oakland, CA",
-  "moderators":[],
-  "speakers":[],
+  "moderators":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+  ],
+  "speakers":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+  ],
   "lineItems": [
     {
       "title":"What is &ldquo;Defamation&rdquo;",
@@ -18,61 +24,61 @@
       "title":"What are valid defenses or requirements for suit",
       "nest": ["Basic Definitions"],
       "html": "<div>&ldquo;Truth not opinion&rdquo;</div><div>&ldquo;Malicious Intent&rdquo;</div>",
-      "seconds": 120
+      "seconds": 180
     },
     {
       "title":"What are available damages & remedies",
       "nest": ["Basic Definitions"],
       "html": "<div>&ldquo;Actual&rdquo;, &ldquo;Presumed&rdquo;, &ldquo;Punative&rdquo; damages</div><div>Mitigating damages through &ldquo;retractions / corrections&rdquo;</div>",
-      "seconds": 120
+      "seconds": 180
     },
     {
       "title":"Alternative legal courses",
       "nest": ["Basic Definitions"],
-      "html": "2 minutes to define Cyberbullying and online Harrassement laws in California",
-      "seconds": 120
+      "html": "3 minutes to define Cyberbullying and online Harrassement laws in California",
+      "seconds": 180
     },
     {
       "title":"Speaker Introductions",
       "html": "Each speaker gets 1 minute to introduce themselves and why they decided to join this rally",
       "nest": ["Context & Consensus"],
-      "seconds": 7 * 60
+      "seconds": 420
     },
     {
       "title":"Trust Builder",
       "nest": ["Context & Consensus"],
-      "html": "5 minutes to ask questions about speaker's expertise or relevance to this issue",
-      "seconds": 7 * 60
+      "html": "10 minutes to ask questions about speaker's expertise or relevance to this issue",
+      "seconds": 600
     },
     {
       "title":"Initial survey",
       "nest": ["Context & Consensus"],
       "html": "<ul>\n        <li>Should we broaden available penalties for defamation?</li>\n        <li>Should we broaden the rules to require a 'whole' truth?</li>\n        <li>Should we broaden the definition of 'malicious intent'</li>\n      </ul>",
-      "seconds": 7 * 60
+      "seconds": 60
     },
     {
       "title":"Should we broaden available damages and remedies for defamation?",
-      "nest": ["Debate on a direction"],
-      "html": "6 minutes to discuss worthwhile penalties and remedies for defamation",
-      "seconds": 6 * 60
+      "nest": ["Debate on a Direction"],
+      "html": "9 minutes to discuss worthwhile penalties and remedies for defamation",
+      "seconds": 540
     },
     {
       "title":"Should we broaden the rules to require a 'whole' truth?",
-      "nest": ["Debate on a direction"],
-      "html": "6 minutes to discuss paraphrasing and other commentary taken out of context so as to distort the persons meaning intentionally",
-      "seconds": 6 * 60
+      "nest": ["Debate on a Direction"],
+      "html": "9 minutes to discuss paraphrasing and other commentary taken out of context so as to distort the persons meaning intentionally",
+      "seconds": 540
     },
     {
       "title":"Should we broaden the rules for defining 'malicious intent'",
-      "nest": ["Debate on a direction"],
-      "html": "6 minutes to discuss better ways to define 'malicious intent'",
-      "seconds": 6 * 60
+      "nest": ["Debate on a Direction"],
+      "html": "9 minutes to discuss better ways to define 'malicious intent'",
+      "seconds": 540
     },
     {
       "title":"Collective Next Steps",
       "nest": ["Next Steps"],
       "html": "5 to discuss collective next steps",
-      "seconds": 5 * 60
+      "seconds": 300
     }
   ]
 }

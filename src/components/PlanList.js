@@ -23,26 +23,11 @@ import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
-// import rallyData from '../data/libel.js';
 import MediaRecorder from "./MediaRecorder";
-import rallyData from '../data/2020-11-14.js';
+import Config from '../Config';
 
-
-export const Config = {
-    api: {
-        base: process.env.REACT_APP_API_URL, // set in .env
-        client : process.env.NODE_ENV === 'production' ?  'https://clock.taylormadetraffic.com/index.html' : '//localhost:3000'
-    },
-    allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt', // https://www.npmjs.com/package/sanitize-html
-        'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-        'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'sup', 'sub', 'center', 'button', 'a'],
-    allowedAttributes: {
-        'a': ['href', 'target'],
-        '*': ['id', 'style', 'data-toggle', 'data-target', 'aria-label', 'role', 'class'],
-        'img': ['src', 'height', 'width']
-    },
-};
+import API from '../Util/API';
+import {withRouter} from "react-router";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -120,22 +105,35 @@ class PlanList extends React.Component {
     constructor(p) {
         super(p);
         this.state = {
-            activeStep : -1,
-            countRemains : 0,
-            countScheduled:0,
-            countStep : 0,
-            showAll:false,
-            running:false,
-            notes : {},
-            videoOpen:false
+            activeStep: -1,
+            countRemains: 0,
+            countScheduled: 0,
+            countStep: 0,
+            showAll: false,
+            running: false,
+            notes: {},
+            videoOpen: false,
+            rallyData: false
         }
+
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
     }
 
     componentDidMount() {
+        if (this.props.match.params && this.props.match.params.rid && this.props.match.params.mid) {
+            let path = '/json/' + this.props.match.params.rid + '/' + this.props.match.params.mid + '.json';
+            API.Get(path).then(res => {
+                this.setState({rallyData:res.data}, e => this.initCounter());
+            }).catch(e => this.setState({rallyData:'invalid path'}))
+        } else {
+            this.setState({rallyData:'invalid path'});
+        }
+    }
+
+    initCounter() {
         let total = 0;
-        rallyData.lineItems.forEach(o => {
+        this.state.rallyData.lineItems.forEach(o => {
             total += o.seconds
             o.countdown = o.seconds;
         });
@@ -167,7 +165,7 @@ class PlanList extends React.Component {
                 this.stopTimers();
                 return 'rally complete';
             }
-            let curStep = rallyData.lineItems[this.state.activeStep];
+            let curStep = this.state.rallyData.lineItems[this.state.activeStep];
             if (typeof curStep.countdown !== 'number') {
                 curStep.countdown = curStep.seconds;
             } else {
@@ -198,6 +196,9 @@ class PlanList extends React.Component {
         const {classes} = this.props;
         const {activeStep} = this.state;
         let nesting = {};
+
+        if (!this.state.rallyData) return 'loading agenda...'
+        else if (typeof this.state.rallyData === 'string') return this.state.rallyData;
 
         return (
             <div className={classes.root}>
@@ -231,13 +232,18 @@ class PlanList extends React.Component {
 
                     <Grid container justify={'space-around'} alignContent={'center'} >
                         <Grid item xs={12} sm={7} md={8} >
-                            <img alt={'libel'} src={rallyData.img} style={{width:'100%'}} />
+                            {this.state.rallyData.videofile ?
+                                <video style={{width:'100%'}} height="240" controls>
+                                    <source src={this.state.rallyData.videofile} type="video/mp4" />
+                                </video>
+                            : <img alt={'libel'} src={this.state.rallyData.img} style={{width:'100%'}} />}
+
                         </Grid>
                         <Grid item style={{padding:8}} xs={12} sm={5} md={4} >
-                            <Typography variant='h1' className={classes.title} color={'error'}>{rallyData.title}</Typography>
-                            <Typography variant='h4' >{rallyData.start}</Typography>
-                            <Typography variant='inherit' color={'inherit'} ><a href={rallyData.videolink} target={'_blank'} rel="noopener noreferrer">
-                                {rallyData.videolink}</a>
+                            <Typography variant='h1' className={classes.title} color={'error'}>{this.state.rallyData.title}</Typography>
+                            <Typography variant='h4' >{this.state.rallyData.start}</Typography>
+                            <Typography variant='inherit' color={'inherit'} ><a href={this.state.rallyData.videolink} target={'_blank'} rel="noopener noreferrer">
+                                {this.state.rallyData.videolink}</a>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -253,13 +259,13 @@ class PlanList extends React.Component {
 
                         <Grid item>
                             <div>Moderator</div>
-                            <Avatar alt={rallyData.moderators[0].name} src={rallyData.moderators[0].img} />
+                            <Avatar alt={this.state.rallyData.moderators[0].name} src={this.state.rallyData.moderators[0].img} />
                         </Grid>
 
                         <Grid item>
                             <div>Speakers</div>
                             <AvatarGroup>
-                                {rallyData.speakers.map(r => <Avatar alt={r.name} src={r.img} />)}
+                                {this.state.rallyData.speakers.map(r => <Avatar alt={r.name} src={r.img} />)}
                                 <Avatar alt="add" onClick={e => alert('TODO: Apply to speak')} >+</Avatar>
                             </AvatarGroup>
                         </Grid>
@@ -267,7 +273,7 @@ class PlanList extends React.Component {
                     </Grid>
 
                     <Stepper activeStep={activeStep} orientation="vertical" >
-                    {rallyData.lineItems.map((curItem, index) => {
+                    {this.state.rallyData.lineItems.map((curItem, index) => {
                         let padLeft = 30; // curItem.nest.length *
                             let parent = curItem.nest[curItem.nest.length - 1];
                             if (typeof nesting[parent] === 'undefined') {
@@ -321,7 +327,7 @@ class PlanList extends React.Component {
                                                                             onClick={this.handleNext}
                                                                             className={classes.button}
                                                                         >
-                                                                            {activeStep === rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
+                                                                            {activeStep === this.state.rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
                                                                         </Button>
                                                                     </div> : null
                                                         }
@@ -336,7 +342,7 @@ class PlanList extends React.Component {
                     )}
                 </Stepper>
 
-                {activeStep === rallyData.lineItems.length && (
+                {activeStep === this.state.rallyData.lineItems.length && (
                     <Paper square elevation={0} className={classes.resetContainer}>
                         <Typography>All steps completed - you&apos;re finished</Typography>
                         <Button onClick={this.handleReset} className={classes.button}>
@@ -402,4 +408,4 @@ const useStyles = theme => ({
     }
 });
 
-export default withStyles(useStyles, {withTheme:true})(PlanList);;
+export default withStyles(useStyles, {withTheme:true})(withRouter(PlanList));
