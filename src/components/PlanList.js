@@ -227,7 +227,6 @@ class PlanList extends React.Component {
                 </AppBar>
                 { this.state.videoOpen === true ? <div style={{position:'absolute', width:'100%', right:0}}> <MediaRecorder /></div> : null}
 
-
                 <div style={{marginTop:100, textAlign:'left'}}>
 
                     <Grid container justify={'space-around'} alignContent={'center'} >
@@ -274,14 +273,15 @@ class PlanList extends React.Component {
 
                     <Stepper activeStep={activeStep} orientation="vertical" >
                     {this.state.rallyData.lineItems.map((curItem, index) => {
-                        let padLeft = 30; // curItem.nest.length *
-                            let parent = curItem.nest[curItem.nest.length - 1];
+                        // let padLeft = 30; // curItem.nest.length *
+                        let parent = null;
+                        if (curItem.nest) {
+                            parent = curItem.nest[curItem.nest.length - 1];
                             if (typeof nesting[parent] === 'undefined') {
                                 nesting[parent] = true;
                                 parent = <div className={classes.stepSection} ><Typography variant='h3' className={classes.topLevelLabel} >{parent}</Typography></div>;
-                            } else {
-                                parent = null;
                             }
+                        }
                             return (
                                     <Step key={'step-' + index} active={this.state.showAll === true || activeStep === index ? true : undefined}>
                                         {parent}

@@ -1,0 +1,35 @@
+{
+  "title":"DemocraSEE Local Dev Environment",
+  "start": "Thursday, November 19th 9:30am - 11:00am",
+  "img":"/images/Screenshot_2020-11-19.png",
+  "videolink":"https://meet.google.com/zoa-txas-bbk",
+  "city":"Oakland - LA, CA",
+  "moderators":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+  ],
+  "speakers":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+  ],
+  "lineItems": [
+    {
+      "title":"CORE: Apache (httpd), PHP7+, mySQL, ImageMagick, XDebug, Git, WP-CLI",
+      "html": "https://wp-cli.org/#installing" ,
+      "seconds": 900
+    },
+    {
+      "title":"TOOLS: PhpStorm / Atom + mySQL Workbench, Postman",
+      "html": "",
+      "seconds": 900
+    },
+    {
+      "title":"CONFIG: Apache VirtualHosts, DNS, and SSL",
+      "desc": "",
+      "seconds": 900
+    },
+    {
+      "title":"CLIENT: NPM, NodeJS, Firebase",
+      "desc": "",
+      "seconds": 900
+    }
+  ]
+}
