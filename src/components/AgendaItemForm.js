@@ -1,39 +1,45 @@
 import React, {Component} from 'react';
-import {withStyles} from "@material-ui/core/styles";
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Popover from '@material-ui/core/Popover';
-import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Create from "@material-ui/icons/Create";
+
+import {updateRallyItem, moveRallyItem, moveRallyHead} from "../redux/entityDataReducer";
+import HtmlEditor from "./HtmlEditor";
 
 class AgendaItemForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {showing: false}
-        this.onItemSave = this.onItemSave.bind(this);
-        this.onChangeHeader = this.onChangeHeader.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.onToggle = this.onToggle.bind(this);
     }
 
-    onItemSave(e) {
+    onChangeItem(key, val) {
+        if (key === 'nest') {
+            this.props.dispatch(moveRallyHead(this.props.index, val));
+        } else if (key === 'order') {
+            this.props.dispatch(moveRallyItem(this.props.index, val));
+        } else {
+            let item = JSON.parse(JSON.stringify(this.props.item));
+            item[key] = val;
+            this.props.dispatch(updateRallyItem(item, this.props.index))
+        }
+    }
 
+    onChange(event) {
+        this.onChangeItem(event.target.name, event.target.value);
     }
 
     onToggle(e) {
         let obj = {showing: !this.state.showing};
         if (e.currentTarget) {
-            console.log(e.currentTarget)
             obj.anchorEl = e.currentTarget;
         }
         this.setState(obj);
-    }
-
-
-    onChangeHeader(e) {
-
     }
 
     render() {
@@ -59,13 +65,13 @@ class AgendaItemForm extends Component {
                             <IconButton onClick={this.onToggle}><CloseIcon/></IconButton>
                         </div>
                         <TextField
-                            id="group-headers"
+                            name="nest"
                             select
                             label='Change Header'
                             fullWidth={true}
                             className={classes.field}
                             value={this.props.item.nest[0]}
-                            onChange={this.onChangeHeader}
+                            onChange={this.onChange}
                         >
                             {this.props.headers.map((option, i) => (
                                 <MenuItem key={'parents' + i} value={option.label}>
@@ -74,31 +80,34 @@ class AgendaItemForm extends Component {
                             ))}
                         </TextField>
 
-                        <TextField id="standard-title" label="Title" value={this.props.item.title} fullWidth={true} variant={'standard'} className={classes.field} />
+                        <TextField name="title" label="Title" value={this.props.item.title} fullWidth={true} variant={'standard'} className={classes.field}
+                                   onChange={this.onChange} />
 
 
                         <div style={{display:'flex', justifyContent:'space-between'}}>
-                            <TextField id="standard-order" label="Item Order" type="number"
+                            <TextField name="order" label="Item Order" type="number"
                                        value={this.props.index + 1}
+                                       onChange={this.onChange}
                                        variant={'outlined'}
                                        className={classes.field}
                                        InputLabelProps={{
                                            shrink: true,
-                                       }}/>
-                            <TextField id="standard-seconds" label="Seconds" type="number"
+                                       }} />
+                            <TextField name="seconds" label="Seconds" type="number"
                                        value={this.props.item.seconds}
+                                       onChange={this.onChange}
                                        variant={'outlined'}
                                        className={classes.field}
                                        InputLabelProps={{
                                            shrink: true,
-                                       }}/>
+                                       }} />
                         </div>
 
-                        <TextField id="standard-html" label="HTML" value={this.props.item.html} fullWidth={true}
-                                   variant={'outlined'}
-                                   className={classes.field}
-                                   multiline rowsMax={4}/>
-                        <TextField id="standard-outline" label="Outline" value={JSON.stringify(this.props.item.outline)}
+                        <HtmlEditor onChange={val => this.onChangeItem('html', val)} html={this.props.item.html} multiline rowsMax={4} />
+
+                        <TextField name="outline" label="Outline"
+                                   value={JSON.stringify(this.props.item.outline)}
+                                   onChange={this.onChange}
                                    variant={'outlined'}
                                    className={classes.field}
                                    fullWidth={true} multiline rowsMax={4}/>
@@ -111,8 +120,4 @@ class AgendaItemForm extends Component {
     }
 }
 
-
-const styles = theme => ({});
-
-
-export default withStyles(styles)(AgendaItemForm);
+export default AgendaItemForm;

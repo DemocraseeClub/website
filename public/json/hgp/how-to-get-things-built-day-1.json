@@ -16,6 +16,7 @@
     {
       "title":"Open Source Tools",
       "nest": ["Picking your Technology Stack"],
+      "html" : "<ul><li>Test 1</li><li>Test 2</li></ul>",
       "outline" : [
         "Web/API Stacks",
         [
@@ -47,7 +48,7 @@
     },
     {
       "title":"Personal network",
-      "nest": ["Recruitment & Outreach"],
+      "nest": ["Recruiting Talent"],
       "outline": [
         "List developers by your personal networks",
         ["Social media","Email","University CS departments"]
@@ -56,7 +57,7 @@
     },
     {
       "title":"Programmer Forums",
-      "nest": ["Recruitment & Outreach"],
+      "nest": ["Recruiting Talent"],
       "outline": [
         "Searching developers by online code forums",
         ["StackExchange networks", "Github Issues"]
@@ -65,7 +66,7 @@
     },
     {
       "title":"Upwork.com",
-      "nest": ["Recruitment & Outreach"],
+      "nest": ["Recruiting Talent"],
       "outline": [
         "Shortlist your top developers by filters",
         ["By location / timezone", "By Code language", "By rankings / income / team"],
@@ -74,15 +75,14 @@
       "seconds": 900
     },
     {
-      "title":"Feature Requests",
-      "nest": ["Task Management and Tracking"],
-      "html": "Github Issues, Jira, Trillo, Bugzilla, ...",
-      "seconds": 900
-    },
-    {
-      "title":"Bug Reporting",
-      "nest": ["Task Management and Tracking"],
-      "html": "Steps to reproduce",
+      "title":"Budgeting Compensation",
+      "nest": ["Recruiting Talent"],
+      "outline": [
+        "Hourly",
+        "Flat-Rates",
+        "(Vested) Equity",
+        "Bonuses"
+      ],
       "seconds": 900
     },
     {
@@ -93,7 +93,7 @@
     },
     {
       "title":"Screen Sharing",
-      "nest": ["Task Management and Tracking"],
+      "nest": ["Interviewing"],
       "outline": [
         "Review Github account history and repositories",
         "Local development environment debugging tools",
@@ -102,21 +102,26 @@
       "seconds": 600
     },
     {
-      "title":"Hourly, Flat-Rate & Equity",
-      "nest": ["Discussing Compensation"],
+      "title":"Feature Requests",
+      "nest": ["Managing & Tracking Tasks"],
       "outline": [
-        "Hourly",
-        "Flat-Rates",
-        "(Vested) Equity",
-        "Bonuses"
+        "Github Issues, Jira, Trillo, Bugzilla, ...",
+        "Markdown.md"
       ],
       "seconds": 900
     },
     {
-      "title":"Defining Deliverables, Deadlines & Payment schedules",
+      "title":"Bug Reporting",
+      "nest": ["Managing & Tracking Tasks"],
+      "html": "Steps to reproduce",
+      "seconds": 900
+    },
+    {
+      "title":"Deliverables & Deadlines",
       "nest": ["Drafting a Contract"],
       "outline": [
         "Definitions",
+        "Benchmarks",
         "Milestones",
         "Ownership",
         "Non-Disclosure",

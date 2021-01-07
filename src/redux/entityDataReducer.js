@@ -4,6 +4,9 @@ import {getIdbySegment} from './authActions';
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
 const ITEM_DATA_FAILURE = 'entity:ITEM_DATA_FAILURE';
 const ITEM_DATA_STARTED = 'entity:ITEM_DATA_STARTED';
+const UPDATE_RALLY_ITEM = 'entity:UPDATE_RALLY_ITEM';
+const MOVE_RALLY_ITEM = 'entity:MOVE_RALLY_ITEM';
+const MOVE_RALLY_HEAD = 'entity:MOVE_RALLY_HEAD';
 
 export const entityDataSuccess = apiData => ({
   type: ITEM_DATA_SUCCESS,
@@ -19,6 +22,25 @@ const entityDataFailure = error => ({
   type: ITEM_DATA_FAILURE,
   error: error
 });
+
+export const updateRallyItem = (item, index) => ({
+  type: UPDATE_RALLY_ITEM,
+  item: item,
+  index:index
+});
+
+export const moveRallyItem = (to, from) => ({
+  type: MOVE_RALLY_ITEM,
+  to: to,
+  from: from,
+});
+
+export const moveRallyHead = (to, from) => ({
+  type: MOVE_RALLY_HEAD,
+  to: to,
+  from: from,
+});
+
 
 
 export const entityData = (url) => {
@@ -75,6 +97,17 @@ export default function entityDataReducer(draft = initialState, action) {
     case ITEM_DATA_FAILURE:
       draft.loading = false;
       draft.error = action.error
+      return draft;
+    case UPDATE_RALLY_ITEM:
+      draft.apiData.lineItems[action.index] = action.item;
+      return draft;
+    case MOVE_RALLY_ITEM:
+      let element = draft.apiData.lineItems[action.from];
+      draft.apiData.lineItems.splice(action.from, 1);
+      draft.apiData.lineItems.splice(action.to, 0, element);
+      return draft;
+    case MOVE_RALLY_HEAD:
+      console.log("TODO: move head", action);
       return draft;
     default:
       return draft;

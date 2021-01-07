@@ -17,16 +17,17 @@ import StopIcon from '@material-ui/icons/PauseCircleFilled';
 import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
+import VideoCall from '@material-ui/icons/VideoCall';
+import VideoCamOff from '@material-ui/icons/VideocamOff';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import TextField from '@material-ui/core/TextField';
 import MediaRecorder from "./MediaRecorder";
 import Config from '../Config';
 
-import API from '../Util/API';
 import AgendaItemForm from "./AgendaItemForm";
 import AgendaHeader from "./AgendaHeader";
+import HtmlEditor from "./HtmlEditor";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -109,7 +110,6 @@ class PlanList extends React.Component {
             countStep: 0,
             showAll: false,
             running: false,
-            editItem:-1,
             headers:[],
             notes: {},
             videoOpen: false,
@@ -121,24 +121,13 @@ class PlanList extends React.Component {
     }
 
     componentDidMount() {
-        if (this.state.rallyData === false) {
-            if (this.props.match.params && this.props.match.params.rid && this.props.match.params.mid) {
-                let path = '/json/' + this.props.match.params.rid + '/' + this.props.match.params.mid + '.json';
-                API.Get(path).then(res => {
-                    this.setState({rallyData:res.data}, e => this.initCounter());
-                }).catch(e => this.setState({rallyData:'invalid path'}))
-            } else {
-                this.setState({rallyData:'invalid path'});
-            }
-        } else {
-            this.initCounter();
-        }
+        this.initCounter();
     }
 
     initCounter() {
         let total = 0;
         let headers = {};
-        this.state.rallyData.lineItems.forEach((o, i) => {
+        this.props.rallyData.lineItems.forEach((o, i) => {
             total += o.seconds
             o.countdown = o.seconds;
             if (typeof headers[o.nest[0]] === 'undefined') headers[o.nest[0]] = {label:o.nest[0], order:Object.values(headers).length, count:0};
@@ -159,13 +148,9 @@ class PlanList extends React.Component {
         this.setState({activeStep:0});
     };
 
-    handleEditItem(i) {
-        this.setState({editItem:i});
-    }
-
     runTimers(){
         if (this.state.activeStep === -1) {
-            this.setState({activeStep: 0 , running: true, videoOpen:true}, this.runTimers)
+            this.setState({activeStep: 0 , running: true}, this.runTimers)
         } else if (this.state.running === false) {
             this.setState({running: true}, this.runTimers)
         } else {
@@ -175,7 +160,7 @@ class PlanList extends React.Component {
                 this.stopTimers();
                 return 'rally complete';
             }
-            let curStep = this.state.rallyData.lineItems[this.state.activeStep];
+            let curStep = this.props.rallyData.lineItems[this.state.activeStep];
             if (typeof curStep.countdown !== 'number') {
                 curStep.countdown = curStep.seconds;
             } else {
@@ -198,7 +183,6 @@ class PlanList extends React.Component {
     handleNote(val, index) {
         let notes = {...this.state.notes};
         notes[index] = val;
-        console.log(notes);
         this.setState({notes:notes});
     }
 
@@ -214,7 +198,7 @@ class PlanList extends React.Component {
     }
 
     render() {
-        if (!this.state.rallyData) return 'loading agenda...'
+        if (!this.props.rallyData) return 'loading agenda...'
 
         const {classes} = this.props;
         const {activeStep} = this.state;
@@ -242,6 +226,12 @@ class PlanList extends React.Component {
                                 <Button style={{alignSelf:'center'}} startIcon={<UnfoldMore />}  variant='contained' color={'secondary'} onClick={e => this.setState({showAll:!this.state.showAll})}>Read All</Button>
                             }
 
+                            {this.state.videoOpen === false ?
+                                <Button style={{alignSelf:'center'}} startIcon={<VideoCall />} variant='contained' color={'secondary'} onClick={e => this.setState({videoOpen:!this.state.videoOpen})}>Video Recorder</Button>
+                                :
+                                <Button style={{alignSelf:'center'}} startIcon={<VideoCamOff />}  variant='contained' color={'secondary'} onClick={e => this.setState({videoOpen:!this.state.videoOpen})}>Hide Camera All</Button>
+                            }
+
                             {this.state.running === true ?
                                 <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers} startIcon={<StopIcon />}>Pause</Button>
                                 :
@@ -256,7 +246,7 @@ class PlanList extends React.Component {
 
                 <div>
                     <Stepper activeStep={activeStep} orientation="vertical" >
-                    {this.state.rallyData.lineItems.map((curItem, index) => {
+                    {this.props.rallyData.lineItems.map((curItem, index) => {
                             let parent = null;
                             if (curItem.nest.length > 0) {
                                 if (typeof nesting[curItem.nest[0]] === 'undefined') {
@@ -278,7 +268,7 @@ class PlanList extends React.Component {
                                             <div className={classes.stepLabel} >
                                                 <Typography className={classes.stepLabelText} variant={'h5'}>
                                                     {curItem.title}</Typography>
-                                                <AgendaItemForm item={curItem} index={index} headers={this.state.headers} classes={classes} />
+                                                <AgendaItemForm item={curItem} index={index} headers={this.state.headers} classes={classes} dispatch={this.props.dispatch} />
                                             </div>
 
                                         </StepLabel>
@@ -298,14 +288,12 @@ class PlanList extends React.Component {
                                                     </Grid>
                                                     <Grid item xs={12} sm={6}>
 
-                                                        <TextField
+                                                        <HtmlEditor
                                                             label="Notes"
-                                                            multiline
                                                             style={{width:'100%'}}
                                                             variant={'outlined'}
                                                             rows={3}
-                                                            value={this.state.notes[index]}
-                                                            onChange={e => this.handleNote(e.currentTarget.value, index)}
+                                                            onChange={val => this.handleNote(val, index)}
                                                         />
                                                         {
                                                             (activeStep === index) ?
@@ -324,7 +312,7 @@ class PlanList extends React.Component {
                                                                             onClick={this.handleNext}
                                                                             className={classes.button}
                                                                         >
-                                                                            {activeStep === this.state.rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
+                                                                            {activeStep === this.props.rallyData.lineItems.length - 1 ? 'Finish' : 'Done'}
                                                                         </Button>
                                                                     </div> : null
                                                         }
@@ -339,7 +327,7 @@ class PlanList extends React.Component {
                     )}
                 </Stepper>
 
-                {activeStep === this.state.rallyData.lineItems.length && (
+                {activeStep === this.props.rallyData.lineItems.length && (
                     <Paper square elevation={0} className={classes.resetContainer}>
                         <Typography>All steps completed - you&apos;re finished</Typography>
                         <Button onClick={this.handleReset} className={classes.button}>
