@@ -1,9 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+
 import App from './App';
 // import PlanList from './components/PlanList';
 import * as serviceWorker from './serviceWorker';
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
+import configureStore, { history } from './redux/configureStore';
+const store = configureStore({});
+
+
 
 let appTheme = createMuiTheme({
     palette: {
@@ -31,9 +38,13 @@ appTheme = responsiveFontSizes(appTheme, {factor: 20});
 
 ReactDOM.render(
     <React.StrictMode>
-        <ThemeProvider theme={appTheme}>
-            <App />
-        </ThemeProvider>
+        <Provider store={store}>
+            <ConnectedRouter history={history} >
+                <ThemeProvider theme={appTheme}>
+                    <App history={history} dispatch={store.dispatch} />
+                </ThemeProvider>
+            </ConnectedRouter>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

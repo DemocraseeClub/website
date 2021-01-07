@@ -1,0 +1,128 @@
+{
+  "title":"How to get things built - Day 1",
+  "start": "Tuesday, January 19th 4:30 pm - 6:45pm",
+  "img":"https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
+  "videolink":"https://meet.google.com/btm-hovc-tds",
+  "city":"Oakland, CA",
+  "moderators":[
+    {"img":"https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png", "name":"Sean Valentine"}
+  ],
+  "speakers":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli Taylor"},
+    {"img":"https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/ScottHanselman.jpeg", "name":"Scott Hanselman"},
+    {"img":"https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/edited-AndrewOverton.png", "name":"Andrew Overton"}
+  ],
+  "lineItems": [
+    {
+      "title":"Open Source Tools",
+      "nest": ["Picking your Technology Stack"],
+      "outline" : [
+        "Web/API Stacks",
+        [
+          "LAMP (Drupal, Wordpress, Symfony, CodeIgnitor, Laravel)",
+          "MERN / MEAN (KeystoneJS, ExpressJS, React",
+          "Spring (Magnolia)"
+        ],
+        "Servers",
+        [
+          "Heroku", "Google Cloud Platform", "AWS"
+        ],
+        "Mobile",
+        [
+          "React Native",
+          "Cordova / Ionic",
+          "native platform SDKs"
+        ]
+      ],
+      "seconds": 900
+    },
+    {
+      "title":"Cost and Availability Comparison",
+      "nest": ["Picking your Technology Stack"],
+      "outline": [
+        "Search Upwork.com and identify 10 hourly rates for junior, mid, and senior developers in languages of interest.",
+        "Note how many total developers claim experience with a language or stack"
+      ],
+      "seconds": 900
+    },
+    {
+      "title":"Personal network",
+      "nest": ["Recruitment & Outreach"],
+      "outline": [
+        "List developers by your personal networks",
+        ["Social media","Email","University CS departments"]
+      ],
+      "seconds": 900
+    },
+    {
+      "title":"Programmer Forums",
+      "nest": ["Recruitment & Outreach"],
+      "outline": [
+        "Searching developers by online code forums",
+        ["StackExchange networks", "Github Issues"]
+      ],
+      "seconds": 900
+    },
+    {
+      "title":"Upwork.com",
+      "nest": ["Recruitment & Outreach"],
+      "outline": [
+        "Shortlist your top developers by filters",
+        ["By location / timezone", "By Code language", "By rankings / income / team"],
+        "Upwork fees"
+      ],
+      "seconds": 900
+    },
+    {
+      "title":"Feature Requests",
+      "nest": ["Task Management and Tracking"],
+      "html": "Github Issues, Jira, Trillo, Bugzilla, ...",
+      "seconds": 900
+    },
+    {
+      "title":"Bug Reporting",
+      "nest": ["Task Management and Tracking"],
+      "html": "Steps to reproduce",
+      "seconds": 900
+    },
+    {
+      "title":"Testing tools",
+      "nest": ["Interviewing"],
+      "html": "Leetcode, CodeSignal, Codility",
+      "seconds": 600
+    },
+    {
+      "title":"Screen Sharing",
+      "nest": ["Task Management and Tracking"],
+      "outline": [
+        "Review Github account history and repositories",
+        "Local development environment debugging tools",
+        ["request Breakpoint demonstration"]
+      ],
+      "seconds": 600
+    },
+    {
+      "title":"Hourly, Flat-Rate & Equity",
+      "nest": ["Discussing Compensation"],
+      "outline": [
+        "Hourly",
+        "Flat-Rates",
+        "(Vested) Equity",
+        "Bonuses"
+      ],
+      "seconds": 900
+    },
+    {
+      "title":"Defining Deliverables, Deadlines & Payment schedules",
+      "nest": ["Drafting a Contract"],
+      "outline": [
+        "Definitions",
+        "Milestones",
+        "Ownership",
+        "Non-Disclosure",
+        "Standard clauses"
+      ],
+      "seconds": 3600
+    }
+  ]
+}

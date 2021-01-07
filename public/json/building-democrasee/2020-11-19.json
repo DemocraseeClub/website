@@ -23,12 +23,12 @@
     },
     {
       "title":"CONFIG: Apache VirtualHosts, DNS, and SSL",
-      "desc": "",
+      "html": "",
       "seconds": 900
     },
     {
       "title":"CLIENT: NPM, NodeJS, Firebase",
-      "desc": "",
+      "html": "",
       "seconds": 900
     }
   ]
