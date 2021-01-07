@@ -103,7 +103,7 @@ class AgendaItemForm extends Component {
                                        }} />
                         </div>
 
-                        <HtmlEditor onChange={val => this.onChangeItem('html', val)} html={this.props.item.html} multiline rowsMax={4} />
+                        <HtmlEditor label={"Content"} onChange={val => this.onChangeItem('html', val)} html={this.props.item.html} multiline rowsMax={4} />
 
                         <TextField name="outline" label="Outline"
                                    value={JSON.stringify(this.props.item.outline)}
