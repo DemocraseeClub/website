@@ -275,7 +275,7 @@ class PlanList extends React.Component {
                                         <StepContent className={classes.stepContent}>
                                             <div >
                                                 <Grid container justify={'space-between'} >
-                                                    <Grid item xs={12} sm={6} style={{fontSize:20}}>
+                                                    <Grid item xs={12} sm={7} style={{fontSize:20}}>
                                                         {curItem.html ?
                                                             <SanitizedHTML allowedTags={Config.allowedTags}
                                                                    allowedAttributes={Config.allowedAttributes}
@@ -286,10 +286,11 @@ class PlanList extends React.Component {
                                                         this.renderOutline(curItem.outline, 1) : null
                                                     }
                                                     </Grid>
-                                                    <Grid item xs={12} sm={6}>
+                                                    <Grid item xs={12} sm={5} spacing={1}>
 
                                                         <HtmlEditor
                                                             label="Notes"
+                                                            toolbar={'inline'}
                                                             style={{width:'100%'}}
                                                             variant={'outlined'}
                                                             rows={3}
