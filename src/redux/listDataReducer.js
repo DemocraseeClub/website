@@ -6,7 +6,6 @@ const API_DATA_SUCCESS = 'lists:API_DATA_SUCCESS';
 const API_DATA_FAILURE = 'lists:API_DATA_FAILURE';
 const API_DATA_STARTED = 'lists:API_DATA_STARTED';
 const MP3_UPDATE = 'lists:MP3_UPDATE';
-const WAGER_UPDATED = 'lists:WAGER_UPDATED';
 
 const listDataSuccess = (apiData, ctx) => ({
   type: API_DATA_SUCCESS,

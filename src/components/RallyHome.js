@@ -73,6 +73,7 @@ class RallyHome extends Component {
                     </Grid>
 
                     <PlanList classes={this.props.classes}
+                              dispatch={this.props.dispatch}
                               rallyData={this.props.entity.apiData} />
 
             </div>

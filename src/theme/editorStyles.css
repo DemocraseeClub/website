@@ -1,0 +1,54 @@
+.editor {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    cursor: text;
+    padding: 10px 10px 0 10px;
+    border-radius:5px;
+    box-shadow: inset 0px 1px 6px -3px #ABABAB;
+    background: #fff;
+}
+.DraftEditor-root {
+    min-height:120px;
+}
+
+.editor :global(.public-DraftEditor-content) {
+    display: block;
+}
+
+.headlineButtonWrapper, .draftJsToolbar__buttonWrapper__1Dmqh, .toolBtn {
+    display: inline-block;
+    background: #fff;
+    margin-right:3px
+}
+
+.headlineButtonWrapper button,
+.draftJsToolbar__buttonWrapper__1Dmqh button,
+.toolBtn button {
+    border:1px solid #ccc;
+    background: #fff;
+    line-height: 26px;
+}
+
+.headlineButton {
+    background: #fbfbfb;
+    color: #888;
+    font-size: 18px;
+    border: 0;
+    padding-top: 6px;
+    vertical-align: bottom;
+    height: 36px;
+    width: 36px;
+    display: inline-block;
+}
+
+.headlineButton:hover,
+.headlineButton:focus {
+    background: #f3f3f3;
+}
+
+.editorToolbar {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
