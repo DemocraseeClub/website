@@ -123,7 +123,7 @@ class Home extends React.Component {
                         <Typography gutterBottom component='h3'>
                             Ways to earn CitizenCoin
                         </Typography>
-                        <img src='/images/coin-payouts.png' style={{width:'100%'}} />
+                        <img src='/images/coin-payouts.png' alt={'payouts'} style={{width:'100%'}} />
                     </DialogContent>
                 </Dialog>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {withStyles, makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -18,8 +18,6 @@ import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
 
-import Avatar from '@material-ui/core/Avatar';
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
@@ -27,7 +25,8 @@ import MediaRecorder from "./MediaRecorder";
 import Config from '../Config';
 
 import API from '../Util/API';
-import {withRouter} from "react-router";
+import AgendaItemForm from "./AgendaItemForm";
+import AgendaHeader from "./AgendaHeader";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -59,18 +58,17 @@ const useQontoStepIconStyles = makeStyles({
     }
 });
 
-
 function QontoStepIcon(props) {
     const classes = useQontoStepIconStyles();
-    const { active, completed, countdown } = props;
+    const { status, countdown } = props;
 
-    let color = active ? 'secondary' : 'primary';
+    let color = status === 'active' ? 'secondary' : 'primary';
 
     if (typeof countdown !== 'number') return <div className={classes.circle} />
 
     return (
             <div>
-                {completed ?
+                {status === 'completed' ?
                     <Check className={classes.completed} color={color} /> :
                     <Unchecked color={color} />
                 }
@@ -80,16 +78,16 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     */
+    status: PropTypes.string,
     active: PropTypes.bool,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     */
     completed: PropTypes.bool,
 };
 
+QontoStepIcon.defaultProps = {
+    status : "inactive",
+    active:false,
+    completed : false
+}
 
 const formatSeconds = (sec, len) => {
     let date = new Date(null);
@@ -111,9 +109,11 @@ class PlanList extends React.Component {
             countStep: 0,
             showAll: false,
             running: false,
+            editItem:-1,
+            headers:[],
             notes: {},
             videoOpen: false,
-            rallyData: false
+            rallyData: p.rallyData || false
         }
 
         this.runTimers = this.runTimers.bind(this);
@@ -121,23 +121,30 @@ class PlanList extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.match.params && this.props.match.params.rid && this.props.match.params.mid) {
-            let path = '/json/' + this.props.match.params.rid + '/' + this.props.match.params.mid + '.json';
-            API.Get(path).then(res => {
-                this.setState({rallyData:res.data}, e => this.initCounter());
-            }).catch(e => this.setState({rallyData:'invalid path'}))
+        if (this.state.rallyData === false) {
+            if (this.props.match.params && this.props.match.params.rid && this.props.match.params.mid) {
+                let path = '/json/' + this.props.match.params.rid + '/' + this.props.match.params.mid + '.json';
+                API.Get(path).then(res => {
+                    this.setState({rallyData:res.data}, e => this.initCounter());
+                }).catch(e => this.setState({rallyData:'invalid path'}))
+            } else {
+                this.setState({rallyData:'invalid path'});
+            }
         } else {
-            this.setState({rallyData:'invalid path'});
+            this.initCounter();
         }
     }
 
     initCounter() {
         let total = 0;
-        this.state.rallyData.lineItems.forEach(o => {
+        let headers = {};
+        this.state.rallyData.lineItems.forEach((o, i) => {
             total += o.seconds
             o.countdown = o.seconds;
+            if (typeof headers[o.nest[0]] === 'undefined') headers[o.nest[0]] = {label:o.nest[0], order:Object.values(headers).length, count:0};
+            headers[o.nest[0]].count++;
         });
-        this.setState({countRemains:total, countScheduled:total});
+        this.setState({countRemains:total, countScheduled:total, headers:Object.values(headers)});
     }
 
     handleNext = () => {
@@ -152,8 +159,11 @@ class PlanList extends React.Component {
         this.setState({activeStep:0});
     };
 
+    handleEditItem(i) {
+        this.setState({editItem:i});
+    }
+
     runTimers(){
-        console.log(this.state.activeStep);
         if (this.state.activeStep === -1) {
             this.setState({activeStep: 0 , running: true, videoOpen:true}, this.runTimers)
         } else if (this.state.running === false) {
@@ -192,16 +202,26 @@ class PlanList extends React.Component {
         this.setState({notes:notes});
     }
 
+    renderOutline(outline, indent) {
+        return outline.map((v, i) => {
+            if (typeof v === 'string') {
+                let padLeft = 30 * indent;
+                return <div style={{paddingLeft:padLeft}} key={indent+'x'+i}>{v}</div>
+            } else {
+                return this.renderOutline(v, indent+1);
+            }
+        })
+    }
+
     render() {
+        if (!this.state.rallyData) return 'loading agenda...'
+
         const {classes} = this.props;
         const {activeStep} = this.state;
         let nesting = {};
 
-        if (!this.state.rallyData) return 'loading agenda...'
-        else if (typeof this.state.rallyData === 'string') return this.state.rallyData;
-
         return (
-            <div className={classes.root}>
+            <div className={classes.root} style={{marginTop:20, textAlign:'left'}}>
 
                 <AppBar position={'sticky'}>
                     <Toolbar>
@@ -216,6 +236,12 @@ class PlanList extends React.Component {
                                 <Typography variant='inherit' > {formatSeconds(this.state.countScheduled)}</Typography>
                             </Typography>
 
+                            {this.state.showAll === true ?
+                                <Button style={{alignSelf:'center'}} startIcon={<UnfoldLess />} variant='contained' color={'secondary'} onClick={e => this.setState({showAll:!this.state.showAll})}>Close All</Button>
+                                :
+                                <Button style={{alignSelf:'center'}} startIcon={<UnfoldMore />}  variant='contained' color={'secondary'} onClick={e => this.setState({showAll:!this.state.showAll})}>Read All</Button>
+                            }
+
                             {this.state.running === true ?
                                 <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers} startIcon={<StopIcon />}>Pause</Button>
                                 :
@@ -225,82 +251,53 @@ class PlanList extends React.Component {
                         </div>
                     </Toolbar>
                 </AppBar>
+
                 { this.state.videoOpen === true ? <div style={{position:'absolute', width:'100%', right:0}}> <MediaRecorder /></div> : null}
 
-                <div style={{marginTop:100, textAlign:'left'}}>
-
-                    <Grid container justify={'space-around'} alignContent={'center'} >
-                        <Grid item xs={12} sm={7} md={8} >
-                            {this.state.rallyData.videofile ?
-                                <video style={{width:'100%'}} height="240" controls>
-                                    <source src={this.state.rallyData.videofile} type="video/mp4" />
-                                </video>
-                            : <img alt={'libel'} src={this.state.rallyData.img} style={{width:'100%'}} />}
-
-                        </Grid>
-                        <Grid item style={{padding:8}} xs={12} sm={5} md={4} >
-                            <Typography variant='h1' className={classes.title} color={'error'}>{this.state.rallyData.title}</Typography>
-                            <Typography variant='h4' >{this.state.rallyData.start}</Typography>
-                            <Typography variant='inherit' color={'inherit'} ><a href={this.state.rallyData.videolink} target={'_blank'} rel="noopener noreferrer">
-                                {this.state.rallyData.videolink}</a>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-
-                    <Grid container justify={'space-around'} style={{marginTop:20}}>
-                        {this.state.showAll === true ?
-                            <Button style={{alignSelf:'center'}} startIcon={<UnfoldLess />} variant='contained' color={'secondary'} onClick={e => this.setState({showAll:!this.state.showAll})}>Close All</Button>
-                            :
-                            <Button style={{alignSelf:'center'}} startIcon={<UnfoldMore />}  variant='contained' color={'secondary'} onClick={e => this.setState({showAll:!this.state.showAll})}>Open All</Button>
-                        }
-
-
-                        <Grid item>
-                            <div>Moderator</div>
-                            <Avatar alt={this.state.rallyData.moderators[0].name} src={this.state.rallyData.moderators[0].img} />
-                        </Grid>
-
-                        <Grid item>
-                            <div>Speakers</div>
-                            <AvatarGroup>
-                                {this.state.rallyData.speakers.map(r => <Avatar alt={r.name} src={r.img} />)}
-                                <Avatar alt="add" onClick={e => alert('TODO: Apply to speak')} >+</Avatar>
-                            </AvatarGroup>
-                        </Grid>
-
-                    </Grid>
-
+                <div>
                     <Stepper activeStep={activeStep} orientation="vertical" >
                     {this.state.rallyData.lineItems.map((curItem, index) => {
-                        // let padLeft = 30; // curItem.nest.length *
-                        let parent = null;
-                        if (curItem.nest) {
-                            parent = curItem.nest[curItem.nest.length - 1];
-                            if (typeof nesting[parent] === 'undefined') {
-                                nesting[parent] = true;
-                                parent = <div className={classes.stepSection} ><Typography variant='h3' className={classes.topLevelLabel} >{parent}</Typography></div>;
+                            let parent = null;
+                            if (curItem.nest.length > 0) {
+                                if (typeof nesting[curItem.nest[0]] === 'undefined') {
+                                    nesting[curItem.nest[0]] = true;
+                                    let header = this.state.headers.find(h => h.label === curItem.nest[0]);
+                                    if (header) {
+                                        parent = <AgendaHeader header={header} classes={classes} />;
+                                    }
+                                }
                             }
-                        }
                             return (
-                                    <Step key={'step-' + index} active={this.state.showAll === true || activeStep === index ? true : undefined}>
+                                    <Step key={'step-' + index}
+                                        active={this.state.showAll === true || activeStep === index ? true : undefined}>
+
                                         {parent}
                                         <StepLabel className={classes.stepTimeBlock}
                                                    StepIconComponent={QontoStepIcon}
                                                    StepIconProps={curItem}>
-                                                <Typography className={classes.stepLabel} variant={'h5'}>{curItem.title}</Typography>
+                                            <div className={classes.stepLabel} >
+                                                <Typography className={classes.stepLabelText} variant={'h5'}>
+                                                    {curItem.title}</Typography>
+                                                <AgendaItemForm item={curItem} index={index} headers={this.state.headers} classes={classes} />
+                                            </div>
+
                                         </StepLabel>
                                         <StepContent className={classes.stepContent}>
                                             <div >
                                                 <Grid container justify={'space-between'} >
                                                     <Grid item xs={12} sm={6} style={{fontSize:20}}>
-                                                        {curItem.desc ? <Typography variant={'h5'}>{curItem.desc}</Typography> : null}
                                                         {curItem.html ?
                                                             <SanitizedHTML allowedTags={Config.allowedTags}
                                                                    allowedAttributes={Config.allowedAttributes}
                                                                    html={curItem.html}/> : null}
+
+                                                    {
+                                                        (curItem.outline) ?
+                                                        this.renderOutline(curItem.outline, 1) : null
+                                                    }
                                                     </Grid>
                                                     <Grid item xs={12} sm={6}>
+
                                                         <TextField
                                                             label="Notes"
                                                             multiline
@@ -362,50 +359,4 @@ class PlanList extends React.Component {
 }
 
 
-const useStyles = theme => ({
-    root: {
-        width: '100%',
-    },
-    title : {
-        fontSize:46,
-        fontWeight:100
-    },
-    button: {
-        marginTop: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
-    actionsContainer: {
-        textAlign:'left',
-        marginTop: theme.spacing(2),
-    },
-    resetContainer: {
-        padding: theme.spacing(3),
-    },
-    stepSection: {
-        paddingLeft:50
-    },
-    stepTimeBlock : {
-        fontSize:19,
-    },
-    stepLabel : {
-        fontSize:19,
-        paddingLeft:20,
-        fontWeight:700,
-    },
-    stepContent : {
-        paddingLeft:45,
-        paddingBottom:10,
-        borderBottom:'1px solid #ccc'
-    },
-    topLevelLabel : {
-        backgroundColor:theme.palette.primary.main,
-        color:theme.palette.primary.contrastText,
-        textAlign:'left',
-        padding:10,
-        fontSize:26,
-        fontWeight:900,
-        borderRadius:'5px 5px 0 5px'
-    }
-});
-
-export default withStyles(useStyles, {withTheme:true})(withRouter(PlanList));
+export default PlanList;

@@ -29,7 +29,7 @@
     {
       "title":"Other Content",
       "nest": ["Wordpress CMS"],
-      "desc": "Manual migration",
+      "html": "Manual migration",
       "seconds": 240
     },
     {
@@ -41,7 +41,7 @@
     {
       "title":"RoadMap",
       "nest": ["Wordpress API"],
-      "desc": "Customizing user role capabilities. Investigate MyCred integration",
+      "html": "Customizing user role capabilities. Investigate MyCred integration",
       "seconds": 120
     },
     {
@@ -58,13 +58,13 @@
     {
       "title":"Firebase",
       "nest": ["Web Server"],
-      "desc": "`firebase deploy`, analytics, CDN and affordable pricing",
+      "html": "`firebase deploy`, analytics, CDN and affordable pricing",
       "seconds": 120
     },
     {
       "title":"Google Cloud Platform",
       "nest": ["Web Server"],
-      "desc": "Linux, Apache, mySQL, PHP",
+      "html": "Linux, Apache, mySQL, PHP",
       "seconds": 120
     }
   ]

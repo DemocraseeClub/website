@@ -5,12 +5,12 @@ import About from './views/About';
 import Ethics from './views/Ethics';
 import City from './views/City';
 import Rallies from "./views/Rallies";
-import PlanList from './components/PlanList';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Topics from "./views/Topics";
 import Resources from "./views/Resources";
+import RallyHome from "./components/RallyHome";
 
 function App() {
     return (
@@ -31,10 +31,10 @@ function App() {
                         <Route path="/form/city/create"><City/></Route>
                         <Route path="/form/city/:cid/update"><City/></Route>
 
-                        <Route path="/rally/:rid/meeting/:mid"><PlanList /></Route>
-                        <Route path="/rally/:rid"><PlanList /></Route>
-                        <Route path="/form/rally/create"><PlanList /></Route>
-                        <Route path="/form/rally/:rid/update"><PlanList /></Route>
+                        <Route path="/rally/:rid/meeting/:mid"><RallyHome /></Route>
+                        <Route path="/rally/:rid"><RallyHome /></Route>
+                        <Route path="/form/rally/create"><RallyHome /></Route>
+                        <Route path="/form/rally/:rid/update"><RallyHome /></Route>
 
                         <Route path="/official/:oid"><City/></Route>
 
