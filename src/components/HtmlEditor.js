@@ -1,5 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, {Component} from 'react';
+import {ContentState, EditorState, convertFromHTML} from 'draft-js';
 import Editor, {createEditorStateWithText} from 'draft-js-plugins-editor';
 import {
     ItalicButton,
@@ -21,9 +22,16 @@ export default class HtmlEditor extends Component {
 
     constructor(p) {
         super(p);
-        this.state = {
-            editorState: createEditorStateWithText(p.html || ''),
-        };
+        if (p.html && p.html.length > 0) {
+            this.state = {
+                editorState : EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(p.html)))
+            }
+        } else {
+            this.state = {
+                editorState: createEditorStateWithText('')
+            };
+        }
+        
         const linkPlugin = createLinkPlugin({
             placeholder: 'https://…'
         });
