@@ -5,9 +5,13 @@
     cursor: text;
     padding: 10px 10px 0 10px;
     border-radius:5px;
-    box-shadow: inset 0px 1px 6px -3px #ABABAB;
-    background: #fff;
 }
+
+.editor legend {
+    font-size: .75rem;
+    color:rgba(0, 0, 0, 0.54);
+}
+
 .DraftEditor-root {
     min-height:120px;
 }

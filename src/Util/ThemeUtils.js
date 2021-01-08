@@ -97,6 +97,6 @@ export const rallyStyles = theme => ({
         borderRadius:'5px 5px 0 5px'
     },
     field: {
-        margin:theme.spacing(1)
+        marginBottom:theme.spacing(2)
     }
 });

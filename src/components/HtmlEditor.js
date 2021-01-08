@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React, {Component} from 'react';
 import {ContentState, EditorState, convertFromHTML} from 'draft-js';
-import Editor, {createEditorStateWithText} from 'draft-js-plugins-editor';
+import Editor, {createEditorStateWithText, composeDecorators} from 'draft-js-plugins-editor';
 import {
     ItalicButton,
     BoldButton,
@@ -14,10 +14,11 @@ import {
 import createLinkPlugin from 'draft-js-anchor-plugin';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
-
+import createImagePlugin from 'draft-js-image-plugin';
 import {stateToHTML} from 'draft-js-export-html';
 import editorStyles from '../theme/editorStyles.css';
-
+import createAlignmentPlugin from 'draft-js-alignment-plugin';
+import InsertPhoto from '@material-ui/icons/InsertPhoto';
 export default class HtmlEditor extends Component {
 
     constructor(p) {
@@ -32,9 +33,16 @@ export default class HtmlEditor extends Component {
             };
         }
 
-        const linkPlugin = createLinkPlugin({
-            placeholder: 'https://…'
-        });
+        const alignmentPlugin = createAlignmentPlugin();
+        const linkPlugin = createLinkPlugin({placeholder: 'https://…'});
+
+        const decorator = composeDecorators(
+            // resizeablePlugin.decorator,
+            alignmentPlugin.decorator,
+            // focusPlugin.decorator,
+            // blockDndPlugin.decorator
+        );
+        const imagePlugin = createImagePlugin({ decorator });
 
         const config = {
             structure: [
@@ -45,15 +53,18 @@ export default class HtmlEditor extends Component {
                 UnorderedListButton,
                 OrderedListButton,
                 BlockquoteButton,
-                linkPlugin.LinkButton
+                linkPlugin.LinkButton,
+                InsertPhoto
             ]
         };
         const toolbarPlugin = (p.toolbar === 'inline') ? createInlineToolbarPlugin(config) : createToolbarPlugin(config);
         this.PluginComponents = {
             InlineToolbar:  (p.toolbar === 'inline') ? toolbarPlugin.InlineToolbar : toolbarPlugin.Toolbar,
-            LinkButton : linkPlugin.LinkButton
+            LinkButton : linkPlugin.LinkButton,
+            AddImage : imagePlugin.addImage,
+            AlignmentTool : alignmentPlugin.AlignmentTool
         };
-        this.plugins = [toolbarPlugin, linkPlugin];
+        this.plugins = [toolbarPlugin, linkPlugin, alignmentPlugin, imagePlugin];
     }
 
     onChange = (editorState) => {
@@ -67,13 +78,13 @@ export default class HtmlEditor extends Component {
     };
 
     render() {
-        const { InlineToolbar, LinkButton } = this.PluginComponents;
+        const { InlineToolbar, LinkButton, AddImage } = this.PluginComponents;
         return (
-            <div className='editorBlock' >
-                {this.props.label ?
-                    <label>{this.props.label}</label> : ''
-                }
-                <div className='editor' onClick={this.focus} >
+            <fieldset className="editor MuiOutlinedInput-notchedOutline">
+                <legend>
+                    <span>{this.props.label}</span>
+                </legend>
+                <div onClick={this.focus} >
                     <Editor
                         editorState={this.state.editorState}
                         onChange={this.onChange}
@@ -85,7 +96,8 @@ export default class HtmlEditor extends Component {
                     <InlineToolbar className='editorToolbar'>
                         {
                             (externalProps) => {
-                                return (<div>
+                                console.log(externalProps);
+                                return (<React.Fragment>
                                     <BoldButton {...externalProps} />
                                     <ItalicButton {...externalProps} />
                                     <UnderlineButton {...externalProps} />
@@ -94,12 +106,14 @@ export default class HtmlEditor extends Component {
                                     <OrderedListButton {...externalProps} />
                                     <BlockquoteButton {...externalProps} />
                                     <LinkButton {...externalProps} />
-                                </div>)
+                                    <InsertPhoto {...externalProps} editorState={this.state.editorState}
+                                                 onChange={this.onChange} modifier={AddImage} />
+                                </React.Fragment>)
                             }
                         }
                     </InlineToolbar>
                 </div>
-            </div>
+            </fieldset>
         );
     }
 }

@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SanitizedHTML from 'react-sanitized-html';
-
+import ReactMarkdown from 'react-markdown'
 import PropTypes from 'prop-types';
 import Check from '@material-ui/icons/CheckBox';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
@@ -166,8 +166,24 @@ class PlanList extends React.Component {
 
         return outline.map((v, i) => {
             if (typeof v === 'string') {
-                let padLeft = 30 * indent;
-                return <div style={{paddingLeft:padLeft}} key={indent+'x'+i}>{v}</div>
+                let liStyle = {paddingLeft:30 * indent, display:'list-item', listStylePosition:'inside' }
+                liStyle.listStyleType = indent % 2 === 0 ? 'disc' : Math.floor(indent/2) % 2 === 0 ? 'circle' : 'square';
+
+                /*
+                const regex = /^\[([\w\s\d]+)\]\(((?:\/|https?:\/\/)[\w\d./?=#]+)\)$/
+                const matches = v.match(regex);
+
+                const singleMatch = /\[([^\[]+)\]\((.*)\)/
+                for (var i = 0; i < matches.length; i++) {
+                    var text = singleMatch.exec(matches[i])
+                    console.log(`Match #${i}:`, text)
+                    console.log(`Word  #${i}: ${text[1]}`)
+                    console.log(`Link  #${i}: ${text[2]}`)
+                }
+
+                 */
+
+                return <div style={liStyle} key={indent+'x'+i}>{v}</div>
             } else {
                 return this.renderOutline(v, indent+1);
             }
@@ -206,7 +222,7 @@ class PlanList extends React.Component {
                             {this.state.videoOpen === false ?
                                 <Button style={{alignSelf:'center'}} startIcon={<VideoCall />} variant='contained' color={'secondary'} onClick={e => this.setState({videoOpen:!this.state.videoOpen})}>Video Recorder</Button>
                                 :
-                                <Button style={{alignSelf:'center'}} startIcon={<VideoCamOff />}  variant='contained' color={'secondary'} onClick={e => this.setState({videoOpen:!this.state.videoOpen})}>Hide Camera All</Button>
+                                <Button style={{alignSelf:'center'}} startIcon={<VideoCamOff />}  variant='contained' color={'secondary'} onClick={e => this.setState({videoOpen:!this.state.videoOpen})}>Hide Recorder</Button>
                             }
 
                             {this.state.running === true ?
@@ -268,7 +284,7 @@ class PlanList extends React.Component {
 
                                                     {
                                                         (curItem.outline) ?
-                                                        this.renderOutline(curItem.outline, 1) : null
+                                                        this.renderOutline(curItem.outline, 0) : null
                                                     }
                                                     </Grid>
                                                     <Grid item xs={12} sm={5} >
