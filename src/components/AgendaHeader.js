@@ -39,7 +39,9 @@ class AgendaHeader extends Component {
                 <div className={classes.stepSection}>
                     <Typography variant='h3' className={classes.topLevelLabel}>
                         {this.props.header.label}
-                        <IconButton size={'small'} variant={'outlined'} onClick={this.onShow}><Create/></IconButton>
+                        {this.props.editMode === true ?
+                            <IconButton size={'small'} variant={'outlined'} onClick={this.onShow}><Create/></IconButton>
+                        : null}
                     </Typography>
                 </div>
                 <Popover

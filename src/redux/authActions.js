@@ -68,13 +68,11 @@ export function toggleMenu(force) {
 }
 
 const segmentMap = { // expects /group/9/playlists/8321/tracks/8483/edit
+    'rally':'rid',
     'users':'aid',
     'members':'uid',
-    'group':'gid',
-    'playlists':'pid',
     'tracks':'tid',
     'comments':'cid',
-    'marketplace':'rid',
     'faqs':'nid'
 };
 
@@ -93,19 +91,12 @@ export function changeApp(gid) {
 export function getIdbySegment(url) {
     const tdata = {};
     let parts = url.split('/');
-    if (parts[1] === 'forms') { // since /forms/group/9/playlists/8321/tracks/8483/edit
-        parts.shift();
-        tdata.verb = parts[parts.length - 1]; // add / edit / delete
-    }
     Object.entries(segmentMap).forEach(([segName, param]) => {
         let index = parts.indexOf(segName);
         if (index > 0 && parseInt(parts[index + 1]) > 0) {
             tdata[param] = parseInt(parts[index+1]);
         }
     });
-    tdata.bundle = parts.reverse().find( e => !parseInt(e) && e !== 'delete' && e !== 'add' && e !== 'edit' && e !== '');
-    if (!tdata.bundle) delete tdata.bundle;
-    if (!tdata.gid) tdata.gid = window.REACT_APP_GID;
     return tdata;
 }
 

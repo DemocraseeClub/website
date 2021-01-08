@@ -4,6 +4,7 @@
   "img":"https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
   "videolink":"https://meet.google.com/btm-hovc-tds",
   "city":"Oakland, CA",
+  "type": "rally",
   "moderators":[
     {"img":"https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png", "name":"Sean Valentine"}
   ],
@@ -15,19 +16,27 @@
   "lineItems": [
     {
       "title":"Open Source Tools",
-      "nest": ["Picking your Technology Stack"],
-      "html" : "<ul><li>Test 1</li><li>Test 2</li></ul>",
+      "nest": "Picking your Technology Stack",
+      "html" : "",
       "outline" : [
-        "Web/API Stacks",
+        "CMS + API Stacks",
         [
-          "LAMP (Drupal, Wordpress, Symfony, CodeIgnitor, Laravel)",
-          "MERN / MEAN (KeystoneJS, ExpressJS, React",
-          "Spring (Magnolia)"
+          "LAMP (PHP + mySQL: Drupal, Wordpress)",
+          "MERN (NodeJS + MongoDB: KeystoneJS)",
+          "Java / Spring (Magnolia)",
+          "Ruby",
+          "Python",
+          ".Net"
         ],
-        "Servers",
+        "Databases",
+        [ "MySQL", "Mongo", "Firebase"],
+        "Web Servers",
         [
-          "Heroku", "Google Cloud Platform", "AWS"
+          "Node.JS",
+          "Apache"
         ],
+        "Deployment",
+        ["Heroku", "Google Cloud Platform", "AWS"],
         "Mobile",
         [
           "React Native",
@@ -39,7 +48,7 @@
     },
     {
       "title":"Cost and Availability Comparison",
-      "nest": ["Picking your Technology Stack"],
+      "nest": "Picking your Technology Stack",
       "outline": [
         "Search Upwork.com and identify 10 hourly rates for junior, mid, and senior developers in languages of interest.",
         "Note how many total developers claim experience with a language or stack"
@@ -48,7 +57,7 @@
     },
     {
       "title":"Personal network",
-      "nest": ["Recruiting Talent"],
+      "nest": "Recruiting Talent",
       "outline": [
         "List developers by your personal networks",
         ["Social media","Email","University CS departments"]
@@ -57,7 +66,7 @@
     },
     {
       "title":"Programmer Forums",
-      "nest": ["Recruiting Talent"],
+      "nest": "Recruiting Talent",
       "outline": [
         "Searching developers by online code forums",
         ["StackExchange networks", "Github Issues"]
@@ -66,7 +75,7 @@
     },
     {
       "title":"Upwork.com",
-      "nest": ["Recruiting Talent"],
+      "nest": "Recruiting Talent",
       "outline": [
         "Shortlist your top developers by filters",
         ["By location / timezone", "By Code language", "By rankings / income / team"],
@@ -76,7 +85,7 @@
     },
     {
       "title":"Budgeting Compensation",
-      "nest": ["Recruiting Talent"],
+      "nest": "Recruiting Talent",
       "outline": [
         "Hourly",
         "Flat-Rates",
@@ -87,13 +96,13 @@
     },
     {
       "title":"Testing tools",
-      "nest": ["Interviewing"],
+      "nest": "Interviewing",
       "html": "Leetcode, CodeSignal, Codility",
       "seconds": 600
     },
     {
       "title":"Screen Sharing",
-      "nest": ["Interviewing"],
+      "nest": "Interviewing",
       "outline": [
         "Review Github account history and repositories",
         "Local development environment debugging tools",
@@ -103,7 +112,7 @@
     },
     {
       "title":"Feature Requests",
-      "nest": ["Managing & Tracking Tasks"],
+      "nest": "Managing & Tracking Tasks",
       "outline": [
         "Github Issues, Jira, Trillo, Bugzilla, ...",
         "Markdown.md"
@@ -112,13 +121,13 @@
     },
     {
       "title":"Bug Reporting",
-      "nest": ["Managing & Tracking Tasks"],
+      "nest": "Managing & Tracking Tasks",
       "html": "Steps to reproduce",
       "seconds": 900
     },
     {
       "title":"Deliverables & Deadlines",
-      "nest": ["Drafting a Contract"],
+      "nest": "Drafting a Contract",
       "outline": [
         "Definitions",
         "Benchmarks",

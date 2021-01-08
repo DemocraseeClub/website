@@ -3,10 +3,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Popover from '@material-ui/core/Popover';
-import MenuItem from "@material-ui/core/MenuItem";
 import Create from "@material-ui/icons/Create";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import {updateRallyItem, moveRallyItem, moveRallyHead} from "../redux/entityDataReducer";
+import {updateRallyItem, moveRallyItem, moveRallyHead, initCounter} from "../redux/entityDataReducer";
 import HtmlEditor from "./HtmlEditor";
 
 class AgendaItemForm extends Component {
@@ -19,14 +20,24 @@ class AgendaItemForm extends Component {
     }
 
     onChangeItem(key, val) {
-        if (key === 'nest') {
-            this.props.dispatch(moveRallyHead(this.props.index, val));
-        } else if (key === 'order') {
-            this.props.dispatch(moveRallyItem(this.props.index, val));
+        if (key === 'order') {
+            this.props.dispatch(moveRallyItem(this.props.index, parseInt(val)));
         } else {
-            let item = JSON.parse(JSON.stringify(this.props.item));
-            item[key] = val;
-            this.props.dispatch(updateRallyItem(item, this.props.index))
+            if (typeof this.props.item[key] === 'object' && this.props.item[key] !== null) {
+                try {
+                    if (val.length > 0) {
+                        val = JSON.parse(val);
+                    }
+                } catch (e) {
+                    return;
+                }
+            } else if (typeof this.props.item[key] === 'number') {
+                val = parseInt(val);
+            }
+            this.props.dispatch(updateRallyItem(key, val, this.props.index))
+            if (key === 'seconds' || key === 'nest') {
+                this.props.dispatch(initCounter());
+            }
         }
     }
 
@@ -46,7 +57,11 @@ class AgendaItemForm extends Component {
         const {classes} = this.props;
         return (
             <React.Fragment>
-                <IconButton size={'small'} variant={'outlined'} onClick={this.onToggle}><Create/></IconButton>
+                <div>
+                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('order', this.props.index - 1)} ><ExpandLess/></IconButton>
+                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('order', this.props.index + 1)} ><ExpandMore/></IconButton>
+                    <IconButton size={'small'} variant={'outlined'} onClick={this.onToggle}><Create/></IconButton>
+                </div>
                 <Popover
                     open={this.state.showing === true}
                     anchorEl={this.state.anchorEl}
@@ -66,19 +81,12 @@ class AgendaItemForm extends Component {
                         </div>
                         <TextField
                             name="nest"
-                            select
-                            label='Change Header'
+                            label='Header'
                             fullWidth={true}
                             className={classes.field}
-                            value={this.props.item.nest[0]}
+                            value={this.props.item.nest}
                             onChange={this.onChange}
-                        >
-                            {this.props.headers.map((option, i) => (
-                                <MenuItem key={'parents' + i} value={option.label}>
-                                    {option.label} <small>({option.count})</small>
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        />
 
                         <TextField name="title" label="Title" value={this.props.item.title} fullWidth={true} variant={'standard'} className={classes.field}
                                    onChange={this.onChange} />
@@ -86,13 +94,14 @@ class AgendaItemForm extends Component {
 
                         <div style={{display:'flex', justifyContent:'space-between'}}>
                             <TextField name="order" label="Item Order" type="number"
-                                       value={this.props.index + 1}
+                                       value={this.props.index}
                                        onChange={this.onChange}
                                        variant={'outlined'}
                                        className={classes.field}
                                        InputLabelProps={{
-                                           shrink: true,
+                                           shrink: true
                                        }} />
+
                             <TextField name="seconds" label="Seconds" type="number"
                                        value={this.props.item.seconds}
                                        onChange={this.onChange}

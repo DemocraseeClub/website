@@ -3,14 +3,23 @@ import { entityData } from '../redux/entityDataReducer';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Typography from "@material-ui/core/Typography";
+import PlanList from './PlanList';
 import ProgressLoading from "./ProgressLoading";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import {rallyStyles} from '../Util/ThemeUtils';
 import {withStyles} from "@material-ui/core/styles";
+import Create from "@material-ui/icons/Create";
+import ExportIcon from "@material-ui/icons/ImportExport";
+import Button from "@material-ui/core/Button";
 
-class RallyHome extends Component {
+class MeetingHome extends Component {
+
+    constructor(p) {
+        super(p);
+        this.state = {editMode:false};
+    }
 
     componentDidMount() {
         this.refresh();
@@ -69,9 +78,23 @@ class RallyHome extends Component {
                             </AvatarGroup>
                         </Grid>
 
+                        <Grid item>
+                            <Button startIcon={<Create />} fullWidth={true} variant={'contained'}
+                                    color={this.state.editMode ? 'primary' : 'secondary'}
+                                    onClick={e => this.setState({editMode:!this.state.editMode})} >Edit Mode</Button>
+                        </Grid>
+
                     </Grid>
 
-                    <h3>Rally Meetings...</h3>
+                    <PlanList classes={this.props.classes}
+                              dispatch={this.props.dispatch}
+                              editMode={this.state.editMode}
+                              rallyData={this.props.entity.apiData} />
+
+
+                    <div style={{marginTop:10}}>
+                        <Button onClick={e => console.log(this.props.entity.apiData)} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Meeting</Button>
+                    </div>
 
             </div>
         );
@@ -101,4 +124,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withRouter(withStyles(rallyStyles, {withTheme:true})(RallyHome)));
+)(withRouter(withStyles(rallyStyles, {withTheme:true})(MeetingHome)));

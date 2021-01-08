@@ -4,9 +4,12 @@ import {getIdbySegment} from './authActions';
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
 const ITEM_DATA_FAILURE = 'entity:ITEM_DATA_FAILURE';
 const ITEM_DATA_STARTED = 'entity:ITEM_DATA_STARTED';
-const UPDATE_RALLY_ITEM = 'entity:UPDATE_RALLY_ITEM';
-const MOVE_RALLY_ITEM = 'entity:MOVE_RALLY_ITEM';
-const MOVE_RALLY_HEAD = 'entity:MOVE_RALLY_HEAD';
+
+const UPDATE_RALLY_ITEM = 'rally:UPDATE_RALLY_ITEM';
+const MOVE_RALLY_ITEM = 'rally:MOVE_RALLY_ITEM';
+const MOVE_RALLY_HEAD = 'rally:MOVE_RALLY_HEAD';
+const ITEM_INIT_COUNTER = 'rally:ITEM_INIT_COUNTER';
+const COUNTDOWN_TIMER = 'rally:COUNTDOWN_TIMER';
 
 export const entityDataSuccess = apiData => ({
   type: ITEM_DATA_SUCCESS,
@@ -23,13 +26,14 @@ const entityDataFailure = error => ({
   error: error
 });
 
-export const updateRallyItem = (item, index) => ({
+export const updateRallyItem = (key, val, index) => ({
   type: UPDATE_RALLY_ITEM,
-  item: item,
+  key: key,
+  val:val,
   index:index
 });
 
-export const moveRallyItem = (to, from) => ({
+export const moveRallyItem = (from, to) => ({
   type: MOVE_RALLY_ITEM,
   to: to,
   from: from,
@@ -41,7 +45,14 @@ export const moveRallyHead = (to, from) => ({
   from: from,
 });
 
+export const initCounter = () => ({
+  type: ITEM_INIT_COUNTER
+});
 
+export const countDown = (index) => ({
+  type: COUNTDOWN_TIMER,
+  index:index
+});
 
 export const entityData = (url) => {
   return (dispatch, getState) => {
@@ -61,6 +72,9 @@ export const entityData = (url) => {
         dispatch(entityDataFailure(msg));
       } else {
         dispatch(entityDataSuccess(res.data));
+        if (res.data.type === 'rally') {
+          dispatch(initCounter());
+        }
         tdata.verb = 'view';
       }
 
@@ -98,16 +112,40 @@ export default function entityDataReducer(draft = initialState, action) {
       draft.loading = false;
       draft.error = action.error
       return draft;
+    case ITEM_INIT_COUNTER:
+      let total = 0;
+      let headers = {};
+      draft.apiData.lineItems.forEach((o, i) => {
+        total += o.seconds
+        o.countdown = o.seconds;
+        if (typeof headers[o.nest] === 'undefined') headers[o.nest] = {label:o.nest, order:Object.values(headers).length, count:0};
+        headers[o.nest].count++;
+      });
+      draft.apiData.countRemains = total;
+      draft.apiData.countScheduled = total;
+      draft.apiData.headers = Object.values(headers);
+      return draft;
     case UPDATE_RALLY_ITEM:
-      draft.apiData.lineItems[action.index] = action.item;
+      draft.apiData.lineItems[action.index][action.key] = action.val;
       return draft;
     case MOVE_RALLY_ITEM:
+      if (!draft.apiData.lineItems[action.to]) return draft;
       let element = draft.apiData.lineItems[action.from];
       draft.apiData.lineItems.splice(action.from, 1);
+      element.nest = draft.apiData.lineItems[action.to].nest;
       draft.apiData.lineItems.splice(action.to, 0, element);
       return draft;
     case MOVE_RALLY_HEAD:
       console.log("TODO: move head", action);
+      return draft;
+    case COUNTDOWN_TIMER:
+      let curStep = draft.apiData.lineItems[action.index];
+      if (typeof curStep.countdown !== 'number') {
+        curStep.countdown = curStep.seconds;
+      } else {
+        curStep.countdown = curStep.countdown - 1;
+      }
+      --draft.apiData.countRemains;
       return draft;
     default:
       return draft;

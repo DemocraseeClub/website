@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Topics from "./views/Topics";
 import Resources from "./views/Resources";
 import RallyHome from "./components/RallyHome";
+import MeetingHome from "./components/MeetingHome";
 
 function App() {
     return (
@@ -31,7 +32,7 @@ function App() {
                         <Route path="/form/city/create"><City/></Route>
                         <Route path="/form/city/:cid/update"><City/></Route>
 
-                        <Route path="/rally/:rid/meeting/:mid"><RallyHome /></Route>
+                        <Route path="/rally/:rid/meeting/:mid"><MeetingHome /></Route>
                         <Route path="/rally/:rid"><RallyHome /></Route>
                         <Route path="/form/rally/create"><RallyHome /></Route>
                         <Route path="/form/rally/:rid/update"><RallyHome /></Route>
