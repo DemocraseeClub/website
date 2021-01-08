@@ -34,9 +34,11 @@ class AgendaItemForm extends Component {
             } else if (typeof this.props.item[key] === 'number') {
                 val = parseInt(val);
             }
-            this.props.dispatch(updateRallyItem(key, val, this.props.index))
-            if (key === 'seconds' || key === 'nest') {
-                this.props.dispatch(initCounter());
+            if (val !== this.props.item[key]) {
+                this.props.dispatch(updateRallyItem(key, val, this.props.index))
+                if (key === 'seconds' || key === 'nest') {
+                    this.props.dispatch(initCounter());
+                }
             }
         }
     }
@@ -77,47 +79,43 @@ class AgendaItemForm extends Component {
                 >
                     <div className={classes.popPadding}>
                         <div style={{textAlign: 'right'}}>
-                            <IconButton onClick={this.onToggle}><CloseIcon/></IconButton>
+                            <IconButton color={'primary'} size={'small'} onClick={this.onToggle}><CloseIcon/></IconButton>
                         </div>
                         <TextField
                             name="nest"
                             label='Header'
                             fullWidth={true}
+                            variant={'outlined'}
                             className={classes.field}
                             value={this.props.item.nest}
                             onChange={this.onChange}
                         />
 
                         <TextField name="title" label="Title" value={this.props.item.title} fullWidth={true} variant={'standard'} className={classes.field}
+                                   variant={'outlined'}
                                    onChange={this.onChange} />
 
+                        <TextField name="seconds" label="Seconds" type="number"
+                                   value={this.props.item.seconds}
+                                   onChange={this.onChange}
+                                   variant={'outlined'}
+                                   fullWidth={true}
+                                   className={classes.field}
+                                   InputLabelProps={{
+                                       shrink: true,
+                                   }} />
 
-                        <div style={{display:'flex', justifyContent:'space-between'}}>
-                            <TextField name="order" label="Item Order" type="number"
-                                       value={this.props.index}
-                                       onChange={this.onChange}
-                                       variant={'outlined'}
-                                       className={classes.field}
-                                       InputLabelProps={{
-                                           shrink: true
-                                       }} />
-
-                            <TextField name="seconds" label="Seconds" type="number"
-                                       value={this.props.item.seconds}
-                                       onChange={this.onChange}
-                                       variant={'outlined'}
-                                       className={classes.field}
-                                       InputLabelProps={{
-                                           shrink: true,
-                                       }} />
-                        </div>
-
-                        <HtmlEditor label={"Content"} onChange={val => this.onChangeItem('html', val)} html={this.props.item.html} multiline rowsMax={4} />
+                        <HtmlEditor label={"Content"}
+                                    onChange={val => this.onChangeItem('html', val)} html={this.props.item.html} multiline rowsMax={4}
+                                    helperText={"Accepts limited HTML"}
+                                    />
 
                         <TextField name="outline" label="Outline"
+                                   helperText={'Accepts JSON of strings and arrays.'}
                                    value={JSON.stringify(this.props.item.outline)}
                                    onChange={this.onChange}
                                    variant={'outlined'}
+                                   style={{marginTop:20}}
                                    className={classes.field}
                                    fullWidth={true} multiline rowsMax={4}/>
 

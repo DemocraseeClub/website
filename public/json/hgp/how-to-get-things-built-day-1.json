@@ -36,7 +36,7 @@
           "Apache"
         ],
         "Deployment",
-        ["Heroku", "Google Cloud Platform", "AWS"],
+        ["Heroku / Firebase", "Google Cloud Platform / AWS", "GoDaddy / Ionos"],
         "Mobile",
         [
           "React Native",
@@ -44,14 +44,15 @@
           "native platform SDKs"
         ]
       ],
-      "seconds": 900
+      "seconds": 3300
     },
     {
       "title":"Cost and Availability Comparison",
       "nest": "Picking your Technology Stack",
       "outline": [
-        "Search Upwork.com and identify 10 hourly rates for junior, mid, and senior developers in languages of interest.",
-        "Note how many total developers claim experience with a language or stack"
+        "Searching Upwork.com:",
+        ["Identify hourly rate ranges for junior, mid, and senior developers in your languages of interest.",
+        "Identify total pool of developers who claim experience with a language or stack"]
       ],
       "seconds": 900
     },
@@ -115,7 +116,7 @@
       "nest": "Managing & Tracking Tasks",
       "outline": [
         "Github Issues, Jira, Trillo, Bugzilla, ...",
-        "Markdown.md"
+        "[Markdown.md](https://guides.github.com/features/mastering-markdown)"
       ],
       "seconds": 900
     },
