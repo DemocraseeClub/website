@@ -3,7 +3,6 @@ import { entityData } from '../redux/entityDataReducer';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Typography from "@material-ui/core/Typography";
-import PlanList from './PlanList';
 import ProgressLoading from "./ProgressLoading";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -72,9 +71,7 @@ class RallyHome extends Component {
 
                     </Grid>
 
-                    <PlanList classes={this.props.classes}
-                              dispatch={this.props.dispatch}
-                              rallyData={this.props.entity.apiData} />
+                    <h3>Rally Meetings...</h3>
 
             </div>
         );

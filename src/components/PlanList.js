@@ -28,6 +28,7 @@ import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
 import AgendaHeader from "./AgendaHeader";
 import HtmlEditor from "./HtmlEditor";
+import ExportIcon from "@material-ui/icons/ImportExport";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -91,6 +92,7 @@ QontoStepIcon.defaultProps = {
 }
 
 const formatSeconds = (sec, len) => {
+    if (!Number(sec)) sec = 0;
     let date = new Date(null);
     date.setSeconds(sec); // specify value of SECONDS
     let time = date.toISOString().substr(11, 8);
@@ -105,9 +107,6 @@ class PlanList extends React.Component {
         super(p);
         this.state = {
             activeStep: -1,
-            countRemains: 0,
-            countScheduled: 0,
-            countStep: 0,
             showAll: false,
             running: false,
             headers:[],
@@ -118,22 +117,6 @@ class PlanList extends React.Component {
 
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
-    }
-
-    componentDidMount() {
-        this.initCounter();
-    }
-
-    initCounter() {
-        let total = 0;
-        let headers = {};
-        this.props.rallyData.lineItems.forEach((o, i) => {
-            total += o.seconds
-            o.countdown = o.seconds;
-            if (typeof headers[o.nest[0]] === 'undefined') headers[o.nest[0]] = {label:o.nest[0], order:Object.values(headers).length, count:0};
-            headers[o.nest[0]].count++;
-        });
-        this.setState({countRemains:total, countScheduled:total, headers:Object.values(headers)});
     }
 
     handleNext = () => {
@@ -154,24 +137,16 @@ class PlanList extends React.Component {
         } else if (this.state.running === false) {
             this.setState({running: true}, this.runTimers)
         } else {
-
-            let totSec = this.state.countRemains - 1;
-            if (totSec === 0) {
+            if (this.props.rallyData.countRemains === 0) {
                 this.stopTimers();
                 return 'rally complete';
             }
-            let curStep = this.props.rallyData.lineItems[this.state.activeStep];
-            if (typeof curStep.countdown !== 'number') {
-                curStep.countdown = curStep.seconds;
-            } else {
-                curStep.countdown = curStep.countdown - 1;
+            if (this.state.activeStep < this.props.rallyData.lineItems.length - 1) {
+                if (this.props.rallyData.lineItems[this.state.activeStep].countdown === 0) {
+                    this.handleNext();
+                }
             }
 
-            let st = {countRemains: totSec, countStep:curStep.countdown};
-            if (curStep.countdown === 0) {
-                st.activeStep = this.state.activeStep + 1;
-            }
-            this.setState(st)
             setTimeout(this.runTimers, 1000);
         }
     }
@@ -187,6 +162,8 @@ class PlanList extends React.Component {
     }
 
     renderOutline(outline, indent) {
+        if (typeof outline === 'string') { return outline; }
+
         return outline.map((v, i) => {
             if (typeof v === 'string') {
                 let padLeft = 30 * indent;
@@ -198,7 +175,7 @@ class PlanList extends React.Component {
     }
 
     render() {
-        if (!this.props.rallyData) return 'loading agenda...'
+        if (!this.props.rallyData || !this.props.rallyData.headers) return 'loading agenda...'
 
         const {classes} = this.props;
         const {activeStep} = this.state;
@@ -215,9 +192,9 @@ class PlanList extends React.Component {
                             </div>
 
                             <Typography variant='h6' >
-                                <Typography variant='inherit' color={'error'}> {formatSeconds(this.state.countRemains)} </Typography>
+                                <Typography variant='inherit' color={'error'}> {formatSeconds(this.props.rallyData.countRemains)} </Typography>
                                 /
-                                <Typography variant='inherit' > {formatSeconds(this.state.countScheduled)}</Typography>
+                                <Typography variant='inherit' > {formatSeconds(this.props.rallyData.countScheduled)}</Typography>
                             </Typography>
 
                             {this.state.showAll === true ?
@@ -244,16 +221,16 @@ class PlanList extends React.Component {
 
                 { this.state.videoOpen === true ? <div style={{position:'absolute', width:'100%', right:0}}> <MediaRecorder /></div> : null}
 
-                <div>
+                <div className='agendaList'>
                     <Stepper activeStep={activeStep} orientation="vertical" >
                     {this.props.rallyData.lineItems.map((curItem, index) => {
                             let parent = null;
                             if (curItem.nest.length > 0) {
-                                if (typeof nesting[curItem.nest[0]] === 'undefined') {
-                                    nesting[curItem.nest[0]] = true;
-                                    let header = this.state.headers.find(h => h.label === curItem.nest[0]);
+                                if (typeof nesting[curItem.nest] === 'undefined') {
+                                    nesting[curItem.nest] = true;
+                                    let header = this.props.rallyData.headers.find(h => h.label === curItem.nest);
                                     if (header) {
-                                        parent = <AgendaHeader header={header} classes={classes} />;
+                                        parent = <AgendaHeader editMode={this.props.editMode} header={header} classes={classes} />;
                                     }
                                 }
                             }
@@ -268,13 +245,21 @@ class PlanList extends React.Component {
                                             <div className={classes.stepLabel} >
                                                 <Typography className={classes.stepLabelText} variant={'h5'}>
                                                     {curItem.title}</Typography>
-                                                <AgendaItemForm item={curItem} index={index} headers={this.state.headers} classes={classes} dispatch={this.props.dispatch} />
+
+                                                {this.props.editMode === true
+                                                    ?
+                                                    <AgendaItemForm item={curItem}
+                                                                    index={index}
+                                                                    headers={this.props.rallyData.headers} classes={classes} dispatch={this.props.dispatch} />
+                                                                    :
+                                                    null
+                                                }
+
                                             </div>
 
                                         </StepLabel>
                                         <StepContent className={classes.stepContent}>
-                                            <div >
-                                                <Grid container justify={'space-between'} >
+                                                <Grid container justify={'space-between'} spacing={1} >
                                                     <Grid item xs={12} sm={7} style={{fontSize:20}}>
                                                         {curItem.html ?
                                                             <SanitizedHTML allowedTags={Config.allowedTags}
@@ -286,7 +271,7 @@ class PlanList extends React.Component {
                                                         this.renderOutline(curItem.outline, 1) : null
                                                     }
                                                     </Grid>
-                                                    <Grid item xs={12} sm={5} spacing={1}>
+                                                    <Grid item xs={12} sm={5} >
 
                                                         <HtmlEditor
                                                             label="Notes"
@@ -319,7 +304,6 @@ class PlanList extends React.Component {
                                                         }
                                                     </Grid>
                                                 </Grid>
-                                            </div>
                                         </StepContent>
                                     </Step>
 
@@ -330,17 +314,18 @@ class PlanList extends React.Component {
 
                 {activeStep === this.props.rallyData.lineItems.length && (
                     <Paper square elevation={0} className={classes.resetContainer}>
-                        <Typography>All steps completed - you&apos;re finished</Typography>
                         <Button onClick={this.handleReset} className={classes.button}>
-                            Reset
-                        </Button>
-                        <Button onClick={this.handleSubmit} className={classes.button}>
-                            Handle Submit
+                            Reset Clock
                         </Button>
                     </Paper>
                 )}
 
                 </div>
+
+                <div style={{marginTop:40}}>
+                    <Button onClick={e => console.log(this.state.notes)} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Notes</Button>
+                </div>
+
             </div>
         );
     }
