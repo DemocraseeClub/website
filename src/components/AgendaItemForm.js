@@ -7,7 +7,7 @@ import Create from "@material-ui/icons/Create";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import {updateRallyItem, moveRallyItem, moveRallyHead, initCounter} from "../redux/entityDataReducer";
+import {updateRallyItem, moveRallyItem, initCounter} from "../redux/entityDataReducer";
 import HtmlEditor from "./HtmlEditor";
 
 class AgendaItemForm extends Component {

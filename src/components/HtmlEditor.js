@@ -19,6 +19,8 @@ import {stateToHTML} from 'draft-js-export-html';
 import editorStyles from '../theme/editorStyles.css';
 import createAlignmentPlugin from 'draft-js-alignment-plugin';
 import InsertPhoto from '@material-ui/icons/InsertPhoto';
+import Button from "@material-ui/core/Button";
+
 export default class HtmlEditor extends Component {
 
     constructor(p) {
@@ -54,7 +56,7 @@ export default class HtmlEditor extends Component {
                 OrderedListButton,
                 BlockquoteButton,
                 linkPlugin.LinkButton,
-                InsertPhoto
+                imagePlugin.addImage
             ]
         };
         const toolbarPlugin = (p.toolbar === 'inline') ? createInlineToolbarPlugin(config) : createToolbarPlugin(config);
@@ -96,7 +98,6 @@ export default class HtmlEditor extends Component {
                     <InlineToolbar className='editorToolbar'>
                         {
                             (externalProps) => {
-                                console.log(externalProps);
                                 return (<React.Fragment>
                                     <BoldButton {...externalProps} />
                                     <ItalicButton {...externalProps} />
@@ -106,12 +107,16 @@ export default class HtmlEditor extends Component {
                                     <OrderedListButton {...externalProps} />
                                     <BlockquoteButton {...externalProps} />
                                     <LinkButton {...externalProps} />
-                                    <InsertPhoto {...externalProps} editorState={this.state.editorState}
-                                                 onChange={this.onChange} modifier={AddImage} />
+                                    <InsertPhoto {...externalProps} />
                                 </React.Fragment>)
                             }
                         }
                     </InlineToolbar>
+                    <Button
+                        editorState={this.state.editorState}
+                        onChange={this.onChange}
+                        modifier={AddImage}
+                    >Add Image</Button>
                 </div>
             </fieldset>
         );
