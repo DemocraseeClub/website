@@ -3,7 +3,7 @@
     box-sizing: border-box;
     border: 1px solid #ddd;
     cursor: text;
-    padding: 10px 10px 0 10px;
+    padding: 5px;
     border-radius:5px;
 }
 
@@ -18,6 +18,7 @@
 
 .editor :global(.public-DraftEditor-content) {
     display: block;
+    min-height: 140px;
 }
 
 .headlineButtonWrapper, .draftJsToolbar__buttonWrapper__1Dmqh, .toolBtn {
@@ -29,30 +30,16 @@
 .headlineButtonWrapper button,
 .draftJsToolbar__buttonWrapper__1Dmqh button,
 .toolBtn button {
-    border:1px solid #ccc;
-    background: #fff;
-    line-height: 26px;
-}
-
-.headlineButton {
-    background: #fbfbfb;
-    color: #888;
-    font-size: 18px;
-    border: 0;
-    padding-top: 6px;
-    vertical-align: bottom;
-    height: 36px;
-    width: 36px;
-    display: inline-block;
-}
-
-.headlineButton:hover,
-.headlineButton:focus {
-    background: #f3f3f3;
+    background: transparent;
+    border:0 none;
 }
 
 .editorToolbar {
     display: flex;
     justify-content: center;
     flex-direction: row;
+}
+
+.buttonWrapper {
+    display: inline-block;
 }

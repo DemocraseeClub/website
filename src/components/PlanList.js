@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SanitizedHTML from 'react-sanitized-html';
-import ReactMarkdown from 'react-markdown'
 import PropTypes from 'prop-types';
 import Check from '@material-ui/icons/CheckBox';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
@@ -291,7 +290,7 @@ class PlanList extends React.Component {
 
                                                         <HtmlEditor
                                                             label="Notes"
-                                                            toolbar={'inline'}
+                                                            toolbar={'static'}
                                                             style={{width:'100%'}}
                                                             variant={'outlined'}
                                                             rows={3}

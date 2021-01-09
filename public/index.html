@@ -42,7 +42,7 @@
             appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
             measurementId: "G-XYVYDC8L1N"
         });
-        firebase.analytics();
+        window.logUse = firebase.analytics();
     } else {
         window.logUse = {
             logEvent: (e, d) => console.log('FB LOG ' + e, d),
