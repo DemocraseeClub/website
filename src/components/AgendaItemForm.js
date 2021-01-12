@@ -49,7 +49,7 @@ class AgendaItemForm extends Component {
 
     onToggle(e) {
         let obj = {showing: !this.state.showing};
-        if (e.currentTarget) {
+        if (e && e.currentTarget) {
             obj.anchorEl = e.currentTarget;
         }
         this.setState(obj);

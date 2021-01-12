@@ -85,9 +85,9 @@ export const rallyStyles = theme => ({
         borderBottom:'1px solid #ccc'
     },
     topLevelLabel : {
-        backgroundColor:theme.palette.primary.main,
-        color:theme.palette.primary.contrastText,
+        color:theme.palette.primary.main,
         display:'flex',
+        boxShadow:'1px 1px 3px 2px #e6e6e6',
         justifyContent:'space-between',
         alignContent:'center',
         textAlign:'left',
