@@ -13,6 +13,7 @@ import {withStyles} from "@material-ui/core/styles";
 import Create from "@material-ui/icons/Create";
 import ExportIcon from "@material-ui/icons/ImportExport";
 import Button from "@material-ui/core/Button";
+import {withSnackbar} from "notistack";
 
 class MeetingHome extends Component {
 
@@ -93,7 +94,10 @@ class MeetingHome extends Component {
 
 
                     <div style={{marginTop:10}}>
-                        <Button onClick={e => console.log(this.props.entity.apiData)} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Meeting</Button>
+                        <Button onClick={e => {
+                            console.log(this.props.entity.apiData)
+                            this.props.enqueueSnackbar('For now, e-mail eli the JSON printed to your console in Developer Tools');
+                        }} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Meeting</Button>
                     </div>
 
             </div>
@@ -124,4 +128,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withRouter(withStyles(rallyStyles, {withTheme:true})(MeetingHome)));
+)(withRouter(withStyles(rallyStyles, {withTheme:true})(withSnackbar(MeetingHome))));

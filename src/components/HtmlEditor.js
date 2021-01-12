@@ -1,25 +1,29 @@
 /* eslint-disable react/no-multi-comp */
 import React, {Component} from 'react';
 import {ContentState, EditorState, convertFromHTML} from 'draft-js';
-import Editor, {createEditorStateWithText, composeDecorators} from 'draft-js-plugins-editor';
-import {
-    ItalicButton,
-    BoldButton,
-    UnderlineButton,
-    CodeButton,
-    UnorderedListButton,
-    OrderedListButton,
-    BlockquoteButton
-} from 'draft-js-buttons';
-import createLinkPlugin from 'draft-js-anchor-plugin';
-import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
-import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
-import createImagePlugin from 'draft-js-image-plugin';
+import Editor, {createEditorStateWithText, composeDecorators} from '@draft-js-plugins/editor';
+
+import createLinkPlugin from '@draft-js-plugins/anchor';
+import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
+import createImagePlugin from '@draft-js-plugins/image';
+import createFocusPlugin from '@draft-js-plugins/focus';
+import createAlignmentPlugin from '@draft-js-plugins/alignment';
+import createVideoPlugin from '@draft-js-plugins/video';
+import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
+import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
+import createResizeablePlugin from '@draft-js-plugins/resizeable';
+import {ItalicButton, BoldButton, UnderlineButton, CodeButton, UnorderedListButton, OrderedListButton, BlockquoteButton} from '@draft-js-plugins/buttons';
 import {stateToHTML} from 'draft-js-export-html';
-import editorStyles from '../theme/editorStyles.css';
-import createAlignmentPlugin from 'draft-js-alignment-plugin';
-import InsertPhoto from '@material-ui/icons/InsertPhoto';
-import Button from "@material-ui/core/Button";
+
+import '@draft-js-plugins/static-toolbar/lib/plugin.css';
+import '@draft-js-plugins/anchor/lib/plugin.css';
+import '@draft-js-plugins/alignment/lib/plugin.css';
+
+import '@draft-js-plugins/image/lib/plugin.css';
+
+import editorStyles from '../theme/editorStyles.module.css';
+import ImageForm from "./ImageForm";
+import MockUpload from "./MockUpload";
 
 export default class HtmlEditor extends Component {
 
@@ -35,38 +39,51 @@ export default class HtmlEditor extends Component {
             };
         }
 
+        const resizeablePlugin = createResizeablePlugin();
         const alignmentPlugin = createAlignmentPlugin();
+        const focusPlugin = createFocusPlugin();
+        const blockDndPlugin = createBlockDndPlugin();
+
         const linkPlugin = createLinkPlugin({placeholder: 'https://…'});
 
-        const decorator = composeDecorators(
-            // resizeablePlugin.decorator,
+        const decorators = composeDecorators(
+            resizeablePlugin.decorator,
             alignmentPlugin.decorator,
-            // focusPlugin.decorator,
-            // blockDndPlugin.decorator
+            focusPlugin.decorator,
+            blockDndPlugin.decorator
         );
-        const imagePlugin = createImagePlugin({ decorator });
+        const videoPlugin = createVideoPlugin(decorators);
+        const imagePlugin = createImagePlugin(decorators);
+        const toolbarPlugin = createToolbarPlugin();
 
-        const config = {
-            structure: [
-                ItalicButton,
-                BoldButton,
-                UnderlineButton,
-                CodeButton,
-                UnorderedListButton,
-                OrderedListButton,
-                BlockquoteButton,
-                linkPlugin.LinkButton,
-                imagePlugin.addImage
-            ]
-        };
-        const toolbarPlugin = (p.toolbar === 'inline') ? createInlineToolbarPlugin(config) : createToolbarPlugin(config);
+        const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
+            handleUpload: MockUpload,
+            addImage: imagePlugin.addImage,
+        });
+
         this.PluginComponents = {
-            InlineToolbar:  (p.toolbar === 'inline') ? toolbarPlugin.InlineToolbar : toolbarPlugin.Toolbar,
+            Toolbar:  toolbarPlugin.Toolbar,
             LinkButton : linkPlugin.LinkButton,
             AddImage : imagePlugin.addImage,
             AlignmentTool : alignmentPlugin.AlignmentTool
         };
-        this.plugins = [toolbarPlugin, linkPlugin, alignmentPlugin, imagePlugin];
+
+        this.plugins = [
+            toolbarPlugin,
+            linkPlugin,
+            alignmentPlugin,
+            focusPlugin,
+            resizeablePlugin,
+
+            dragNDropFileUploadPlugin,
+            blockDndPlugin,
+
+            imagePlugin,
+            videoPlugin
+        ];
+        this.editor = null;
+
+        this.onFocus = this.onFocus.bind(this);
     }
 
     onChange = (editorState) => {
@@ -75,27 +92,37 @@ export default class HtmlEditor extends Component {
         this.props.onChange(html);
     };
 
-    focus = () => {
-        this.editor.focus();
+    onFocus = (e) => {
+        if (e.target.className === 'DraftEditor-root') {
+            this.editor.focus();
+        }
     };
 
+    /* setEditorState(insertImage(data.file)) //created below
+    insertImage( url ) {
+        const contentState = this.state.editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: url })
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set( this.state.editorState, { currentContent: contentStateWithEntity });
+        this.onChange(AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, '')) // Update the editor state
+    };
+     */
+
     render() {
-        const { InlineToolbar, LinkButton, AddImage } = this.PluginComponents;
+        const { Toolbar, LinkButton, AddImage, AlignmentTool } = this.PluginComponents;
         return (
-            <fieldset className="editor MuiOutlinedInput-notchedOutline">
+            <fieldset className={editorStyles.editor} >
                 <legend>
                     <span>{this.props.label}</span>
                 </legend>
-                <div onClick={this.focus} >
+                <div onClick={this.onFocus} >
                     <Editor
                         editorState={this.state.editorState}
                         onChange={this.onChange}
                         plugins={this.plugins}
-                        ref={(element) => {
-                            this.editor = element;
-                        }}
+                        ref={(element) => { this.editor = element; }}
                     />
-                    <InlineToolbar className='editorToolbar'>
+                    <Toolbar className={editorStyles.editorToolbar}>
                         {
                             (externalProps) => {
                                 return (<React.Fragment>
@@ -107,16 +134,16 @@ export default class HtmlEditor extends Component {
                                     <OrderedListButton {...externalProps} />
                                     <BlockquoteButton {...externalProps} />
                                     <LinkButton {...externalProps} />
-                                    <InsertPhoto {...externalProps} />
+                                    <ImageForm
+                                        editorState={this.state.editorState}
+                                        onChange={this.onChange}
+                                        modifier={AddImage}
+                                    />
+                                    <AlignmentTool {...externalProps} />
                                 </React.Fragment>)
                             }
                         }
-                    </InlineToolbar>
-                    <Button
-                        editorState={this.state.editorState}
-                        onChange={this.onChange}
-                        modifier={AddImage}
-                    >Add Image</Button>
+                    </Toolbar>
                 </div>
             </fieldset>
         );

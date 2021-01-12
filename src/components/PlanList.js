@@ -18,7 +18,7 @@ import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
 import VideoCall from '@material-ui/icons/VideoCall';
 import VideoCamOff from '@material-ui/icons/VideocamOff';
-
+import { withSnackbar } from 'notistack';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MediaRecorder from "./MediaRecorder";
@@ -26,8 +26,8 @@ import Config from '../Config';
 
 import AgendaItemForm from "./AgendaItemForm";
 import AgendaHeader from "./AgendaHeader";
-import HtmlEditor from "./HtmlEditor";
 import ExportIcon from "@material-ui/icons/ImportExport";
+import HtmlEditor from "./HtmlEditor";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -338,7 +338,10 @@ class PlanList extends React.Component {
                 </div>
 
                 <div style={{marginTop:40}}>
-                    <Button onClick={e => console.log(this.state.notes)} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Notes</Button>
+                    <Button onClick={e => {
+                        console.log(this.state.notes);
+                        this.props.enqueueSnackbar('Copy from your console in Developer Tools');
+                    }} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Notes</Button>
                 </div>
 
             </div>
@@ -348,4 +351,4 @@ class PlanList extends React.Component {
 }
 
 
-export default PlanList;
+export default withSnackbar(PlanList);
