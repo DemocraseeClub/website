@@ -162,10 +162,10 @@ class AgendaItem extends React.Component {
                                     allowedAttributes={Config.allowedAttributes}
                                     html={curItem.html} /> : null}
 
-                            {(curItem.outline) ? this.renderOutline(curItem.outline, 0) : null}
+                            { (curItem.outline) ? this.renderOutline(curItem.outline, 0) : null }
 
                             {(activeStep === index) ?
-                                    <div className={classes.actionsContainer}>
+                                    <div className={classes.actionsContainer} >
                                         {activeStep > 0 ?
                                             <Button size="small" onClick={this.props.handleBack}
                                                     className={classes.button}>Back</Button> : null
@@ -176,7 +176,7 @@ class AgendaItem extends React.Component {
                                             size="small"
                                             endIcon={<Check/>}
                                             onClick={this.props.handleNext}
-                                            className={classes.button}>
+                                            className={classes.button} >
                                             Done
                                         </Button>
                                     </div> : null
@@ -195,30 +195,30 @@ class AgendaItem extends React.Component {
                                 className={this.state.showNotes.length > 0 ? classes.tabsHorz : classes.tabsVert}
                                 classes={{flexContainer:classes.spaceAround}}
                             >
-                                <Tab icon={<img src={'/images/Google_Sheets_logo.png'} />} classes={{root:classes.tabsIcon}}  />
+                                <Tab icon={<img src={'/images/Google_Sheets_logo.png'} />} classes={{root:classes.tabsIcon}} />
                                 <Tab icon={<img src={'/images/Google_Docs_logo.png'} />} classes={{root:classes.tabsIcon}} />
-                                <Tab icon={<SpeakerNotes/>}  classes={{root:classes.tabsIcon}} />
+                                <Tab icon={<SpeakerNotes/>} classes={{root:classes.tabsIcon}} />
                             </Tabs>
 
                             <TabPanel value={this.state.showNotes} index={'gsheets'}>
                                     <iframe
-                                        src='https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing&minimal=true'
-                                        width={'100%'} height={'250'} seamless />
+                                        src='https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing&rm=minimal'
+                                        width={'100%'} height={'450'} seamless />
                             </TabPanel>
                             <TabPanel value={this.state.showNotes} index={'gdocs'}>
                                     <iframe
-                                        src='https://docs.google.com/document/d/1hRQ8W8X2pHuaKXXVVlF0H4RcGHF_5YOBbRob6lOLTqk/edit?usp=sharing&minimal=true'
-                                        width={'100%'} height={'250'} seamless/>
+                                        src='https://docs.google.com/document/d/1hRQ8W8X2pHuaKXXVVlF0H4RcGHF_5YOBbRob6lOLTqk/edit?usp=sharing&rm=minimal'
+                                        width={'100%'} height={'450'} seamless />
                             </TabPanel>
                             <TabPanel value={this.state.showNotes} index={'private'}>
                                     <HtmlEditor
-                                        label="Shared Notes"
+                                        label="Private Notes"
                                         toolbar={'static'}
                                         style={{width: '100%'}}
                                         variant={'outlined'}
                                         rows={3}
-                                        html={this.state.notes[index] ? this.state.notes[index].shared : ''}
-                                        onChange={val => this.handleNote(val, index, 'shared')}
+                                        html={this.state.notes.private}
+                                        onChange={val => this.handleNote(val, 'private')}
                                     />
                             </TabPanel>
                         </Grid>

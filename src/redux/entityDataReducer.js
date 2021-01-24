@@ -126,7 +126,13 @@ export default function entityDataReducer(draft = initialState, action) {
       draft.apiData.headers = Object.values(headers);
       return draft;
     case UPDATE_RALLY_ITEM:
-      draft.apiData.lineItems[action.index][action.key] = action.val;
+      if (action.key === 'delete') {
+        draft.apiData.lineItems.splice(action.index, 1);
+      } else if (action.key === 'clone') {
+        draft.apiData.lineItems.splice(action.index, 0, draft.apiData.lineItems[action.index]);
+      } else {
+        draft.apiData.lineItems[action.index][action.key] = action.val;
+      }
       return draft;
     case MOVE_RALLY_ITEM:
       if (!draft.apiData.lineItems[action.to]) return draft;

@@ -22,7 +22,9 @@ class AgendaItemForm extends Component {
     }
 
     onChangeItem(key, val) {
-        if (key === 'order') {
+        if (key === 'delete' || key === 'clone') {
+            this.props.dispatch(updateRallyItem(key, val, this.props.index));
+        } else if (key === 'order') {
             this.props.dispatch(moveRallyItem(this.props.index, parseInt(val)));
         } else {
             if (typeof this.props.item[key] === 'object' && this.props.item[key] !== null) {

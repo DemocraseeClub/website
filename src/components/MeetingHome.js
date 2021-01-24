@@ -19,7 +19,7 @@ class MeetingHome extends Component {
 
     constructor(p) {
         super(p);
-        this.state = {editMode:false};
+        this.state = {editMode:true};
     }
 
     componentDidMount() {
