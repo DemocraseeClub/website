@@ -1,16 +1,22 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-
+import Box from '@material-ui/core/Box';
+import {NavLink} from "react-router-dom";
 
 class Rallies extends React.Component {
 
     render() {
         const {classes} = this.props;
         return (
-            <Paper className={classes.root}>
-                <p>Rallies</p>
-            </Paper>
+            <Box m={4} >
+                <Box mb={4} >
+                    <p>Upcoming Rallies</p>
+                    <p>coming soon...</p>
+                </Box>
+                <Box mt={4} >
+                    <NavLink to={'/rally/templates'}>Rally Templates</NavLink>
+                </Box>
+            </Box>
         );
     }
 

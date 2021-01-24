@@ -4,6 +4,8 @@ private.txt
 .firebase
 .idea
 
+src/Draftail
+
 # dependencies
 /node_modules
 /.pnp

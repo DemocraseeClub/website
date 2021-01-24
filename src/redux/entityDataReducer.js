@@ -137,6 +137,7 @@ export default function entityDataReducer(draft = initialState, action) {
     case MOVE_RALLY_ITEM:
       if (!draft.apiData.lineItems[action.to]) return draft;
       let element = draft.apiData.lineItems[action.from];
+      if (!element) return draft;
       draft.apiData.lineItems.splice(action.from, 1);
       element.nest = draft.apiData.lineItems[action.to].nest;
       draft.apiData.lineItems.splice(action.to, 0, element);
