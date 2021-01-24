@@ -18,7 +18,6 @@ import {stateToHTML} from 'draft-js-export-html';
 import '@draft-js-plugins/static-toolbar/lib/plugin.css';
 import '@draft-js-plugins/anchor/lib/plugin.css';
 import '@draft-js-plugins/alignment/lib/plugin.css';
-
 import '@draft-js-plugins/image/lib/plugin.css';
 
 import editorStyles from '../theme/editorStyles.module.css';
@@ -44,7 +43,7 @@ export default class HtmlEditor extends Component {
         const focusPlugin = createFocusPlugin();
         const blockDndPlugin = createBlockDndPlugin();
 
-        const linkPlugin = createLinkPlugin({placeholder: 'https://…'});
+        const linkPlugin = createLinkPlugin({placeholder: 'https://…', linkTarget: '_blank'});
 
         const decorators = composeDecorators(
             resizeablePlugin.decorator,
@@ -65,6 +64,7 @@ export default class HtmlEditor extends Component {
             Toolbar:  toolbarPlugin.Toolbar,
             LinkButton : linkPlugin.LinkButton,
             AddImage : imagePlugin.addImage,
+            AddVideo : videoPlugin.addVideo,
             AlignmentTool : alignmentPlugin.AlignmentTool
         };
 
@@ -86,9 +86,58 @@ export default class HtmlEditor extends Component {
         this.onFocus = this.onFocus.bind(this);
     }
 
+    getYtId(url){
+        url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        return (url[2] !== undefined) ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
+    }
+
     onChange = (editorState) => {
         this.setState({editorState});
-        var html = stateToHTML(editorState.getCurrentContent());
+        let options = {
+            entityStyleFn: (entity) => {
+                const entityType = entity.get('type').toLowerCase();
+                /* if (entityType === 'link') {
+                    const data = entity.getData();
+                    return {
+                        element: 'a',
+                        attributes: {
+                            href: data.href,
+                            target:'_blank'
+                        },
+                    };
+                } else */ if (entityType === 'image') {
+                    const data = entity.getData();
+                    return {
+                        element: 'img',
+                        attributes: {
+                            src: data.src
+                        },
+                        style: {
+                            width:'100%'
+                        },
+                    };
+                } else if (entityType === 'draft-js-video-plugin-video') {
+                    const data = entity.getData();
+                    if (data.src.indexOf('youtube.com')) {
+                        return {
+                            element: 'iframe',
+                            attributes: {
+                                src: "https://www.youtube.com/embed/"+ this.getYtId(data.src)
+                            },
+                        };
+                    } else {
+                        return {
+                            element: 'video',
+                            attributes: {
+                                src: data.src,
+                            },
+                        };
+                    }
+
+                }
+            },
+        };
+        var html = stateToHTML(editorState.getCurrentContent(), options);
         this.props.onChange(html);
     };
 
@@ -109,7 +158,7 @@ export default class HtmlEditor extends Component {
      */
 
     render() {
-        const { Toolbar, LinkButton, AddImage, AlignmentTool } = this.PluginComponents;
+        const { Toolbar, LinkButton, AddImage, AddVideo, AlignmentTool } = this.PluginComponents;
         return (
             <fieldset className={editorStyles.editor} >
                 <legend>
@@ -138,7 +187,13 @@ export default class HtmlEditor extends Component {
                                         editorState={this.state.editorState}
                                         onChange={this.onChange}
                                         modifier={AddImage}
+                                        type='image'
                                     />
+                                    <ImageForm
+                                        editorState={this.state.editorState}
+                                        onChange={this.onChange}
+                                        modifier={AddVideo}
+                                        type='video' />
                                     <AlignmentTool {...externalProps} />
                                 </React.Fragment>)
                             }

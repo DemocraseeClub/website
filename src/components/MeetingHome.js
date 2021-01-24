@@ -53,7 +53,7 @@ class MeetingHome extends Component {
                                 <video style={{width:'100%'}} height="240" controls>
                                     <source src={this.props.entity.apiData.videofile} type="video/mp4" />
                                 </video>
-                                : <img alt={'libel'} src={this.props.entity.apiData.img} style={{width:'100%'}} />}
+                                : <img alt={'libel'} src={this.props.entity.apiData.img} style={{maxWidth:'100%'}} />}
 
                         </Grid>
                         <Grid item style={{padding:8}} xs={12} sm={5} md={4} >

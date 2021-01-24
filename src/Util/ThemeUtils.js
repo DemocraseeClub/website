@@ -64,7 +64,7 @@ export const rallyStyles = theme => ({
         padding: theme.spacing(3),
     },
     stepSection: {
-        paddingLeft:20, marginBottom:10
+        paddingLeft:0, marginBottom:14, marginTop:10
     },
     stepTimeBlock : {
         fontSize:19,
@@ -94,9 +94,22 @@ export const rallyStyles = theme => ({
         padding:10,
         fontSize:26,
         fontWeight:900,
-        borderRadius:'5px 5px 0 5px'
+        borderRadius:'0px 5px 5px 0px'
     },
     field: {
         marginBottom:theme.spacing(2)
+    },
+    tabsVert: {
+        borderLeft: `1px solid ${theme.palette.divider}`,
+        height:'100%'
+    },
+    tabsHorz : {
+        width:'100%'
+    },
+    spaceAround : {
+        justifyContent:'space-around'
+    },
+    tabsIcon : {
+        minWidth:25
     }
 });
