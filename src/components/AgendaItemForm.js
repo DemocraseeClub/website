@@ -8,6 +8,8 @@ import Delete from "@material-ui/icons/Delete";
 import FileCopy from "@material-ui/icons/FileCopy";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 
 import {updateRallyItem, moveRallyItem, initCounter} from "../redux/entityDataReducer";
 import HtmlEditor from "./HtmlEditor";
@@ -63,13 +65,15 @@ class AgendaItemForm extends Component {
         const {classes} = this.props;
         return (
             <React.Fragment>
-                <div>
-                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('order', this.props.index - 1)} ><ExpandLess/></IconButton>
-                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('order', this.props.index + 1)} ><ExpandMore/></IconButton>
-                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('delete')} ><Delete /></IconButton>
-                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('clone')} ><FileCopy /></IconButton>
-                    <IconButton size={'small'} variant={'outlined'} onClick={this.onToggle}><Create/></IconButton>
-                </div>
+                <Grid container alignItems="center" justify={'flex-end'} >
+                    <IconButton onClick={e => this.onChangeItem('order', this.props.index - 1)} ><ExpandLess/></IconButton>
+                    <IconButton onClick={e => this.onChangeItem('order', this.props.index + 1)} ><ExpandMore/></IconButton>
+                    <Divider orientation="vertical" flexItem variant={'middle'}  />
+                    <IconButton onClick={this.onToggle}><Create/></IconButton>
+                    <IconButton onClick={e => this.onChangeItem('clone')} ><FileCopy /></IconButton>
+                    <Divider orientation="vertical" flexItem variant={'middle'} />
+                    <IconButton onClick={e => this.onChangeItem('delete')} ><Delete /></IconButton>
+                </Grid>
                 <Popover
                     open={this.state.showing === true}
                     anchorEl={this.state.anchorEl}

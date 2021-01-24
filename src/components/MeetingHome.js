@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Typography from "@material-ui/core/Typography";
 import PlanList from './PlanList';
+import InsertPhoto from '@material-ui/icons/InsertPhoto';
 import ProgressLoading from "./ProgressLoading";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import {rallyStyles} from '../Util/ThemeUtils';
@@ -29,6 +31,10 @@ class MeetingHome extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.location.pathname !== prevProps.location.pathname || this.props.location.search !== prevProps.location.search) {
             this.refresh();
+        } else if (!prevProps.entity.apiData && this.props.entity.apiData) {
+            if (this.props.entity.apiData.moderators.length === 0) {
+                this.setState({editMode:true})
+            }
         }
     }
 
@@ -52,13 +58,18 @@ class MeetingHome extends Component {
                             {this.props.entity.apiData.videofile ?
                                 <video style={{width:'100%'}} height="240" controls>
                                     <source src={this.props.entity.apiData.videofile} type="video/mp4" />
-                                </video>
-                                : <img alt={'libel'} src={this.props.entity.apiData.img} style={{maxWidth:'100%'}} />}
-
+                                </video> :
+                            (this.props.entity.apiData.img) ?
+                                <img alt={this.props.entity.apiData.title} src={this.props.entity.apiData.img} style={{maxWidth:'100%'}} />
+                            :
+                                <Box p={2} ml={4}>
+                                    <Button variant={'contained'} disableElevation={true} color={'secondary'} startIcon={<InsertPhoto />}>Cover Image</Button>
+                                </Box>
+                        }
                         </Grid>
                         <Grid item style={{padding:8}} xs={12} sm={5} md={4} >
                             <Typography variant='h1' className={classes.title} color={'error'}>{this.props.entity.apiData.title}</Typography>
-                            <Typography variant='h4' >{this.props.entity.apiData.start}</Typography>
+                            <Typography variant='h4' >{this.props.entity.apiData.start === 'tomorrow' ? new Date(+new Date() + 86400000).toLocaleString()  : this.props.entity.apiData.start }</Typography>
                             <Typography variant='inherit' color={'inherit'} ><a href={this.props.entity.apiData.videolink} target={'_blank'} rel="noopener noreferrer">
                                 {this.props.entity.apiData.videolink}</a>
                             </Typography>
@@ -68,7 +79,11 @@ class MeetingHome extends Component {
                     <Grid container justify={'space-around'} style={{marginTop:20}}>
                         <Grid item>
                             <div>Moderator</div>
-                            <Avatar alt={this.props.entity.apiData.moderators[0].name} src={this.props.entity.apiData.moderators[0].img} />
+                            {this.props.entity.apiData.moderators.length > 0 ?
+                                <Avatar alt={this.props.entity.apiData.moderators[0].name} src={this.props.entity.apiData.moderators[0].img} />
+                                :
+                                <Avatar alt="add" >+</Avatar>
+                            }
                         </Grid>
 
                         <Grid item>
@@ -93,11 +108,11 @@ class MeetingHome extends Component {
                               rallyData={this.props.entity.apiData} />
 
 
-                    <div style={{marginTop:10}}>
+                    <div style={{marginTop:20, marginBottom:20, paddingLeft:25}}>
                         <Button onClick={e => {
                             console.log(this.props.entity.apiData)
                             this.props.enqueueSnackbar('For now, e-mail eli the JSON printed to your console in Developer Tools');
-                        }} startIcon={<ExportIcon />} fullWidth={true} variant={'outlined'} >Export Meeting</Button>
+                        }} startIcon={<ExportIcon />} variant={'contained'} color={'info'} disableElevation={true} >Export Meeting</Button>
                     </div>
 
             </div>

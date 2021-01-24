@@ -1,0 +1,19 @@
+{
+  "title": "A Brainstorming meeting title",
+  "start": "tomorrow",
+  "img": false,
+  "videolink": false,
+  "city": "My City",
+  "type": "rally",
+  "moderators": [],
+  "speakers": [],
+  "lineItems": [
+    {
+      "nest": "Write your main subject title",
+      "title": "Write your agenda item title",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    }
+  ]
+}
