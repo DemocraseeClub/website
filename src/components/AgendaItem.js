@@ -15,7 +15,7 @@ import {withSnackbar} from 'notistack';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
 import HtmlEditor from "./HtmlEditor";
-import ResizePanel from "react-resize-panel";
+// import ResizePanel from "react-resize-panel";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // import SvgIcon from '@material-ui/core/SvgIcon';
@@ -139,7 +139,6 @@ class AgendaItem extends React.Component {
 
     render() {
         const {classes, curItem, index, activeStep} = this.props;
-        const PanelWrap = (true || this.state.resizable) ? ResizePanel : React.Fragment;
 
         return (
             <Step key={'step-' + index} active={this.props.forceShow === true || activeStep === index ? true : undefined} style={{marginBottom:10}} >
@@ -202,12 +201,12 @@ class AgendaItem extends React.Component {
 
                             <TabPanel value={this.state.showNotes} index={'gsheets'}>
                                     <iframe
-                                        src='https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing&rm=minimal'
+                                        src='https://docs.google.com/spreadsheets/d/1RO1mgOJoZjhGFnh0SnW4ev212LHd3byP1J-zi2BKMp8/edit?usp=sharing&rm=minimal'
                                         width={'100%'} height={'450'} seamless />
                             </TabPanel>
                             <TabPanel value={this.state.showNotes} index={'gdocs'}>
                                     <iframe
-                                        src='https://docs.google.com/document/d/1hRQ8W8X2pHuaKXXVVlF0H4RcGHF_5YOBbRob6lOLTqk/edit?usp=sharing&rm=minimal'
+                                        src='https://docs.google.com/document/d/1bg5p_GKXJ81CX9YhpvMVepakOcgBYDlLAYaRdFrIV0M/edit?usp=sharing&&rm=minimal'
                                         width={'100%'} height={'450'} seamless />
                             </TabPanel>
                             <TabPanel value={this.state.showNotes} index={'private'}>
