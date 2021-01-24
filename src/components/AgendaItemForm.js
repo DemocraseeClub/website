@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Popover from '@material-ui/core/Popover';
 import Create from "@material-ui/icons/Create";
+import Delete from "@material-ui/icons/Delete";
+import FileCopy from "@material-ui/icons/FileCopy";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
@@ -62,20 +64,16 @@ class AgendaItemForm extends Component {
                 <div>
                     <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('order', this.props.index - 1)} ><ExpandLess/></IconButton>
                     <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('order', this.props.index + 1)} ><ExpandMore/></IconButton>
+                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('delete')} ><Delete /></IconButton>
+                    <IconButton size={'small'} variant={'outlined'} onClick={e => this.onChangeItem('clone')} ><FileCopy /></IconButton>
                     <IconButton size={'small'} variant={'outlined'} onClick={this.onToggle}><Create/></IconButton>
                 </div>
                 <Popover
                     open={this.state.showing === true}
                     anchorEl={this.state.anchorEl}
                     onClose={this.onToggle}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
-                    }}
-                    transformOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
+                    anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                    transformOrigin={{vertical: 'bottom', horizontal: 'center'}}
                 >
                     <div className={classes.popPadding}>
                         <div style={{textAlign: 'right'}}>

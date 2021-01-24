@@ -1,143 +1,168 @@
 {
-  "title":"How to get things built - Day 1",
+  "title": "How to get things built",
   "start": "Tuesday, January 19th 4:30 pm - 6:45pm",
-  "img":"https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
-  "videolink":"https://meet.google.com/btm-hovc-tds",
-  "city":"Oakland, CA",
+  "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
+  "videolink": "https://meet.google.com/btm-hovc-tds",
+  "city": "Oakland, CA",
   "type": "rally",
-  "moderators":[
-    {"img":"https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png", "name":"Sean Valentine"}
+  "moderators": [
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png",
+      "name": "Sean Valentine"
+    }
   ],
-  "speakers":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli Taylor"},
-    {"img":"https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/ScottHanselman.jpeg", "name":"Scott Hanselman"}
+  "speakers": [
+    {
+      "img": "https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png",
+      "name": "Eli Taylor"
+    },
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/ScottHanselman.jpeg",
+      "name": "Scott Hanselman"
+    }
   ],
   "lineItems": [
     {
-      "title":"Open Source Tools",
       "nest": "Picking your Technology Stack",
-      "html" : "",
-      "outline" : [
-        "CMS + API Stacks",
-        [
-          "LAMP (PHP + mySQL: Drupal, Wordpress)",
-          "MERN (NodeJS + MongoDB: KeystoneJS)",
-          "Java / Spring (Magnolia)",
-          "Ruby",
-          "Python",
-          ".Net",
-          "..."
-        ],
-        "Databases",
-        [ "MySQL", "Mongo", "Firebase"],
-        "Web Servers",
-        [
-          "Node.JS",
-          "Apache"
-        ],
-        "Deployment",
-        ["Heroku / Firebase", "Google Cloud Platform / AWS", "GoDaddy / Ionos"],
-        "Mobile",
-        [
-          "React Native",
-          "Cordova / Ionic",
-          "native platform SDKs"
-        ]
-      ],
-      "seconds": 3300
+      "title": "Introduce & assess yourself",
+      "outline": "",
+      "seconds": 1200,
+      "countdown": 1136,
+      "html": "<p><u>Introduce yourself</u></p>\n<ol>\n  <li>Name, Project</li>\n  <li>Pick your preferred leadership role beyond CEO: (ex. CTO, CFO, Art Director, Marketing Manager, Product Manager, ?)</li>\n  <li>If you could have any super power, what would it be?</li>\n</ol>\n<p><u>Assess yourself</u></p>\n<ul>\n  <li>How confident do you feel about achieving your goals</li>\n  <li>How confident do you feel you can build your app on-time and with this budget?</li>\n</ul>"
     },
     {
-      "title":"Cost and Availability Comparison",
       "nest": "Picking your Technology Stack",
-      "outline": [
-        "Searching Upwork.com:",
-        ["Identify hourly rate ranges for junior, mid, and senior developers in your languages of interest.",
-        "Identify total pool of developers who claim experience with a language or stack"]
-      ],
-      "seconds": 900
+      "title": "Picking a development methodology",
+      "html": "<p><a href=\"https://www.synopsys.com/blogs/software-security/top-4-software-development-methodologies/\" target=\"_blank\">Methodologies</a> for the Software Development Life Cycle (SDLC)</p><ul><li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/waterfall-development.jpg\"/></figure>Waterfall</li> <li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/devops-small.jpg\"/></figure>DevOps / Agile</li>  <li> <figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/rapidapplicationdevelopment-small.jpg\"/></figure>Rapid Application Development (RAD)</li></ul><figure><img style=\"width:100%; max-width:600px\" src=\"/images/dev-methodologies.jpg\"/></figure>",
+      "seconds": 1200,
+      "countdown": 1200
     },
     {
-      "title":"Personal network",
+      "nest": "Picking your Technology Stack",
+      "title": "Identify project dependencies",
+      "html": "<p>Where does your primary data come from?</p>\n<ul>\n  <li>End users?</li>\n  <li>You or your service providers?</li>\n  <li>Some company or goverment agency?</li>\n  <li>A crawler?</li>\n</ul>\n<p>Do you need strong admin editorial tools / complex permissions?</p>\n<p>Do you require a single search field over traditional navigation?</p>",
+      "outline": "",
+      "seconds": 1200,
+      "countdown": 1200
+    },
+    {
+      "nest": "Picking your Technology Stack",
+      "title": "Picking where to start",
+      "html": "<ul>\n  <li>Data</li>\n  <li>API</li>\n  <li>Interface</li>\n</ul>",
+      "seconds": 1200,
+      "countdown": 1200
+    },
+    {
+      "nest": "Picking your Technology Stack",
+      "title": "Picking services and tools",
+      "html": "<p>Front-End Libraries</p>\n<ul>\n  <li>Web: React vs. Angular, Vue...?</li>\n  <li>Mobile: React Native vs. native platform SDKs</li><li>IoT: Node-Red, ... ?</ul>\n<p>Back-End Content Management Systems (CMS)</p>\n<ul>\n  <li><a target='_blank' href=\"https://www.drupal.org/developers\">Drupal 8</a>+ (php + mysql)</li>\n  <li><a target='_blank' href=\"https://www.keystonejs.com/\">KeystoneJS</a> (nodejs + mongo)</li>\n  <li>Java, Ruby, Python, .Net, ...?</li>\n</ul>\n<p>Deployment</p>\n<ul>\n  <li>Heroku / Firebase (guarantees portability, requires external storage)</li>\n  <li>Google Cloud Platform / AWS (guarantees scalability)</li>\n  <li>GoDaddy / Ionos (cheap)</li>\n</ul>",
+      "outline": "",
+      "seconds": 300,
+      "countdown": 300
+    },
+    {
+      "title": "Writing your job description",
       "nest": "Recruiting Talent",
-      "outline": [
-        "List developers by your personal networks",
-        ["Social media","Email","University CS departments"]
-      ],
-      "seconds": 900
+      "outline": "",
+      "seconds": 900,
+      "countdown": 900,
+      "html": "<p><em>Expectations</em></p>\n<ul>\n  <li>Product description</li>\n  <li>Required Frameworks</li>\n  <li>Budget (hourly / flat-rate)</li>\n</ul>\n<p><em>Incentives</em></p>\n<ul>\n  <li>Bonuses</li>\n  <li>Vested Equity</li>\n  <li>Roadmap</li>\n</ul>"
     },
     {
-      "title":"Programmer Forums",
       "nest": "Recruiting Talent",
-      "outline": [
-        "Searching developers by online code forums",
-        ["StackExchange networks", "Github Issues"]
-      ],
-      "seconds": 900
+      "title": "Recruiting",
+      "outline": "",
+      "seconds": 900,
+      "countdown": 900,
+      "html": "<p>Searching your private network</p>\n<ul>\n  <li>Social media</li>\n  <li>University CS departments</li>\n</ul>\n<p>Searching developers by online code forums</p>\n<ul>\n  <li><a target='_blank' href=\"https://stackexchange.com/sites#technology\">StackExchange</a> networks (<a target='_blank' href=\"https://stackoverflow.com/users/624160/e-a-t\">StackOverflow</a>)</li>\n  <li><a target='_blank' href=\"https://guides.github.com/features/issues/\">Github Issues</a></li>\n  <li><a target='_blank' href=\"https://leetcode.com/discuss/career?currentPage=1&amp;orderBy=hot&amp;query=\">Leetcode</a></li>\n</ul>\n<p><a target='_blank' href=\"https://www.upwork.com/\">Upwork.com</a> / <a target='_blank' href=\"https://www.toptal.com/\">TopTal.com</a> / ?</p>\n<ul>\n  <li>Local</li>\n  <li>US</li>\n  <li>Americas</li>\n  <li><a target='_blank' href=\"https://www.timeanddate.com/time/map/\">Global</a></li>\n</ul>\n<figure><img style=\"width:100%\" src=\"https://c.tadst.com/gfx/600x400/timezone-map5.png?1\"/></figure>"
     },
     {
-      "title":"Upwork.com",
-      "nest": "Recruiting Talent",
-      "outline": [
-        "Shortlist your top developers by filters",
-        ["By location / timezone", "By Code language", "By rankings / income / team"],
-        "Upwork fees"
-      ],
-      "seconds": 900
-    },
-    {
-      "title":"Budgeting Compensation",
-      "nest": "Recruiting Talent",
-      "outline": [
-        "Hourly",
-        "Flat-Rates",
-        "(Vested) Equity",
-        "Bonuses"
-      ],
-      "seconds": 900
-    },
-    {
-      "title":"Testing tools",
+      "title": "Testing tools",
       "nest": "Interviewing",
-      "html": "Leetcode, CodeSignal, Codility",
-      "seconds": 600
+      "outline": "",
+      "seconds": 300,
+      "countdown": 300,
+      "html": "<p><a href=\"https://codesignal.com/\" target=\"_blank\">CodeSignal</a></p>\n<p>https://codesignal.com/blog/measuring-dev-skills/how-to-measure-senior-developers-skills/</p>\n<p>https://codesignal.com/blog/data-driven-recruiting/quantifying-technical-skills/</p>\n<p><a href=\"https://www.codility.com/\" target=\"_blank\">Codility</a></p>\n<p><br></p>\n<figure><iframe src=\"https://www.youtube.com/embed/Qd1fz0gG1y4\">&nbsp;</iframe></figure>\n<p><br></p>"
     },
     {
-      "title":"Screen Sharing",
+      "title": "Screen Sharing",
       "nest": "Interviewing",
-      "outline": [
-        "Review Github account history and repositories",
-        "Local development environment debugging tools",
-        ["request Breakpoint demonstration"]
-      ],
-      "seconds": 600
+      "outline": "",
+      "seconds": 600,
+      "countdown": 600,
+      "html": "<p>Review <a target='_blank' href=\"https://github.com/shanselman\">Github account</a> history and repositories.</p>\n<ul>\n  <li>Does age / languages of repositories match up with claimed experience?</li>\n  <li>How often do they commit?</li>\n  <li>Make sure repos aren't just forks of other's work</li>\n</ul>\n<p>Request debugging demonstation:</p>\n<ul>\n  <li>Do they use a modern IDE like <a target='_blank' href=\"https://www.jetbrains.com/\">JetBrains</a> products or Eclipse / Visual Studio / ?</li><li>Do they use testing tools like <a target='_blank' href=\"https://www.postman.com/\">Postman</a></li>  <li>Can they set runtime breakpoints in their code?</li>\n</ul>\n<figure><img style=\"width:100%\"  src=\"https://blog.jetbrains.com/wp-content/uploads/2018/01/webstorm-stopping-on-a-breakpoint.png\"/></figure>"
     },
     {
-      "title":"Feature Requests",
+      "title": "Feature Requests",
       "nest": "Managing & Tracking Tasks",
-      "outline": [
-        "Github Issues, Jira, Trillo, Bugzilla, ...",
-        "[Markdown.md](https://guides.github.com/features/mastering-markdown)"
-      ],
-      "seconds": 900
+      "outline": "",
+      "seconds": 300,
+      "countdown": 300,
+      "html": "<p><a href=\"https://www.youtube.com/watch?v=TJlYiMp8FuY\" target=\"_blank\">Github Issues</a>, Jira, Trillo, Bugzilla, ...</p>\n<p><br></p>\n<p>Request Structure</p>\n<ul>\n  <li>Title</li>\n  <li>Description</li>\n  <li>Component / Label</li>\n  <li>Priority / Deadline</li>\n  <li>Assignee</li>\n</ul>\n<figure><br></figure>\n<p>Default <a href=\"https://docs.github.com/en/github/managing-your-work-on-github/managing-labels\" target=\"_blank\">Label</a> Categories. Adding new ones:&nbsp;</p>\n<ul>\n  <li>Design</li>\n  <li>Copywriting</li>\n  <li>Navigation</li>\n  <li>Form Submissions (on success)</li>\n  <li>Form Failures (error handling)</li>\n  <li>?</li>\n</ul>"
     },
     {
-      "title":"Bug Reporting",
+      "title": "Bug Reporting",
       "nest": "Managing & Tracking Tasks",
-      "html": "Steps to reproduce",
-      "seconds": 900
+      "html": "<li><strong>Component</strong>: Flag the issue with all appropriate Labels</li><li><strong>Title</strong>: How would you describe the bug in less than 60 characters? It should quickly and uniquely identify a bug report as well as explain the problem, not your suggested solution. Good: \"Canceling a File Copy dialog crashes File Manager\" Bad: \"Software crashes\" Bad: \"Browser should work with my web site\"</li>\n  <li><strong>OS</strong>: On which operating system (OS) did you find it? (E.g. Linux, Windows, and Mac.) Example: \"<em>If you know the bug happens on more than one type of operating system, choose \"All\". If your OS isn't listed, choose Other\".</em></li>\n  <li><strong>Steps to Reproduce</strong>: Minimized, easy-to-follow steps that will trigger the bug. If they're necessary, make sure to include any special setup steps. A good example of this would look like the following:<br>\n1) View any web page. (I used the default sample page, http://www.google.com/).<br>\n2) Drag-select the page. Specifically, while holding down the mouse button, drag the mouse pointer downwards from any point in the browser's content region to the bottom of the browser's content region.</li>\n  <li><strong>Actual Results</strong>: What the application did after performing the above steps. An example would be: <em>The application crashed.</em></li>\n  <li><strong>Expected Results</strong>: What the application should have done, were the bug not present. An example would be: <em>The window should scroll downwards. Scrolled content should be selected. Or, at least, the application should not crash.</em></li>\n</ul>",
+      "seconds": 300,
+      "countdown": 300
     },
     {
-      "title":"Deliverables & Deadlines",
+      "nest": "Drafting a Contract",
+      "title": "Demanding Documentation & Transparency",
+      "outline": "",
+      "seconds": 300,
+      "countdown": 300,
+      "html": "<p>Daily branch commits!!!</p>\n<p><br></p>\n<figure><img src=\"https://wac-cdn.atlassian.com/dam/jcr:61ccc620-5249-4338-be66-94d563f2843c/05%20(2).svg?cdnVersion=1410\" style=\"width: 100%\">&nbsp;</img></figure>\n<p><br></p>\n<p>Use <a href=\"https://chrome.google.com/webstore/detail/awesome-screenshot-screen/nlipoenfbbikpbjkfpfillcgkoblgpmj\" target=\"_blank\">screen recording tools</a></p>\n<p>Upwork's work diary</p>\n<figure><img src=\"https://i.ytimg.com/vi/qAXbzLUcjic/maxresdefault.jpg\" style=\"width: 100%\">📷</img></figure>"
+    },
+    {
+      "title": "Deliverables & Deadlines",
       "nest": "Drafting a Contract",
       "outline": [
         "Definitions",
         "Benchmarks",
         "Milestones",
+        "Payment Schedule",
         "Ownership",
         "Non-Disclosure",
         "Standard clauses"
       ],
-      "seconds": 3600
+      "seconds": 3600,
+      "countdown": 3600
+    }
+  ],
+  "countRemains": 12236,
+  "countScheduled": 12300,
+  "headers": [
+    {
+      "label": "Introductions",
+      "order": 0,
+      "count": 1
+    },
+    {
+      "label": "Picking your Technology Stack",
+      "order": 1,
+      "count": 4
+    },
+    {
+      "label": "Recruiting Talent",
+      "order": 2,
+      "count": 2
+    },
+    {
+      "label": "Interviewing",
+      "order": 3,
+      "count": 2
+    },
+    {
+      "label": "Managing & Tracking Tasks",
+      "order": 4,
+      "count": 2
+    },
+    {
+      "label": "Drafting a Contract",
+      "order": 5,
+      "count": 2
     }
   ]
 }
