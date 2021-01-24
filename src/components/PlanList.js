@@ -235,6 +235,7 @@ class PlanList extends React.Component {
                                     key={'ai' + index}
                                     curItem={curItem} index={index} classes={classes} header={header}
                                     editMode={this.props.editMode}
+                                    dispatch={this.props.dispatch}
                                     handleBack={this.handleBack}
                                     handleNext={this.handleNext}
                                 />

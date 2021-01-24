@@ -104,7 +104,11 @@ export const rallyStyles = theme => ({
         height:'100%'
     },
     tabsHorz : {
-        width:'100%'
+        width:'100%',
+        borderLeft: `1px solid ${theme.palette.divider}`,
+        borderTop: `1px solid ${theme.palette.divider}`,
+        borderRight: `1px solid ${theme.palette.divider}`,
+        borderRadius:'5px 5px 0 0',
     },
     spaceAround : {
         justifyContent:'space-around'
