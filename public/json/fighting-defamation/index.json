@@ -1,0 +1,25 @@
+{
+  "title":"How can we improve libel laws to reconcile defamation",
+  "start": "Thursday, December 3rd 7:30 pm",
+  "profile":"https://democrasee.club/wp-content/uploads/2020/10/libel-150x150.jpg",
+  "videolink":"https://meet.google.com/btm-hovc-tds",
+  "city":"Oakland, CA",
+  "hosts":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+  ],
+  "speakers":[
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+  ],
+  "research_json" : {
+
+  },
+  "meetings" : [
+    {
+      "title": "Libel",
+      "link": "/rally/fighting-defamation/meeting/libel",
+      "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
+    }
+  ]
+}

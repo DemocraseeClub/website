@@ -3208,11 +3208,6 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cash-dom@^4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/cash-dom/-/cash-dom-4.1.5.tgz#0ef0cf205bc7603aa4e2dfada5808442a7a0e6ca"
-  integrity sha512-E6MO0A6ms5iZPtexznQXWRkFEvqdPqCmdx/SiJr2PnhOQNhZNfALkLG5t83Hk3J5JELzED7PJuzhMoS2tT64XA==
-
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -7232,11 +7227,6 @@ lodash._reinterpolate@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
 
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -9411,7 +9401,7 @@ react-dom@^16.14.0:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-draggable@^4.0.3, react-draggable@^4.4.3:
+react-draggable@^4.4.3:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.3.tgz#0727f2cae5813e36b0e4962bf11b2f9ef2b406f3"
   integrity sha512-jV4TE59MBuWm7gb6Ns3Q1mxX8Azffb7oTtDtBgFkxRvhDp38YAARmRplrj0+XGkhOJB5XziArX+4HUUABtyZ0w==
@@ -9444,16 +9434,6 @@ react-redux@^7.2.2:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.13.1"
-
-react-resize-panel@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/react-resize-panel/-/react-resize-panel-0.3.5.tgz#43aa3450bf5b5a2566b40c4201445ced96c2a905"
-  integrity sha512-iyHOFTrSt+WV4Ilzi81x6KH3FU7VsGP736rmxepwGrgAEATmCvXzZdluTm3NpsptP7aC3hLODmXwnxusyA393A==
-  dependencies:
-    cash-dom "^4.1.5"
-    classnames "^2.2.6"
-    lodash.debounce "^4.0.8"
-    react-draggable "^4.0.3"
 
 react-router-dom@^5.2.0:
   version "5.2.0"

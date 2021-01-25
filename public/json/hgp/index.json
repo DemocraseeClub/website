@@ -1,0 +1,43 @@
+{
+  "title": "How to get things built",
+  "desc": "",
+  "profile": "https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
+  "cover": null,
+  "type": "rally",
+  "wisedemo": ["Realizing Potential", "Big Picture", "Interaction"],
+  "targets": ["Schools"],
+  "topics": ["Education"],
+  "stakeholders": ["Students", "Entrepreneurs"],
+  "author": [
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+  ],
+  "hosts": [
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png",
+      "name": "Sean Valentine"
+    },
+    {
+      "img": "https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png",
+      "name": "Eli Taylor"
+    },
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/ScottHanselman.jpeg",
+      "name": "Scott Hanselman"
+    }
+  ],
+  "research_json" : {
+
+  },
+  "meetings" : [
+    {
+      "title": "How to get things built (or find someone who can)",
+      "link": "/rally/hgp/meeting/how-to-get-things-built-day-1",
+      "start": "Tuesday, January 19th 4:30 pm - 6:45pm"
+    },
+    {
+      "title": "Preparing your data for development",
+      "link": "/rally/hgp/meeting/how-to-get-things-built-day-2",
+      "start": "Tuesday, January 19th 4:30 pm - 6:45pm"
+    }
+  ]
+}

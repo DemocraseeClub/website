@@ -65,7 +65,7 @@ class AgendaItemForm extends Component {
         const {classes} = this.props;
         return (
             <React.Fragment>
-                <Grid container alignItems="center" justify={'flex-end'} >
+                <Grid container style={{width:'auto'}} alignItems="center" justify={'flex-end'} >
                     <IconButton onClick={e => this.onChangeItem('order', this.props.index - 1)} ><ExpandLess/></IconButton>
                     <IconButton onClick={e => this.onChangeItem('order', this.props.index + 1)} ><ExpandMore/></IconButton>
                     <Divider orientation="vertical" flexItem variant={'middle'}  />
