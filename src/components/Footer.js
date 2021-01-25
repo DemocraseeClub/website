@@ -43,7 +43,7 @@ class Footer extends React.Component {
                                 Subscribe
                             </DialogTitle>
                             <DialogContent dividers>
-
+                                Please sign up at <a href={'https://democrasee.club'} rel="noopener noreferrer" target={"_blank"}>Democrasee.club</a>
                             </DialogContent>
                         </Dialog>
 

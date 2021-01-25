@@ -9,7 +9,7 @@ const Config = {
         'sup', 'sub', 'center', 'button', 'a', 'u'],
     allowedAttributes: {
         'a': ['href', 'target', 'style'],
-        'iframe' : ['src', 'allowfullscreen', 'frameborder', 'class'],
+        'iframe' : ['src', 'allowfullscreen', 'frameborder'],
         '*': ['id', 'style', 'data-toggle', 'data-target', 'aria-label', 'role', 'class'],
         'img': ['src', 'height', 'width', 'style']
     },

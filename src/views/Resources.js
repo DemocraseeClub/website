@@ -10,6 +10,7 @@ class Resources extends React.Component {
         return (
             <Paper className={classes.root}>
                 <p>Resources</p>
+                <p>coming soon...</p>
             </Paper>
         );
     }

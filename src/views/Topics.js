@@ -14,6 +14,7 @@ class Topics extends React.Component {
         return (
             <Paper className={classes.root}>
                 <p>Topics</p>
+                <p>coming soon...</p>
             </Paper>
         );
     }

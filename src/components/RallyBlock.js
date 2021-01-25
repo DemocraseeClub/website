@@ -66,14 +66,16 @@ class RallyHome extends Component {
                             <AvatarGroup>
                                 {rally.hosts.map(r => <Avatar key={r.img} alt={r.name}
                                                                                   src={r.img}/>)}
-                                <Avatar alt="add" onClick={e => alert('TODO: Apply to speak')}>+</Avatar>
+                                {rally.speakers && rally.speakers.map(r => <Avatar key={r.img} alt={r.name}
+                                                                 src={r.img}/>)}
+                                <Avatar alt="add" onClick={e => alert('TODO: Join rally')}>+</Avatar>
                             </AvatarGroup>
                         </Box>
 
                         <Box mt={8}>
                             <Button startIcon={<Create/>} variant={'contained'}
                                     color={this.state.editMode ? 'primary' : 'secondary'}
-                                    onClick={e => this.setState({editMode: !this.state.editMode})}>Edit Mode</Button>
+                                    onClick={e => this.setState({editMode: !this.state.editMode})}>Edit Rally</Button>
                         </Box>
 
                     </Grid>

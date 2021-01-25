@@ -23,19 +23,96 @@
   ],
   "lineItems": [
     {
-      "nest": "Picking your Technology Stack",
-      "title": "Introduce & assess yourself",
+      "nest": "Overview",
+      "title": "Forms",
       "outline": "",
       "seconds": 1200,
-      "countdown": 1136,
-      "html": "<p><u>Introduce yourself</u></p>\n<ol>\n  <li>Name, Project</li>\n  <li>Pick your preferred leadership role beyond CEO: (ex. CTO, CFO, Art Director, Marketing Manager, Product Manager, ?)</li>\n  <li>If you could have any super power, what would it be?</li>\n</ol>\n<p><u>Assess yourself</u></p>\n<ul>\n  <li>How confident do you feel about achieving your goals</li>\n  <li>How confident do you feel you can build your app on-time and with this budget?</li>\n</ul>"
+      "countdown": 1200,
+      "html": "<p>Forms provide a strong baseline for how your product works visually and programmatically. Even if none of the forms are exposed to users, writing down your forms can provide your developers with a complete picture of your desired data and how to best store and retrieve it.</p>"
     },
     {
-      "nest": "Picking your Technology Stack",
-      "title": "Picking a development methodology",
-      "html": "<p><a href=\"https://www.synopsys.com/blogs/software-security/top-4-software-development-methodologies/\" target=\"_blank\">Methodologies</a> for the Software Development Life Cycle (SDLC)</p><ul><li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/waterfall-development.jpg\"/></figure>Waterfall</li> <li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/devops-small.jpg\"/></figure>DevOps / Agile</li>  <li> <figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/rapidapplicationdevelopment-small.jpg\"/></figure>Rapid Application Development (RAD)</li></ul><figure><img style=\"width:100%; max-width:600px\" src=\"/images/dev-methodologies.jpg\"/></figure>",
+      "nest": "Overview",
+      "title": "Startup Data",
+      "html": "<p>Try to use realistic data rather than Latin or jumbled placeholders.</p><p>Use shutterstock.com or other licensing tool to find quality graphics and photography with proper licensing.</p>",
       "seconds": 1200,
       "countdown": 1200
+    },
+    {
+      "nest": "Key Terms",
+      "title": "Objects",
+      "html": "<p>Rallies, Meetings, Resources, Invites, Officials, Cities</p>",
+      "seconds": 600,
+      "countdown": 600
+    },
+    {
+      "nest": "Key Terms",
+      "title": "Actions",
+      "html": "<p>Create/Add, Read/View, Update/Edit, Delete/Unpublish</p>\n<p><br></p>\n<p>Also maybe \"add to cart\", \"checkout\", \"like/unlike\", ...</p>",
+      "seconds": 1200,
+      "countdown": 1200
+    },
+    {
+      "nest": "Key Terms",
+      "title": "Data",
+      "html": "<p>\"Data\" is everything including scraped, user-generated, and curated content.&nbsp;</p>\n<ul>\n  <li><em>Vocabularies</em> (aka taxonomies) supports filtering searches</li>\n  <li><em>Permissions</em> matrix supports security and error handling</li>\n  <li>Field <em>schema </em>describes how your Objects and fields all relate.</li>\n</ul>",
+      "seconds": 600,
+      "countdown": 600
+    },
+    {
+      "nest": "Exercises",
+      "title": "Object - Actions Worksheet",
+      "tools": ["gsheets"],
+      "tools": false,
+      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p>",
+      "seconds": 1200,
+      "countdown": 1200
+    },
+    {
+      "nest": "Exercises",
+      "title": "Permissions Matrix",
+      "tools": false,
+      "html": "<p>Aka 3D Object - Actions Worksheet. Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/1Wv55QbrNdy6lKZvTY8A8Tso_rZJSpFRS30dmQ1LebIc/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p>",
+      "seconds": 1200,
+      "countdown": 1200
+    },
+    {
+      "nest": "Exercises",
+      "title": "Vocabulary Fields",
+      "tools": false,
+      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit?usp=sharing' width={'100%'} height={'450'} seamless /></p>",
+      "seconds": 1200
+    },{
+      "nest": "Exercises",
+      "title": "Object Field Definitions",
+      "tools": false,
+      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/14JqTgNzR63KTKqUZ7dI7JLK0pZVt-3yRxCTIgt3gSBU/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p>",
+      "seconds": 1200
+    },
+    {
+      "nest": "Exercises",
+      "title": "Google Forms for predefined Data",
+      "html": "<p>Using Google Forms - or any CMS you're familiar with - to digitizing your startup data and vocabulary terms.</p>",
+      "seconds": 1200,
+      "countdown": 1200
+    }
+  ],
+  "countRemains": 9600,
+  "countScheduled": 9600,
+  "headers": [
+    {
+      "label": "Overview",
+      "order": 0,
+      "count": 2
+    },
+    {
+      "label": "Key Terms",
+      "order": 1,
+      "count": 3
+    },
+    {
+      "label": "Exercises",
+      "order": 2,
+      "count": 4
     }
   ]
 }

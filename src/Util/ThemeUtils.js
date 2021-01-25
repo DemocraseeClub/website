@@ -101,6 +101,7 @@ export const rallyStyles = theme => ({
     },
     tabsVert: {
         borderLeft: `1px solid ${theme.palette.divider}`,
+        width:45,
         height:'100%'
     },
     tabsHorz : {

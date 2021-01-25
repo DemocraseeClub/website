@@ -9,14 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import SanitizedHTML from 'react-sanitized-html';
 import PropTypes from 'prop-types';
 import Check from '@material-ui/icons/CheckBox';
-import SpeakerNotes from '@material-ui/icons/SpeakerNotes';
 import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import {withSnackbar} from 'notistack';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
-import HtmlEditor from "./HtmlEditor";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import AgendaItemTools from "./AgendaItemTools";
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // import {ReactComponent as GoogleSheetsIcon} from '../assets/Google_Sheets_logo.png';
 // import {ReactComponent as GoogleDocsIcon} from '../assets/Google_Docs_logo.png';
@@ -94,32 +91,6 @@ const formatSeconds = (sec, len) => {
 
 class AgendaItem extends React.Component {
 
-    constructor(p) {
-        super(p);
-        this.state = {
-            notes: {'private':'', 'gdocs':'', 'gsheets':''},
-            showNotes: []
-        }
-        this.toggleNotes = this.toggleNotes.bind(this);
-    }
-
-    handleNote(val, type) {
-        let notes = {...this.state.notes};
-        notes[type] = val;
-        this.setState({notes: notes});
-    }
-
-    toggleNotes(type) {
-        let showNotes = [...this.state.showNotes];
-        let i = this.state.showNotes.indexOf(type);
-        if (i > -1) {
-            showNotes.splice(i,1);
-        } else {
-            showNotes.push(type);
-        }
-        this.setState({showNotes: showNotes});
-    }
-
     renderOutline(outline, indent) {
         if (typeof outline === 'string') {
             return outline;
@@ -151,13 +122,25 @@ class AgendaItem extends React.Component {
                     </div>
                 </StepLabel>
                 <StepContent className={classes.stepContent}>
-                    <Grid container justify={'space-around'} spacing={0}>
-                        <Grid item xs={this.state.showNotes.length === 0 ? 11 : 6} style={{fontSize: 20}}>
+                    <Grid container justify={'space-around'} spacing={0} wrap={'nowrap'}>
+                        <Grid item style={{fontSize: 20, flexGrow:1}}>
                             {curItem.html ?
                                 <SanitizedHTML
                                     allowedIframeDomains={['youtube.com', 'google.com']}
+                                    allowedIframeHostnames={['www.youtube.com', 'docs.google.com', 'sheets.google.com']}
+                                    allowIframeRelativeUrls={false}
+                                    allowedSchemes={[ 'data', 'https' ]}
                                     allowedTags={Config.allowedTags}
                                     allowedAttributes={Config.allowedAttributes}
+                                    exclusiveFilter={frame => {
+                                        if (frame.tag === 'iframe') {
+                                            console.log(frame);
+                                            if (frame.attribs.src.indexOf('https://docs.google.com') !== 0 && frame.attribs.src.indexOf('https://sheets.google.com') !== 0) {
+                                                return true;
+                                            }
+                                        }
+                                        return false;
+                                    }}
                                     html={curItem.html} /> : null}
 
                             { (curItem.outline) ? this.renderOutline(curItem.outline, 0) : null }
@@ -180,46 +163,11 @@ class AgendaItem extends React.Component {
                                     </div> : null
                             }
                         </Grid>
-                        <Grid item xs={this.state.showNotes.length === 0 ? 1 : 6}>
-                            <Tabs
-                                orientation={this.state.showNotes.length > 0 ? "horizontal" : "vertical"}
-                                variant="standard"
-                                value={this.state.showNotes}
-                                onChange={(e, index) => {
-                                    let type = index === 0 ? 'gsheets' : index === 1 ? 'gdocs' : 'private';
-                                    this.toggleNotes(type);
-                                }}
-                                aria-label="Note Controls"
-                                className={this.state.showNotes.length > 0 ? classes.tabsHorz : classes.tabsVert}
-                                classes={{flexContainer:classes.spaceAround}}
-                            >
-                                <Tab icon={<img src={'/images/Google_Sheets_logo.png'} />} classes={{root:classes.tabsIcon}} />
-                                <Tab icon={<img src={'/images/Google_Docs_logo.png'} />} classes={{root:classes.tabsIcon}} />
-                                <Tab icon={<SpeakerNotes/>} classes={{root:classes.tabsIcon}} />
-                            </Tabs>
-
-                            <TabPanel value={this.state.showNotes} index={'gsheets'}>
-                                    <iframe
-                                        src='https://docs.google.com/spreadsheets/d/1RO1mgOJoZjhGFnh0SnW4ev212LHd3byP1J-zi2BKMp8/edit?usp=sharing&rm=minimal'
-                                        width={'100%'} height={'450'} seamless />
-                            </TabPanel>
-                            <TabPanel value={this.state.showNotes} index={'gdocs'}>
-                                    <iframe
-                                        src='https://docs.google.com/document/d/1bg5p_GKXJ81CX9YhpvMVepakOcgBYDlLAYaRdFrIV0M/edit?usp=sharing&&rm=minimal'
-                                        width={'100%'} height={'450'} seamless />
-                            </TabPanel>
-                            <TabPanel value={this.state.showNotes} index={'private'}>
-                                    <HtmlEditor
-                                        label="Private Notes"
-                                        toolbar={'static'}
-                                        style={{width: '100%'}}
-                                        variant={'outlined'}
-                                        rows={3}
-                                        html={this.state.notes.private}
-                                        onChange={val => this.handleNote(val, 'private')}
-                                    />
-                            </TabPanel>
-                        </Grid>
+                        { (curItem.tools === false) ? '' :
+                            <Grid item >
+                                <AgendaItemTools classes={classes} />
+                            </Grid>
+                        }
                     </Grid>
                 </StepContent>
             </Step>
@@ -227,29 +175,5 @@ class AgendaItem extends React.Component {
         );
     }
 }
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-    let isVisible = value.indexOf(index) > -1;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={isVisible === false}
-            id={`ai-tabpanel-${index}`}
-            aria-labelledby={`ai-tab-${index}`}
-            {...other}
-        >
-            {isVisible === true ? children : ''}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-};
-
 
 export default withSnackbar(AgendaItem);
