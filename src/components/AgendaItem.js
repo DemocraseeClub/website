@@ -14,6 +14,7 @@ import {withSnackbar} from 'notistack';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
 import AgendaItemTools from "./AgendaItemTools";
+import { formatSeconds} from "../Util/WindowUtils";
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // import {ReactComponent as GoogleSheetsIcon} from '../assets/Google_Sheets_logo.png';
 // import {ReactComponent as GoogleDocsIcon} from '../assets/Google_Docs_logo.png';
@@ -69,24 +70,11 @@ function QontoStepIcon(props) {
 
 QontoStepIcon.propTypes = {
     status: PropTypes.string,
-    active: PropTypes.bool,
-    completed: PropTypes.bool,
+    countdown : PropTypes.number
 };
 
 QontoStepIcon.defaultProps = {
-    status: "inactive",
-    active: false,
-    completed: false
-}
-
-const formatSeconds = (sec, len) => {
-    if (!Number(sec)) sec = 0;
-    let date = new Date(null);
-    date.setSeconds(sec); // specify value of SECONDS
-    let time = date.toISOString().substr(11, 8);
-    if (time.indexOf('01:00:00') === 0) return '60:00';
-    if (time.indexOf('00:') === 0) time = time.substr('00:'.length);
-    return time;
+    status: "inactive"
 }
 
 class AgendaItem extends React.Component {
@@ -122,7 +110,7 @@ class AgendaItem extends React.Component {
                     </div>
                 </StepLabel>
                 <StepContent className={classes.stepContent}>
-                    <Grid container justify={'space-around'} spacing={0} wrap={'nowrap'}>
+                    <Grid container justify={'space-around'} spacing={0}>
                         <Grid item style={{fontSize: 20, flexGrow:1}}>
                             {curItem.html ?
                                 <SanitizedHTML

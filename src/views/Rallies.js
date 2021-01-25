@@ -7,7 +7,6 @@ import {NavLink} from "react-router-dom";
 class Rallies extends React.Component {
 
     render() {
-        const {classes} = this.props;
         return (
             <Box m={4} >
                 <Box mb={4} >
