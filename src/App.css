@@ -25,5 +25,6 @@ code {
   background: -webkit-linear-gradient(45deg,  #0a5760 0%,#0a5760 25%,#0a5760 25%,#0a5760 25%,#d65248 25%,#d65248 27%,#b9dff4 27%,#b9dff4 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(45deg,  #0a5760 0%,#0a5760 25%,#0a5760 25%,#0a5760 25%,#d65248 25%,#d65248 27%,#b9dff4 27%,#b9dff4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a5760', endColorstr='#b9dff4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
 }
+
+iframe { min-height:450px; width: 100%}

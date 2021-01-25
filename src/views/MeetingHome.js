@@ -11,6 +11,9 @@ import ExportIcon from "@material-ui/icons/ImportExport";
 import Button from "@material-ui/core/Button";
 import {withSnackbar} from "notistack";
 import RallyBlock from "../components/RallyBlock";
+import Box from "@material-ui/core/Box";
+import Create from "@material-ui/icons/Create";
+import Grid from "@material-ui/core/Grid";
 
 class MeetingHome extends Component {
 
@@ -56,12 +59,15 @@ class MeetingHome extends Component {
                               rallyData={this.props.entity.apiData} />
 
 
-                    <div style={{marginTop:20, marginBottom:20, paddingLeft:25}}>
-                        <Button onClick={e => {
-                            console.log(this.props.entity.apiData)
-                            this.props.enqueueSnackbar('For now, e-mail eli the JSON printed to your console in Developer Tools');
-                        }} startIcon={<ExportIcon />} variant={'contained'} color={'info'} disableElevation={true} >Export Meeting</Button>
-                    </div>
+                <Grid container justify={'space-between'} p={3}>
+                    <Button startIcon={<Create/>} variant={'contained'}
+                            color={this.state.editMode ? 'primary' : 'secondary'}
+                            onClick={e => this.setState({editMode: !this.state.editMode})}>Edit Meeting</Button>
+                    <Button onClick={e => {
+                        console.log(this.props.entity.apiData)
+                        this.props.enqueueSnackbar('For now, e-mail eli the JSON printed to your console in Developer Tools');
+                    }} startIcon={<ExportIcon />} variant={'contained'} color={'info'} disableElevation={true} >Export Meeting</Button>
+                </Grid>
 
             </div>
         );

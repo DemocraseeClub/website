@@ -165,10 +165,7 @@ class PlanList extends React.Component {
                             alignContent: 'center',
                             width: '100%'
                         }}>
-                            <div>
-                                <Typography variant='h6'>Agenda Clock</Typography>
-                            </div>
-
+                            <Typography variant='h6'>Meeting Time</Typography>
                             <Typography variant='h6'>
                                 <Typography variant='inherit'
                                             color={'error'}> {formatSeconds(this.props.rallyData.countRemains)} </Typography>

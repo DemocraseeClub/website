@@ -2,6 +2,7 @@ import React from 'react';
 import {fade, withStyles} from '@material-ui/core/styles';
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import {withSnackbar} from 'notistack';
 
 class CitySelector extends React.Component {
     constructor(p) {
@@ -20,6 +21,10 @@ class CitySelector extends React.Component {
         this.setState({q:this.state.city.name})
     }
 
+    onFocus(e) {
+        this.props.enqueueSnackbar('City search still in development');
+    }
+
     onSelect(city) {
         this.setState({city: city});
         // dispatch new City ID
@@ -35,6 +40,7 @@ class CitySelector extends React.Component {
                 <InputBase
                     onBlur={e => this.onBlur(e)}
                     onChange={e => this.search(e)}
+                    onFocus={e => this.onFocus(e)}
                     value={this.state.q}
                     placeholder="Select your city"
                     classes={{
@@ -93,4 +99,4 @@ const useStyles = theme => ({
     }
 });
 
-export default withStyles(useStyles, {withTheme:true})(CitySelector);
+export default withStyles(useStyles, {withTheme:true})(withSnackbar(CitySelector));

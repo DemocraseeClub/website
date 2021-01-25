@@ -33,7 +33,6 @@ class Header extends React.Component {
                         <Grid item>
                             <CitySelector />
                         </Grid>
-
                     </Grid>
                 </Toolbar>
             </AppBar>
