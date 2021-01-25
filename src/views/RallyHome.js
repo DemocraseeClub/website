@@ -9,6 +9,7 @@ import {withStyles} from "@material-ui/core/styles";
 import RallyBlock from "../components/RallyBlock";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
 
 class RallyHome extends Component {
@@ -59,6 +60,9 @@ class RallyHome extends Component {
                                 </NavLink>
                             </Grid>
                         })}
+                        <Box mt={8}>
+                            <NavLink to={'/rally/templates'}><Button variant={'contained'} disableElevation={true}>Host a meeting</Button></NavLink>
+                        </Box>
                     </Box>
                 }
             </React.Fragment>
