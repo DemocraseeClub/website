@@ -1,0 +1,41 @@
+{
+  "title": "Preparing your data for development",
+  "start": "Tuesday, January 19th 4:30 pm - 6:45pm",
+  "profile": "https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
+  "city": "Oakland, CA",
+  "type": "meeting",
+  "template": "course.1",
+  "hosts": [
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png",
+      "name": "Sean Valentine"
+    }
+  ],
+  "speakers": [
+    {
+      "img": "https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png",
+      "name": "Eli Taylor"
+    },
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/ScottHanselman.jpeg",
+      "name": "Scott Hanselman"
+    }
+  ],
+  "lineItems": [
+    {
+      "nest": "Picking your Technology Stack",
+      "title": "Introduce & assess yourself",
+      "outline": "",
+      "seconds": 1200,
+      "countdown": 1136,
+      "html": "<p><u>Introduce yourself</u></p>\n<ol>\n  <li>Name, Project</li>\n  <li>Pick your preferred leadership role beyond CEO: (ex. CTO, CFO, Art Director, Marketing Manager, Product Manager, ?)</li>\n  <li>If you could have any super power, what would it be?</li>\n</ol>\n<p><u>Assess yourself</u></p>\n<ul>\n  <li>How confident do you feel about achieving your goals</li>\n  <li>How confident do you feel you can build your app on-time and with this budget?</li>\n</ul>"
+    },
+    {
+      "nest": "Picking your Technology Stack",
+      "title": "Picking a development methodology",
+      "html": "<p><a href=\"https://www.synopsys.com/blogs/software-security/top-4-software-development-methodologies/\" target=\"_blank\">Methodologies</a> for the Software Development Life Cycle (SDLC)</p><ul><li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/waterfall-development.jpg\"/></figure>Waterfall</li> <li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/devops-small.jpg\"/></figure>DevOps / Agile</li>  <li> <figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/rapidapplicationdevelopment-small.jpg\"/></figure>Rapid Application Development (RAD)</li></ul><figure><img style=\"width:100%; max-width:600px\" src=\"/images/dev-methodologies.jpg\"/></figure>",
+      "seconds": 1200,
+      "countdown": 1200
+    }
+  ]
+}

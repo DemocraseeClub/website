@@ -1,0 +1,40 @@
+{
+  "title": "Building Democrasee",
+  "desc": "Join us in building this site. We host regular meetings to discuss how to best manifest our dreams",
+  "profile": "/images/democrasee_logo_black.png",
+  "cover": null,
+  "type": "rally",
+  "wisedemo": ["Realizing Potential", "Big Picture", "Interaction", "Sustainability"],
+  "targets": ["Local Governments"],
+  "topics": ["Education", "Communication"],
+  "stakeholders": ["Citizens", "Elected Officials"],
+  "author": [
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+  ],
+  "hosts": [
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
+    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"}
+  ],
+  "research_json" : {
+
+  },
+  "meetings" : [
+    {
+      "title": "2020-10-26",
+      "link": "/rally/building-democrasee/meeting/2020-10-26",
+      "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
+    },
+    {
+      "title": "2020-11-14",
+      "link": "/rally/building-democrasee/meeting/2020-11-14",
+      "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
+    },
+    {
+      "title": "2020-11-19",
+      "link": "/rally/building-democrasee/meeting/2020-11-19",
+      "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
+    }
+  ]
+}

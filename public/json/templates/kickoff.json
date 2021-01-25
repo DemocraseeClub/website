@@ -1,16 +1,73 @@
 {
   "title": "A Kickoff meeting title",
   "start": "tomorrow",
-  "img": false,
+  "profile": false,
   "videolink": false,
   "city": "My City",
   "type": "rally",
-  "moderators": [],
+  "template": "kickoff",
+  "hosts": [],
   "speakers": [],
   "lineItems": [
     {
-      "nest": "Write your main subject title",
-      "title": "Write your agenda item title",
+      "nest": "Icebreaker Introductions",
+      "title": "Who Are we?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Problem",
+      "title": "Why we're each here",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Problem",
+      "title": "Why this rally stared",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Problem",
+      "title": "Why we care",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Questions",
+      "title": "What we'll do together",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Questions",
+      "title": "What we know",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Questions",
+      "title": "How might we....",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Next Steps",
+      "title": "What we need to do",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    },
+    {
+      "nest": "Next Steps",
+      "title": "Who will do it",
       "outline": "",
       "seconds": 1200,
       "html": "Some agenda item contents"

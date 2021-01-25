@@ -15,7 +15,6 @@ import {withSnackbar} from 'notistack';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
 import HtmlEditor from "./HtmlEditor";
-// import ResizePanel from "react-resize-panel";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // import SvgIcon from '@material-ui/core/SvgIcon';
@@ -147,7 +146,7 @@ class AgendaItem extends React.Component {
                            StepIconComponent={QontoStepIcon}
                            StepIconProps={curItem}>
                     <div className={classes.stepLabel}>
-                        <Typography className={classes.stepLabelText} variant={'h5'}>{curItem.title}</Typography>
+                        <Typography style={{flexGrow:1}} className={classes.stepLabelText} variant={'h5'}>{curItem.title}</Typography>
                         {this.props.editMode === true ? <AgendaItemForm item={curItem} index={index} classes={classes} dispatch={this.props.dispatch}/> : null}
                     </div>
                 </StepLabel>

@@ -6,6 +6,9 @@ private.txt
 
 src/Draftail
 
+*.mov
+*.mp4
+
 # dependencies
 /node_modules
 /.pnp

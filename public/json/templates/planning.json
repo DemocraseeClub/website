@@ -1,11 +1,12 @@
 {
   "title": "A Planning meeting title",
   "start": "tomorrow",
-  "img": false,
+  "profile": false,
   "videolink": false,
   "city": "My City",
   "type": "rally",
-  "moderators": [],
+  "template": "planning",
+  "hosts": [],
   "speakers": [],
   "lineItems": [
     {

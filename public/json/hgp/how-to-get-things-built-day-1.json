@@ -1,11 +1,11 @@
 {
-  "title": "How to get things built",
+  "title": "How to get things built (or find someone who can)",
   "start": "Tuesday, January 19th 4:30 pm - 6:45pm",
   "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
-  "videolink": "https://meet.google.com/btm-hovc-tds",
   "city": "Oakland, CA",
-  "type": "rally",
-  "moderators": [
+  "type": "meeting",
+  "template": "course.1",
+  "hosts": [
     {
       "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png",
       "name": "Sean Valentine"
@@ -28,12 +28,14 @@
       "outline": "",
       "seconds": 1200,
       "countdown": 1136,
+      "tools" : ["gdocs"],
       "html": "<p><u>Introduce yourself</u></p>\n<ol>\n  <li>Name, Project</li>\n  <li>Pick your preferred leadership role beyond CEO: (ex. CTO, CFO, Art Director, Marketing Manager, Product Manager, ?)</li>\n  <li>If you could have any super power, what would it be?</li>\n</ol>\n<p><u>Assess yourself</u></p>\n<ul>\n  <li>How confident do you feel about achieving your goals</li>\n  <li>How confident do you feel you can build your app on-time and with this budget?</li>\n</ul>"
     },
     {
       "nest": "Picking your Technology Stack",
       "title": "Picking a development methodology",
       "html": "<p><a href=\"https://www.synopsys.com/blogs/software-security/top-4-software-development-methodologies/\" target=\"_blank\">Methodologies</a> for the Software Development Life Cycle (SDLC)</p><ul><li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/waterfall-development.jpg\"/></figure>Waterfall</li> <li><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/devops-small.jpg\"/></figure>DevOps / Agile</li>  <li> <figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/rapidapplicationdevelopment-small.jpg\"/></figure>Rapid Application Development (RAD)</li></ul><figure><img style=\"width:100%; max-width:600px\" src=\"/images/dev-methodologies.jpg\"/></figure>",
+      "tools" : ["private"],
       "seconds": 1200,
       "countdown": 1200
     },
@@ -42,6 +44,7 @@
       "title": "Identify project dependencies",
       "html": "<p>Where does your primary data come from?</p>\n<ul>\n  <li>End users?</li>\n  <li>You or your service providers?</li>\n  <li>Some company or goverment agency?</li>\n  <li>A crawler?</li>\n</ul>\n<p>Do you need strong admin editorial tools / complex permissions?</p>\n<p>Do you require a single search field over traditional navigation?</p>",
       "outline": "",
+      "tools" : ["gsheets"],
       "seconds": 1200,
       "countdown": 1200
     },
@@ -49,6 +52,7 @@
       "nest": "Picking your Technology Stack",
       "title": "Picking where to start",
       "html": "<ul>\n  <li>Data</li>\n  <li>API</li>\n  <li>Interface</li>\n</ul>",
+      "tools" : ["gsheets"],
       "seconds": 1200,
       "countdown": 1200
     },
@@ -57,6 +61,7 @@
       "title": "Picking services and tools",
       "html": "<p>Front-End Libraries</p>\n<ul>\n  <li>Web: React vs. Angular, Vue...?</li>\n  <li>Mobile: React Native vs. native platform SDKs</li><li>IoT: Node-Red, ... ?</ul>\n<p>Back-End Content Management Systems (CMS)</p>\n<ul>\n  <li><a target='_blank' href=\"https://www.drupal.org/developers\">Drupal 8</a>+ (php + mysql)</li>\n  <li><a target='_blank' href=\"https://www.keystonejs.com/\">KeystoneJS</a> (nodejs + mongo)</li>\n  <li>Java, Ruby, Python, .Net, ...?</li>\n</ul>\n<p>Deployment</p>\n<ul>\n  <li>Heroku / Firebase (guarantees portability, requires external storage)</li>\n  <li>Google Cloud Platform / AWS (guarantees scalability)</li>\n  <li>GoDaddy / Ionos (cheap)</li>\n</ul>",
       "outline": "",
+      "tools" : ["gsheets"],
       "seconds": 300,
       "countdown": 300
     },

@@ -72,7 +72,7 @@ export const entityData = (url) => {
         dispatch(entityDataFailure(msg));
       } else {
         dispatch(entityDataSuccess(res.data));
-        if (res.data.type === 'rally') {
+        if (res.data.type === 'meeting') {
           dispatch(initCounter());
         }
         tdata.verb = 'view';
