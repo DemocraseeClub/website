@@ -1,0 +1,20 @@
+{
+  "title": "A course meeting title",
+  "start": "tomorrow",
+  "profile": false,
+  "videolink": false,
+  "city": "My City",
+  "type": "meeting",
+  "template": "action",
+  "hosts": [],
+  "speakers": [],
+  "lineItems": [
+    {
+      "nest": "Write your main subject title",
+      "title": "Write your agenda item title",
+      "outline": "",
+      "seconds": 1200,
+      "html": "Some agenda item contents"
+    }
+  ]
+}

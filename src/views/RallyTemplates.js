@@ -1,12 +1,6 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-// import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import {rallyStyles} from '../Util/ThemeUtils';
 import {withRouter} from "react-router";
@@ -27,28 +21,35 @@ class RallyTemplates extends React.Component {
                     <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/kickoff`)}>
                         <div>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Kickoff</Typography>
-                            <Typography variant={'body1'}>Choose this rally type to get started</Typography>
+                            <Typography variant={'body1'}>Choose this template to get started</Typography>
                         </div>
                         <Typography variant={'caption'}>diversity ● big picture ● caring</Typography>
                     </Box>
                     <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/brainstorm`)}>
                         <div>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Brainstorming</Typography>
-                            <Typography variant={'body1'}>Choose this rally type if you want to gather all ideas, aka diverge</Typography>
+                            <Typography variant={'body1'}>Choose this template if you want to gather all ideas, aka diverge</Typography>
                         </div>
                         <Typography variant={'caption'}>interaction ● diversity ● big picture</Typography>
                     </Box>
                     <Box item  className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/planning`)}>
                         <div>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Planning</Typography>
-                            <Typography variant={'body1'}>Choose this rally type when you’re ready to plan</Typography>
+                            <Typography variant={'body1'}>Choose this template when you’re ready to plan</Typography>
                         </div>
                         <Typography variant={'caption'}>interaction ● sustainability ● caring</Typography>
                     </Box>
                     <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/action`)}>
                         <div>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Action plan</Typography>
-                            <Typography variant={'body1'}>Choose this rally type to get started</Typography>
+                            <Typography variant={'body1'}>Choose this template to guide your conversation towards concrete action</Typography>
+                        </div>
+                        <Typography variant={'caption'}>action ● realizing potential</Typography>
+                    </Box>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/course`)}>
+                        <div>
+                            <Typography variant={'h2'} className={classes.stepLabelText}>Course</Typography>
+                            <Typography variant={'body1'}>Choose this template to write up a lesson plan for screen and document sharing</Typography>
                         </div>
                         <Typography variant={'caption'}>action ● realizing potential</Typography>
                     </Box>

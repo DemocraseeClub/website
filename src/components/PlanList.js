@@ -1,14 +1,10 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
-import Check from '@material-ui/icons/CheckBox';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import StopIcon from '@material-ui/icons/PauseCircleFilled';
-import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
 import VideoCall from '@material-ui/icons/VideoCall';
@@ -19,74 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MediaRecorder from "./MediaRecorder";
 import {countDown} from "../redux/entityDataReducer";
 import AgendaItem from "./AgendaItem";
-
-const useQontoStepIconStyles = makeStyles({
-    root: {
-        color: '#eaeaf0',
-        display: 'flex',
-        height: 22,
-        alignItems: 'center',
-    },
-    active: {
-        color: '#784af4',
-    },
-    circle: {
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        backgroundColor: 'currentColor',
-    },
-    completed: {
-        color: '#784af4',
-        zIndex: 1,
-        fontSize: 18,
-    },
-    timer: {
-        fontSize: 11,
-        fontWeight: 800,
-        textAlign: 'center',
-        display: 'block',
-        textIndent: '-6px'
-    }
-});
-
-function QontoStepIcon(props) {
-    const classes = useQontoStepIconStyles();
-    const {status, countdown} = props;
-
-    let color = status === 'active' ? 'secondary' : 'primary';
-
-    if (typeof countdown !== 'number') return <div className={classes.circle}/>
-
-    return (
-        <div>
-            {status === 'completed' ? <Check className={classes.completed} color={color}/> : <Unchecked color={color}/>}
-            <span className={classes.timer}>{formatSeconds(countdown)}</span>
-        </div>
-    );
-}
-
-QontoStepIcon.propTypes = {
-    status: PropTypes.string,
-    active: PropTypes.bool,
-    completed: PropTypes.bool,
-};
-
-QontoStepIcon.defaultProps = {
-    status: "inactive",
-    active: false,
-    completed: false
-}
-
-const formatSeconds = (sec, len) => {
-    if (!Number(sec)) sec = 0;
-    let date = new Date(null);
-    date.setSeconds(sec); // specify value of SECONDS
-    let time = date.toISOString().substr(11, 8);
-    if (time.indexOf('01:00:00') === 0) return '60:00';
-    if (time.indexOf('00:') === 0) time = time.substr('00:'.length);
-    return time;
-}
+import { formatSeconds} from "../Util/WindowUtils";
 
 class PlanList extends React.Component {
 

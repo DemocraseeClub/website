@@ -12,3 +12,13 @@ export function getParam(name, url, d) {
     if (vals.length === 1) return vals[0];
     return vals;
 };
+
+export const formatSeconds = (sec, len) => {
+    if (!Number(sec)) sec = 0;
+    let date = new Date(null);
+    date.setSeconds(sec); // specify value of SECONDS
+    let time = date.toISOString().substr(11, 8);
+    if (time.indexOf('01:00:00') === 0) return '60:00';
+    if (time.indexOf('00:') === 0) time = time.substr('00:'.length);
+    return time;
+}

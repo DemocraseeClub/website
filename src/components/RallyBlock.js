@@ -28,11 +28,11 @@ class RallyHome extends Component {
             return acc;
         }, [])
         if (tags.length > 0) {
-            tags = [<div>{tags.join(' ● ')}</div>]
+            tags = [<div key={'tags'}>{tags.join(' ● ')}</div>]
         }
         if (rally.type === 'meeting') {
             let href = document.location.pathname.split('/').slice(0, 3).join('/');
-            tags.push(<NavLink to={href}>Rally Series</NavLink>)
+            tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
         return (
@@ -64,10 +64,8 @@ class RallyHome extends Component {
                         <Box mt={4}>
                             <div>Hosts</div>
                             <AvatarGroup>
-                                {rally.hosts.map(r => <Avatar key={r.img} alt={r.name}
-                                                                                  src={r.img}/>)}
-                                {rally.speakers && rally.speakers.map(r => <Avatar key={r.img} alt={r.name}
-                                                                 src={r.img}/>)}
+                                {rally.hosts.map(r => <Avatar key={r.img} alt={r.name} src={r.img}/>)}
+                                {rally.speakers && rally.speakers.map(r => <Avatar key={r.img} alt={r.name} src={r.img}/>)}
                                 <Avatar alt="add" onClick={e => alert('TODO: Join rally')}>+</Avatar>
                             </AvatarGroup>
                         </Box>

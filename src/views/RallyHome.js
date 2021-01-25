@@ -38,8 +38,7 @@ class RallyHome extends Component {
 
     render() {
         if (this.props.entity.loading === true) return <ProgressLoading/>;
-        if (this.props.entity.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}>
-            <Typography variant='h2'>{this.props.entity.error}</Typography></div>;
+        if (this.props.entity.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography variant='h2'>{this.props.entity.error}</Typography></div>;
         if (!this.props.entity.apiData) return 'no results';
         const rally = this.props.entity.apiData;
 
@@ -54,7 +53,7 @@ class RallyHome extends Component {
                     <Box p={3}>
                         <Typography variant='subtitle1'>Meetings</Typography>
                         {rally.meetings.map(r => {
-                            return <Grid item>
+                            return <Grid item key={r.title}>
                                 <NavLink to={r.link}>
                                     <Typography variant={'h4'}>{r.title}</Typography>
                                 </NavLink>
@@ -66,9 +65,6 @@ class RallyHome extends Component {
                     </Box>
                 }
             </React.Fragment>
-
-
-
         );
     }
 

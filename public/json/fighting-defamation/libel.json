@@ -16,7 +16,7 @@
   ],
   "lineItems": [
     {
-      "title":"What is &ldquo;Defamation&rdquo;",
+      "title":"What is \"Defamation\"",
       "subtitle": "Slander & Libel",
       "nest": "Basic Definitions",
       "html": "<div>Slander</div> <div>Libel</div>",
@@ -25,13 +25,13 @@
     {
       "title":"What are valid defenses or requirements for suit",
       "nest": "Basic Definitions",
-      "html": "<div>&ldquo;Truth not opinion&rdquo;</div><div>&ldquo;Malicious Intent&rdquo;</div>",
+      "html": "<div>\"Truth not opinion\"</div><div>\"Malicious Intent\"</div>",
       "seconds": 180
     },
     {
       "title":"What are available damages & remedies",
       "nest": "Basic Definitions",
-      "html": "<div>&ldquo;Actual&rdquo;, &ldquo;Presumed&rdquo;, &ldquo;Punative&rdquo; damages</div><div>Mitigating damages through &ldquo;retractions / corrections&rdquo;</div>",
+      "html": "<div>\"Actual\", \"Presumed\", \"Punative\" damages</div><div>Mitigating damages through \"retractions / corrections\"</div>",
       "seconds": 180
     },
     {
