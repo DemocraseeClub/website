@@ -10,8 +10,6 @@ import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/c
 import configureStore, { history } from './redux/configureStore';
 const store = configureStore({});
 
-
-
 let appTheme = createMuiTheme({
     palette: {
         primary: {

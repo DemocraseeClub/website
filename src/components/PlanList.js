@@ -12,10 +12,12 @@ import VideoCamOff from '@material-ui/icons/VideocamOff';
 import {withSnackbar} from 'notistack';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import MediaRecorder from "./MediaRecorder";
 import {countDown} from "../redux/entityDataReducer";
 import AgendaItem from "./AgendaItem";
 import { formatSeconds} from "../Util/WindowUtils";
+import Room from "./Room";
+import { v1 as uuid } from "uuid";
+import {getParam} from "../Util/WindowUtils";
 
 class PlanList extends React.Component {
 
@@ -26,9 +28,10 @@ class PlanList extends React.Component {
             showAll: false,
             running: false,
             headers: [],
-            videoOpen: false,
+            roomId : getParam('roomId', document.location.hash, false),
             rallyData: p.rallyData || false
         }
+        this.state.videoOpen = this.state.roomId !== false;
 
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
@@ -45,6 +48,17 @@ class PlanList extends React.Component {
     handleReset = () => {
         this.setState({activeStep: 0});
     };
+
+    toggleRoom() {
+        let obj = {videoOpen:!this.state.videoOpen};
+        if (!this.state.roomId) {
+            obj.roomId = uuid();
+        }
+
+        this.setState(obj, e => {
+            document.location.hash = 'roomId='+this.state.roomId;
+        });
+    }
 
     runTimers() {
         if (this.state.activeStep === -1) {
@@ -116,12 +130,12 @@ class PlanList extends React.Component {
                             {this.state.videoOpen === false ?
                                 <Button style={{alignSelf: 'center'}} startIcon={<VideoCall/>} variant='contained'
                                         color={'secondary'}
-                                        onClick={e => this.setState({videoOpen: !this.state.videoOpen})}>Video
+                                        onClick={e => this.toggleRoom()}>Video
                                     Recorder</Button>
                                 :
                                 <Button style={{alignSelf: 'center'}} startIcon={<VideoCamOff/>} variant='contained'
                                         color={'secondary'}
-                                        onClick={e => this.setState({videoOpen: !this.state.videoOpen})}>Hide
+                                        onClick={e => this.toggleRoom()}>Hide
                                     Recorder</Button>
                             }
 
@@ -138,10 +152,10 @@ class PlanList extends React.Component {
                 </AppBar>
 
                 {this.state.videoOpen === true ?
-                    <div style={{position: 'absolute', width: '100%', right: 0}}><MediaRecorder/></div> : null}
+                    <div style={{position: 'absolute', width: '100%', right: 0}}><Room roomId={this.state.roomId} /></div> : null}
 
                 <div className='agendaList'>
-                    <Stepper activeStep={activeStep} orientation="vertical" style={{padding:'24px 14px 24px 14px'}}>
+                    <Stepper activeStep={activeStep} orientation="vertical" style={{padding:'24px 14px 24px 14px'}} >
                         {this.props.rallyData.lineItems.map((curItem, index) => {
                             let header = null;
                             if (curItem.nest.length > 0) {
