@@ -1,7 +1,8 @@
 export function getParam(name, url, d) {
-    if (!d && typeof d !== 'number') d = '';
+    if (d === undefined) d = '';
     if (!url) url = document.location.search;
     if (url.indexOf('?') > -1) url = url.slice(url.indexOf('?') + 1);
+    if (url.indexOf('#') === 0) url = url.slice(1);
     let parts = url.split('&');
     let vals =  [];
     parts.forEach(e => {
