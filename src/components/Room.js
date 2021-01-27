@@ -20,8 +20,6 @@ class Room extends React.Component {
             myRoom: null,
             enabled: {'video': false, 'audio': false, 'screen': false},
             roomsViewing: [],
-            screenStream: null,
-            camStream: null,
             roomFieldText: ''
         }
 
@@ -32,6 +30,8 @@ class Room extends React.Component {
         }
 
         this.peerConnection = null;
+        this.screenStream = null;
+        this.camStream = null;
 
         this.senders = [];
 
@@ -43,19 +43,18 @@ class Room extends React.Component {
     }
 
     displayLocalStreams() {
-        if (this.state.camStream && this.state.screenStream) {
-            // TODO: merge
-            this.myVideo.current.srcObject = this.state.camStream;
-        } else if (this.state.camStream) {
-            this.myVideo.current.srcObject = this.state.camStream;
-        } else if (this.state.screenStream) {
-            this.myVideo.current.srcObject = this.state.screenStream;
+        if (this.camStream && this.screenStream) {
+            // TODO: merge with https://github.com/t-mullen/video-stream-merger
+            this.myVideo.current.srcObject = this.camStream;
+        } else if (this.camStream) {
+            this.myVideo.current.srcObject = this.camStream;
+        } else if (this.screenStream) {
+            this.myVideo.current.srcObject = this.screenStream;
         }
-
     }
 
     async toggleCamMic(type) {
-        let enable = {video: this.state.enabled.video === true, audio: this.state.enabled.audio === true};
+        let enable = {video: this.state.enabled.video, audio: this.state.enabled.audio};
         enable[type] = !this.state.enabled[type];
         if (enable[type] === false) {
             this.setState({enabled: enable});
@@ -155,11 +154,11 @@ class Room extends React.Component {
         });
         // Listen for remote ICE candidates above
         if (owner === 'me') {
-            this.state.camStream.getTracks().forEach(track => {
-                this.senders.push(peerConnection.addTrack(track, this.state.camStream));
+            this.camStream.getTracks().forEach(track => {
+                this.senders.push(peerConnection.addTrack(track, this.camStream));
             });
-            this.setState({myRoom: roomRef.id});
             this.peerConnection = peerConnection;
+            this.setState({myRoom: roomRef.id});
         }
 
         return peerConnection;
@@ -167,13 +166,11 @@ class Room extends React.Component {
     }
 
     broadcastMedia() {
-        let remoteStream = this.state.roomsViewing[this.state.roomsViewing.length - 1];
-
         this.peerConnection.addEventListener('track', event => {
             console.log('Got remote track:', event.streams[0]);
             event.streams[0].getTracks().forEach(track => {
                 console.log('Add a track to the remoteStream:', track);
-                this.state.remoteStream.addTrack(track);
+                this.camStream.addTrack(track);
             });
         });
     }
@@ -197,8 +194,8 @@ class Room extends React.Component {
     async hangUp(e) {
         let cams = ['camStream', 'screenStream'];
         cams.forEach(cam => {
-            if (this.state[cam]) {
-                const tracks = this.state[cam].current.srcObject.getTracks();
+            if (this[cam]) {
+                const tracks = this[cam].getTracks();
                 tracks.forEach(track => {
                     track.stop();
                 });
@@ -209,26 +206,27 @@ class Room extends React.Component {
             this.peerConnection.close();
         }
 
-        this.myVideo.current.srcObject = null;
+        if (this.myVideo.current) {
+            this.myVideo.current.srcObject = null;
+        }
 
-        cams = ['myRoom'];
-        for (let i = 0; i < cams.length; i++) {
-            if (this.state[cams[i]]) {
-                const roomRef = this.db.collection('rooms').doc(this.state[cams[i]]);
-                const calleeCandidates = await roomRef.collection('calleeCandidates').get();
-                for (let l = 0; i < calleeCandidates.length; l++) {
-                    await calleeCandidates[l].ref.delete();
-                }
-                const callerCandidates = await roomRef.collection('callerCandidates').get();
-                for (let l = 0; i < callerCandidates.length; l++) {
-                    await callerCandidates[l].ref.delete();
-                }
-                await roomRef.delete();
+        if (this.state.myRoom) {
+            const roomRef = this.db.collection('rooms').doc(this.state.myRoom);
+            const calleeCandidates = await roomRef.collection('calleeCandidates').get();
+            for (let l = 0; l < calleeCandidates.length; l++) {
+                await calleeCandidates[l].ref.delete();
             }
+            const callerCandidates = await roomRef.collection('callerCandidates').get();
+            for (let l = 0; l < callerCandidates.length; l++) {
+                await callerCandidates[l].ref.delete();
+            }
+            await roomRef.delete();
         }
     }
 
     render() {
+        const isEnabled = this.state.enabled.video === true || this.state.enabled.audio === true || this.state.enabled.screen === true
+
         return (
             <React.Fragment>
                 <Toolbar>
@@ -241,40 +239,42 @@ class Room extends React.Component {
                                         <Button variant={'outline'} color={'secondary'} onClick={e => this.hangUp()}>Hangup</Button>
                                     </div>
                                     :
-                                    <Button variant={'contained'} color={'secondary'} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                                    <Button variant={'contained'} color={'secondary'}
+                                            disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
                             }
                         </Grid>
 
                         <Grid item >
                             <ButtonGroup>
-                            <Button endIcon={this.state.enabled.video ? <Check /> : <Unchecked />}
+                            <Button endIcon={this.state.enabled.video === true ? <Check /> : <Unchecked />}
                                     variant={'contained'}
-                                    color={this.state.enabled.video ? 'secondary' : 'primary'}
+                                    color={this.state.enabled.video === true ? 'secondary' : 'primary'}
                                     onClick={e => this.toggleCamMic('video')}>Camera</Button>
-                            <Button endIcon={this.state.enabled.audio ? <Check /> : <Unchecked />}
+                            <Button endIcon={this.state.enabled.audio === true ? <Check /> : <Unchecked />}
                                     variant={'contained'}
-                                    color={this.state.enabled.video ? 'secondary' : 'primary'}
+                                    color={this.state.enabled.audio === true ? 'secondary' : 'primary'}
                                     onClick={e => this.toggleCamMic('audio')}>Mic</Button>
-                            <Button endIcon={this.state.enabled.screen ? <Check /> : <Unchecked />}
+                            <Button endIcon={this.state.enabled.screen === true ? <Check /> : <Unchecked />}
                                     variant={'contained'}
-                                    color={this.state.enabled.video ? 'secondary' : 'primary'}
+                                    color={this.state.enabled.screen === true ? 'secondary' : 'primary'}
                                     onClick={e => this.shareScreen()}>Screen</Button>
                             </ButtonGroup>
                         </Grid>
 
                         <Divider orientation="vertical" style={{flexGrow:1}} />
-                        
+
                         <TextField
                             size={'small'}
                             label="Enter Room ID"
                             variant={'filled'}
                             color="secondary"
-                            value={this.roomFieldText}
-                            disabled={this.roomFieldText === ''}
+                            value={this.state.roomFieldText}
+
                             onChange={e => this.setState({roomFieldText: e.target.value})}
                             InputProps={{
                                 endAdornment: (
-                                    <Button onClick={e => this.joinRoom()} variant={'contained'} color={'secondary'} >Connect</Button>
+                                    <Button onClick={e => this.joinRoom()} variant={'contained'} color={'secondary'}
+                                            disabled={this.state.roomFieldText === ''}>Connect</Button>
                                 )
                             }}
                         />
@@ -282,12 +282,11 @@ class Room extends React.Component {
                     </Grid>
                 </Toolbar>
 
-                {this.state.camStream || this.state.screenStream ?
-                    <DragBox key={'mystream'} onClose={e => this.hangUp()}>
+                {this.myRoom ?
+                    <DragBox key={'mystream'} onClose={e => this.hangUp()} >
                         <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.myVideo} muted={true}/>
                     </DragBox> : ''}
-                {this.state.roomsViewing.map((o, i) =>
-                    <RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/>)}
+                {this.state.roomsViewing.map((o, i) => <RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/>)}
             </React.Fragment>
         );
     }
