@@ -13,5 +13,16 @@ const Config = {
         '*': ['id', 'style', 'data-toggle', 'data-target', 'aria-label', 'role', 'class'],
         'img': ['src', 'height', 'width', 'style']
     },
+    peerConfig : {
+        iceServers: [
+            {
+                urls: [
+                    'stun:stun1.l.google.com:19302',
+                    'stun:stun2.l.google.com:19302',
+                ],
+            },
+        ],
+        iceCandidatePoolSize: 10
+    }
 };
 export default Config;

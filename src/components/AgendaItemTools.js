@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SpeakerNotes from '@material-ui/icons/SpeakerNotes';
-import {withSnackbar} from 'notistack';
 import HtmlEditor from "./HtmlEditor";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-class AgendaItem extends React.Component {
+class AgendaItemTools extends React.Component {
 
     constructor(p) {
         super(p);
@@ -106,4 +105,4 @@ TabPanel.propTypes = {
 };
 
 
-export default withSnackbar(AgendaItem);
+export default AgendaItemTools;
