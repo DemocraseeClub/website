@@ -28,10 +28,9 @@ class PlanList extends React.Component {
             showAll: false,
             running: false,
             headers: [],
-            roomId : getParam('roomId', document.location.hash, false),
+            videoOpen : false,
             rallyData: p.rallyData || false
         }
-        this.state.videoOpen = this.state.roomId !== false;
 
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
@@ -50,14 +49,7 @@ class PlanList extends React.Component {
     };
 
     toggleRoom() {
-        let obj = {videoOpen:!this.state.videoOpen};
-        if (!this.state.roomId) {
-            obj.roomId = uuid();
-        }
-
-        this.setState(obj, e => {
-            document.location.hash = 'roomId='+this.state.roomId;
-        });
+        this.setState({videoOpen:!this.state.videoOpen} );
     }
 
     runTimers() {
@@ -100,7 +92,7 @@ class PlanList extends React.Component {
         return (
             <div className={classes.root} style={{marginTop: 20, textAlign: 'left'}}>
 
-                <AppBar position={'sticky'}>
+                <AppBar position={'sticky'} style={{maxHeight:130}}>
                     <Toolbar>
                         <div style={{
                             display: 'flex',
@@ -130,13 +122,11 @@ class PlanList extends React.Component {
                             {this.state.videoOpen === false ?
                                 <Button style={{alignSelf: 'center'}} startIcon={<VideoCall/>} variant='contained'
                                         color={'secondary'}
-                                        onClick={e => this.toggleRoom()}>Video
-                                    Recorder</Button>
+                                        onClick={e => this.toggleRoom()}>Enable Rooms</Button>
                                 :
                                 <Button style={{alignSelf: 'center'}} startIcon={<VideoCamOff/>} variant='contained'
                                         color={'secondary'}
-                                        onClick={e => this.toggleRoom()}>Hide
-                                    Recorder</Button>
+                                        onClick={e => this.toggleRoom()}>Close Rooms</Button>
                             }
 
                             {this.state.running === true ?
@@ -149,10 +139,9 @@ class PlanList extends React.Component {
 
                         </div>
                     </Toolbar>
+                    {this.state.videoOpen === true ? <Room /> : null}
                 </AppBar>
 
-                {this.state.videoOpen === true ?
-                    <div style={{position: 'absolute', width: '100%', right: 0}}><Room roomId={this.state.roomId} /></div> : null}
 
                 <div className='agendaList'>
                     <Stepper activeStep={activeStep} orientation="vertical" style={{padding:'24px 14px 24px 14px'}} >
