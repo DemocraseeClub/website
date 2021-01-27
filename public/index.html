@@ -28,26 +28,24 @@
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-firestore.js"></script>
+
 <script>
-    if (document.location.port.length === 0) { // ignore dev environments
-        firebase.initializeApp({
-            apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
-            authDomain: "democraseeclub.firebaseapp.com",
-            databaseURL: "https://democraseeclub.firebaseio.com",
-            projectId: "democraseeclub",
-            storageBucket: "democraseeclub.appspot.com",
-            messagingSenderId: "1051506392090",
-            appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
-            measurementId: "G-XYVYDC8L1N"
-        });
-        window.logUse = firebase.analytics();
-    } else {
-        window.logUse = {
-            logEvent: (e, d) => console.log('FB LOG ' + e, d),
-            setUserProperties: o => console.log('FB SET ', o)
-        };
-    }
+    window.fbApp = firebase.initializeApp({
+        apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
+        authDomain: "democraseeclub.firebaseapp.com",
+        databaseURL: "https://democraseeclub.firebaseio.com",
+        projectId: "democraseeclub",
+        storageBucket: "democraseeclub.appspot.com",
+        messagingSenderId: "1051506392090",
+        appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
+        measurementId: "G-XYVYDC8L1N"
+    });
+    window.logUse = window.fbApp.analytics();
+    // var defaultStorage = fbApp.storage();
+    // var defaultFirestore = fbApp.firestore();
 </script>
 </body>

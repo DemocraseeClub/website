@@ -91,7 +91,7 @@ class Rallies extends React.Component {
                                         Fighting Defamation
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Course touch for Alumni Venture Seed Fund
+                                        Can we improve laws to keep free speech constructive?
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
