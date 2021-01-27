@@ -2,23 +2,15 @@ import React from "react";
 import DragBox from "./DragBox";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-
-const configuration = {
-    iceServers: [
-        {
-            urls: [
-                'stun:stun1.l.google.com:19302',
-                'stun:stun2.l.google.com:19302',
-            ],
-        },
-    ],
-    iceCandidatePoolSize: 10
-};
+import RemoteVideo from "./RemoteVideo";
+import Config from "../Config";
+import Check from '@material-ui/icons/CheckBox';
+import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
+import {withSnackbar} from 'notistack';
 
 class Room extends React.Component {
 
@@ -26,65 +18,102 @@ class Room extends React.Component {
         super(p);
         this.state = {
             myRoom: null,
-            sharing:{},
+            enabled: {'video': false, 'audio': false, 'screen': false},
             roomsViewing: [],
-            localStream: null,
-            remoteStream: null,
-            roomFieldText : ''
+            screenStream: null,
+            camStream: null,
+            roomFieldText: ''
         }
-        this.db = window.firebase.firestore();
+
+        try {
+            this.db = window.firebase.firestore();
+        } catch (e) {
+            this.db = e => console.log(e);
+        }
+
         this.peerConnection = null;
-        this.senders = []
-        this.userVideo = React.createRef();
-        this.partnerVideo = React.createRef();
+
+        this.senders = [];
+
+        this.myVideo = React.createRef();
     }
 
-    async enableCamMic(e) {
-        let stream = await window.navigator.mediaDevices.getUserMedia({video: true, audio: true});
-        let remoteStream = new MediaStream();
-        this.setState({localStream: stream, remoteStream: remoteStream}, e => {
-            this.userVideo.current.srcObject = this.state.localStream;
-            if (this.partnerVideo.current) this.partnerVideo.current.srcObject = this.state.remoteStream;
-        })
+    async componentWillUnmount() {
+        await this.hangUp();
     }
 
-    shareScreen() {
-        navigator.mediaDevices.getDisplayMedia({cursor: true}).then(stream => {
+    displayLocalStreams() {
+        if (this.state.camStream && this.state.screenStream) {
+            // TODO: merge
+            this.myVideo.current.srcObject = this.state.camStream;
+        } else if (this.state.camStream) {
+            this.myVideo.current.srcObject = this.state.camStream;
+        } else if (this.state.screenStream) {
+            this.myVideo.current.srcObject = this.state.screenStream;
+        }
 
+    }
+
+    async toggleCamMic(type) {
+        let enable = {video: this.state.enabled.video === true, audio: this.state.enabled.audio === true};
+        enable[type] = !this.state.enabled[type];
+        if (enable[type] === false) {
+            this.setState({enabled: enable});
+        } else {
+            let stream = await window.navigator.mediaDevices.getUserMedia(enable);
+            this.setState({camStream: stream, enabled: enable}, () => this.displayLocalStreams());
+        }
+    }
+
+    async shareScreen() {
+        let enable = {...this.state.enabled}
+        enable.screen = !enable.screen;
+        if (enable.screen === false) {
+            this.setState({enabled: enable});
+        } else {
+            let stream = await navigator.mediaDevices.getDisplayMedia({cursor: true});
+
+            /*
             const screenTrack = stream.getTracks()[0];
             let vidsender = this.senders.find(sender => sender.track.kind === 'video');
             if (vidsender) {
                 vidsender.replaceTrack(screenTrack);
                 screenTrack.onended = function () {
-                    this.senders.find(sender => sender.track.kind === "video").replaceTrack(this.userStream.current.getTracks()[1]);
+                    this.senders.find(sender => sender.track.kind === "video").replaceTrack(this.screenVideo.current.getTracks()[1]);
                 }
             }
-            let st = {localStream: stream};
-            if (!this.state.remoteStream) {
-                st.remoteStream = new MediaStream();
-            }
-            this.setState(st, e => {
-                this.userVideo.current.srcObject = this.state.localStream;
-            })
-        })
+            */
+
+            this.setState({screenStream: stream, enabled: enable}, () => this.displayLocalStreams());
+        }
     }
 
-    async createRoom() {
+    async createRoom(owner) {
         const roomRef = await this.db.collection('rooms').doc();
 
-        console.log('Create PeerConnection with configuration: ', configuration);
-        this.peerConnection = new RTCPeerConnection(configuration);
-        this.registerPeerConnectionListeners();
-
-        this.state.localStream.getTracks().forEach(track => {
-            console.log(track);
-            this.senders.push(this.peerConnection.addTrack(track, this.state.localStream));
+        console.log('Create PeerConnection with configuration: ', Config.peerConfig);
+        let peerConnection = new RTCPeerConnection(Config.peerConfig);
+        peerConnection.addEventListener('icegatheringstatechange', () => {
+            console.log(`ICE gathering state changed: ${peerConnection.iceGatheringState}`);
         });
+
+        peerConnection.addEventListener('connectionstatechange', () => {
+            console.log(`Connection state change: ${peerConnection.connectionState}`);
+        });
+
+        peerConnection.addEventListener('signalingstatechange', () => {
+            console.log(`Signaling state change: ${peerConnection.signalingState}`);
+        });
+
+        peerConnection.addEventListener('iceconnectionstatechange ', () => {
+            console.log(`ICE connection state change: ${peerConnection.iceConnectionState}`);
+        });
+
 
         // Code for collecting ICE candidates below
         const callerCandidatesCollection = roomRef.collection('callerCandidates');
 
-        this.peerConnection.addEventListener('icecandidate', event => {
+        peerConnection.addEventListener('icecandidate', event => {
             if (!event.candidate) {
                 console.log('Got final candidate!');
                 return;
@@ -95,30 +124,21 @@ class Room extends React.Component {
         // Code for collecting ICE candidates above
 
         // Code for creating a room below
-        const offer = await this.peerConnection.createOffer();
-        await this.peerConnection.setLocalDescription(offer);
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
         console.log('Created offer:', offer);
 
         const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}};
         await roomRef.set(roomWithOffer);
-        this.setState({myRoom: roomRef.id})
-        console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
-
-        this.peerConnection.addEventListener('track', event => {
-            console.log('Got remote track:', event.streams[0]);
-            event.streams[0].getTracks().forEach(track => {
-                console.log('Add a track to the remoteStream:', track);
-                this.state.remoteStream.addTrack(track);
-            });
-        });
+        this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`);
 
         // Listening for remote session description below
         roomRef.onSnapshot(async snapshot => {
             const data = snapshot.data();
-            if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
+            if (!peerConnection.currentRemoteDescription && data && data.answer) {
                 console.log('Got remote description: ', data.answer);
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
-                await this.peerConnection.setRemoteDescription(rtcSessionDescription);
+                await peerConnection.setRemoteDescription(rtcSessionDescription);
             }
         });
         // Listening for remote session description above
@@ -129,196 +149,148 @@ class Room extends React.Component {
                 if (change.type === 'added') {
                     let data = change.doc.data();
                     console.log(`Got new remote ICE candidate: ${JSON.stringify(data)}`);
-                    await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
+                    await peerConnection.addIceCandidate(new RTCIceCandidate(data));
                 }
             });
         });
         // Listen for remote ICE candidates above
+        if (owner === 'me') {
+            this.state.camStream.getTracks().forEach(track => {
+                this.senders.push(peerConnection.addTrack(track, this.state.camStream));
+            });
+            this.setState({myRoom: roomRef.id});
+            this.peerConnection = peerConnection;
+        }
+
+        return peerConnection;
+
+    }
+
+    broadcastMedia() {
+        let remoteStream = this.state.roomsViewing[this.state.roomsViewing.length - 1];
+
+        this.peerConnection.addEventListener('track', event => {
+            console.log('Got remote track:', event.streams[0]);
+            event.streams[0].getTracks().forEach(track => {
+                console.log('Add a track to the remoteStream:', track);
+                this.state.remoteStream.addTrack(track);
+            });
+        });
     }
 
     joinRoom() {
-        let newRoom = this.state.roomFieldText;
-        let rooms = {...this.state.roomsViewing}
-        if (typeof rooms[newRoom] === 'undefined') {
-            rooms[newRoom] = null;
-            this.setState({roomsViewing: rooms}, e=> {
-                this.joinRoomById(newRoom);
-                this.setState({roomFieldText:''})
+        let newRoomId = this.state.roomFieldText;
+        let rooms = [...this.state.roomsViewing];
+        let i = rooms.find(o => o.roomId === newRoomId);
+        if (!i) {
+            let room = {roomId: newRoomId, stream: new MediaStream(), peer: null};
+            room.peer = (newRoomId === this.state.myRoom) ? this.peerConnection : this.createRoom('remote')
+            rooms.push(room);
+            this.setState({roomsViewing: rooms}, e => {
+                this.setState({roomFieldText: ''})
             })
         } else {
             console.log('room already exists');
         }
     }
 
-    async joinRoomById(room) {
-        const roomRef = this.db.collection('rooms').doc(room);
-        const roomSnapshot = await roomRef.get();
-        console.log('Got room:', roomSnapshot.exists);
-
-        if (roomSnapshot.exists) {
-            console.log('Create PeerConnection with configuration: ', configuration);
-            this.peerConnection = new RTCPeerConnection(configuration);
-            this.registerPeerConnectionListeners();
-            this.state.localStream.getTracks().forEach(track => {
-                this.peerConnection.addTrack(track, this.state.localStream);
-            });
-
-            // Code for collecting ICE candidates below
-            const calleeCandidatesCollection = roomRef.collection('calleeCandidates');
-            this.peerConnection.addEventListener('icecandidate', event => {
-                if (!event.candidate) {
-                    console.log('Got final candidate!');
-                    return;
-                }
-                console.log('Got candidate: ', event.candidate);
-                calleeCandidatesCollection.add(event.candidate.toJSON());
-            });
-            // Code for collecting ICE candidates above
-
-            this.peerConnection.addEventListener('track', event => {
-                console.log('Got remote track:', event.streams[0]);
-                event.streams[0].getTracks().forEach(track => {
-                    console.log('Add a track to the remoteStream:', track);
-                    this.state.remoteStream.addTrack(track);
-                });
-            });
-
-            // Code for creating SDP answer below
-            const offer = roomSnapshot.data().offer;
-            console.log('Got offer:', offer);
-            await this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-            const answer = await this.peerConnection.createAnswer();
-            console.log('Created answer:', answer);
-            await this.peerConnection.setLocalDescription(answer);
-
-            const roomWithAnswer = {
-                answer: {
-                    type: answer.type,
-                    sdp: answer.sdp,
-                },
-            };
-            await roomRef.update(roomWithAnswer);
-            // Code for creating SDP answer above
-
-            // Listening for remote ICE candidates below
-            roomRef.collection('callerCandidates').onSnapshot(snapshot => {
-                snapshot.docChanges().forEach(async change => {
-                    if (change.type === 'added') {
-                        let data = change.doc.data();
-                        console.log(`Got new remote ICE candidate: ${JSON.stringify(data)}`);
-                        await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
-                    }
-                });
-            });
-            // Listening for remote ICE candidates above
-        }
-    }
-
     async hangUp(e) {
-        const tracks = this.state.localStream.current.srcObject.getTracks();
-        tracks.forEach(track => {
-            track.stop();
-        });
-
-        if (this.state.remoteStream) {
-            this.state.remoteStream.getTracks().forEach(track => track.stop());
-        }
+        let cams = ['camStream', 'screenStream'];
+        cams.forEach(cam => {
+            if (this.state[cam]) {
+                const tracks = this.state[cam].current.srcObject.getTracks();
+                tracks.forEach(track => {
+                    track.stop();
+                });
+            }
+        })
 
         if (this.peerConnection) {
             this.peerConnection.close();
         }
 
-        this.userVideo.current.srcObject = null;
-        this.partnerVideo.current.srcObject = null;
+        this.myVideo.current.srcObject = null;
 
-        // Delete room on hangup
-        if (this.state.myRoom) {
-            const roomRef = this.db.collection('rooms').doc(this.state.myRoom);
-            const calleeCandidates = await roomRef.collection('calleeCandidates').get();
-            calleeCandidates.forEach(async candidate => {
-                await candidate.ref.delete();
-            });
-            const callerCandidates = await roomRef.collection('callerCandidates').get();
-            callerCandidates.forEach(async candidate => {
-                await candidate.ref.delete();
-            });
-            await roomRef.delete();
+        cams = ['myRoom'];
+        for (let i = 0; i < cams.length; i++) {
+            if (this.state[cams[i]]) {
+                const roomRef = this.db.collection('rooms').doc(this.state[cams[i]]);
+                const calleeCandidates = await roomRef.collection('calleeCandidates').get();
+                for (let l = 0; i < calleeCandidates.length; l++) {
+                    await calleeCandidates[l].ref.delete();
+                }
+                const callerCandidates = await roomRef.collection('callerCandidates').get();
+                for (let l = 0; i < callerCandidates.length; l++) {
+                    await callerCandidates[l].ref.delete();
+                }
+                await roomRef.delete();
+            }
         }
     }
 
-    registerPeerConnectionListeners() {
-        this.peerConnection.addEventListener('icegatheringstatechange', () => {
-            console.log(
-                `ICE gathering state changed: ${this.peerConnection.iceGatheringState}`);
-        });
-
-        this.peerConnection.addEventListener('connectionstatechange', () => {
-            console.log(`Connection state change: ${this.peerConnection.connectionState}`);
-        });
-
-        this.peerConnection.addEventListener('signalingstatechange', () => {
-            console.log(`Signaling state change: ${this.peerConnection.signalingState}`);
-        });
-
-        this.peerConnection.addEventListener('iceconnectionstatechange ', () => {
-            console.log(
-                `ICE connection state change: ${this.peerConnection.iceConnectionState}`);
-        });
-    }
-
     render() {
-        const {classes} = this.props;
         return (
             <React.Fragment>
                 <Toolbar>
-                        {!this.state.localStream ?
-                            <Grid container justify="center" alignItems="center" spacing={4}>
-                                <label>Enable: </label>
-                                <ButtonGroup size="small" aria-label="small outlined button group">
-                                    <Button size="small" onClick={e => this.enableCamMic()}>Camera</Button>
-                                    <Button size="small" onClick={e => this.enableCamMic()}>Mic</Button>
-                                    <Button size="small" onClick={e => this.shareScreen()}>Screen</Button>
-                                </ButtonGroup>
-                            </Grid>
-                            :
-                            <Grid container justify={'space-between'} alignItems="center">
-                                {this.state.myRoom ? <small>My Room ID: {this.state.myRoom}</small> : <Button variant={'filled'} onClick={e => this.createRoom()}>Broadcast</Button>}
-                                <Divider className={classes.divider} orientation="vertical" />
+                    <Grid container justify={'space-between'} alignItems="center">
 
-                                <div>
-                                    <TextField
-                                        label="Enter Room ID"
-                                        color="secondary"
-                                        value={this.roomFieldText}
-                                        onChange={e => this.setState({roomFieldText:e.target.value})}
-                                    />
-                                    <Button onClick={e => this.joinRoom()}>Connect</Button>
-                                </div>
-
-                                {this.state.roomsViewing.length > 0 ?
-                                    <Button variant={'outline'} onClick={e => this.hangUp()}>Hangup</Button>
+                        <Grid item style={{marginRight:10}}>
+                            { (this.state.myRoom) ?
+                                    <div>
+                                        <label>My Room: {this.state.myRoom}</label>
+                                        <Button variant={'outline'} color={'secondary'} onClick={e => this.hangUp()}>Hangup</Button>
+                                    </div>
                                     :
-                                    <Button variant={'outline'} onClick={e => this.hangUp()}>Stop</Button>
-                                }
-                            </Grid>
-                        }
+                                    <Button variant={'contained'} color={'secondary'} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                            }
+                        </Grid>
+
+                        <Grid item >
+                            <ButtonGroup>
+                            <Button endIcon={this.state.enabled.video ? <Check /> : <Unchecked />}
+                                    variant={'contained'}
+                                    color={this.state.enabled.video ? 'secondary' : 'primary'}
+                                    onClick={e => this.toggleCamMic('video')}>Camera</Button>
+                            <Button endIcon={this.state.enabled.audio ? <Check /> : <Unchecked />}
+                                    variant={'contained'}
+                                    color={this.state.enabled.video ? 'secondary' : 'primary'}
+                                    onClick={e => this.toggleCamMic('audio')}>Mic</Button>
+                            <Button endIcon={this.state.enabled.screen ? <Check /> : <Unchecked />}
+                                    variant={'contained'}
+                                    color={this.state.enabled.video ? 'secondary' : 'primary'}
+                                    onClick={e => this.shareScreen()}>Screen</Button>
+                            </ButtonGroup>
+                        </Grid>
+
+                        <Divider orientation="vertical" style={{flexGrow:1}} />
+                        
+                        <TextField
+                            size={'small'}
+                            label="Enter Room ID"
+                            variant={'filled'}
+                            color="secondary"
+                            value={this.roomFieldText}
+                            disabled={this.roomFieldText === ''}
+                            onChange={e => this.setState({roomFieldText: e.target.value})}
+                            InputProps={{
+                                endAdornment: (
+                                    <Button onClick={e => this.joinRoom()} variant={'contained'} color={'secondary'} >Connect</Button>
+                                )
+                            }}
+                        />
+
+                    </Grid>
                 </Toolbar>
-                {this.state.localStream || this.state.remoteStream ?
-                    <DragBox>
-                    {this.state.localStream ? <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.userVideo} muted={true}/> : false}
-                    {this.state.remoteStream && this.state.roomsViewing.length > 0 ? <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.partnerVideo}/> : false }
-                </DragBox> : ''}
+
+                {this.state.camStream || this.state.screenStream ?
+                    <DragBox key={'mystream'} onClose={e => this.hangUp()}>
+                        <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.myVideo} muted={true}/>
+                    </DragBox> : ''}
+                {this.state.roomsViewing.map((o, i) =>
+                    <RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/>)}
             </React.Fragment>
         );
     }
-
 }
 
-
-const useStyles = theme => ({
-    root: {
-        width: '100%',
-    }
-});
-
-export default withStyles(useStyles, {withTheme: true})(Room);
+export default withSnackbar(Room);

@@ -9,15 +9,12 @@ import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
 import VideoCall from '@material-ui/icons/VideoCall';
 import VideoCamOff from '@material-ui/icons/VideocamOff';
-import {withSnackbar} from 'notistack';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import {countDown} from "../redux/entityDataReducer";
 import AgendaItem from "./AgendaItem";
 import { formatSeconds} from "../Util/WindowUtils";
 import Room from "./Room";
-import { v1 as uuid } from "uuid";
-import {getParam} from "../Util/WindowUtils";
 
 class PlanList extends React.Component {
 
@@ -186,4 +183,4 @@ class PlanList extends React.Component {
 }
 
 
-export default withSnackbar(PlanList);
+export default PlanList;

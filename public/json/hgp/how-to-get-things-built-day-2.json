@@ -40,14 +40,14 @@
     {
       "nest": "Key Terms",
       "title": "Objects",
-      "html": "<p>Rallies, Meetings, Resources, Invites, Officials, Cities</p>",
+      "html": "<p>For this site, we have 6 primary 'objects': Rallies, Meetings, Resources, Invites, Officials, Cities</p>",
       "seconds": 600,
       "countdown": 600
     },
     {
       "nest": "Key Terms",
       "title": "Actions",
-      "html": "<p>Create/Add, Read/View, Update/Edit, Delete/Unpublish</p>\n<p><br></p>\n<p>Also maybe \"add to cart\", \"checkout\", \"like/unlike\", ...</p>",
+      "html": "Consider Actions as the things a typical user can do, not what your entire system can do. Examples include: <p>Create/Add, Read/View, Update/Edit, Delete/Unpublish</p>\n<p><br></p>\n<p>Also maybe \"add to cart\", \"checkout\", \"like/unlike\", ...</p>",
       "seconds": 1200,
       "countdown": 1200
     },

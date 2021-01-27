@@ -1,10 +1,7 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import {withSnackbar} from 'notistack';
-import Config from '../Config';
 import TextField from "@material-ui/core/TextField";
 
 class InlineEditable extends React.Component {
@@ -51,4 +48,4 @@ InlineEditable.propTypes = {
     editMode: PropTypes.bool.isRequired
 };
 
-export default withSnackbar(InlineEditable);
+export default InlineEditable;

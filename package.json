@@ -20,7 +20,6 @@
     "@material-ui/core": "^4.9.9",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.48",
-    "@material-ui/pickers": "^3.2.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -45,16 +44,14 @@
     "react-router-dom": "^5.2.0",
     "react-sanitized-html": "^2.0.0",
     "react-scripts": "3.4.3",
-    "react-video-recorder": "^3.17.1",
     "redux": "^4.0.5",
     "redux-immer": "^1.0.5",
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "sanitize-html": "^1.22.1",
-    "socket.io-client": "^3.1.0",
     "styled-components": "^5.2.1",
     "typescript": "^4.1.3",
-    "uuid": "^8.3.2"
+    "video-stream-merger": "^3.6.3"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts start",

@@ -10,7 +10,6 @@ import SanitizedHTML from 'react-sanitized-html';
 import PropTypes from 'prop-types';
 import Check from '@material-ui/icons/CheckBox';
 import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
-import {withSnackbar} from 'notistack';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
 import AgendaItemTools from "./AgendaItemTools";
@@ -164,4 +163,4 @@ class AgendaItem extends React.Component {
     }
 }
 
-export default withSnackbar(AgendaItem);
+export default AgendaItem;
