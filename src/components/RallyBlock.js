@@ -10,6 +10,7 @@ import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
 import Create from "@material-ui/icons/Create";
+import {withSnackbar} from "notistack";
 
 class RallyHome extends Component {
 
@@ -73,7 +74,7 @@ class RallyHome extends Component {
                         <Box mt={8}>
                             <Button startIcon={<Create/>} variant={'contained'}
                                     color={this.state.editMode ? 'primary' : 'secondary'}
-                                    onClick={e => this.setState({editMode: !this.state.editMode})}>Edit Rally</Button>
+                                    onClick={e => this.props.enqueueSnackbar('Sorry, editing the Rally is not ready yet.')}>Edit Rally</Button>
                         </Box>
 
                     </Grid>
@@ -84,4 +85,4 @@ class RallyHome extends Component {
     }
 }
 
-export default withStyles(rallyStyles, {withTheme: true})(RallyHome);
+export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(RallyHome));

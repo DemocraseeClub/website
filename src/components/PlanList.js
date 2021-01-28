@@ -25,7 +25,7 @@ class PlanList extends React.Component {
             showAll: false,
             running: false,
             headers: [],
-            videoOpen : false,
+            videoOpen : true,
             rallyData: p.rallyData || false
         }
 

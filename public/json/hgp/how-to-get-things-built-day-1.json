@@ -25,17 +25,20 @@
     {
       "nest": "Picking your Technology Stack",
       "title": "Introduce & assess yourself",
-      "outline": "",
       "seconds": 1200,
-      "countdown": 1136,
-      "tools" : ["gdocs"],
+      "countdown": 1200,
+      "tools": [
+        "gdocs"
+      ],
       "html": "<p><u>Introduce yourself</u></p>\n<ol>\n  <li>Name, Project</li>\n  <li>Pick your preferred leadership roles beyond CEO: (CTO, CFO, Art Director, Marketing Manager, Product Manager, ?)</li>\n  <li>If you could have any super power, what would it be?</li>\n</ol>\n<p><u>Assess yourself</u></p>\n<ul>\n  <li>How confident do you feel about achieving your goals</li>\n  <li>How confident do you feel you can build your app on-time and with this budget?</li>\n</ul>"
     },
     {
       "nest": "Picking your Technology Stack",
       "title": "Picking a development methodology",
       "html": "<p><a href=\"https://www.synopsys.com/blogs/software-security/top-4-software-development-methodologies/\" target=\"_blank\">Methodologies</a> for the Software Development Life Cycle (SDLC)</p><div><p><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/waterfall-development.jpg\"/></figure><em style='width:100px'>Waterfall</em>:  Build what you think your customers want.</p> <p><figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/devops-small.jpg\"/></figure><em>DevOps / Agile</em>: Build only what your can prove your customers want.</p>  <p> <figure style=\"display: inline-block;vertical-align: middle;\"><img style=\"height:40px\" src=\"https://www.synopsys.com/blogs/software-security/wp-content/uploads/2017/03/rapidapplicationdevelopment-small.jpg\"/></figure><em>Rapid Application Development (RAD)</em>Build as you think.</p></div><figure><img style=\"width:100%; max-width:600px\" src=\"/images/dev-methodologies.jpg\"/></figure>",
-      "tools" : ["private"],
+      "tools": [
+        "private"
+      ],
       "seconds": 1200,
       "countdown": 1200
     },
@@ -43,8 +46,9 @@
       "nest": "Picking your Technology Stack",
       "title": "Identify project dependencies",
       "html": "<p>Where does your primary data come from?</p>\n<ul>\n  <li>End users?</li>\n  <li>You or your service providers?</li>\n  <li>Some company or goverment agency?</li>\n  <li>A crawler?</li>\n</ul>\n<p>Do you need strong admin editorial tools / complex permissions?</p>\n<p>Do you require a single search field over traditional navigation?</p>",
-      "outline": "",
-      "tools" : ["gsheets"],
+      "tools": [
+        "gsheets"
+      ],
       "seconds": 1200,
       "countdown": 1200
     },
@@ -52,7 +56,9 @@
       "nest": "Picking your Technology Stack",
       "title": "Picking where to start",
       "html": "<ul>\n  <li>Data</li>\n  <li>API</li>\n  <li>Interface</li>\n</ul>",
-      "tools" : ["gsheets"],
+      "tools": [
+        "gsheets"
+      ],
       "seconds": 1200,
       "countdown": 1200
     },
@@ -60,15 +66,15 @@
       "nest": "Picking your Technology Stack",
       "title": "Picking services and tools",
       "html": "<p>Front-End Libraries</p>\n<ul>\n  <li>Web: React vs. Angular, Vue...?</li>\n  <li>Mobile: React Native vs. native platform SDKs</li><li>IoT: Node-Red, ... ?</ul>\n<p>Back-End Content Management Systems (CMS)</p>\n<ul>\n  <li><a target='_blank' href=\"https://www.drupal.org/developers\">Drupal 8</a>+ (php + mysql)</li>\n  <li><a target='_blank' href=\"https://www.keystonejs.com/\">KeystoneJS</a> (nodejs + mongo)</li>\n  <li>Java, Ruby, Python, .Net, ...?</li>\n</ul>\n<p>Deployment</p>\n<ul>\n  <li>Heroku / Firebase (guarantees portability, requires external storage)</li>\n  <li>Google Cloud Platform / AWS (guarantees scalability)</li>\n  <li>GoDaddy / Ionos (cheap)</li>\n</ul>",
-      "outline": "",
-      "tools" : ["gsheets"],
+      "tools": [
+        "gsheets"
+      ],
       "seconds": 300,
       "countdown": 300
     },
     {
       "title": "Writing your job description",
       "nest": "Recruiting Talent",
-      "outline": "",
       "seconds": 900,
       "countdown": 900,
       "html": "<p><em>Expectations</em></p>\n<ul>\n  <li>Product description</li>\n  <li>Required Frameworks</li>\n  <li>Budget (hourly / flat-rate)</li>\n</ul>\n<p><em>Incentives</em></p>\n<ul>\n  <li>Bonuses</li>\n  <li>Vested Equity</li>\n  <li>Roadmap</li>\n</ul>"
@@ -76,7 +82,6 @@
     {
       "nest": "Recruiting Talent",
       "title": "Recruiting",
-      "outline": "",
       "seconds": 900,
       "countdown": 900,
       "html": "<p>Searching your private network</p>\n<ul>\n  <li>Social media</li>\n  <li>University CS departments</li>\n</ul>\n<p>Searching developers by online code forums</p>\n<ul>\n  <li><a target='_blank' href=\"https://stackexchange.com/sites#technology\">StackExchange</a> networks (<a target='_blank' href=\"https://stackoverflow.com/users/624160/e-a-t\">StackOverflow</a>)</li>\n  <li><a target='_blank' href=\"https://guides.github.com/features/issues/\">Github Issues</a></li>\n  <li><a target='_blank' href=\"https://leetcode.com/discuss/career?currentPage=1&amp;orderBy=hot&amp;query=\">Leetcode</a></li>\n</ul>\n<p><a target='_blank' href=\"https://www.upwork.com/\">Upwork.com</a> / <a target='_blank' href=\"https://www.toptal.com/\">TopTal.com</a> / ?</p>\n<ul>\n  <li>Local</li>\n  <li>US</li>\n  <li>Americas</li>\n  <li><a target='_blank' href=\"https://www.timeanddate.com/time/map/\">Global</a></li>\n</ul>\n<figure><img style=\"width:100%\" src=\"https://c.tadst.com/gfx/600x400/timezone-map5.png?1\"/></figure>"
@@ -84,7 +89,6 @@
     {
       "title": "Testing tools",
       "nest": "Interviewing",
-      "outline": "",
       "seconds": 300,
       "countdown": 300,
       "html": "<p><a href=\"https://codesignal.com/\" target=\"_blank\">CodeSignal</a></p>\n<p>https://codesignal.com/blog/measuring-dev-skills/how-to-measure-senior-developers-skills/</p>\n<p>https://codesignal.com/blog/data-driven-recruiting/quantifying-technical-skills/</p>\n<p><a href=\"https://www.codility.com/\" target=\"_blank\">Codility</a></p>\n<p><br></p>\n<figure><iframe src=\"https://www.youtube.com/embed/Qd1fz0gG1y4\">&nbsp;</iframe></figure>\n<p><br></p>"
@@ -92,15 +96,13 @@
     {
       "title": "Screen Sharing",
       "nest": "Interviewing",
-      "outline": "",
       "seconds": 600,
       "countdown": 600,
-      "html": "<p>Review <a target='_blank' href=\"https://github.com/shanselman\">Github account</a> history and repositories.</p>\n<ul>\n  <li>Does age / languages of repositories match up with claimed experience?</li>\n  <li>How often do they commit?</li>\n  <li>Make sure repos aren't just forks of other's work</li>\n</ul>\n<p>Request debugging demonstation:</p>\n<ul>\n  <li>Do they use a modern IDE like <a target='_blank' href=\"https://www.jetbrains.com/\">JetBrains</a> products or Eclipse / Visual Studio / ?</li><li>Do they use testing tools like <a target='_blank' href=\"https://www.postman.com/\">Postman</a></li>  <li>Can they set runtime breakpoints in their code?</li>\n</ul>\n<figure><img style=\"width:100%\"  src=\"https://blog.jetbrains.com/wp-content/uploads/2018/01/webstorm-stopping-on-a-breakpoint.png\"/></figure>"
+      "html": "<p>Review <a href=\"https://github.com/shanselman\" target=\"_blank\">Github account</a> history and repositories.</p>\n<ul>\n  <li>Does age / languages of repositories match up with claimed experience?</li>\n  <li>How often do they <a href=\"https://github.com/eliataylor/democrasee-wp/commits/main\">commit</a>?</li>\n  <li>Make sure repos aren't just <a href=\"https://github.com/eliataylor/node\">forks</a> of other's work</li>\n</ul>\n<p>Request debugging demonstation:</p>\n<ul>\n  <li>Do they use a modern IDE like <a href=\"https://www.jetbrains.com/\" target=\"_blank\">JetBrains</a> products or Eclipse / Visual Studio / ?</li>\n  <li>Do they use testing tools like <a href=\"https://www.postman.com/\" target=\"_blank\">Postman</a></li>\n  <li>Can they set runtime breakpoints in their code?</li>\n</ul>\n<figure><img src=\"https://blog.jetbrains.com/wp-content/uploads/2018/01/webstorm-stopping-on-a-breakpoint.png\" style=\"width: 100%\">📷</img>📷</figure>"
     },
     {
       "title": "Feature Requests",
       "nest": "Managing & Tracking Tasks",
-      "outline": "",
       "seconds": 300,
       "countdown": 300,
       "html": "<p><a href=\"https://www.youtube.com/watch?v=TJlYiMp8FuY\" target=\"_blank\">Github Issues</a>, Jira, Trillo, Bugzilla, ...</p>\n<p><br></p>\n<p>Request Structure</p>\n<ul>\n  <li>Title</li>\n  <li>Description</li>\n  <li>Component / Label</li>\n  <li>Priority / Deadline</li>\n  <li>Assignee</li>\n</ul>\n<figure><br></figure>\n<p>Default <a href=\"https://docs.github.com/en/github/managing-your-work-on-github/managing-labels\" target=\"_blank\">Label</a> Categories. Adding new ones:&nbsp;</p>\n<ul>\n  <li>Design</li>\n  <li>Copywriting</li>\n  <li>Navigation</li>\n  <li>Form Submissions (on success)</li>\n  <li>Form Failures (error handling)</li>\n  <li>?</li>\n</ul>"
@@ -115,58 +117,44 @@
     {
       "nest": "Drafting a Contract",
       "title": "Demanding Documentation & Transparency",
-      "outline": "",
       "seconds": 300,
       "countdown": 300,
-      "html": "<p>Daily branch commits!!!</p>\n<p><br></p>\n<figure><img src=\"https://wac-cdn.atlassian.com/dam/jcr:61ccc620-5249-4338-be66-94d563f2843c/05%20(2).svg?cdnVersion=1410\" style=\"width: 100%\">&nbsp;</img></figure>\n<p><br></p>\n<p>Use <a href=\"https://chrome.google.com/webstore/detail/awesome-screenshot-screen/nlipoenfbbikpbjkfpfillcgkoblgpmj\" target=\"_blank\">screen recording tools</a></p>\n<p>Upwork's work diary</p>\n<figure><img src=\"https://i.ytimg.com/vi/qAXbzLUcjic/maxresdefault.jpg\" style=\"width: 100%\">📷</img></figure>"
+      "html": "<p>Daily branch commits!!! - Provides transparency and proof of dev's effort if they need an extension.</p>\n<figure><img src=\"https://wac-cdn.atlassian.com/dam/jcr:61ccc620-5249-4338-be66-94d563f2843c/05%20(2).svg?cdnVersion=1410\" style=\"width: 100%\">📷</img></figure>\n<p>Use <a href=\"https://chrome.google.com/webstore/detail/awesome-screenshot-screen/nlipoenfbbikpbjkfpfillcgkoblgpmj\" target=\"_blank\">screen recording tools</a></p>\n<p>Upwork's work diary</p>\n<figure><img src=\"https://i.ytimg.com/vi/qAXbzLUcjic/maxresdefault.jpg\" style=\"width: 100%\">📷</img>📷</figure>"
     },
     {
       "title": "Deliverables & Deadlines",
       "nest": "Drafting a Contract",
-      "outline": [
-        "Definitions",
-        "Benchmarks",
-        "Milestones",
-        "Payment Schedule",
-        "Ownership",
-        "Non-Disclosure",
-        "Standard clauses"
-      ],
       "seconds": 3600,
-      "countdown": 3600
+      "countdown": 3600,
+      "html": "<ul>\n  <li>Definitions</li>\n  <li>Benchmarks</li>\n  <li>Milestones&nbsp;</li>\n  <li>Deliverable Formats (ex. a <a href=\"https://documenter.getpostman.com/view/8140651/SVYnQft9?version=latest#why-use-the-wordpress-rest-api\">Postman Collection</a>)</li>\n  <li>Payment Schedule</li>\n  <li>Ownership</li>\n  <li>Non-Disclosure</li>\n  <li>Standard clauses</li>\n</ul>"
     }
   ],
-  "countRemains": 12236,
+  "countRemains": 12300,
   "countScheduled": 12300,
   "headers": [
     {
-      "label": "Introductions",
-      "order": 0,
-      "count": 1
-    },
-    {
       "label": "Picking your Technology Stack",
-      "order": 1,
-      "count": 4
+      "order": 0,
+      "count": 5
     },
     {
       "label": "Recruiting Talent",
-      "order": 2,
+      "order": 1,
       "count": 2
     },
     {
       "label": "Interviewing",
-      "order": 3,
+      "order": 2,
       "count": 2
     },
     {
       "label": "Managing & Tracking Tasks",
-      "order": 4,
+      "order": 3,
       "count": 2
     },
     {
       "label": "Drafting a Contract",
-      "order": 5,
+      "order": 4,
       "count": 2
     }
   ]
