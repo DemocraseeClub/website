@@ -78,6 +78,11 @@ QontoStepIcon.defaultProps = {
 
 class AgendaItem extends React.Component {
 
+    constructor(p) {
+        super(p);
+        this.state = {forceShow:p.forceShow};
+    }
+
     renderOutline(outline, indent) {
         if (typeof outline === 'string') {
             return outline;
@@ -98,11 +103,12 @@ class AgendaItem extends React.Component {
         const {classes, curItem, index, activeStep} = this.props;
 
         return (
-            <Step key={'step-' + index} active={this.props.forceShow === true || activeStep === index ? true : undefined} style={{marginBottom:10}} >
+            <Step key={'step-' + index} active={this.state.forceShow === true || activeStep === index ? true : undefined} style={{marginBottom:10}} >
                 {this.props.header}
                 <StepLabel className={classes.stepTimeBlock}
                            StepIconComponent={QontoStepIcon}
-                           StepIconProps={curItem}>
+                           StepIconProps={curItem}
+                           onClick={() => this.setState({forceShow:!this.state.forceShow})} >
                     <div className={classes.stepLabel}>
                         <Typography style={{flexGrow:1}} className={classes.stepLabelText} variant={'h5'}>{curItem.title}</Typography>
                         {this.props.editMode === true ? <AgendaItemForm item={curItem} index={index} classes={classes} dispatch={this.props.dispatch}/> : null}

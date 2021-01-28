@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 
 function PaperComponent(props) {
     return (
-        <Draggable handle={`#${this.props.key}-draggable-title'`} cancel={'[class*="MuiDialogContent-root"]'} style={{zIndex:9999}}>
+        <Draggable handle={`#${this.props.key}-draggable-title'`} cancel={'[class*="MuiDialogContent-root"]'} >
             <Paper {...props} elevation={3} />
         </Draggable>
     );

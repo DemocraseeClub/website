@@ -60,7 +60,8 @@ class Room extends React.Component {
             this.setState({enabled: enable});
         } else {
             let stream = await window.navigator.mediaDevices.getUserMedia(enable);
-            this.setState({camStream: stream, enabled: enable}, () => this.displayLocalStreams());
+            this.camStream = stream;
+            this.setState({enabled: enable}, () => this.displayLocalStreams());
         }
     }
 
@@ -83,7 +84,8 @@ class Room extends React.Component {
             }
             */
 
-            this.setState({screenStream: stream, enabled: enable}, () => this.displayLocalStreams());
+            this.screenStream = stream;
+            this.setState({enabled: enable}, () => this.displayLocalStreams());
         }
     }
 
@@ -282,7 +284,7 @@ class Room extends React.Component {
                     </Grid>
                 </Toolbar>
 
-                {this.myRoom ?
+                {this.camStream || this.screenStream ?
                     <DragBox key={'mystream'} onClose={e => this.hangUp()} >
                         <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.myVideo} muted={true}/>
                     </DragBox> : ''}

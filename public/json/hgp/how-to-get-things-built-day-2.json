@@ -54,7 +54,7 @@
     {
       "nest": "Key Terms",
       "title": "Data",
-      "html": "<p>\"Data\" is everything including scraped, user-generated, and curated content.&nbsp;</p>\n<ul>\n  <li><em>Vocabularies</em> (aka taxonomies) supports filtering searches</li>\n  <li><em>Permissions</em> matrix supports security and error handling</li>\n  <li>Field <em>schema </em>describes how your Objects and fields all relate.</li>\n</ul>",
+      "html": "<p>\"Data\" is everything including scraped, user-generated, and curated content.&nbsp;</p>\n<ul>. \"Meta-Data\" is everything that describes your data including  <li><em>Vocabularies</em> (aka taxonomies) supports filtering searches</li>\n  <li><em>Permissions</em> matrix supports security and error handling</li>\n  <li>Field <em>schema </em>describes how your Objects and fields all relate.</li>\n</ul>",
       "seconds": 600,
       "countdown": 600
     },
