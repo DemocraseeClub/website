@@ -30,17 +30,15 @@ class RemoteVideo extends React.Component {
         console.log('Got room:', roomSnapshot.exists);
         if (!roomSnapshot.exists) return false;
 
-        console.log('Create PeerConnection with configuration: ', Config.peerConfig);
-
         // Code for collecting ICE candidates below
-        const calleeCandidatesCollection = roomRef.collection('calleeCandidates');
+        const callerCandidatesCollection = roomRef.collection('callerCandidates');
         this.props.peerConnection.addEventListener('icecandidate', event => {
             if (!event.candidate) {
                 console.log('Got final candidate!');
                 return;
             }
             console.log('Got candidate: ', event.candidate);
-            calleeCandidatesCollection.add(event.candidate.toJSON());
+            callerCandidatesCollection.add(event.candidate.toJSON());
         });
         // Code for collecting ICE candidates above
 
@@ -114,7 +112,7 @@ class RemoteVideo extends React.Component {
     render() {
         // TODO: add hangup button
         return (
-            <DragBox key={this.props.key} onClose={e => this.hangUp()}><video controls style={{height: 250, width: '100%'}} autoPlay ref={this.partnerVideo}/></DragBox>
+            <DragBox key={'room'+this.props.roomId} onClose={e => this.hangUp()}><video controls style={{height: 250, width: '100%'}} autoPlay ref={this.partnerVideo}/></DragBox>
         );
     }
 

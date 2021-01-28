@@ -45,11 +45,37 @@ class Room extends React.Component {
     displayLocalStreams() {
         if (this.camStream && this.screenStream) {
             // TODO: merge with https://github.com/t-mullen/video-stream-merger
-            this.myVideo.current.srcObject = this.camStream;
-        } else if (this.camStream) {
-            this.myVideo.current.srcObject = this.camStream;
+            var VideoStreamMerger = require('video-stream-merger')
+
+            var merger = new VideoStreamMerger()
+
+            // Add the screen capture. Position it to fill the whole stream (the default)
+            merger.addStream(this.screenStream, {
+                x: 0, // position of the topleft corner
+                y: 0,
+                width: merger.width,
+                height: merger.height,
+                mute: true // we don't want sound from the screen (if there is any)
+            })
+
+            // Add the webcam stream. Position it on the bottom left and resize it to 100x100.
+            merger.addStream(this.camStream, {
+                x: 0,
+                y: merger.height - 100,
+                width: 100,
+                height: 100,
+                mute: false
+            })
+
+            // Start the merging. Calling this makes the result available to us
+            merger.start()
+
+            // We now have a merged MediaStream!
+            this.myVideo.current.srcObject = merger.result;
         } else if (this.screenStream) {
             this.myVideo.current.srcObject = this.screenStream;
+        } else if (this.camStream) {
+            this.myVideo.current.srcObject = this.camStream;
         }
     }
 
@@ -89,9 +115,7 @@ class Room extends React.Component {
         }
     }
 
-    async createRoom(owner) {
-        const roomRef = await this.db.collection('rooms').doc();
-
+    createPeerConnection() {
         console.log('Create PeerConnection with configuration: ', Config.peerConfig);
         let peerConnection = new RTCPeerConnection(Config.peerConfig);
         peerConnection.addEventListener('icegatheringstatechange', () => {
@@ -111,9 +135,23 @@ class Room extends React.Component {
         });
 
 
+        if (this.myVideo.current) {
+            let stream = this.myVideo.current.srcObject;
+            stream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, stream);
+            });
+        }
+
+        return peerConnection;
+    }
+
+    async createRoom(owner) {
+        const roomRef = await this.db.collection('rooms').doc();
+
+        let peerConnection = this.createPeerConnection();
+
         // Code for collecting ICE candidates below
         const callerCandidatesCollection = roomRef.collection('callerCandidates');
-
         peerConnection.addEventListener('icecandidate', event => {
             if (!event.candidate) {
                 console.log('Got final candidate!');
@@ -155,26 +193,22 @@ class Room extends React.Component {
             });
         });
         // Listen for remote ICE candidates above
-        if (owner === 'me') {
-            this.camStream.getTracks().forEach(track => {
-                this.senders.push(peerConnection.addTrack(track, this.camStream));
-            });
-            this.peerConnection = peerConnection;
-            this.setState({myRoom: roomRef.id});
-        }
 
-        return peerConnection;
-
-    }
-
-    broadcastMedia() {
-        this.peerConnection.addEventListener('track', event => {
+        peerConnection.addEventListener('track', event => {
             console.log('Got remote track:', event.streams[0]);
             event.streams[0].getTracks().forEach(track => {
                 console.log('Add a track to the remoteStream:', track);
-                this.camStream.addTrack(track);
+                if (this.myVideo.current) {
+                    this.myVideo.current.srcObject.addTrack(track);
+                }
             });
         });
+
+        this.peerConnection = peerConnection;
+        this.setState({myRoom: roomRef.id});
+
+        return peerConnection;
+
     }
 
     joinRoom() {
@@ -183,7 +217,8 @@ class Room extends React.Component {
         let i = rooms.find(o => o.roomId === newRoomId);
         if (!i) {
             let room = {roomId: newRoomId, stream: new MediaStream(), peer: null};
-            room.peer = (newRoomId === this.state.myRoom) ? this.peerConnection : this.createRoom('remote')
+            room.peer = (newRoomId === this.state.myRoom) ? this.peerConnection : this.createPeerConnection()
+            console.log('adding room', room);
             rooms.push(room);
             this.setState({roomsViewing: rooms}, e => {
                 this.setState({roomFieldText: ''})
@@ -288,7 +323,7 @@ class Room extends React.Component {
                     <DragBox key={'mystream'} onClose={e => this.hangUp()} >
                         <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.myVideo} muted={true}/>
                     </DragBox> : ''}
-                {this.state.roomsViewing.map((o, i) => <RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/>)}
+                {this.state.roomsViewing.map((o, i) => <RemoteVideo key={o.roomId} roomId={o.roomId} db={this.db} localStream={this.screenStream || this.camStream} peerConnection={o.peer}/>)}
             </React.Fragment>
         );
     }

@@ -2,13 +2,14 @@ import React from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import StopIcon from '@material-ui/icons/PauseCircleFilled';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
-import VideoCall from '@material-ui/icons/VideoCall';
-import VideoCamOff from '@material-ui/icons/VideocamOff';
+// import VideoCall from '@material-ui/icons/VideoCall';
+// import VideoCamOff from '@material-ui/icons/VideocamOff';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import {countDown} from "../redux/entityDataReducer";
@@ -91,14 +92,9 @@ class PlanList extends React.Component {
 
                 <AppBar position={'sticky'} style={{maxHeight:130}}>
                     <Toolbar>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignContent: 'center',
-                            width: '100%'
-                        }}>
+                        <Grid container justify={'space-between'} alignItems={'center'}>
                             <Typography variant='h6'>Meeting Time</Typography>
-                            <Typography variant='h6'>
+                            <Typography variant='h6' >
                                 <Typography variant='inherit'
                                             color={'error'}> {formatSeconds(this.props.rallyData.countRemains)} </Typography>
                                 /
@@ -116,16 +112,6 @@ class PlanList extends React.Component {
                                         onClick={e => this.setState({showAll: !this.state.showAll})}>Read All</Button>
                             }
 
-                            {this.state.videoOpen === false ?
-                                <Button style={{alignSelf: 'center'}} startIcon={<VideoCall/>} variant='contained'
-                                        color={'secondary'}
-                                        onClick={e => this.toggleRoom()}>Enable Rooms</Button>
-                                :
-                                <Button style={{alignSelf: 'center'}} startIcon={<VideoCamOff/>} variant='contained'
-                                        color={'secondary'}
-                                        onClick={e => this.toggleRoom()}>Close Rooms</Button>
-                            }
-
                             {this.state.running === true ?
                                 <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers}
                                         startIcon={<StopIcon/>}>Pause</Button>
@@ -134,7 +120,7 @@ class PlanList extends React.Component {
                                         startIcon={<PlayIcon/>}>Start Clock</Button>
                             }
 
-                        </div>
+                        </Grid>
                     </Toolbar>
                     {this.state.videoOpen === true ? <Room /> : null}
                 </AppBar>
