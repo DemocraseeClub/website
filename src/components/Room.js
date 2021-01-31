@@ -15,6 +15,12 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import VideoElement from "./VideoElement";
 
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+
 class Room extends React.Component {
 
     constructor(p) {
@@ -31,7 +37,7 @@ class Room extends React.Component {
         this.screenStream = null;
         this.camStream = null;
 
-        this.myVideo = React.createRef();
+        this.castBtnRef = React.createRef();
     }
 
     async componentWillUnmount() {
@@ -39,6 +45,7 @@ class Room extends React.Component {
     }
 
     displayLocalStreams() {
+        let stream = null;
         if (this.camStream && this.screenStream) {
             // TODO: merge with https://github.com/t-mullen/video-stream-merger
             var VideoStreamMerger = require('video-stream-merger')
@@ -60,38 +67,45 @@ class Room extends React.Component {
                 y: merger.height - Math.round(merger.height / 6),
                 width: Math.round(merger.width / 6),
                 height: Math.round(merger.height / 6),
-                mute: false
+                mute: this.state.enabled.audio === true ? false : true
             })
 
             // Start the merging. Calling this makes the result available to us
             merger.start()
 
             // We now have a merged MediaStream!
-            this.myVideo.current.srcObject = merger.result;
+            stream = merger.result;
         } else if (this.screenStream) {
-            this.myVideo.current.srcObject = this.screenStream;
+            stream = this.screenStream;
         } else if (this.camStream) {
-            this.myVideo.current.srcObject = this.camStream;
+            stream = this.camStream;
         }
 
         if (this.peerConnection) {
-            let stream = this.myVideo.current.srcObject;
             stream.getTracks().forEach(track => {
                 this.peerConnection.addTrack(track, stream);
             });
         }
+
+        this.setState({myStream:stream});
 
     }
 
     async toggleCamMic(type) {
         let enable = {video: this.state.enabled.video, audio: this.state.enabled.audio};
         enable[type] = !this.state.enabled[type];
-        if (enable[type] === false) {
-            this.setState({enabled: enable});
-        } else {
+        if (enable[type] === true) {
             let stream = await window.navigator.mediaDevices.getUserMedia(enable);
             this.camStream = stream;
             this.setState({enabled: enable}, () => this.displayLocalStreams());
+        } else if (enable.video === false && enable.audio === false) {
+            this.camStream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+            this.camStream = null;
+            this.setState({enabled: enable});
+        } else {
+            this.setState({enabled: enable});
         }
     }
 
@@ -126,11 +140,12 @@ class Room extends React.Component {
             console.log(`ICE connection state change: ${peerConnection.iceConnectionState}`);
         });
 
-        if (this.myVideo.current) {
-            let stream = this.myVideo.current.srcObject;
+        if (this.state.myStream) {
+            let stream = this.state.myStream;
             stream.getTracks().forEach(track => {
                 peerConnection.addTrack(track, stream);
             });
+            this.setState({myStream:stream})
         }
 
         return peerConnection;
@@ -234,12 +249,12 @@ class Room extends React.Component {
             }
         })
 
+        this.camStream = null;
+        this.screenStream = null;
+
         if (this.peerConnection) {
             this.peerConnection.close();
-        }
-
-        if (this.myVideo.current) {
-            this.myVideo.current.srcObject = null;
+            this.peerConnection = null;
         }
 
         if (this.state.myRoom) {
@@ -254,43 +269,80 @@ class Room extends React.Component {
             }
             await roomRef.delete();
         }
+        this.setState({myRoom:null, myStream:null, enabled: {'video': false, 'audio': false, 'screen': false}});
     }
+
+    handleClose(event) {
+        if (this.castBtnRef.current && this.castBtnRef.current.contains(event.target)) {
+            return;
+        }
+
+        this.setState({castBtnRef:false});
+    };
 
     render() {
         const isEnabled = this.state.enabled.video === true || this.state.enabled.audio === true || this.state.enabled.screen === true;
-        // const hasVideos = (this.camStream || this.screenStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
+        const hasVideos = (this.camStream || this.screenStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
 
         return (
             <React.Fragment>
                 <Toolbar>
                     <Grid container justify={'space-between'} alignItems="center">
 
-                        <Grid item style={{marginRight:10}}>
-                            { (this.state.myRoom) ?
-                                    <div>
-                                        <Button style={{marginRight:10}} color={'secondary'} variant={'contained'} onClick={e => this.hangUp()}>Hangup</Button>
-                                    </div>
-                                    :
-                                    <Button variant={'contained'} color={'secondary'}
-                                            disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
-                            }
-                        </Grid>
                         {(this.state.myRoom) ? ' ' :
                             <Grid item>
-                                <ButtonGroup>
-                                    <Button endIcon={this.state.enabled.video === true ? <Check/> : <Unchecked/>}
-                                            variant={'contained'}
-                                            color={this.state.enabled.video === true ? 'secondary' : 'primary'}
-                                            onClick={e => this.toggleCamMic('video')}>Camera</Button>
-                                    <Button endIcon={this.state.enabled.audio === true ? <Check/> : <Unchecked/>}
-                                            variant={'contained'}
-                                            color={this.state.enabled.audio === true ? 'secondary' : 'primary'}
-                                            onClick={e => this.toggleCamMic('audio')}>Mic</Button>
-                                    <Button endIcon={this.state.enabled.screen === true ? <Check/> : <Unchecked/>}
-                                            variant={'contained'}
-                                            color={this.state.enabled.screen === true ? 'secondary' : 'primary'}
-                                            onClick={e => this.shareScreen()}>Screen</Button>
+                                <ButtonGroup variant="contained" color="secondary" aria-label="broadcast options" >
+                                    { (this.state.myRoom) ?
+                                        <Button onClick={e => this.hangUp()}>Hangup</Button>
+                                        :
+                                        <Button disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                                    }
+                                    <Button
+                                        ref={this.castBtnRef}
+                                        color="primary"
+                                        aria-controls={this.state.showCastOptions ? 'split-button-menu' : undefined}
+                                        aria-expanded={this.state.showCastOptions ? 'true' : undefined}
+                                        aria-label="broadcast options"
+                                        aria-haspopup="menu"
+                                        onClick={() => this.setState({showCastOptions:!this.state.showCastOptions})}
+                                    >
+                                        <ArrowDropDownIcon />
+                                    </Button>
                                 </ButtonGroup>
+                                <Popper open={this.state.showCastOptions}
+                                        anchorEl={this.castBtnRef.current} role={'popover'}
+                                        transition disablePortal
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'left',
+                                        }}
+                                >
+                                    {({ TransitionProps, placement }) => (
+                                        <Grow
+                                            {...TransitionProps}
+                                            style={{transformOrigin: 'left bottom'}} >
+                                            <Paper>
+                                                <ClickAwayListener onClickAway={e => this.handleClose(e)}>
+                                                    <ButtonGroup variant="contained" color="primary" aria-label="broadcast options" >
+                                                        <Button endIcon={this.state.enabled.video === true ? <Check/> : <Unchecked/>}
+                                                                color={this.state.enabled.video === true ? 'secondary' : 'primary'}
+                                                                onClick={e => this.toggleCamMic('video')}>Cam</Button>
+                                                        <Button endIcon={this.state.enabled.audio === true ? <Check/> : <Unchecked/>}
+                                                                color={this.state.enabled.audio === true ? 'secondary' : 'primary'}
+                                                                onClick={e => this.toggleCamMic('audio')}>Mic</Button>
+                                                        <Button endIcon={this.state.enabled.screen === true ? <Check/> : <Unchecked/>}
+                                                                color={this.state.enabled.screen === true ? 'secondary' : 'primary'}
+                                                                onClick={e => this.shareScreen()}>Screen</Button>
+                                                        </ButtonGroup>
+                                                </ClickAwayListener>
+                                            </Paper>
+                                        </Grow>
+                                    )}
+                                </Popper>
                             </Grid>
                         }
                         <Divider orientation="vertical" style={{flexGrow:1}} />
@@ -313,15 +365,19 @@ class Room extends React.Component {
 
                     </Grid>
                 </Toolbar>
-                <GridList cols={2.5} cellHeight={260} >
-                    {this.camStream || this.screenStream ?
-                        <GridListTile onClose={e => this.hangUp()} >
-                            {this.state.myRoom ? <Typography variant='caption' component={'span'} color={'error'}>My Room: {this.state.myRoom}</Typography> : ''}
-                            <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.myVideo} muted={true} />
-                        </GridListTile> : ''}
-                    {this.state.viewers.map((o, i) => <GridListTile key={o.roomId+i} ><VideoElement roomId={o.roomId} stream={o.stream} /></GridListTile>)}
-                    {this.state.roomsViewing.map((o, i) => <GridListTile key={o.roomId+i} ><RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/></GridListTile>)}
-                </GridList>
+                {hasVideos === false ? '' :
+                <div className={this.props.classes.hScrollContainer}>
+                    <div className={this.props.classes.hScroller} >
+                        {this.state.myStream ?
+                            <div className={this.props.classes.hScrollItem} onClose={e => this.hangUp()} >
+                                <VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} owner={'me'} />
+                            </div> : ''}
+                        {this.state.viewers.map((o, i) =>
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><VideoElement roomId={o.roomId} stream={o.stream} /></div>)}
+                        {this.state.roomsViewing.map((o, i) =>
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/></div>)}
+                    </div>
+                </div> }
 
             </React.Fragment>
         );
