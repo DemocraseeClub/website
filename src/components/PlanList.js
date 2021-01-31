@@ -3,6 +3,9 @@ import Stepper from '@material-ui/core/Stepper';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
+import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import StopIcon from '@material-ui/icons/PauseCircleFilled';
@@ -16,6 +19,7 @@ import {countDown} from "../redux/entityDataReducer";
 import AgendaItem from "./AgendaItem";
 import { formatSeconds} from "../Util/WindowUtils";
 import Room from "./Room";
+import AgendaItemTools from "./AgendaItemTools";
 
 class PlanList extends React.Component {
 
@@ -26,12 +30,41 @@ class PlanList extends React.Component {
             showAll: false,
             running: false,
             headers: [],
+            topPad:0,
+            showDrawer:false,
             videoOpen : true,
             rallyData: p.rallyData || false
         }
 
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    componentWillUnmount() {
+        if (this.state.showDrawer === true) {
+            document.removeEventListener('scroll', this.handleScroll);
+        }
+    }
+
+    toggleDrawer() {
+        if (this.state.showDrawer === false) {
+            document.addEventListener('scroll', this.handleScroll);
+        } else {
+            document.removeEventListener('scroll', this.handleScroll);
+        }
+        this.setState({showDrawer:!this.state.showDrawer});
+
+    }
+
+    handleScroll() {
+        let pos = document.getElementById("noteTabs").getBoundingClientRect().top;
+        if (pos < 120) {
+            pos = Math.abs(pos) + 120; // window.scrollY;
+            this.setState({topPad: pos});
+            //window.requestAnimationFrame(() => this.setState({topPad: pos}));
+
+        }
     }
 
     handleNext = () => {
@@ -90,10 +123,18 @@ class PlanList extends React.Component {
         return (
             <div className={classes.root} style={{marginTop: 20, textAlign: 'left'}}>
 
-                <AppBar position={'sticky'} style={{maxHeight:130}}>
+                <AppBar position={'sticky'} className={classes.appBar} >
                     <Toolbar>
                         <Grid container justify={'space-between'} alignItems={'center'}>
-                            <Typography variant='h6'>Meeting Time</Typography>
+
+                            {this.state.running === true ?
+                                <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers}
+                                        startIcon={<StopIcon/>}>Pause</Button>
+                                :
+                                <Button variant={'contained'} color={'secondary'} onClick={this.runTimers}
+                                        startIcon={<PlayIcon/>}>Start Clock</Button>
+                            }
+
                             <Typography variant='h6' >
                                 <Typography variant='inherit'
                                             color={'error'}> {formatSeconds(this.props.rallyData.countRemains)} </Typography>
@@ -112,22 +153,24 @@ class PlanList extends React.Component {
                                         onClick={e => this.setState({showAll: !this.state.showAll})}>Read All</Button>
                             }
 
-                            {this.state.running === true ?
-                                <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers}
-                                        startIcon={<StopIcon/>}>Pause</Button>
-                                :
-                                <Button variant={'contained'} color={'secondary'} onClick={this.runTimers}
-                                        startIcon={<PlayIcon/>}>Start Clock</Button>
-                            }
+
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                edge="end"
+                                onClick={() => this.toggleDrawer()}
+                            >
+                                <MenuIcon />
+                            </IconButton>
 
                         </Grid>
                     </Toolbar>
                     {this.state.videoOpen === true ? <Room /> : null}
                 </AppBar>
 
+                <div className={classes.agendaContent}>
 
-                <div className='agendaList'>
-                    <Stepper activeStep={activeStep} orientation="vertical" style={{padding:'24px 14px 24px 14px'}} >
+                    <Stepper activeStep={activeStep} orientation="vertical" className={classes.vertStepper} >
                         {this.props.rallyData.lineItems.map((curItem, index) => {
                             let header = null;
                             if (curItem.nest.length > 0) {
@@ -161,7 +204,22 @@ class PlanList extends React.Component {
                             </Button>
                         </Paper>
                     )}
+
+
+                    <Drawer
+                        variant="persistent"
+                        anchor="right"
+                        className={this.state.showDrawer ? classes.drawer :[classes.drawer, classes.hide].join(' ')}
+                        classes={{paper: classes.drawerInner}}
+                        open={this.state.showDrawer}
+                    >
+                        <AgendaItemTools classes={classes} />
+                    </Drawer>
+
+
                 </div>
+
+
             </div>
         );
     }

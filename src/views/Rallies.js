@@ -62,7 +62,7 @@ class Rallies extends React.Component {
                                         Hidden Genius Project
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Course touch for Alumni Venture Seed Fund
+                                        Course for young founders of Hidden Genius Project's Alumni Venture Seed Fund to
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
@@ -91,7 +91,7 @@ class Rallies extends React.Component {
                                         Fighting Defamation
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Can we improve laws to keep free speech constructive?
+                                        Can we improve libel laws to keep free speech constructive?
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>

@@ -1,6 +1,5 @@
 import React from "react";
-import Config from '../Config';
-import DragBox from "./DragBox";
+import Typography from "@material-ui/core/Typography";
 
 class RemoteVideo extends React.Component {
 
@@ -8,6 +7,7 @@ class RemoteVideo extends React.Component {
         super(p);
         this.partnerVideo = React.createRef();
         this.remoteStream = new MediaStream();
+        this.db = p.db;
     }
 
     componentDidMount() {
@@ -25,7 +25,10 @@ class RemoteVideo extends React.Component {
     }
 
     async joinRoomById(room) {
-        const roomRef = this.props.db.collection('rooms').doc(room);
+        if (!this.props.db) {
+            this.db = window.firebase.firestore();
+        }
+        const roomRef = this.db.collection('rooms').doc(room);
         const roomSnapshot = await roomRef.get();
         console.log('Got room:', roomSnapshot.exists);
         if (!roomSnapshot.exists) return false;
@@ -43,11 +46,12 @@ class RemoteVideo extends React.Component {
         // Code for collecting ICE candidates above
 
         this.props.peerConnection.addEventListener('track', event => {
-            console.log('Got remote track:', event.streams[0]);
+            console.log('Got presenter track:', event.streams[0]);
             event.streams[0].getTracks().forEach(track => {
                 console.log('Add a track to the remoteStream:', track);
                 this.remoteStream.addTrack(track);
             });
+            this.partnerVideo.current.srcObject = this.remoteStream;
         });
 
         // Code for creating SDP answer below
@@ -59,10 +63,7 @@ class RemoteVideo extends React.Component {
         await this.props.peerConnection.setLocalDescription(answer);
 
         const roomWithAnswer = {
-            answer: {
-                type: answer.type,
-                sdp: answer.sdp,
-            },
+            answer: {type: answer.type, sdp: answer.sdp}
         };
         await roomRef.update(roomWithAnswer);
         // Code for creating SDP answer above
@@ -72,7 +73,7 @@ class RemoteVideo extends React.Component {
             snapshot.docChanges().forEach(async change => {
                 if (change.type === 'added') {
                     let data = change.doc.data();
-                    console.log(`Got new remote ICE candidate: ${JSON.stringify(data)}`);
+                    console.log(`Got new remote callerCandidates: ${JSON.stringify(data)}`);
                     await this.props.peerConnection.addIceCandidate(new RTCIceCandidate(data));
                 }
             });
@@ -112,7 +113,10 @@ class RemoteVideo extends React.Component {
     render() {
         // TODO: add hangup button
         return (
-            <DragBox key={'room'+this.props.roomId} onClose={e => this.hangUp()}><video controls style={{height: 250, width: '100%'}} autoPlay ref={this.partnerVideo}/></DragBox>
+            <div>
+                <Typography variant='caption' component={'span'} >{this.props.roomId}</Typography>
+                <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.partnerVideo}/>
+            </div>
         );
     }
 

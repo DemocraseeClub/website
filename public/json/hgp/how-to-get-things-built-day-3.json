@@ -1,0 +1,80 @@
+{
+  "title": "Building and Deploying Code",
+  "start": "Tuesday, January 19th 4:30 pm - 6:45pm",
+  "profile": "https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png",
+  "city": "Oakland, CA",
+  "type": "meeting",
+  "template": "course.1",
+  "hosts": [
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/03/SeanValentine-HGPDirectorOfStrategicInitiatives.png",
+      "name": "Sean Valentine"
+    }
+  ],
+  "speakers": [
+    {
+      "img": "https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png",
+      "name": "Eli Taylor"
+    },
+    {
+      "img": "https://www.hiddengeniusproject.org/wp-content/uploads/2020/10/ScottHanselman.jpeg",
+      "name": "Scott Hanselman"
+    }
+  ],
+  "lineItems": [
+    {
+      "nest": "Github",
+      "title": "git branches",
+      "seconds": 300,
+      "html": ""
+    },
+    {
+      "nest": "Github",
+      "title": "git remote -v",
+      "seconds": 300,
+      "html": ""
+    },
+    {
+      "nest": "Git",
+      "title": "github actions",
+      "seconds": 300,
+      "html": ""
+    },
+    {
+      "nest": "Package Managers",
+      "title": "NPM / YARN",
+      "html": "For Javascript / NodeJS",
+      "seconds": 300
+    },
+    {
+      "nest": "Package Managers",
+      "title": "Composer",
+      "html": "For PHP",
+      "seconds": 300
+    },
+    {
+      "nest": "Package Managers",
+      "title": "Gem",
+      "html": "For Ruby",
+      "seconds": 300
+    },
+    {
+      "nest": "Cloud CLIs",
+      "title": "Heroku CLI",
+      "html": "git push heroku master",
+      "seconds": 300
+    },
+    {
+      "nest": "Cloud CLIs",
+      "title": "firebase deploy",
+      "html": "",
+      "seconds": 300
+    },
+    {
+      "nest": "Cloud CLIs",
+      "title": "Google Cloud Platform CLI",
+      "html": "",
+      "seconds": 300
+    }
+  ]
+}
