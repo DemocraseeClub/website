@@ -1,12 +1,14 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import VideoElement from "./VideoElement";
+import PropTypes from "prop-types";
 
 class RemoteVideo extends React.Component {
 
     constructor(p) {
         super(p);
         this.partnerVideo = React.createRef();
-        this.remoteStream = new MediaStream();
+        this.state = {remoteStream : new MediaStream()};
         this.db = p.db;
     }
 
@@ -30,7 +32,7 @@ class RemoteVideo extends React.Component {
         }
         const roomRef = this.db.collection('rooms').doc(room);
         const roomSnapshot = await roomRef.get();
-        console.log('Got room:', roomSnapshot.exists);
+        console.log('Got room:', roomSnapshot.exists, roomRef);
         if (!roomSnapshot.exists) return false;
 
         // Code for collecting ICE candidates below
@@ -46,12 +48,13 @@ class RemoteVideo extends React.Component {
         // Code for collecting ICE candidates above
 
         this.props.peerConnection.addEventListener('track', event => {
+            let remoteStream = this.state.remoteStream; // WARN: maybe clone this ?
             console.log('Got presenter track:', event.streams[0]);
             event.streams[0].getTracks().forEach(track => {
                 console.log('Add a track to the remoteStream:', track);
-                this.remoteStream.addTrack(track);
+                remoteStream.addTrack(track);
             });
-            this.partnerVideo.current.srcObject = this.remoteStream;
+            this.setState({remoteStream:remoteStream});
         });
 
         // Code for creating SDP answer below
@@ -80,8 +83,6 @@ class RemoteVideo extends React.Component {
         });
         // Listening for remote ICE candidates above
 
-        this.partnerVideo.current.srcObject = this.remoteStream;
-
     }
 
     async hangUp() {
@@ -93,33 +94,21 @@ class RemoteVideo extends React.Component {
             this.props.peerConnection.close();
         }
 
-        this.partnerVideo.current.srcObject = null;
-
-        // Delete room on hangup
-        if (this.props.roomId) {
-            const roomRef = this.props.db.collection('rooms').doc(this.props.roomId);
-            const calleeCandidates = await roomRef.collection('calleeCandidates').get();
-            calleeCandidates.forEach(async candidate => {
-                await candidate.ref.delete();
-            });
-            const callerCandidates = await roomRef.collection('callerCandidates').get();
-            callerCandidates.forEach(async candidate => {
-                await candidate.ref.delete();
-            });
-            await roomRef.delete();
-        }
+        this.setState({remoteStream:null});
     }
 
     render() {
-        // TODO: add hangup button
         return (
-            <div>
-                <Typography variant='caption' component={'span'} >{this.props.roomId}</Typography>
-                <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.partnerVideo}/>
-            </div>
+            <VideoElement stream={this.state.remoteStream} roomId={this.props.roomId} />
         );
     }
 
 }
+
+RemoteVideo.propTypes = {
+    peerConnection: PropTypes.object.isRequired,
+    roomId : PropTypes.string.isRequired
+};
+
 
 export default RemoteVideo;

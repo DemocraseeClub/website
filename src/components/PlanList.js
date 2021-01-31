@@ -165,7 +165,7 @@ class PlanList extends React.Component {
 
                         </Grid>
                     </Toolbar>
-                    {this.state.videoOpen === true ? <Room /> : null}
+                    {this.state.videoOpen === true ? <Room classes={classes} /> : null}
                 </AppBar>
 
                 <div className={classes.agendaContent}>

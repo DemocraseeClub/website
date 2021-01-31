@@ -150,5 +150,22 @@ export const rallyStyles = theme => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginRight: 0,
+    },
+    hScrollContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        overflow: 'hidden',
+        textAlign:'center',
+        height:285,
+        transition: theme.transitions.create('height', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        })
+    },
+    hScroller : {
+        flexWrap: 'nowrap',
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        transform: 'translateZ(0)',
     }
 });
