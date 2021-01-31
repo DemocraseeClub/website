@@ -58,7 +58,7 @@ class MeetingHome extends Component {
                               rallyData={this.props.entity.apiData} />
 
 
-                <Grid container justify={'space-between'} p={3}>
+                <Grid container justify={'space-between'} style={{padding:20}}>
                     <Button startIcon={<Create/>} variant={'contained'}
                             color={this.state.editMode ? 'primary' : 'secondary'}
                             onClick={e => this.setState({editMode: !this.state.editMode})}>Edit Meeting</Button>

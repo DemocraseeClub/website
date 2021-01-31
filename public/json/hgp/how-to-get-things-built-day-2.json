@@ -41,20 +41,18 @@
       "nest": "Key Terms",
       "title": "Objects",
       "html": "<p>For this site, we have 6 primary 'objects': Rallies, Meetings, Resources, Invites, Officials, Cities</p>",
-      "seconds": 600,
-      "countdown": 600
+      "seconds": 600
     },
     {
       "nest": "Key Terms",
       "title": "Actions",
       "html": "Consider Actions as the things a typical user can do, not what your entire system can do. Examples include: <p>Create/Add, Read/View, Update/Edit, Delete/Unpublish</p>\n<p><br></p>\n<p>Also maybe \"add to cart\", \"checkout\", \"like/unlike\", ...</p>",
-      "seconds": 1200,
-      "countdown": 1200
+      "seconds": 1200
     },
     {
       "nest": "Key Terms",
       "title": "Data",
-      "html": "<p>\"Data\" is everything including scraped, user-generated, and curated content.&nbsp;</p>\n<ul>. \"Meta-Data\" is everything that describes your data including  <li><em>Vocabularies</em> (aka taxonomies) supports filtering searches</li>\n  <li><em>Permissions</em> matrix supports security and error handling</li>\n  <li>Field <em>schema </em>describes how your Objects and fields all relate.</li>\n</ul>",
+      "html": "<p>\"Data\" is everything including scraped, user-generated, and curated content.</p><ul> \"Meta-Data\" is everything that describes your data including  <li><em>Vocabularies</em> (aka taxonomies) supports filtering searches</li>\n  <li><em>Permissions</em> matrix supports security and error handling</li>\n  <li>Field <em>schema </em>describes how your Objects and fields all relate.</li></ul>",
       "seconds": 600,
       "countdown": 600
     },
@@ -63,7 +61,7 @@
       "title": "Object - Actions Worksheet",
       "tools": ["gsheets"],
       "tools": false,
-      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p>",
+      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p><a href=\"https://docs.google.com/spreadsheets/d/15DFFyO-OlJgHBFKhBK587VSR6mHSkmgZkQjZEpYS6KM/edit?usp=sharing\" target=\"_blank\">Open in new window</a>",
       "seconds": 1200,
       "countdown": 1200
     },
@@ -71,7 +69,7 @@
       "nest": "Exercises",
       "title": "Permissions Matrix",
       "tools": false,
-      "html": "<p>Aka 3D Object - Actions Worksheet. Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/1Wv55QbrNdy6lKZvTY8A8Tso_rZJSpFRS30dmQ1LebIc/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p>",
+      "html": "<p>Aka 3D Object - Actions Worksheet. Copy and edit this first tab for your app. <iframe src='https://docs.google.com/spreadsheets/d/1Wv55QbrNdy6lKZvTY8A8Tso_rZJSpFRS30dmQ1LebIc/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p><a href=\"https://docs.google.com/spreadsheets/d/1Wv55QbrNdy6lKZvTY8A8Tso_rZJSpFRS30dmQ1LebIc/edit?usp=sharing\" target=\"_blank\">Open in new window</a>",
       "seconds": 1200,
       "countdown": 1200
     },
@@ -79,13 +77,13 @@
       "nest": "Exercises",
       "title": "Vocabulary Fields",
       "tools": false,
-      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit?usp=sharing' width={'100%'} height={'450'} seamless /></p>",
+      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit?usp=sharing' width={'100%'} height={'450'} seamless /></p><a href=\"https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit?usp=sharing\" target=\"_blank\">Open in new window</a>",
       "seconds": 1200
     },{
       "nest": "Exercises",
       "title": "Object Field Definitions",
       "tools": false,
-      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/14JqTgNzR63KTKqUZ7dI7JLK0pZVt-3yRxCTIgt3gSBU/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p>",
+      "html": "<p>Copy and edit this first tab for your app <iframe src='https://docs.google.com/spreadsheets/d/14JqTgNzR63KTKqUZ7dI7JLK0pZVt-3yRxCTIgt3gSBU/edit?usp=sharing&rm=minimal' width={'100%'} height={'450'} seamless /></p><a href=\"https://docs.google.com/spreadsheets/d/14JqTgNzR63KTKqUZ7dI7JLK0pZVt-3yRxCTIgt3gSBU/edit?usp=sharing\" target=\"_blank\">Open in new window</a>",
       "seconds": 1200
     },
     {

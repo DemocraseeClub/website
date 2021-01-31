@@ -12,7 +12,7 @@ import Check from '@material-ui/icons/CheckBox';
 import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
-import AgendaItemTools from "./AgendaItemTools";
+// import AgendaItemTools from "./AgendaItemTools";
 import { formatSeconds} from "../Util/WindowUtils";
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // import {ReactComponent as GoogleSheetsIcon} from '../assets/Google_Sheets_logo.png';
@@ -53,13 +53,12 @@ function QontoStepIcon(props) {
     const {status, countdown} = props;
 
     let color = status === 'active' ? 'secondary' : 'primary';
-
     if (typeof countdown !== 'number') return <div className={classes.circle} />
 
     return (
         <div>
             {status === 'completed' ?
-                <Check className={classes.completed} color={color}/> :
+                <Check className={classes.completed} color={color} /> :
                 <Unchecked color={color}/>
             }
             <span className={classes.timer}>{formatSeconds(countdown)}</span>
@@ -67,20 +66,20 @@ function QontoStepIcon(props) {
     );
 }
 
-QontoStepIcon.propTypes = {
-    status: PropTypes.string,
-    countdown : PropTypes.number
-};
-
-QontoStepIcon.defaultProps = {
-    status: "inactive"
-}
+QontoStepIcon.propTypes = {status: PropTypes.string, countdown : PropTypes.number};
+QontoStepIcon.defaultProps = {status: "inactive"}
 
 class AgendaItem extends React.Component {
 
     constructor(p) {
         super(p);
         this.state = {forceShow:p.forceShow};
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.forceShow !== this.props.forceShow) {
+            this.setState({forceShow:this.props.forceShow});
+        }
     }
 
     renderOutline(outline, indent) {
@@ -156,11 +155,6 @@ class AgendaItem extends React.Component {
                                     </div> : null
                             }
                         </Grid>
-                        { (curItem.tools === false) ? '' :
-                            <Grid item >
-                                <AgendaItemTools classes={classes} />
-                            </Grid>
-                        }
                     </Grid>
                 </StepContent>
             </Step>

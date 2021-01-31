@@ -39,5 +39,11 @@
       "link": "/rally/hgp/meeting/how-to-get-things-built-day-2",
       "start": "Tuesday, January 19th 4:30 pm - 6:45pm"
     }
+  ,
+    {
+      "title": "Compiling and Deploying Code",
+      "link": "/rally/hgp/meeting/how-to-get-things-built-day-3",
+      "start": "Tuesday, January 19th 4:30 pm - 6:45pm"
+    }
   ]
 }

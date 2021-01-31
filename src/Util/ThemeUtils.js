@@ -40,6 +40,8 @@ export function lightOrDark(color) {
         return 'dark';
     }
 }
+const drawerWidth = 240;
+
 
 export const rallyStyles = theme => ({
     root: {
@@ -116,5 +118,37 @@ export const rallyStyles = theme => ({
     },
     tabsIcon : {
         minWidth:25
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
+    agendaContent: {
+        position:'relative',
+        display:'flex',
+        wrap:'nowrap',
+        justifyContent:'space-between'
+    },
+    hide : {
+        display:'none'
+    },
+    drawer: {
+        position:'relative',
+        right:0,
+        top:0,
+        flexShrink: 0,
+    },
+    drawerInner : {
+        position:'relative',
+        right:0,
+        top:0,
+    },
+    vertStepper: {
+        flexGrow:1,
+        padding:'24px 14px 24px 14px',
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: 0,
     }
 });

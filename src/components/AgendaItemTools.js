@@ -38,6 +38,7 @@ class AgendaItemTools extends React.Component {
                             <Tabs
                                 orientation={this.state.showNotes.length > 0 ? "horizontal" : "vertical"}
                                 variant="standard"
+                                id={"noteTabs"}
                                 value={this.state.showNotes}
                                 onChange={(e, index) => {
                                     let type = index === 0 ? 'gsheets' : index === 1 ? 'gdocs' : 'private';
