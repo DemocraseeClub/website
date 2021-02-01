@@ -11,7 +11,13 @@ class VideoElement extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.mounted === false && this.state.mounted === true) {
+        let doUpdate = prevState.mounted === false && this.state.mounted === true;
+        if (doUpdate === false) {
+            if (this.props.stream.id !== prevProps.stream.id || this.props.roomId !== prevProps.roomId) {
+                doUpdate = true;
+            }
+        }
+        if (doUpdate === true ) {
             this.vidEl.current.srcObject = this.props.stream;
             if (this.props.muted === true) {
                 this.vidEl.current.volume = 0;
@@ -25,27 +31,32 @@ class VideoElement extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.vidEl} />
                 {(!this.props.roomId) ? '' :
-                    <Typography variant='overline' >
-                        {this.state.showRoomId === true ? this.props.roomId : '****'}
-                        <span onClick={() => this.setState({showRoomId:!this.state.showRoomId})}>{this.state.showRoomId === true ? ' hide' : ' show'}</span>
+                    <Typography variant='overline' style={{display:'inline-flex'}} >
+                        {this.props.viewers === -1 ? '' : <span style={{marginRight:5}} >viewers: {this.props.viewers}</span>}
+                        <span style={{marginRight:5}}>{this.state.showRoomId === true ? this.props.roomId : ' **** '}</span>
+                        <u onClick={() => this.setState({showRoomId:!this.state.showRoomId})}>{this.state.showRoomId === true ? 'hide' : 'show'}</u>
                     </Typography>
                 }
-            </div>
+            </React.Fragment>
         );
     }
 }
 
 VideoElement.defaultProps = {
     stream : new MediaStream(),
-    roomId : false
+    roomId : false,
+    viewers : -1,
+    muted : false,
 }
 
 VideoElement.propTypes = {
     stream: PropTypes.object.isRequired,
-    roomId : PropTypes.string.isRequired
+    roomId : PropTypes.string,
+    viewers : PropTypes.number,
+    muted : PropTypes.bool
 };
 
 
