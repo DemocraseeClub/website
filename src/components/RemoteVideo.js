@@ -63,6 +63,16 @@ class RemoteVideo extends React.Component {
             this.setState({remoteStream:remoteStream});
         });
 
+        this.peerConnection.ontrack = event => {
+            let remoteStream = this.state.remoteStream; // WARN: maybe clone this ?
+            console.log('Got presenter track:', event.streams[0]);
+            event.streams[0].getTracks().forEach(track => {
+                console.log('Add a track to the remoteStream:', track);
+                remoteStream.addTrack(track);
+            });
+            this.setState({remoteStream:remoteStream});
+        }
+
         // Code for creating SDP answer below
         const offer = roomSnapshot.data().offer;
         console.log('Got offer:', offer);
@@ -123,6 +133,7 @@ class RemoteVideo extends React.Component {
 
 
     async hangUp() {
+        console.log("HANGING UP REMOTE!");
         if (this.remoteStream) {
             this.remoteStream.getTracks().forEach(track => track.stop());
         }
