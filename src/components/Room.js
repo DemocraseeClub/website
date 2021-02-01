@@ -184,9 +184,16 @@ class Room extends React.Component {
         this.peerConnection.addEventListener('track', event => {
             console.log('Got viewer track:', event);
             let rooms = [...this.state.viewers];
-            rooms.push({roomId: this.state.myRoom, stream: event.stream[0]});
+            rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
             this.setState({viewers: rooms})
         });
+
+        this.peerConnection.ontrack = event => {
+            console.log('Got viewer track2:', event);
+            let rooms = [...this.state.viewers];
+            rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+            this.setState({viewers: rooms})
+        }
 
         // Listening for remote session description below
         roomRef.onSnapshot(async snapshot => {
@@ -236,6 +243,7 @@ class Room extends React.Component {
     }
 
     async hangUp() {
+        console.log("HANGING UP MY ROOM!");
         let cams = ['camStream', 'screenStream'];
         cams.forEach(cam => {
             if (this[cam]) {
