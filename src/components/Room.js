@@ -10,9 +10,6 @@ import Config from "../Config";
 import Check from '@material-ui/icons/CheckBox';
 import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import {withSnackbar} from 'notistack';
-import Typography from "@material-ui/core/Typography";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
 import VideoElement from "./VideoElement";
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -20,6 +17,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
+const VideoStreamMerger = require('video-stream-merger')
+
 
 class Room extends React.Component {
 
@@ -29,6 +28,7 @@ class Room extends React.Component {
             myRoom: null,
             enabled: {'video': false, 'audio': false, 'screen': false},
             roomsViewing: [],
+            myStream:null,
             viewers: [],
             roomFieldText: ''
         }
@@ -47,9 +47,6 @@ class Room extends React.Component {
     displayLocalStreams() {
         let stream = null;
         if (this.camStream && this.screenStream) {
-            // TODO: merge with https://github.com/t-mullen/video-stream-merger
-            var VideoStreamMerger = require('video-stream-merger')
-
             var merger = new VideoStreamMerger()
 
             // Add the screen capture. Position it to fill the whole stream (the default)
@@ -82,6 +79,7 @@ class Room extends React.Component {
         }
 
         if (this.peerConnection) {
+            console.log("adding local stream on display");
             stream.getTracks().forEach(track => {
                 this.peerConnection.addTrack(track, stream);
             });
@@ -92,21 +90,18 @@ class Room extends React.Component {
     }
 
     async toggleCamMic(type) {
-        let enable = {video: this.state.enabled.video, audio: this.state.enabled.audio};
+        let enable = {...this.state.enabled};
         enable[type] = !this.state.enabled[type];
         if (enable[type] === true) {
             let stream = await window.navigator.mediaDevices.getUserMedia(enable);
             this.camStream = stream;
-            this.setState({enabled: enable}, () => this.displayLocalStreams());
         } else if (enable.video === false && enable.audio === false) {
             this.camStream.getTracks().forEach(function(track) {
                 track.stop();
             });
             this.camStream = null;
-            this.setState({enabled: enable});
-        } else {
-            this.setState({enabled: enable});
         }
+        this.setState({enabled: enable}, () => this.displayLocalStreams());
     }
 
     async shareScreen() {
@@ -140,7 +135,9 @@ class Room extends React.Component {
             console.log(`ICE connection state change: ${peerConnection.iceConnectionState}`);
         });
 
+
         if (this.state.myStream) {
+            console.log("adding local stream");
             let stream = this.state.myStream;
             stream.getTracks().forEach(track => {
                 peerConnection.addTrack(track, stream);
@@ -151,17 +148,22 @@ class Room extends React.Component {
         return peerConnection;
     }
 
-    async createRoom(owner) {
+    async createRoom() {
         if (!this.db) {
             this.db = window.firebase.firestore();
         }
         const roomRef = await this.db.collection('rooms').doc();
 
-        let peerConnection = this.createPeerConnection();
+        this.peerConnection = this.createPeerConnection();
+
+        this.peerConnection.onaddstream = (event => {
+            console.log("ON ADDED STREAM createRoom", event);
+            this.setState({myStream:event.stream})
+        });
 
         // Code for collecting ICE candidates below
         const callerCandidatesCollection = roomRef.collection('callerCandidates');
-        peerConnection.addEventListener('icecandidate', event => {
+        this.peerConnection.addEventListener('icecandidate', event => {
             if (!event.candidate) {
                 console.log('Got final candidate!');
                 return;
@@ -172,21 +174,27 @@ class Room extends React.Component {
         // Code for collecting ICE candidates above
 
         // Code for creating a room below
-        const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
+        const offer = await this.peerConnection.createOffer();
+        await this.peerConnection.setLocalDescription(offer);
         console.log('Created offer:', offer);
 
         const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}};
         await roomRef.set(roomWithOffer);
-        this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`);
+
+        this.peerConnection.addEventListener('track', event => {
+            console.log('Got viewer track:', event);
+            let rooms = [...this.state.viewers];
+            rooms.push({roomId: this.state.myRoom, stream: event.stream[0]});
+            this.setState({viewers: rooms})
+        });
 
         // Listening for remote session description below
         roomRef.onSnapshot(async snapshot => {
             const data = snapshot.data();
-            if (!peerConnection.currentRemoteDescription && data && data.answer) {
+            if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
                 console.log('Got remote description: ', data.answer);
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
-                await peerConnection.setRemoteDescription(rtcSessionDescription);
+                await this.peerConnection.setRemoteDescription(rtcSessionDescription);
             }
         });
         // Listening for remote session description above
@@ -197,27 +205,16 @@ class Room extends React.Component {
                 if (change.type === 'added') {
                     let data = change.doc.data();
                     console.log(`Got new remote calleeCandidates: ${JSON.stringify(data)}`);
-                    await peerConnection.addIceCandidate(new RTCIceCandidate(data));
+                    await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
                 }
             });
         });
         // Listen for remote ICE candidates above
 
-        peerConnection.addEventListener('track', event => {
-            console.log('Got viewer track:', event.streams[0]);
-            let rooms = [...this.state.viewers];
-            let stream = new MediaStream();
-            event.streams[0].getTracks().forEach(track => {
-                stream.addTrack(track);
-            });
-            rooms.push({roomId: this.state.myRoom, stream: stream, peer: peerConnection});
-            this.setState({viewers: rooms})
-        });
 
-        this.peerConnection = peerConnection;
         this.setState({myRoom: roomRef.id});
-
-        return peerConnection;
+        this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`);
+        return this.peerConnection;
 
     }
 
@@ -226,8 +223,8 @@ class Room extends React.Component {
         let rooms = [...this.state.roomsViewing];
         let i = rooms.find(o => o.roomId === newRoomId);
         if (!i) {
-            let room = {roomId: newRoomId, stream: new MediaStream(), peer: null};
-            room.peer = (newRoomId === this.state.myRoom) ? this.peerConnection : this.createPeerConnection()
+            let room = {roomId: newRoomId, stream: new MediaStream()};
+
             console.log('adding room', room);
             rooms.push(room);
             this.setState({roomsViewing: rooms}, e => {
@@ -276,20 +273,19 @@ class Room extends React.Component {
         if (this.castBtnRef.current && this.castBtnRef.current.contains(event.target)) {
             return;
         }
-
-        this.setState({castBtnRef:false});
+        this.setState({showCastOptions:false});
     };
 
     render() {
         const isEnabled = this.state.enabled.video === true || this.state.enabled.audio === true || this.state.enabled.screen === true;
-        const hasVideos = (this.camStream || this.screenStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
+        const hasVideos = (this.state.myStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
 
         return (
             <React.Fragment>
                 <Toolbar>
                     <Grid container justify={'space-between'} alignItems="center">
 
-                        {(this.state.myRoom) ? ' ' :
+                        {(this.state.myRoom) ? '' :
                             <Grid item>
                                 <ButtonGroup variant="contained" color="secondary" aria-label="broadcast options" >
                                     { (this.state.myRoom) ?
@@ -310,7 +306,7 @@ class Room extends React.Component {
                                     </Button>
                                 </ButtonGroup>
                                 <Popper open={this.state.showCastOptions}
-                                        anchorEl={this.castBtnRef.current} role={'popover'}
+                                        anchorEl={this.castBtnRef}
                                         transition disablePortal
                                         anchorOrigin={{
                                             vertical: 'top',
@@ -327,15 +323,12 @@ class Room extends React.Component {
                                             style={{transformOrigin: 'left bottom'}} >
                                             <Paper>
                                                 <ClickAwayListener onClickAway={e => this.handleClose(e)}>
-                                                    <ButtonGroup variant="contained" color="primary" aria-label="broadcast options" >
+                                                    <ButtonGroup variant="contained" color="primary" aria-label="broadcast options"  >
                                                         <Button endIcon={this.state.enabled.video === true ? <Check/> : <Unchecked/>}
-                                                                color={this.state.enabled.video === true ? 'secondary' : 'primary'}
                                                                 onClick={e => this.toggleCamMic('video')}>Cam</Button>
                                                         <Button endIcon={this.state.enabled.audio === true ? <Check/> : <Unchecked/>}
-                                                                color={this.state.enabled.audio === true ? 'secondary' : 'primary'}
                                                                 onClick={e => this.toggleCamMic('audio')}>Mic</Button>
                                                         <Button endIcon={this.state.enabled.screen === true ? <Check/> : <Unchecked/>}
-                                                                color={this.state.enabled.screen === true ? 'secondary' : 'primary'}
                                                                 onClick={e => this.shareScreen()}>Screen</Button>
                                                         </ButtonGroup>
                                                 </ClickAwayListener>
@@ -349,6 +342,7 @@ class Room extends React.Component {
 
                         <TextField
                             size={'small'}
+                            margin={'dense'}
                             label="Enter Room ID"
                             variant={'filled'}
                             color="secondary"
@@ -369,16 +363,13 @@ class Room extends React.Component {
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
                         {this.state.myStream ?
-                            <div className={this.props.classes.hScrollItem} onClose={e => this.hangUp()} >
-                                <VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} owner={'me'} />
-                            </div> : ''}
+                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} /></div> : ''}
                         {this.state.viewers.map((o, i) =>
                             <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><VideoElement roomId={o.roomId} stream={o.stream} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} db={this.db} peerConnection={o.peer}/></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} stream={o.stream} db={this.db} /></div>)}
                     </div>
                 </div> }
-
             </React.Fragment>
         );
     }

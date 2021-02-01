@@ -1,14 +1,13 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import VideoElement from "./VideoElement";
 import PropTypes from "prop-types";
+import Config from "../Config";
 
 class RemoteVideo extends React.Component {
 
     constructor(p) {
         super(p);
-        this.partnerVideo = React.createRef();
-        this.state = {remoteStream : new MediaStream()};
+        this.state = {remoteStream : p.stream};
         this.db = p.db;
     }
 
@@ -35,19 +34,26 @@ class RemoteVideo extends React.Component {
         console.log('Got room:', roomSnapshot.exists, roomRef);
         if (!roomSnapshot.exists) return false;
 
+        this.peerConnection = this.createPeerConnection();
+
+        this.peerConnection.onaddstream = (event => {
+            console.log("ON ADDED STREAM", event);
+            this.setState({remoteStream:event.stream})
+        });
+
         // Code for collecting ICE candidates below
-        const callerCandidatesCollection = roomRef.collection('callerCandidates');
-        this.props.peerConnection.addEventListener('icecandidate', event => {
+        const calleeCandidatesCollection = roomRef.collection('calleeCandidates');
+        this.peerConnection.addEventListener('icecandidate', event => {
             if (!event.candidate) {
-                console.log('Got final candidate!');
+                console.log('Got final icecandidate!', event);
                 return;
             }
             console.log('Got candidate: ', event.candidate);
-            callerCandidatesCollection.add(event.candidate.toJSON());
+            calleeCandidatesCollection.add(event.candidate.toJSON());
         });
         // Code for collecting ICE candidates above
 
-        this.props.peerConnection.addEventListener('track', event => {
+        this.peerConnection.addEventListener('track', event => {
             let remoteStream = this.state.remoteStream; // WARN: maybe clone this ?
             console.log('Got presenter track:', event.streams[0]);
             event.streams[0].getTracks().forEach(track => {
@@ -60,10 +66,10 @@ class RemoteVideo extends React.Component {
         // Code for creating SDP answer below
         const offer = roomSnapshot.data().offer;
         console.log('Got offer:', offer);
-        await this.props.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-        const answer = await this.props.peerConnection.createAnswer();
+        await this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        const answer = await this.peerConnection.createAnswer();
         console.log('Created answer:', answer);
-        await this.props.peerConnection.setLocalDescription(answer);
+        await this.peerConnection.setLocalDescription(answer);
 
         const roomWithAnswer = {
             answer: {type: answer.type, sdp: answer.sdp}
@@ -77,7 +83,7 @@ class RemoteVideo extends React.Component {
                 if (change.type === 'added') {
                     let data = change.doc.data();
                     console.log(`Got new remote callerCandidates: ${JSON.stringify(data)}`);
-                    await this.props.peerConnection.addIceCandidate(new RTCIceCandidate(data));
+                    await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
                 }
             });
         });
@@ -85,13 +91,44 @@ class RemoteVideo extends React.Component {
 
     }
 
+    createPeerConnection() {
+        console.log('Create PeerConnection with configuration: ', Config.peerConfig);
+        let peerConnection = new RTCPeerConnection(Config.peerConfig);
+        peerConnection.addEventListener('icegatheringstatechange', () => {
+            console.log(`ICE gathering state changed: ${peerConnection.iceGatheringState}`);
+        });
+
+        peerConnection.addEventListener('connectionstatechange', () => {
+            console.log(`Connection state change: ${peerConnection.connectionState}`);
+        });
+
+        peerConnection.addEventListener('signalingstatechange', () => {
+            console.log(`Signaling state change: ${peerConnection.signalingState}`);
+        });
+
+        peerConnection.addEventListener('iceconnectionstatechange ', () => {
+            console.log(`ICE connection state change: ${peerConnection.iceConnectionState}`);
+        });
+
+
+        if (this.state.remoteStream) {
+            console.log("adding remote stream");
+            this.state.remoteStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, this.state.remoteStream);
+            });
+        }
+
+        return peerConnection;
+    }
+
+
     async hangUp() {
         if (this.remoteStream) {
             this.remoteStream.getTracks().forEach(track => track.stop());
         }
 
-        if (this.props.peerConnection) {
-            this.props.peerConnection.close();
+        if (this.peerConnection) {
+            this.peerConnection.close();
         }
 
         this.setState({remoteStream:null});

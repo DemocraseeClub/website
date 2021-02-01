@@ -40,8 +40,6 @@ export function lightOrDark(color) {
         return 'dark';
     }
 }
-const drawerWidth = 240;
-
 
 export const rallyStyles = theme => ({
     root: {
@@ -164,8 +162,15 @@ export const rallyStyles = theme => ({
         })
     },
     hScroller : {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignContent:'center',
         flexWrap: 'nowrap',
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
+    },
+    hScrollItem : {
+        display:'inline-block',
+        textAlign:'center',
     }
 });
