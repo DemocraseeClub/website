@@ -54,6 +54,9 @@ class RallyTemplates extends React.Component {
                         <Typography variant={'caption'}>action ● realizing potential</Typography>
                     </Box>
                 </Box>
+                <Box item mt={3} pl={1} >
+                <Typography variant={'caption'}>* All meeting templates include live camera/mic/screen sharing without authentication</Typography>
+                </Box>
             </div>
         );
     }
