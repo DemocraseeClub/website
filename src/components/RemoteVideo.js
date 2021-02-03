@@ -154,7 +154,6 @@ class RemoteVideo extends React.Component {
 }
 
 RemoteVideo.propTypes = {
-    peerConnection: PropTypes.object.isRequired,
     roomId : PropTypes.string.isRequired
 };
 
