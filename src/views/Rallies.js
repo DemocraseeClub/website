@@ -62,7 +62,7 @@ class Rallies extends React.Component {
                                         Hidden Genius Project
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Course for young founders of Hidden Genius Project's Alumni Venture Seed Fund to
+                                        A four part course for the young founders of Hidden Genius Project's <a href={"https://www.hiddengeniusproject.org/alumniventureseedfund/"} target={"_blank"} rel="noopener noreferrer">Alumni Venture Seed Fund</a>.
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>

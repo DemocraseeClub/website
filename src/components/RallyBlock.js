@@ -11,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
 import Create from "@material-ui/icons/Create";
 import {withSnackbar} from "notistack";
+import Config from "../Config";
+import SanitizedHTML from "react-sanitized-html";
 
 class RallyHome extends Component {
 
@@ -60,7 +62,23 @@ class RallyHome extends Component {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
-                        {rally.desc ? <Typography variant='body1'>{rally.desc}</Typography> : ''}
+                        {rally.desc ? <SanitizedHTML
+                            allowedIframeDomains={['youtube.com', 'google.com']}
+                            allowedIframeHostnames={['www.youtube.com', 'docs.google.com', 'sheets.google.com']}
+                            allowIframeRelativeUrls={false}
+                            allowedSchemes={[ 'data', 'https' ]}
+                            allowedTags={Config.allowedTags}
+                            allowedAttributes={Config.allowedAttributes}
+                            exclusiveFilter={frame => {
+                                if (frame.tag === 'iframe') {
+                                    console.log(frame);
+                                    if (frame.attribs.src.indexOf('https://docs.google.com') !== 0 && frame.attribs.src.indexOf('https://sheets.google.com') !== 0) {
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            }}
+                            html={rally.desc} /> : ''}
 
                         <Box mt={4}>
                             <div>Hosts</div>
