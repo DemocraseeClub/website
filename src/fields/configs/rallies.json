@@ -1,0 +1,62 @@
+{
+    "summary": {
+        "label": "Summary",
+        "machine_name": "summary",
+        "field_type": "text",
+        "object_type": "rallies",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "picture": {
+        "label": "Picture",
+        "machine_name": "picture",
+        "field_type": "image",
+        "object_type": "rallies",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "topics": {
+        "label": "Topics",
+        "machine_name": "topics",
+        "field_type": "taxonomy",
+        "object_type": "rallies",
+        "cardinality": 3,
+        "required": true,
+        "relationship": "topics",
+        "default": ""
+    },
+    "meeting": {
+        "label": "Meeting",
+        "machine_name": "meeting",
+        "field_type": "post_object",
+        "object_type": "rallies",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "meetings",
+        "default": ""
+    },
+    "stakeholders": {
+        "label": "Stakeholders",
+        "machine_name": "stakeholders",
+        "field_type": "taxonomy",
+        "object_type": "rallies",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "stakeholders",
+        "default": ""
+    },
+    "research_json": {
+        "label": "Research JSON",
+        "machine_name": "research_json",
+        "field_type": "json",
+        "object_type": "rallies",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    }
+}

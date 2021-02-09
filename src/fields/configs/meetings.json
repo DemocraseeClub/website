@@ -1,0 +1,112 @@
+{
+    "city": {
+        "label": "City",
+        "machine_name": "city",
+        "field_type": "post_object",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "cities",
+        "default": ""
+    },
+    "meeting_type": {
+        "label": "Meeting Type",
+        "machine_name": "meeting_type",
+        "field_type": "taxonomy",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "meeting_types",
+        "default": ""
+    },
+    "speaker": {
+        "label": "Speaker",
+        "machine_name": "speaker",
+        "field_type": "user",
+        "object_type": "meetings",
+        "cardinality": 7,
+        "required": true,
+        "relationship": "users",
+        "default": "self"
+    },
+    "moderators": {
+        "label": "Moderators",
+        "machine_name": "moderators",
+        "field_type": "user",
+        "object_type": "meetings",
+        "cardinality": 2,
+        "required": true,
+        "relationship": "users",
+        "default": ""
+    },
+    "sponsors": {
+        "label": "Sponsors",
+        "machine_name": "sponsors",
+        "field_type": "user",
+        "object_type": "meetings",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "users",
+        "default": ""
+    },
+    "postal_address": {
+        "label": "Postal Address",
+        "machine_name": "postal_address",
+        "field_type": "address",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "meeting_link": {
+        "label": "Meeting Link",
+        "machine_name": "meeting_link",
+        "field_type": "url",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "",
+        "default": ""
+    },
+    "start_end_times": {
+        "label": "Date & Time Start - End",
+        "machine_name": "start_end_times",
+        "field_type": "date-time",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "",
+        "default": ""
+    },
+    "agenda_json": {
+        "label": "Agenda JSON",
+        "machine_name": "agenda_json",
+        "field_type": "json",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "duration": {
+        "label": "Duration",
+        "machine_name": "duration",
+        "field_type": "number",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "recording": {
+        "label": "Recording",
+        "machine_name": "recording",
+        "field_type": "file",
+        "object_type": "meetings",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    }
+}

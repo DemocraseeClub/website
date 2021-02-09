@@ -1,0 +1,112 @@
+{
+    "website": {
+        "label": "Website",
+        "machine_name": "website",
+        "field_type": "url",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "picture": {
+        "label": "Picture",
+        "machine_name": "picture",
+        "field_type": "image",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "cover_photo": {
+        "label": "Cover Photo",
+        "machine_name": "cover_photo",
+        "field_type": "image",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "topic_defs_json": {
+        "label": "Topic Definitions JSON",
+        "machine_name": "topic_defs_json",
+        "field_type": "json",
+        "object_type": "users",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "resources": {
+        "label": "Resources",
+        "machine_name": "resources",
+        "field_type": "post_object",
+        "object_type": "users",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "resources",
+        "default": ""
+    },
+    "job_title": {
+        "label": "Job Title",
+        "machine_name": "job_title",
+        "field_type": "text",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "",
+        "default": ""
+    },
+    "office_phone": {
+        "label": "Office Phone",
+        "machine_name": "office_phone",
+        "field_type": "phone",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "office_email": {
+        "label": "Office Email",
+        "machine_name": "office_email",
+        "field_type": "email",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "social_links": {
+        "label": "Social Media links",
+        "machine_name": "social_links",
+        "field_type": "url",
+        "object_type": "users",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "party_affiliation": {
+        "label": "Party",
+        "machine_name": "party_affiliation",
+        "field_type": "taxonomy",
+        "object_type": "users",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "parties",
+        "default": ""
+    },
+    "city": {
+        "label": "City",
+        "machine_name": "city",
+        "field_type": "post_object",
+        "object_type": "users",
+        "cardinality": -1,
+        "required": true,
+        "relationship": "cities",
+        "default": ""
+    }
+}

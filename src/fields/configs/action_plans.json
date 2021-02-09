@@ -1,0 +1,92 @@
+{
+    "exe_summary": {
+        "label": "Executive Summary",
+        "machine_name": "exe_summary",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "analysis": {
+        "label": "Analysis and Policy Alternatives / Proposal",
+        "machine_name": "analysis",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "background": {
+        "label": "Background / Legislative History / Problem Statement",
+        "machine_name": "background",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "coauthors": {
+        "label": "CoAuthors",
+        "machine_name": "coauthors",
+        "field_type": "user",
+        "object_type": "action_plans",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "users",
+        "default": ""
+    },
+    "pro_argument": {
+        "label": "Pro Argument",
+        "machine_name": "pro_argument",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "con_argument": {
+        "label": "Con Argument",
+        "machine_name": "con_argument",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "prequesites": {
+        "label": "Prequesites",
+        "machine_name": "prequesites",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "",
+        "default": ""
+    },
+    "timeline": {
+        "label": "Timeline",
+        "machine_name": "timeline",
+        "field_type": "text_area",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "rally": {
+        "label": "Rally",
+        "machine_name": "rally",
+        "field_type": "post_object",
+        "object_type": "action_plans",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "rallies",
+        "default": ""
+    }
+}
