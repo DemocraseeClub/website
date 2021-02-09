@@ -37,7 +37,7 @@ class Room extends React.Component {
         this.screenStream = null;
         this.camStream = null;
 
-        this.castBtnRef = React.createRef();
+        this.castBtnRef = React.createRef('');
     }
 
     async componentWillUnmount() {
@@ -156,6 +156,7 @@ class Room extends React.Component {
 
         this.peerConnection = this.createPeerConnection();
 
+       
         this.peerConnection.onaddstream = (event => {
             console.log("ON ADDED STREAM createRoom", event);
             this.setState({myStream:event.stream})
@@ -178,7 +179,7 @@ class Room extends React.Component {
         await this.peerConnection.setLocalDescription(offer);
         console.log('Created offer:', offer);
 
-        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}};
+        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0};
         await roomRef.set(roomWithOffer);
 
         this.peerConnection.addEventListener('track', event => {
@@ -198,6 +199,7 @@ class Room extends React.Component {
         // Listening for remote session description below
         roomRef.onSnapshot(async snapshot => {
             const data = snapshot.data();
+            console.log(data);
             if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
                 console.log('Got remote description: ', data.answer);
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
@@ -314,13 +316,13 @@ class Room extends React.Component {
                                     </Button>
                                 </ButtonGroup>
                                 <Popper open={this.state.showCastOptions}
-                                        anchorEl={this.castBtnRef}
+                                        anchorEl={this.castBtnRef.current}
                                         transition disablePortal
-                                        anchorOrigin={{
+                                        anchororigin={{
                                             vertical: 'top',
                                             horizontal: 'right',
                                         }}
-                                        transformOrigin={{
+                                        transformorigin={{
                                             vertical: 'bottom',
                                             horizontal: 'left',
                                         }}
@@ -371,9 +373,9 @@ class Room extends React.Component {
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
                         {this.state.myStream ?
-                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} /></div> : ''}
+                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={window.firebase.firestore()}/></div> : ''}
                         {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><VideoElement roomId={o.roomId} stream={o.stream} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><VideoElement roomId={o.roomId} stream={o.stream} db={window.firebase.firestore()} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
                             <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} stream={o.stream} db={this.db} /></div>)}
                     </div>
