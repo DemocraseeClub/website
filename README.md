@@ -1,3 +1,11 @@
-A. To workshop an idea
-B. To offer your expertise on a topic
-C. To draft an action plan to propose to an elected official
+**This project is an evolving idea around "incentivizing civic action". For starters we're building out a tool to optimize online meetings with a timer, an agenda builder using DraftJS, and screen/cam/mic sharing over Firebase.** 
+
+*The hope is that better organized and guided conversations can turn all this rage into constructive action.*
+
+Check the [Issues](https://github.com/eliataylor/clock-agendas/issues) here if you're interested in helping out. 
+
+- The database schema is described here:  https://democraseeclub.web.app/rally/building-democrasee/meeting/2020-11-14
+- The taxonomy schema is described here: https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit#gid=421989747
+
+
+(ɔ) 2020 - Available via [GNU](https://www.gnu.org/licenses/gpl-3.0.html)
