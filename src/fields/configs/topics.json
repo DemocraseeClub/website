@@ -1,0 +1,20 @@
+{
+    "icon": {
+        "label": "Icon",
+        "machine_name": "icon",
+        "field_type": "image",
+        "object_type": "topics",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    },
+    "photo": {
+        "label": "Photo",
+        "machine_name": "photo",
+        "field_type": "image",
+        "object_type": "topics",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    }
+}

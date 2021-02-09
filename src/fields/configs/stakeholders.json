@@ -1,0 +1,11 @@
+{
+    "image": {
+        "label": "Image",
+        "machine_name": "image",
+        "field_type": "image",
+        "object_type": "stakeholders",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    }
+}

@@ -12,6 +12,8 @@ class InlineEditable extends React.Component {
     }
 
     render() {
+        // TODO: render the correct field type with validation based on `src/fields/configs/rallies/${this.props.field.field_name}.json`
+
         return (
             <React.Fragment>
                 {this.state.editing === true ?

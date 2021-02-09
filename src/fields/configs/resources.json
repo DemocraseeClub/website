@@ -1,0 +1,42 @@
+{
+    "image": {
+        "label": "Image",
+        "machine_name": "image",
+        "field_type": "image",
+        "object_type": "resources",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "",
+        "default": ""
+    },
+    "postal_address": {
+        "label": "Postal Address",
+        "machine_name": "postal_address",
+        "field_type": "text",
+        "object_type": "resources",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "price_ccoin": {
+        "label": "Price (citizencoin)",
+        "machine_name": "price_ccoin",
+        "field_type": "number",
+        "object_type": "resources",
+        "cardinality": 1,
+        "required": true,
+        "relationship": "",
+        "default": ""
+    },
+    "resource_type": {
+        "label": "Resource Type",
+        "machine_name": "resource_type",
+        "field_type": "taxonomy",
+        "object_type": "resources",
+        "cardinality": -1,
+        "required": true,
+        "relationship": "resource_types",
+        "default": ""
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "title": "A survey or short Q&A session",
+    "start": "tomorrow",
+    "profile": false,
+    "videolink": false,
+    "city": "My City",
+    "type": "meeting",
+    "template": "survey",
+    "hosts": [],
+    "speakers": [],
+    "lineItems": [
+    {
+        "nest": "Questions",
+        "title": "Do you think you can ",
+        "outline": "",
+        "seconds": 120,
+        "html": ""
+    }
+]
+}

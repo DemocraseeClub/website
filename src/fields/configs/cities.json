@@ -1,0 +1,152 @@
+{
+    "postal_address": {
+        "label": "Postal Address",
+        "machine_name": "postal_address",
+        "field_type": "address",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "picture": {
+        "label": "Picture",
+        "machine_name": "picture",
+        "field_type": "image",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "cover_photo": {
+        "label": "Cover Photo",
+        "machine_name": "cover_photo",
+        "field_type": "image",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "sponsors": {
+        "label": "Sponsors",
+        "machine_name": "sponsors",
+        "field_type": "user",
+        "object_type": "cities",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "users",
+        "default": ""
+    },
+    "website": {
+        "label": "Website",
+        "machine_name": "website",
+        "field_type": "url",
+        "object_type": "cities",
+        "cardinality": 3,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "population": {
+        "label": "Population",
+        "machine_name": "population",
+        "field_type": "number",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "altitude": {
+        "label": "Altitude",
+        "machine_name": "altitude",
+        "field_type": "number",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "county": {
+        "label": "County",
+        "machine_name": "county",
+        "field_type": "text",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "state_term_id": {
+        "label": "State",
+        "machine_name": "state_term_id",
+        "field_type": "taxonomy",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "states",
+        "default": ""
+    },
+    "officials": {
+        "label": "Officials",
+        "machine_name": "officials",
+        "field_type": "user",
+        "object_type": "cities",
+        "cardinality": -1,
+        "required": false,
+        "relationship": "users",
+        "default": ""
+    },
+    "land_area": {
+        "label": "Land Area",
+        "machine_name": "land_area",
+        "field_type": "number",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "water_area": {
+        "label": "Water Area",
+        "machine_name": "water_area",
+        "field_type": "number",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "total_area": {
+        "label": "Total Area",
+        "machine_name": "total_area",
+        "field_type": "number",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "density": {
+        "label": "Density",
+        "machine_name": "density",
+        "field_type": "number",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    },
+    "timezone": {
+        "label": "Timezone",
+        "machine_name": "timezone",
+        "field_type": "text",
+        "object_type": "cities",
+        "cardinality": 1,
+        "required": false,
+        "relationship": "",
+        "default": ""
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "website": {
+        "label": "Website",
+        "machine_name": "website",
+        "field_type": "url",
+        "object_type": "states",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    },
+    "icon": {
+        "label": "Icon",
+        "machine_name": "icon",
+        "field_type": "image",
+        "object_type": "states",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    }
+}

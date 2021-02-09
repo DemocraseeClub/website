@@ -1,0 +1,20 @@
+{
+    "logo": {
+        "label": "Logo",
+        "machine_name": "logo",
+        "field_type": "image",
+        "object_type": "parties",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    },
+    "website": {
+        "label": "Website",
+        "machine_name": "website",
+        "field_type": "url",
+        "object_type": "parties",
+        "cardinality": 1,
+        "relationship": "",
+        "default": ""
+    }
+}
