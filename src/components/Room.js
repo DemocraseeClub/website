@@ -30,7 +30,8 @@ class Room extends React.Component {
             roomsViewing: [],
             myStream:null,
             viewers: [],
-            roomFieldText: ''
+            roomFieldText: '',
+            
         }
 
         this.peerConnection = null;
@@ -183,7 +184,8 @@ class Room extends React.Component {
         await roomRef.set(roomWithOffer);
 
         this.peerConnection.addEventListener('track', event => {
-            console.log('Got viewer track:', event);
+            console.log('Got viewer track: ', event);
+            console.log('event streams: ', event.streams);
             let rooms = [...this.state.viewers];
             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
             this.setState({viewers: rooms})
@@ -191,6 +193,7 @@ class Room extends React.Component {
 
         this.peerConnection.ontrack = event => {
             console.log('Got viewer track2:', event);
+            console.log('event streams: ', event.streams);
             let rooms = [...this.state.viewers];
             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
             this.setState({viewers: rooms})

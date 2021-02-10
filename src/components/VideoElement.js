@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Typography from "@material-ui/core/Typography";
 import PropTypes from 'prop-types';
 
 class VideoElement extends Component {
@@ -41,9 +40,6 @@ class VideoElement extends Component {
 
     componentDidMount() { 
         console.log("montado", this.props)
-
-      
-
 
         this.setState({mounted:true})
     }

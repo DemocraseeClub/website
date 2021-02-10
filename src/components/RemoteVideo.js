@@ -3,17 +3,32 @@ import VideoElement from "./VideoElement";
 import PropTypes from "prop-types";
 import Config from "../Config";
 import { FormatColorResetTwoTone } from "@material-ui/icons";
+import { Beforeunload } from "react-beforeunload";
 
 class RemoteVideo extends React.Component {
   constructor(p) {
     super(p);
-    this.state = { remoteStream: p.stream };
+    this.state = { remoteStream: p.stream, view: false  };
     this.db = p.db;
-    this.view = false;
+    
   }
 
   componentDidMount() {
     this.joinRoomById(this.props.roomId);
+    // window.addEventListener("beforeunload", async function (e) {
+
+    //   if(this.view) {
+    //     const roomRef = this.db.collection("rooms").doc(this.props.roomId)
+    //     const roomSnapshot = await roomRef.get();
+    //     const viewers = roomSnapshot.data().viewers;
+    //     roomRef.update({
+    //       viewers: viewers -1,
+    //     });
+    //     this.view = false;
+    //     e.preventDefault();
+    //   }
+
+    // });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -24,6 +39,15 @@ class RemoteVideo extends React.Component {
 
   async componentWillUnmount() {
     await this.hangUp();
+    if (this.state.view) {
+      const roomRef = this.db.collection("rooms").doc(this.props.roomId);
+      const roomSnapshot = await roomRef.get();
+      const viewers = roomSnapshot.data().viewers;
+      roomRef.update({
+        viewers: viewers - 1,
+      });
+      this.setState({view:false})
+    }
   }
 
   async joinRoomById(room) {
@@ -31,10 +55,6 @@ class RemoteVideo extends React.Component {
       this.db = window.firebase.firestore();
     }
     const roomRef = this.db.collection("rooms").doc(room);
-
-    // roomRef.collection('rooms').doc(room).get().then(doc => {
-    //     console.log(doc.data());
-    // });
 
     const roomSnapshot = await roomRef.get();
 
@@ -47,6 +67,14 @@ class RemoteVideo extends React.Component {
       console.log("ON ADDED STREAM", event);
       this.setState({ remoteStream: event.stream });
     };
+
+    //Updating viewers in Firestore
+    roomRef.update({
+      viewers: roomSnapshot.data().viewers + 1,
+    });
+    this.view = true;
+    this.setState({view: true});
+    /** */
 
     // Code for collecting ICE candidates below
     const calleeCandidatesCollection = roomRef.collection("calleeCandidates");
@@ -130,21 +158,11 @@ class RemoteVideo extends React.Component {
       const roomSnapshot = await roomRef.get();
       const viewers = roomSnapshot.data().viewers;
       switch (peerConnection.connectionState) {
-        case "connected":
-            this.view = true;
-
-
-          roomRef.update({
-            viewers: viewers + 1,
-          });
-
-          break;
         case "disconnected":
-            this.view = false;
-          console.log("saliendo", viewers)
-            roomRef.update({
-              viewers: viewers -1,
-            });
+          this.setState({view: false})
+          roomRef.update({
+            viewers: viewers - 1,
+          });
           break;
         default:
           break;
@@ -181,30 +199,32 @@ class RemoteVideo extends React.Component {
       this.peerConnection.close();
     }
 
-    if(this.view) {
-        this.view = false;
-
-        const roomRef = this.db.collection("rooms").doc(this.props.roomId);
-        const roomSnapshot = await roomRef.get();
-    
-        const viewers = roomSnapshot.data().viewers;
-
-        roomRef.update({
-            viewers: viewers - 1 ,
-          });
-    }
-
-
     this.setState({ remoteStream: null });
+  }
+
+  async handleBeforeUnload(e) {
+    if (this.state.view) {
+      e.preventDefault();
+
+      const roomRef = this.db.collection("rooms").doc(this.props.roomId);
+      const roomSnapshot = await roomRef.get();
+      const viewers = roomSnapshot.data().viewers;
+      roomRef.update({
+        viewers: viewers - 1,
+      });
+      
+    }
   }
 
   render() {
     return (
-      <VideoElement
-        stream={this.state.remoteStream}
-        roomId={this.props.roomId}
-        db={this.db}
-      />
+      <Beforeunload onBeforeunload={(e) => this.handleBeforeUnload(e)}>
+        <VideoElement
+          stream={this.state.remoteStream}
+          roomId={this.props.roomId}
+          db={this.db}
+        />
+      </Beforeunload>
     );
   }
 }
