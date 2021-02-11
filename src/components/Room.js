@@ -31,6 +31,7 @@ class Room extends React.Component {
             myStream:null,
             viewers: [],
             roomFieldText: '',
+            listener:[]
             
         }
 
@@ -42,6 +43,9 @@ class Room extends React.Component {
     }
 
     async componentWillUnmount() {
+        this.state.listener[0]();
+        this.state.listener[1]();
+
         await this.hangUp();
     }
 
@@ -180,7 +184,7 @@ class Room extends React.Component {
         await this.peerConnection.setLocalDescription(offer);
         console.log('Created offer:', offer);
 
-        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0};
+        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0, roomsViewing: []};
         await roomRef.set(roomWithOffer);
 
         this.peerConnection.addEventListener('track', event => {
@@ -200,7 +204,8 @@ class Room extends React.Component {
         }
 
         // Listening for remote session description below
-        roomRef.onSnapshot(async snapshot => {
+        const auxList1 =roomRef.onSnapshot(async snapshot => {
+
             const data = snapshot.data();
             console.log(data);
             if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
@@ -208,11 +213,12 @@ class Room extends React.Component {
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
                 await this.peerConnection.setRemoteDescription(rtcSessionDescription);
             }
+            this.setState({viewers: snapshot.data().roomsViewing})
         });
         // Listening for remote session description above
 
         // Listen for remote ICE candidates below
-        roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
+        const auxList2 =  roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(async change => {
                 if (change.type === 'added') {
                     let data = change.doc.data();
@@ -224,13 +230,17 @@ class Room extends React.Component {
         // Listen for remote ICE candidates above
 
 
-        this.setState({myRoom: roomRef.id});
+        this.setState({myRoom: roomRef.id, listener: [auxList1, auxList2]});
+        
         this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`);
         return this.peerConnection;
 
     }
 
-    joinRoom() {
+    async joinRoom() {
+        if (!this.db) {
+            this.db = window.firebase.firestore();
+        }
         let newRoomId = this.state.roomFieldText;
         let rooms = [...this.state.roomsViewing];
         let i = rooms.find(o => o.roomId === newRoomId);
@@ -242,6 +252,8 @@ class Room extends React.Component {
             this.setState({roomsViewing: rooms}, e => {
                 this.setState({roomFieldText: ''})
             })
+
+
         } else {
             console.log('room already exists');
         }
@@ -378,9 +390,9 @@ class Room extends React.Component {
                         {this.state.myStream ?
                             <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={window.firebase.firestore()}/></div> : ''}
                         {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><VideoElement roomId={o.roomId} stream={o.stream} db={window.firebase.firestore()} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o}  stream={new MediaStream()} db={window.firebase.firestore()} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} stream={o.stream} db={this.db} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} /></div>)}
                     </div>
                 </div> }
             </React.Fragment>
