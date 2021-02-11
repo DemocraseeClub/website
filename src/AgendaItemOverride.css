@@ -1,0 +1,40 @@
+.WithSnackbar\(MeetingHome\)-drawer-29 {
+    right: 5px !important;
+    position: fixed !important;
+    top: 150px !important;
+    height: max-content;
+    border: 2px solid rgb(199, 199, 199) !important;
+    z-index: 2000 !important;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.WithSnackbar\(MeetingHome\)-tabsVert-22 {
+    border:none !important
+}
+
+
+div[role="tabpanel"] {
+    width: 500px;
+}
+
+.WithSnackbar\(MeetingHome\)-tabsIcon-25 {
+    min-width: 45px !important;
+    width: 33% !important;
+}
+
+.MuiTabs-flexContainer>.MuiButtonBase-root {
+    transition: background-color 0.3s ease;
+    -webkit-transition: background-color 0.3s ease;
+    -moz-transition: background-color 0.3s ease;
+    -ms-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
