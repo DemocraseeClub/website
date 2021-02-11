@@ -7,19 +7,19 @@ class VideoElement extends Component {
         super(p);
         this.listener = false;
         this.vidEl = React.createRef();
-        this.state = {mounted:false, showRoomId:false, viewers: this.props.viewers}
+        this.state = {mounted:false, showRoomId:false, viewers: this.props.viewers, listener: null}
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("actualizado", this.props)
 
         if(this.props.roomId && !prevProps.roomId) {
             this.listener = true;
-            this.props.db.collection('rooms').doc(this.props.roomId).onSnapshot((snap) => {
-                    console.log('snap', snap.data())
+            const auxListener = this.props.db.collection('rooms').doc(this.props.roomId).onSnapshot((snap) => {
+                console.log(snap.data(), 'snap')
                 this.setState({viewers:snap.data().viewers}) ;
             })
 
+            this.setState({listener:auxListener})
         }
 
         let doUpdate = prevState.mounted === false && this.state.mounted === true;
@@ -39,11 +39,12 @@ class VideoElement extends Component {
     }
 
     componentDidMount() { 
-        console.log("montado", this.props)
-
         this.setState({mounted:true})
     }
 
+    componentWillUnmount() {
+        if(this.state.listener) this.state.listener();
+    }
 
 
     render() {
