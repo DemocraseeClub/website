@@ -12,6 +12,10 @@ class VideoElement extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
+        if(prevProps.viewers !== this.props.viewers) {
+            this.setState({viewers: this.props.viewers})
+        }
+
         if(this.props.roomId && !prevProps.roomId) {
             this.listener = true;
             const auxListener = this.props.db.collection('rooms').doc(this.props.roomId).onSnapshot((snap) => {
@@ -54,8 +58,12 @@ class VideoElement extends Component {
                 {(!this.props.roomId) ? '' :
                     <p style={{display:'inline-flex', margin:0}} >
                         {this.props.viewers === -1 ? '' : <span style={{marginRight:5}} >viewers: {this.state.viewers}</span>}
-                        <span style={{marginRight:5, fontWeight:'bold'}}>{this.state.showRoomId === true ? this.props.roomId : ' **** '}</span>
-                        <u onClick={() => this.setState({showRoomId:!this.state.showRoomId})}>{this.state.showRoomId === true ? 'hide' : 'show'}</u>
+                        { this.props.notShowCode ? null :
+                        <div>
+                            <span style={{marginRight:5, fontWeight:'bold'}}>{this.state.showRoomId === true ? this.props.roomId : ' **** '}</span>
+                            <u onClick={() => this.setState({showRoomId:!this.state.showRoomId})}>{this.state.showRoomId === true ? 'hide' : 'show'}</u>
+                        </div>
+                        }
                     </p>
                 }
             </React.Fragment>
