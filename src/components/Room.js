@@ -43,8 +43,10 @@ class Room extends React.Component {
     }
 
     async componentWillUnmount() {
-        this.state.listener[0]();
-        this.state.listener[1]();
+        if(this.state.listener.length > 0) {
+            this.state.listener[0]();
+            this.state.listener[1]();
+        }
 
         await this.hangUp();
     }
@@ -187,21 +189,21 @@ class Room extends React.Component {
         const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0, roomsViewing: []};
         await roomRef.set(roomWithOffer);
 
-        this.peerConnection.addEventListener('track', event => {
-            console.log('Got viewer track: ', event);
-            console.log('event streams: ', event.streams);
-            let rooms = [...this.state.viewers];
-            rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
-            this.setState({viewers: rooms})
-        });
+        // this.peerConnection.addEventListener('track', event => {
+        //     console.log('Got viewer track: ', event);
+        //     console.log('event streams: ', event.streams);
+        //     let rooms = [...this.state.viewers];
+        //     rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+        //     this.setState({viewers: rooms})
+        // });
 
-        this.peerConnection.ontrack = event => {
-            console.log('Got viewer track2:', event);
-            console.log('event streams: ', event.streams);
-            let rooms = [...this.state.viewers];
-            rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
-            this.setState({viewers: rooms})
-        }
+        // this.peerConnection.ontrack = event => {
+        //     console.log('Got viewer track2:', event);
+        //     console.log('event streams: ', event.streams);
+        //     let rooms = [...this.state.viewers];
+        //     rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+        //     this.setState({viewers: rooms})
+        // }
 
         // Listening for remote session description below
         const auxList1 =roomRef.onSnapshot(async snapshot => {
@@ -213,7 +215,16 @@ class Room extends React.Component {
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
                 await this.peerConnection.setRemoteDescription(rtcSessionDescription);
             }
-            this.setState({viewers: snapshot.data().roomsViewing})
+
+            let viewers = snapshot.data().roomsViewing;
+            let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
+            for(let i = viewers.length - 1; i>=0 ;i--){
+                if(auxRoomsViewing.indexOf(viewers[i])!==-1)
+                    viewers.splice(i,1);
+            }
+         
+
+            this.setState({viewers: viewers})
         });
         // Listening for remote session description above
 
@@ -390,7 +401,7 @@ class Room extends React.Component {
                         {this.state.myStream ?
                             <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={window.firebase.firestore()}/></div> : ''}
                         {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o}  stream={new MediaStream()} db={window.firebase.firestore()} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom}  stream={new MediaStream()} db={window.firebase.firestore()} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
                             <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} /></div>)}
                     </div>
