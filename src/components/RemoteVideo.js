@@ -7,7 +7,7 @@ import { Beforeunload } from "react-beforeunload";
 class RemoteVideo extends React.Component {
   constructor(p) {
     super(p);
-    this.state = { remoteStream: p.stream, view: false, added: false};
+    this.state = { remoteStream: p.stream, view: false, added: false, viewers: null};
     this.db = p.db;
   }
 
@@ -55,9 +55,10 @@ class RemoteVideo extends React.Component {
         } 
         console.log(auxRoomsAdd, Array.from(auxRoomsAdd).length, "rommsadd")
         roomRef.update({
-          viewers: Array.from(auxRoomsAdd).length,
+          viewers: this.props.myRoomId ? Array.from(auxRoomsAdd).length : viewers + 1,
           roomsViewing: Array.from(auxRoomsAdd),
         });
+        this.setState({viewers: this.props.myRoomId ? Array.from(auxRoomsAdd).length : viewers + 1})
         
         break;
       case "remove":
@@ -69,9 +70,10 @@ class RemoteVideo extends React.Component {
         }
         console.log(auxRoomsRemove, Array.from(auxRoomsRemove).length, "romms remove")
         roomRef.update({
-          viewers: auxRoomsRemove.length,
+          viewers: this.props.myRoomId ?  auxRoomsRemove.length : viewers - 1,
           roomsViewing: auxRoomsRemove,
         });
+        this.setState({viewers: this.props.myRoomId ?  auxRoomsRemove.length : viewers - 1})
         break;
       default:
         console.log("invalid action");
@@ -232,13 +234,8 @@ class RemoteVideo extends React.Component {
   async handleBeforeUnload(e) {
     if (this.state.view) {
       e.preventDefault();
-
-      const roomRef = this.db.collection("rooms").doc(this.props.roomId);
-      const roomSnapshot = await roomRef.get();
-      const viewers = roomSnapshot.data().viewers;
-      roomRef.update({
-        viewers: viewers - 1,
-      });
+      await this.handleViewers("remove");
+      this.setState({ view: false });
     }
   }
 
@@ -249,6 +246,8 @@ class RemoteVideo extends React.Component {
           stream={this.state.remoteStream}
           roomId={this.props.roomId}
           db={this.db}
+          notShowCode={true}
+          viewers={this.state.viewers}
         />
       </Beforeunload>
     );
