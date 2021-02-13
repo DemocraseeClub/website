@@ -7,7 +7,7 @@ import { Beforeunload } from "react-beforeunload";
 class RemoteVideo extends React.Component {
   constructor(p) {
     super(p);
-    this.state = { remoteStream: p.stream, view: false };
+    this.state = { remoteStream: p.stream, view: false, added: false};
     this.db = p.db;
   }
 
@@ -19,6 +19,12 @@ class RemoteVideo extends React.Component {
     if (!this.props.roomId && prevProps.roomId) {
       this.hangUp();
     }
+
+    if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {  
+      console.log('actualizando')
+      this.handleViewers('add')
+    }
+
   }
 
   async componentWillUnmount() {
@@ -38,28 +44,33 @@ class RemoteVideo extends React.Component {
     const viewers = roomSnapshot.data().viewers;
     const roomsViewing = roomSnapshot.data().roomsViewing;
 
-    let auxRooms = [...roomsViewing];
+    
 
     switch (action) {
       case "add":
+        let auxRoomsAdd = new Set([...roomsViewing]);
         if (this.props.myRoomId) {
-          auxRooms.push(this.props.myRoomId);
-        } //TODO agregar el caso cuando no haya un broadcast activo
-
+          auxRoomsAdd.add(this.props.myRoomId);
+          this.setState({added:true})
+        } 
+        console.log(auxRoomsAdd, Array.from(auxRoomsAdd).length, "rommsadd")
         roomRef.update({
-          viewers: viewers + 1,
-          roomsViewing: auxRooms,
+          viewers: Array.from(auxRoomsAdd).length,
+          roomsViewing: Array.from(auxRoomsAdd),
         });
+        
         break;
       case "remove":
-        if (this.props.myRoomId) {
-          let i = auxRooms.indexOf(this.props.myRoomId);
-          auxRooms.splice(i, 1);
-        }
+        let auxRoomsRemove = [...roomsViewing];
 
+        if (this.props.myRoomId) {
+          let i = auxRoomsRemove.indexOf(this.props.myRoomId);
+          auxRoomsRemove.splice(i, 1);
+        }
+        console.log(auxRoomsRemove, Array.from(auxRoomsRemove).length, "romms remove")
         roomRef.update({
-          viewers: viewers - 1,
-          roomsViewing: auxRooms,
+          viewers: auxRoomsRemove.length,
+          roomsViewing: auxRoomsRemove,
         });
         break;
       default:
