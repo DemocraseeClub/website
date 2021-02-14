@@ -1,8 +1,8 @@
 {
   "title":"Open ideation conversation",
-  "start": "October 18th, 2020 11:00am",
+  "start": "February 9th, 2021 11:00am",
   "profile": "/images/democrasee_logo_black.png",
-  "videofile" : "http://clock.taylormadetraffic.com/screencasts/Meeting-2020-10-18_11.20.52.mp4",
+  "videofile" : "http://clock.taylormadetraffic.com/screencasts/2021-02-09.mp4",
   "city":"Oakland - LA, CA",
   "type": "meeting",
   "template": "kickoff.1",
@@ -11,7 +11,7 @@
   ],
   "speakers":[
     {"img":"/images/marcela.png", "name":"Marcela"},
-    {"img":"/images/indy.png", "name":"Indy"},
+    {"img":"/images/indy.png", "name":"indy"},
     {"img":"/images/polina.png", "name":"Polina"}
   ],
   "lineItems": [

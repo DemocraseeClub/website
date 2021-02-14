@@ -13,6 +13,10 @@ import Create from "@material-ui/icons/Create";
 import {withSnackbar} from "notistack";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
 class RallyHome extends Component {
 
@@ -94,8 +98,26 @@ class RallyHome extends Component {
                                     color={this.state.editMode ? 'primary' : 'secondary'}
                                     onClick={e => this.props.enqueueSnackbar('Sorry, editing the Rally is not ready yet.')}>Edit Rally</Button>
                         </Box>
-
                     </Grid>
+
+
+                    {(rally.research_json && rally.research_json.length > 0)
+                        ?
+                        <Box mt={4} p={3} style={{width:'100%'}}>
+                            <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
+                            <List component="nav" aria-label="research links">
+                                {rally.research_json.map(r => {
+                                    return <ListItem button>
+                                        <ListItemIcon>
+                                            <img src={r.img} height={20} />
+                                        </ListItemIcon>
+                                        <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
+                                    </ListItem>
+                                })}
+                            </List>
+                        </Box> : ''
+                    }
+
                 </Grid>
 
             </div>

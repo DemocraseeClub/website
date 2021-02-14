@@ -4,7 +4,7 @@
 
 Check the [Issues](https://github.com/eliataylor/clock-agendas/issues) here if you're interested in helping out. 
 
-- The database schema is described here:  https://democraseeclub.web.app/rally/building-democrasee/meeting/2020-11-14
+- The database schema is described here: https://docs.google.com/spreadsheets/d/14JqTgNzR63KTKqUZ7dI7JLK0pZVt-3yRxCTIgt3gSBU/edit#gid=806175863
 - The taxonomy schema is described here: https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit#gid=421989747
 
 
