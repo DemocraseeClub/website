@@ -91,8 +91,8 @@ class RallyHome extends Component {
 
                         {!rally.start || rally.start === 'tomorrow' ?
                             <Box mt={4}>
-                                <Button variant={'contained'} color={'secondary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
-                                <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe</Button>
+                                <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
+                                <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe to Schedule</Button>
                             </Box>
                             :
                             <Typography variant='h6' >{rally.start}</Typography>
@@ -107,11 +107,6 @@ class RallyHome extends Component {
                             </AvatarGroup>
                         </Box>
 
-                        <Box mt={8}>
-                            <Button startIcon={<Create/>} variant={'contained'}
-                                    color={this.state.editMode ? 'primary' : 'secondary'}
-                                    onClick={e => this.props.enqueueSnackbar('Sorry, editing the Rally is not ready yet.')}>Edit Rally</Button>
-                        </Box>
                     </Grid>
 
 

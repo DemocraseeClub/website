@@ -1,18 +1,18 @@
 {
   "title":"How can we improve libel laws to reconcile defamation",
-  "start": "Thursday, December 3rd 7:30 pm",
+  "start": "tomorrow",
   "profile":"https://democrasee.club/wp-content/uploads/2020/10/libel-150x150.jpg",
   "videolink":"https://meet.google.com/btm-hovc-tds",
   "city":"Oakland, CA",
   "type": "meeting",
   "template": "action.1",
   "hosts":[
-    {"img":"/images/eli.png", "name":"Eli"},
+    {"img":"/images/eli.png", "name":"Eli"}
   ],
   "speakers":[
     {"img":"/images/marcela.png", "name":"Marcela"},
     {"img":"/images/indy.png", "name":"Indy"},
-    {"img":"/images/polina.png", "name":"Polina"},
+    {"img":"/images/polina.png", "name":"Polina"}
   ],
   "lineItems": [
     {
