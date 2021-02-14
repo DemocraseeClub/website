@@ -116,7 +116,6 @@ class Rallies extends React.Component {
                                     component="img"
                                     alt="Universal Food Stamps"
                                     height="200"
-                                    style={{objectFit:'contain'}}
                                     image="https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg"
                                     title="Universal Food Stamps"
                                 /></NavLink>
@@ -145,7 +144,6 @@ class Rallies extends React.Component {
                                     component="img"
                                     alt="5G Infrastructure"
                                     height="200"
-                                    style={{objectFit:'contain'}}
                                     image="https://api.trackauthoritymusic.com/sites/default/files/playlists/communications.png"
                                     title="5G Infrastructure"
                                 /></NavLink>

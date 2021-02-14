@@ -1,0 +1,107 @@
+{
+  "title": "Universal Food Stamps",
+  "desc": "How can we subsidize US farming through a universal food stamp / EBT program.",
+  "profile": "https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg",
+  "cover": null,
+  "type": "rally",
+  "wisedemo": ["Interaction"],
+  "targets": ["Cities"],
+  "topics": ["Agriculture", "Economics"],
+  "stakeholders": ["Tax Payers", "Farmers", "Citizens"],
+  "author": [
+    {"img":"/images/eli.png", "name":"Eli"}
+  ],
+  "hosts": [
+    {"img":"/images/eli.png", "name":"Eli"}
+  ],
+  "research_json" : [
+    {
+      "title": "How the Civil-Rights Movement Aimed to End Poverty",
+      "img": "https://cdn.theatlantic.com/thumbor/FWfTNbnuj9vOL7qmzjVFCE_2D38=/80x50:2000x1125/media/img/2018/04/02/Budget_lead/original.jpg",
+      "link": "https://www.theatlantic.com/magazine/archive/2018/02/a-freedom-budget-for-all-americans-annotated/557024/"
+    },
+    {
+      "title": "CASE STUDY: Universal Farmers Markets For Los Angeles",
+      "img":"https://static1.squarespace.com/static/5bc50618ab1a624d324ecd81/t/5e3c66859301431f40d059c8/1613161874231/?format=1500w",
+      "link": "https://www.goodfoodla.org/fsd-affordable/2020/2/4/universal-ebt-at-farmers-markets-case-study"
+    }
+  ],
+  "speakers": [],
+  "lineItems": [
+    {
+      "nest": "Economic Effects",
+      "title": "How might this effect US agriculture?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    },
+    {
+      "nest": "Economic Effects",
+      "title": "How might this effect foreign agriculture and trade?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    },
+    {
+      "nest": "Environmental Effects",
+      "title": "How might this effect soil?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    },
+    {
+      "nest": "Environmental Effects",
+      "title": "How might this effect climate change?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    },
+    {
+      "nest": "Environmental Effects",
+      "title": "How might this effect water resources?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    },
+    {
+      "nest": "Health Effects",
+      "title": "How might this effect public health?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    },
+    {
+      "nest": "Health Effects",
+      "title": "How might this effect homelessness?",
+      "outline": "",
+      "seconds": 1200,
+      "html": "<p><br></p>",
+      "countdown": 1200
+    }
+  ],
+  "countRemains": 7200,
+  "countScheduled": 7200,
+  "headers": [
+    {
+      "label": "Economic Effects",
+      "order": 0,
+      "count": 2
+    },
+    {
+      "label": "Environmental Effects",
+      "order": 1,
+      "count": 3
+    },
+    {
+      "label": "Health Effects",
+      "order": 2,
+      "count": 1
+    }
+  ]
+}

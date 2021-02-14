@@ -19,7 +19,18 @@
       "title": "How the Civil-Rights Movement Aimed to End Poverty",
       "img": "https://cdn.theatlantic.com/thumbor/FWfTNbnuj9vOL7qmzjVFCE_2D38=/80x50:2000x1125/media/img/2018/04/02/Budget_lead/original.jpg",
       "link": "https://www.theatlantic.com/magazine/archive/2018/02/a-freedom-budget-for-all-americans-annotated/557024/"
+    },
+    {
+      "title": "CASE STUDY: Universal Farmers Markets For Los Angeles",
+      "img":"https://static1.squarespace.com/static/5bc50618ab1a624d324ecd81/t/5e3c66859301431f40d059c8/1613161874231/?format=1500w",
+      "link": "https://www.goodfoodla.org/fsd-affordable/2020/2/4/universal-ebt-at-farmers-markets-case-study"
     }
   ],
-  "meetings" : []
+  "meetings" : [
+    {
+      "title": "Initial Conversation",
+      "link": "/rally/universal-food-stamps/meeting/initial-conversation",
+      "start": "Tomorrow"
+    }
+  ]
 }

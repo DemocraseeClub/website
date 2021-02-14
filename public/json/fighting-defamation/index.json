@@ -10,7 +10,7 @@
   "speakers":[
     {"img":"/images/marcela.png", "name":"Marcela"},
     {"img":"/images/indy.png", "name":"Indy"},
-    {"img":"/images/polina.png", "name":"Polina"},
+    {"img":"/images/polina.png", "name":"Polina"}
   ],
   "research_json" : [],
   "meetings" : [
