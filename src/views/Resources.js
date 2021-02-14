@@ -118,13 +118,18 @@ class Resources extends React.Component {
                                     <CardMedia
                                         component="img"
                                         alt="Polina Logo"
-                                        height="200"
-                                        image="/images/polina.png"
+                                        height="120"
+                                        image="/images/polina-banner.jpg"
+                                        style={{objectFit:'contain'}}
                                         title="Polina Logo"
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="h2">
                                             Online marketing consulting
+                                            <Typography gutterBottom variant="caption" component="h5">
+                                                <a href={"https://www.linkedin.com/in/polina-tolkacheva-6548604"} target="_blank" rel="noopener noreferrer">LinkedIn/polina</a>
+                                            </Typography>
+
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             Offering 1 hour consultations to review existing and come up with new online marketing strategies
