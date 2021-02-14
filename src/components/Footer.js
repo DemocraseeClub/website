@@ -68,8 +68,10 @@ class Footer extends React.Component {
                     </Grid>
                 </Grid>
                 <div style={{padding: 5}} className={classes.redBg}></div>
+
                 <div style={{padding: 10, textAlign: 'right', color: '#002866'}}
-                     className={classes.lightBlue}>2020 &copy; democrasee.club
+                     className={classes.lightBlue}>
+                    (ɔ) 2021 - Available <a style={{textDecoration:'underline'}} href={"https://github.com/eliataylor/clock-agendas"} target={"_blank"}>Open Source</a> via <a href={"https://www.gnu.org/licenses/gpl-3.0.html"} target={"_blank"}>GNU</a>
                 </div>
             </footer>
         );

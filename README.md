@@ -8,4 +8,4 @@ Check the [Issues](https://github.com/eliataylor/clock-agendas/issues) here if y
 - The taxonomy schema is described here: https://docs.google.com/spreadsheets/d/1Jte7GraFn1zHfBaa291_d3csNZy9ifFKqZ6H7zzFL4w/edit#gid=421989747
 
 
-(ɔ) 2020 - Available via [GNU](https://www.gnu.org/licenses/gpl-3.0.html)
+(ɔ) 2021 - Available via [GNU](https://www.gnu.org/licenses/gpl-3.0.html)
