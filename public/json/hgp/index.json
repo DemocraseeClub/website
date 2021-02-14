@@ -9,7 +9,7 @@
   "topics": ["Education"],
   "stakeholders": ["Students", "Entrepreneurs"],
   "author": [
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+    {"img":"/images/eli.png", "name":"Eli"}
   ],
   "hosts": [
     {
@@ -17,7 +17,7 @@
       "name": "Sean Valentine"
     },
     {
-      "img": "https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png",
+      "img": "/images/eli.png",
       "name": "Eli Taylor"
     },
     {
@@ -25,9 +25,7 @@
       "name": "Scott Hanselman"
     }
   ],
-  "research_json" : {
-
-  },
+  "research_json" : [],
   "meetings" : [
     {
       "title": "How to get things built (or finding someone who can)",

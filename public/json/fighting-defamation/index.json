@@ -5,16 +5,14 @@
   "videolink":"https://meet.google.com/btm-hovc-tds",
   "city":"Oakland, CA",
   "hosts":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+    {"img":"/images/eli.png", "name":"Eli"},
   ],
   "speakers":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+    {"img":"/images/marcela.png", "name":"Marcela"},
+    {"img":"/images/indy.png", "name":"Indy"},
+    {"img":"/images/polina.png", "name":"Polina"},
   ],
-  "research_json" : {
-
-  },
+  "research_json" : [],
   "meetings" : [
     {
       "title": "Libel",

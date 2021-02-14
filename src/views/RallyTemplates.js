@@ -18,37 +18,30 @@ class RallyTemplates extends React.Component {
                 </Box>
 
                 <Box>
-                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/kickoff`)}>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/rally`)}>
                         <div>
-                            <Typography variant={'h2'} className={classes.stepLabelText}>Kickoff</Typography>
-                            <Typography variant={'body1'}>Choose this template to get started</Typography>
+                            <Typography variant={'h2'} className={classes.stepLabelText}>Rally</Typography>
+                            <Typography variant={'body1'}>Choose this template for team building around any idea</Typography>
                         </div>
                         <Typography variant={'caption'}>diversity ● big picture ● caring</Typography>
                     </Box>
-                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/brainstorm`)}>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/surveys`)}>
                         <div>
-                            <Typography variant={'h2'} className={classes.stepLabelText}>Brainstorming</Typography>
-                            <Typography variant={'body1'}>Choose this template if you want to gather all ideas, aka diverge</Typography>
+                            <Typography variant={'h2'} className={classes.stepLabelText}>Survey</Typography>
+                            <Typography variant={'body1'}>Choose this template to create self-assessed video surveys</Typography>
                         </div>
-                        <Typography variant={'caption'}>interaction ● diversity ● big picture</Typography>
-                    </Box>
-                    <Box item  className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/planning`)}>
-                        <div>
-                            <Typography variant={'h2'} className={classes.stepLabelText}>Planning</Typography>
-                            <Typography variant={'body1'}>Choose this template when you’re ready to plan</Typography>
-                        </div>
-                        <Typography variant={'caption'}>interaction ● sustainability ● caring</Typography>
+                        <Typography variant={'caption'}>caring ● action</Typography>
                     </Box>
                     <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/action`)}>
                         <div>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Action plan</Typography>
-                            <Typography variant={'body1'}>Choose this template to guide your conversation towards concrete action</Typography>
+                            <Typography variant={'body1'}>Choose this template to guide your conversation towards drafting a concrete action plan or legislation</Typography>
                         </div>
                         <Typography variant={'caption'}>action ● realizing potential</Typography>
                     </Box>
                     <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={e => this.props.history.push(`/rally/templates/meeting/course`)}>
                         <div>
-                            <Typography variant={'h2'} className={classes.stepLabelText}>Course</Typography>
+                            <Typography variant={'h2'} className={classes.stepLabelText}>Class</Typography>
                             <Typography variant={'body1'}>Choose this template to write up a lesson plan for screen and document sharing</Typography>
                         </div>
                         <Typography variant={'caption'}>action ● realizing potential</Typography>

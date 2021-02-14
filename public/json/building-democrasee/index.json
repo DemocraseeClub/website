@@ -9,32 +9,44 @@
   "topics": ["Education", "Communication"],
   "stakeholders": ["Citizens", "Elected Officials"],
   "author": [
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+    {"img":"/images/eli.png", "name":"Eli"}
   ],
   "hosts": [
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"}
+    {"img":"/images/eli.png", "name":"Eli"},
+    {"img":"/images/polina.png", "name":"Polina"},
+    {"img":"/images/marcela.png", "name":"Marcela"},
+    {"img":"/images/indy.png", "name":"Indy"}
   ],
-  "research_json" : {
-
-  },
+  "research_json" : [],
   "meetings" : [
     {
-      "title": "2020-10-26",
+      "title": "Early Ideation, 2020-10-18",
+      "link": "/rally/building-democrasee/meeting/2020-10-18",
+      "start": "October 18th, 2020 11:00am"
+    },{
+      "title": "Early Ideation, 2020-10-26",
       "link": "/rally/building-democrasee/meeting/2020-10-26",
       "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
     },
     {
-      "title": "2020-11-14",
+      "title": "Early Ideation, 2020-11-14",
       "link": "/rally/building-democrasee/meeting/2020-11-14",
       "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
     },
     {
-      "title": "2020-11-19",
+      "title": "Code Review Screencast",
+      "link": "/rally/building-democrasee/meeting/2020-11-15",
+      "start": "November 15th, 2020 1:30am"
+    },
+    {
+      "title": "Development roadmap with Polina and Eli",
       "link": "/rally/building-democrasee/meeting/2020-11-19",
-      "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
+      "start": "November 19th, 2020 9:50am"
+    },
+    {
+      "title": "Megan and Eli discuss site vocabulary and agenda Templates",
+      "link": "/rally/building-democrasee/meeting/2021-01-24",
+      "start": "January 24th, 2021 1pm"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "title":"Open ideation conversation",
+  "start": "November 15th, 2020 1:30am",
+  "profile": "/images/democrasee_logo_black.png",
+  "videofile" : "http://clock.taylormadetraffic.com/screencasts/Screen Recording 2020-11-15 at 1.30.39 AM.mp4",
+  "city":"Oakland - LA, CA",
+  "type": "meeting",
+  "template": "kickoff.1",
+  "hosts":[
+    {"img":"/images/eli.png", "name":"Eli"}
+  ],
+  "speakers":[],
+  "lineItems": [
+    {
+      "nest": "Open Discussion",
+      "title":"Open Discussion",
+      "html": "",
+      "seconds": 900
+    }
+  ]
+}
