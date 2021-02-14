@@ -4,26 +4,92 @@
   "profile": "/images/democrasee_logo_black.png",
   "cover": null,
   "type": "rally",
-  "wisedemo": ["Realizing Potential", "Big Picture", "Interaction", "Sustainability"],
-  "targets": ["Local Governments"],
-  "topics": ["Education", "Communication"],
-  "stakeholders": ["Citizens", "Elected Officials"],
+  "wisedemo": [
+    "Realizing Potential",
+    "Big Picture",
+    "Interaction",
+    "Sustainability"
+  ],
+  "targets": [
+    "Local Governments"
+  ],
+  "topics": [
+    "Education",
+    "Communication"
+  ],
+  "stakeholders": [
+    "Citizens",
+    "Elected Officials"
+  ],
   "author": [
-    {"img":"/images/eli.png", "name":"Eli"}
+    {
+      "img": "/images/eli.png",
+      "name": "Eli"
+    }
   ],
   "hosts": [
-    {"img":"/images/eli.png", "name":"Eli"},
-    {"img":"/images/polina.png", "name":"Polina"},
-    {"img":"/images/marcela.png", "name":"Marcela"},
-    {"img":"/images/indy.png", "name":"Indy"}
+    {
+      "img": "/images/eli.png",
+      "name": "Eli"
+    },
+    {
+      "img": "/images/polina.png",
+      "name": "Polina"
+    },
+    {
+      "img": "/images/marcela.png",
+      "name": "Marcela"
+    },
+    {
+      "img": "/images/indy.png",
+      "name": "Indy"
+    }
   ],
-  "research_json" : [],
-  "meetings" : [
+  "research_json": [
+    {
+      "title": "The Emergence of Wise Democracy with Tom Atlee",
+      "link": "https://www.fractalfriends.us/fractalfriends/tom-atlee"
+    },
+    {
+      "title": "Windows into this Pattern Language",
+      "link": "https://www.wd-pl.com/category-questions/"
+    },
+    {
+      "title": "Freakanomics interview with Katherine Gehl",
+      "link": "https://freakonomics.com/podcast/politics-industry/"
+    },
+    {
+      "title": "Sadhguru conversation about politics",
+      "link": "https://www.youtube.com/watch?v=6UFJxtorQ5M"
+    },
+    {
+      "title": "BBC world news Yalda Hakim with Sadhguru on Religion, Politics & Human Society",
+      "link": "https://www.youtube.com/watch?v=pvcV7kixo1Y"
+    },
+    {
+      "title": "An Indigenous View on Doughnut Economics from New Zealand",
+      "link": "https://www.projectmoonshot.city/post/an-indigenous-view-on-doughnut-economics-from-new-zealand"
+    },
+    {
+      "title": "Political Theory – Confucius on the proper role of government",
+      "link": "http://selfdeprecate.com/politics-articles/confucius-proper-role-government/"
+    },
+    {
+      "title": "Systems Of The Damned | Russell Brand & Charles Eisenstein - Under The Skin",
+      "link": "https://www.youtube.com/watch?v=-dP2VoY5Olk"
+    },
+    {
+      "title": "Societal Structure in Kautilyan Era",
+      "link": "https://www.youtube.com/watch?v=IoCpobhc8HM"
+    }
+  ],
+  "meetings": [
     {
       "title": "Early Ideation, 2020-10-18",
       "link": "/rally/building-democrasee/meeting/2020-10-18",
       "start": "October 18th, 2020 11:00am"
-    },{
+    },
+    {
       "title": "Early Ideation, 2020-10-26",
       "link": "/rally/building-democrasee/meeting/2020-10-26",
       "start": "Tuesday, October 26th 4:30 pm - 6:45pm"
