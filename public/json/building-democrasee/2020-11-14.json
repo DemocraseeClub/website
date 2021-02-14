@@ -2,17 +2,16 @@
   "title":"DemocraSEE Code Review",
   "start": "Saturday, November 14th 1:00am - 1:30am",
   "profile": "/images/democrasee_logo_black.png",
-  "videofile":"/videos/Screencast_2020-11-14.mp4",
   "type": "meeting",
   "template": "kickoff.1",
   "city":"Oakland, CA",
   "hosts":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+    {"img":"/images/eli.png", "name":"Eli"}
   ],
   "speakers":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+    {"img":"/images/marcela.png", "name":"Marcela"},
+    {"img":"/images/indy.png", "name":"Indy"},
+    {"img":"/images/polina.png", "name":"Polina"}
   ],
   "lineItems": [
     {

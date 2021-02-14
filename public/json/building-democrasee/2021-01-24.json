@@ -1,0 +1,23 @@
+{
+  "title":"Megan and Eli discuss site vocabulary and agenda Templates",
+  "start": "January 24th, 2021 1pm",
+  "profile": "/images/democrasee_logo_black.png",
+  "videofile" : "http://clock.taylormadetraffic.com/screencasts/Screen Recording 2021-01-24 at 1.02.48 PM.mp4",
+  "city":"Oakland - LA, CA",
+  "type": "meeting",
+  "template": "kickoff.1",
+  "hosts":[
+    {"img":"/images/eli.png", "name":"Eli"}
+  ],
+  "speakers":[
+    {"img":"/images/megan.png", "name":"Megan Feil"}
+  ],
+  "lineItems": [
+    {
+      "nest": "Open Discussion",
+      "title":"Open Discussion",
+      "html": "",
+      "seconds": 900
+    }
+  ]
+}

@@ -6,12 +6,12 @@
   "type": "meeting",
   "template": "kickoff.1",
   "hosts":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.06-PM-circle.png", "name":"Indy"}
+    {"img":"/images/indy.png", "name":"Indy"}
   ],
   "speakers":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.29-PM-circle.png", "name":"Marcela"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"},
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+    {"img":"/images/marcela.png", "name":"Marcela"},
+    {"img":"/images/eli.png", "name":"Eli"},
+    {"img":"/images/polina.png", "name":"Polina"}
   ],
   "lineItems": [
     {
@@ -47,7 +47,7 @@
     {
       "title":"Monetization",
       "nest": "Goals",
-      "html": "Donations? Sponsorship? ... Lets wireframe what any monitization checkout process lookslike",
+      "html": "Donations? Sponsorship? ... Let's wireframe what any monitization checkout process looks like",
       "seconds": 600
     },
     {

@@ -46,7 +46,7 @@ class RallyHome extends Component {
                     </Typography>
                 </Box>
                 <Grid container justify={'space-around'} alignContent={'center'}>
-                    <Grid item xs={12} sm={6} style={{textAlign:'center'}}>
+                    <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
                         {rally.videofile ?
                             <video style={{width:'100%'}} height="240" controls>
                                 <source src={rally.videofile} type="video/mp4" />

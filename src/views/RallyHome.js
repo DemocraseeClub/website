@@ -11,6 +11,10 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class RallyHome extends Component {
 
@@ -46,25 +50,45 @@ class RallyHome extends Component {
         return (
             <React.Fragment>
                 <RallyBlock rally={this.props.entity.apiData} />
+
+                <Box p={3}>
                 {!rally.meetings ? '' :
                 (rally.meetings.length === 0)
                     ?
-                    'No meetings yet. Create one'
+                    <span>No meetings yet. <u onClick={() =>  window.logUse.logEvent('rally-subscription', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
                     :
-                    <Box p={3}>
-                        <Typography variant='subtitle1'>Meetings</Typography>
-                        {rally.meetings.map(r => {
-                            return <Grid item key={r.title}>
-                                <NavLink to={r.link}>
-                                    <Typography variant={'h4'}>{r.title}</Typography>
-                                </NavLink>
-                            </Grid>
-                        })}
-                        <Box mt={8}>
-                            <NavLink to={'/rally/templates'}><Button variant={'contained'} disableElevation={true}>Host a meeting</Button></NavLink>
-                        </Box>
-                    </Box>
+                        <React.Fragment>
+                            <Typography variant='subtitle1'>Meetings</Typography>
+                            {rally.meetings.map(r => {
+                                return <Grid item key={r.title}>
+                                    <NavLink to={r.link}>
+                                        <Typography variant={'h4'}>{r.title}</Typography>
+                                    </NavLink>
+                                </Grid>
+                            })}
+                            <Box mt={8} >
+                                <NavLink to={'/rally/templates'}><Button variant={'contained'} disableElevation={true}>Host a meeting</Button></NavLink>
+                            </Box>
+                        </React.Fragment>
                 }
+
+                {(rally.research_json && rally.research_json.length > 0)
+                ?
+                    <React.Fragment>
+                        <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
+                        <List component="nav" aria-label="research links">
+                        {rally.research_json.map(r => {
+                            return <ListItem button>
+                                <ListItemIcon>
+                                    <img src={r.img} height={20} />
+                                </ListItemIcon>
+                                <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
+                            </ListItem>
+                        })}
+                        </List>
+                    </React.Fragment> : ''
+                }
+                </Box>
             </React.Fragment>
         );
     }

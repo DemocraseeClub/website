@@ -1,0 +1,25 @@
+{
+  "title": "Universal Food Stamps",
+  "desc": "How can we subsidize US farming through a universal food stamp / EBT program.",
+  "profile": "https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg",
+  "cover": null,
+  "type": "rally",
+  "wisedemo": ["Interaction"],
+  "targets": ["Cities"],
+  "topics": ["Agriculture", "Economics"],
+  "stakeholders": ["Tax Payers", "Farmers", "Citizens"],
+  "author": [
+    {"img":"/images/eli.png", "name":"Eli"}
+  ],
+  "hosts": [
+    {"img":"/images/eli.png", "name":"Eli"}
+  ],
+  "research_json" : [
+    {
+      "title": "How the Civil-Rights Movement Aimed to End Poverty",
+      "img": "https://cdn.theatlantic.com/thumbor/FWfTNbnuj9vOL7qmzjVFCE_2D38=/80x50:2000x1125/media/img/2018/04/02/Budget_lead/original.jpg",
+      "link": "https://www.theatlantic.com/magazine/archive/2018/02/a-freedom-budget-for-all-americans-annotated/557024/"
+    }
+  ],
+  "meetings" : []
+}
