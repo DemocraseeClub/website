@@ -25,6 +25,11 @@ class RallyHome extends Component {
         this.state = {editMode: p.editMode || false};
     }
 
+    trackSubscribe(event, id) {
+        this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
+        window.logUse.logEvent('rally-'+event, {'id':id});
+    }
+
     render() {
         const {classes, rally} = this.props;
 
@@ -83,6 +88,15 @@ class RallyHome extends Component {
                                 return false;
                             }}
                             html={rally.desc} /> : ''}
+
+                        {!rally.start || rally.start === 'tomorrow' ?
+                            <Box mt={4}>
+                                <Button variant={'contained'} color={'secondary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
+                                <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe</Button>
+                            </Box>
+                            :
+                            <Typography variant='h6' >{rally.start}</Typography>
+                        }
 
                         <Box mt={4}>
                             <div>Hosts</div>

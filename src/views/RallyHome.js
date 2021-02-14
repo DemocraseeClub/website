@@ -9,12 +9,7 @@ import {withStyles} from "@material-ui/core/styles";
 import RallyBlock from "../components/RallyBlock";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 class RallyHome extends Component {
 
@@ -55,7 +50,7 @@ class RallyHome extends Component {
                 {!rally.meetings ? '' :
                 (rally.meetings.length === 0)
                     ?
-                    <span>No meetings yet. <u onClick={() =>  window.logUse.logEvent('rally-subscription', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
+                    <span>No meetings yet. <u onClick={() =>  window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
                     :
                         <React.Fragment>
                             <Typography variant='subtitle1'>Meetings</Typography>
@@ -66,9 +61,6 @@ class RallyHome extends Component {
                                     </NavLink>
                                 </Grid>
                             })}
-                            <Box mt={8} >
-                                <NavLink to={'/rally/templates'}><Button variant={'contained'} disableElevation={true}>Host a meeting</Button></NavLink>
-                            </Box>
                         </React.Fragment>
                 }
                 </Box>
