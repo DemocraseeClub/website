@@ -112,6 +112,34 @@ class Resources extends React.Component {
                             </Card>
                         </Grid>
 
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        alt="Polina Logo"
+                                        height="200"
+                                        image="/images/polina.png"
+                                        title="Polina Logo"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Online marketing consulting
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Offering 1 hour consultations to review existing and come up with new online marketing strategies
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions style={{justifyContent: 'space-between'}}>
+                                    <Button size="small" color="primary"
+                                            onClick={() => this.redeem('polina@omuze.com')}>Redeem</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+
+
+
 
 
 

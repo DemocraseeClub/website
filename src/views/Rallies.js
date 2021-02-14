@@ -10,11 +10,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import {withSnackbar} from "notistack";
 
 class Rallies extends React.Component {
 
     trackSubscribe(id) {
-        window.logUse.logEvent('rally-subscription', {'id':id});
+        this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
+        window.logUse.logEvent('rally-subscribe', {'id':id});
     }
 
     render() {
@@ -182,4 +184,4 @@ const useStyles = theme => ({
     }
 });
 
-export default withStyles(useStyles, {withTheme:true})(Rallies);
+export default withStyles(useStyles, {withTheme:true})(withSnackbar(Rallies));
