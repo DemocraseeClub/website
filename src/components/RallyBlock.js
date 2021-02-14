@@ -52,7 +52,7 @@ class RallyHome extends Component {
                                 <source src={rally.videofile} type="video/mp4" />
                             </video> : ''}
                         {(rally.profile) ?
-                            <img alt={rally.title} src={rally.profile} style={{maxWidth: '100%', textAlign:'center'}}/>
+                            <img alt={rally.title} src={rally.profile} style={{maxWidth: '100%', textAlign:'center'}} />
                             :
                             <Box p={2} ml={4}>
                                 <Button variant={'contained'} disableElevation={true} color={'secondary'}
