@@ -60,57 +60,6 @@ class Resources extends React.Component {
                             </Card>
                         </Grid>
 
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Card>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        alt="Indy Logo"
-                                        height="200"
-                                        image="http://clock.taylormadetraffic.com/screencasts/Screen%20Shot%202020-10-18%20at%2012.31.20%20PM.png"
-                                        title="Indy Logo"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            Meditation &amp; Breath-work
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Offering 1 hour sessions in meditation, breath work, and laughter.
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions style={{justifyContent: 'space-between'}}>
-                                    <Button size="small" color="primary"
-                                            onClick={() => this.redeem('indyrishisingh111@gmail.com')}>Redeem</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Card>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        alt="Indy Logo"
-                                        height="200"
-                                        image="/images/indy.png"
-                                        title="Indy Logo"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            Tutoring for various subjects
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Offering tutoring in Math, Sciences, Writing, Grammar, PE, social emotional learning &amp; website design.
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions style={{justifyContent: 'space-between'}}>
-                                    <Button size="small" color="primary"
-                                            onClick={() => this.redeem('indyrishisingh111@gmail.com')}>Redeem</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
 
                         <Grid item xs={12} sm={6} md={4}>
                             <Card>
@@ -143,6 +92,58 @@ class Resources extends React.Component {
                             </Card>
                         </Grid>
 
+                        
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        alt="Indy Logo"
+                                        height="200"
+                                        image="/images/Indy-Rishi-Singh-playing-flute.jpg"
+                                        title="Indy Logo"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Meditation &amp; Breath-work
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Offering 1 hour sessions in meditation, breath work, and laughter.
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions style={{justifyContent: 'space-between'}}>
+                                    <Button size="small" color="primary"
+                                            onClick={() => this.redeem('indyrishisingh111@gmail.com')}>Redeem</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        alt="Indy Logo"
+                                        height="200"
+                                        image="/images/Indy-neuroplasticity-assembly-miraleste.jpg"
+                                        title="Indy Logo"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Tutoring for various subjects
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Offering tutoring in Math, Sciences, Writing, Grammar, PE, social emotional learning &amp; website design.
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions style={{justifyContent: 'space-between'}}>
+                                    <Button size="small" color="primary"
+                                            onClick={() => this.redeem('indyrishisingh111@gmail.com')}>Redeem</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
 
 
 
