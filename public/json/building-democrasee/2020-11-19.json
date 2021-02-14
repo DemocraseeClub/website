@@ -1,15 +1,16 @@
 {
-  "title":"DemocraSEE Local Dev Environment",
+  "title":"Development roadmap with Polina and Eli",
   "start": "Thursday, November 19th 9:30am - 11:00am",
   "profile": "/images/democrasee_logo_black.png",
+  "videofile" : "http://clock.taylormadetraffic.com/screencasts/Screen%20Recording%202020-11-19%20at%209.50.24%20AM.mp4",
   "city":"Oakland - LA, CA",
   "type": "meeting",
   "template": "kickoff.1",
   "hosts":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.18-PM-circle.png", "name":"Eli"}
+    {"img":"/images/eli.png", "name":"Eli"}
   ],
   "speakers":[
-    {"img":"https://democrasee.club/wp-content/uploads/bb-plugin/cache/Screen-Shot-2020-10-11-at-1.18.39-PM-circle.png", "name":"Polina"}
+    {"img":"/images/polina.png", "name":"Polina"}
   ],
   "lineItems": [
     {

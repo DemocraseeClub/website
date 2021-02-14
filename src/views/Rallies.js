@@ -13,6 +13,10 @@ import Button from '@material-ui/core/Button';
 
 class Rallies extends React.Component {
 
+    trackSubscribe(id) {
+        window.logUse.logEvent('rally-subscription', {'id':id});
+    }
+
     render() {
         return (
             <Box m={4} >
@@ -38,10 +42,11 @@ class Rallies extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions>
+                            <CardActions style={{justifyContent:'space-between'}}>
                                 <NavLink to={'/rally/building-democrasee'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
+                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('building-democrasee')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -66,14 +71,14 @@ class Rallies extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions>
+                            <CardActions style={{justifyContent:'space-between'}}>
                                 <NavLink to={'/rally/hgp'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
+                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('hgp')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
-
 
                     <Grid item xs={12} sm={6} md={4}>
                         <Card>
@@ -95,10 +100,69 @@ class Rallies extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions>
+                            <CardActions style={{justifyContent:'space-between'}}>
                                 <NavLink to={'/rally/fighting-defamation'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
+                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('fighting-defamation')}>Subscribe</Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card>
+                            <CardActionArea>
+                                <NavLink to={'/rally/universal-food-stamps'}><CardMedia
+                                    component="img"
+                                    alt="Universal Food Stamps"
+                                    height="200"
+                                    style={{objectFit:'contain'}}
+                                    image="https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg"
+                                    title="Universal Food Stamps"
+                                /></NavLink>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Universal Food Stamps
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        How can we subsidize US farming through a universal food stamp / EBT program.
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions style={{justifyContent:'space-between'}}>
+                                <NavLink to={'/rally/universal-food-stamps'}><Button size="small" color="primary">
+                                    View
+                                </Button></NavLink>
+                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('universal-food-stamps')}>Subscribe</Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card>
+                            <CardActionArea>
+                                <NavLink to={'/rally/5G-infrastructure'}><CardMedia
+                                    component="img"
+                                    alt="5G Infrastructure"
+                                    height="200"
+                                    style={{objectFit:'contain'}}
+                                    image="https://api.trackauthoritymusic.com/sites/default/files/playlists/communications.png"
+                                    title="5G Infrastructure"
+                                /></NavLink>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        5G Infrastructure
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        Who does a 5G infrastructure benefit and when?
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions style={{justifyContent:'space-between'}}>
+                                <NavLink to={'/rally/5G-infrastructure'}><Button size="small" color="primary">
+                                    View
+                                </Button></NavLink>
+                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('5G-infrastructure')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
