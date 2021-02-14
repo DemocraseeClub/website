@@ -29,7 +29,7 @@ function App() {
                                 <Button color='primary' variant='contained' onClick={() => closeWarning(false)}>Close</Button>
                             </p>
                             <p>This site is just a prototype. If interested please share your ideal <NavLink onClick={() => closeWarning(false)} to={"/rally/templates"} >meeting template</NavLink> </p>
-                            <p>To subscribe, visit the live site <a href="https://democrasee.club" target="_blank">Democrasee.club</a>.</p>
+                            <p>To subscribe, visit the live site <a href="https://democrasee.club" target="_blank" rel="noopener noreferrer" >Democrasee.club</a>.</p>
                         </div>
                     </Dialog>
 
