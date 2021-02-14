@@ -71,23 +71,6 @@ class RallyHome extends Component {
                             </Box>
                         </React.Fragment>
                 }
-
-                {(rally.research_json && rally.research_json.length > 0)
-                ?
-                    <React.Fragment>
-                        <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
-                        <List component="nav" aria-label="research links">
-                        {rally.research_json.map(r => {
-                            return <ListItem button>
-                                <ListItemIcon>
-                                    <img src={r.img} height={20} />
-                                </ListItemIcon>
-                                <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
-                            </ListItem>
-                        })}
-                        </List>
-                    </React.Fragment> : ''
-                }
                 </Box>
             </React.Fragment>
         );

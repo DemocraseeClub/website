@@ -40,7 +40,11 @@ class Resources extends React.Component {
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="h2">
                                             Application Development
+                                            <Typography gutterBottom variant="caption" component="h5">
+                                                <a href={"https://taylormadetraffic.com"} target="_blank" rel="noopener noreferrer">TaylorMadeTraffic.com</a>
+                                            </Typography>
                                         </Typography>
+
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             Offering and exchanging development consulting and coding for CitizenCoin or
                                             help with any of these site <a
@@ -55,6 +59,62 @@ class Resources extends React.Component {
                                 </CardActions>
                             </Card>
                         </Grid>
+
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        alt="Indy Logo"
+                                        height="200"
+                                        image="http://clock.taylormadetraffic.com/screencasts/Screen%20Shot%202020-10-18%20at%2012.31.20%20PM.png"
+                                        title="Indy Logo"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Meditation &amp; Breath-work
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Offering 1 hour sessions in meditation, breath work, and laughter.
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions style={{justifyContent: 'space-between'}}>
+                                    <Button size="small" color="primary"
+                                            onClick={() => this.redeem('indyrishisingh111@gmail.com')}>Redeem</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        alt="Indy Logo"
+                                        height="200"
+                                        image="/images/indy.png"
+                                        title="Indy Logo"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Tutoring for various subjects
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Offering tutoring in Math, Sciences, Writing, Grammar, PE, social emotional learning &amp; website design.
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions style={{justifyContent: 'space-between'}}>
+                                    <Button size="small" color="primary"
+                                            onClick={() => this.redeem('indyrishisingh111@gmail.com')}>Redeem</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+
+
+
+
                     </Grid>
                 </Box>
             </Box>
