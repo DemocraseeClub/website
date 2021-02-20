@@ -108,6 +108,14 @@ export default class HtmlEditor extends Component {
                     };
                 } else */ if (entityType === 'image') {
                     const data = entity.getData();
+                    if(data.src.includes("docs.google.com")){
+                        return {
+                            element: 'iframe',
+                            attributes: {
+                                src: data.src
+                            }
+                        }
+                    }
                     return {
                         element: 'img',
                         attributes: {
@@ -199,6 +207,7 @@ export default class HtmlEditor extends Component {
                                         editorState={this.state.editorState}
                                         onChange={this.onChange}
                                         modifier={AddImage}
+                                        type='doc'
                                     />
                                     <AlignmentTool {...externalProps} />
                                 </React.Fragment>)
