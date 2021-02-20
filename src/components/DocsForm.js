@@ -16,7 +16,7 @@ export default class DocAdd extends Component {
     }
 
     addDoc = () => {
-        this.props.onChange(this.props.modifier(this.props.editorState, { src : this.state.url}));
+        this.props.onChange(this.props.modifier(this.props.editorState, this.state.url));
     };
 
     changeUrl = (evt) => {
