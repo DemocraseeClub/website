@@ -154,7 +154,7 @@ class Rallies extends React.Component {
                                         5G Infrastructure
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Who does a 5G infrastructure benefit and when?
+                                        5G improves internet speeds, but only at very short distances. This is a conversation about whether that makes it a worthwhile public investment
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
@@ -166,7 +166,6 @@ class Rallies extends React.Component {
                             </CardActions>
                         </Card>
                     </Grid>
-
                 </Grid>
                 <Box mt={10} >
                     <NavLink to={'/rally/templates'}>Create a Rally</NavLink>
