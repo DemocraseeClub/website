@@ -22,6 +22,7 @@ import '@draft-js-plugins/image/lib/plugin.css';
 
 import editorStyles from '../theme/editorStyles.module.css';
 import ImageForm from "./ImageForm";
+import DocForm from "./DocsForm";
 import MockUpload from "./MockUpload";
 
 export default class HtmlEditor extends Component {
@@ -194,6 +195,10 @@ export default class HtmlEditor extends Component {
                                         onChange={this.onChange}
                                         modifier={AddVideo}
                                         type='video' />
+                                    <DocForm
+                                        editorState={this.state.editorState}
+                                        onChange={this.onChange}
+                                    />
                                     <AlignmentTool {...externalProps} />
                                 </React.Fragment>)
                             }
