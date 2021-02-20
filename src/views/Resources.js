@@ -22,7 +22,7 @@ class Resources extends React.Component {
         return (
             <Box m={4}>
                 <Typography variant={'h4'}>Resources</Typography>
-                <Typography variant={'body1'}>This is a network of supporting organizations and individuals offering
+                <Typography variant={'subtitle1'}>This is a network of supporting organizations and individuals offering
                     their produces, services or expertise in exchange for <em>CitizenCoin</em> earned through
                     contributions to this platform</Typography>
                 <Box m={4}>
@@ -39,17 +39,16 @@ class Resources extends React.Component {
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="h2">
-                                            Application Development
+                                            Software Development
                                             <Typography gutterBottom variant="caption" component="h5">
                                                 <a href={"https://taylormadetraffic.com"} target="_blank" rel="noopener noreferrer">TaylorMadeTraffic.com</a>
                                             </Typography>
                                         </Typography>
 
                                         <Typography variant="body2" color="textSecondary" component="p">
-                                            Offering and exchanging development consulting and coding for CitizenCoin or
-                                            help with any of these site <a
+                                            Offering our software development consulting and coding services in exchange for CitizeCoin or your help with any of the <a
                                             href={"https://github.com/eliataylor/clock-agendas/issues"} target="_blank"
-                                            rel="noopener noreferrer">Issues</a>
+                                            rel="noopener noreferrer">Issues</a> on this site.
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
@@ -67,9 +66,8 @@ class Resources extends React.Component {
                                     <CardMedia
                                         component="img"
                                         alt="Polina Logo"
-                                        height="120"
+                                        height="150"
                                         image="/images/polina-banner.jpg"
-                                        style={{objectFit:'contain'}}
                                         title="Polina Logo"
                                     />
                                     <CardContent>
