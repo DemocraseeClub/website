@@ -198,6 +198,7 @@ export default class HtmlEditor extends Component {
                                     <DocForm
                                         editorState={this.state.editorState}
                                         onChange={this.onChange}
+                                        modifier={AddImage}
                                     />
                                     <AlignmentTool {...externalProps} />
                                 </React.Fragment>)
