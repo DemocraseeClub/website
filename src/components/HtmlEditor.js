@@ -22,6 +22,7 @@ import '@draft-js-plugins/image/lib/plugin.css';
 
 import editorStyles from '../theme/editorStyles.module.css';
 import ImageForm from "./ImageForm";
+import DocForm from "./DocsForm";
 import MockUpload from "./MockUpload";
 
 export default class HtmlEditor extends Component {
@@ -107,6 +108,14 @@ export default class HtmlEditor extends Component {
                     };
                 } else */ if (entityType === 'image') {
                     const data = entity.getData();
+                    if(data.src.includes("docs.google.com")){
+                        return {
+                            element: 'iframe',
+                            attributes: {
+                                src: data.src
+                            }
+                        }
+                    }
                     return {
                         element: 'img',
                         attributes: {
@@ -194,6 +203,12 @@ export default class HtmlEditor extends Component {
                                         onChange={this.onChange}
                                         modifier={AddVideo}
                                         type='video' />
+                                    <DocForm
+                                        editorState={this.state.editorState}
+                                        onChange={this.onChange}
+                                        modifier={AddImage}
+                                        type='doc'
+                                    />
                                     <AlignmentTool {...externalProps} />
                                 </React.Fragment>)
                             }
