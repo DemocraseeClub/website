@@ -1,0 +1,67 @@
+{
+  "title":"DemocraSEE'ing together",
+  "start": "February 23rd, 2021 4:00pm",
+  "profile": "/images/democrasee_logo_black.png",
+  "meetlink" : "https://us02web.zoom.us/j/85959813159?pwd=cWk4M2NYd2RaaW14bzNwNkEyU1ZEQT09",
+  "city":"Oakland - LA, CA",
+  "type": "meeting",
+  "template": "kickoff.1",
+  "hosts":[
+    {"img":"/images/indy.png", "name":"indy"}
+  ],
+  "speakers":[
+    {"img":"/images/megan.png", "name":"Megan"},
+    {"img":"/images/eli.png", "name":"Eli"},
+    {"img":"/images/polina.png", "name":"Polina"}
+  ],
+  "lineItems": [
+    {
+      "nest": "Testing",
+      "title":"Testing cam/mic/screen sharing",
+      "html": "",
+      "seconds": 300
+    },
+    {
+      "nest": "Testing",
+      "title":"Testing WYSIWYG editor",
+      "html": "Embed images, youtube, docs, sheets, or forms",
+      "seconds": 300
+    },
+    {
+      "nest": "Review",
+      "title":"Review Polina's redesigns of tools",
+      "html": "",
+      "seconds": 700
+    },
+    {
+      "nest": "Review",
+      "title":"Review Polina and Indy's promo videos",
+      "html": "",
+      "seconds": 700
+    },
+    {
+      "nest": "Review",
+      "title":"Define video questions",
+      "html": "",
+      "seconds": 300
+    },
+    {
+      "nest": "Review",
+      "title":"Review crowd-funding profiles",
+      "html": "",
+      "seconds": 300
+    },
+    {
+      "nest": "Review",
+      "title":"Review resources & CitizenCoin concept",
+      "html": "",
+      "seconds": 300
+    },
+    {
+      "nest": "Open Discussion",
+      "title":"Open Discussion",
+      "html": "",
+      "seconds": 900
+    }
+  ]
+}

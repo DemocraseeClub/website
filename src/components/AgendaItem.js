@@ -59,7 +59,7 @@ function QontoStepIcon(props) {
         <div>
             {status === 'completed' ?
                 <Check className={classes.completed} color={color} /> :
-                <Unchecked color={color}/>
+                <Unchecked color={color}  />
             }
             <span className={classes.timer}>{formatSeconds(countdown)}</span>
         </div>

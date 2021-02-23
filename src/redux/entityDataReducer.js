@@ -129,7 +129,8 @@ export default function entityDataReducer(draft = initialState, action) {
       if (action.key === 'delete') {
         draft.apiData.lineItems.splice(action.index, 1);
       } else if (action.key === 'clone') {
-        draft.apiData.lineItems.splice(action.index, 0, draft.apiData.lineItems[action.index]);
+        draft.apiData.lineItems.splice(action.index, 0, {...draft.apiData.lineItems[action.index]});
+        draft.apiData.lineItems[action.index + 1].title += ' - copy';
       } else {
         draft.apiData.lineItems[action.index][action.key] = action.val;
       }
