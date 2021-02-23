@@ -97,18 +97,23 @@ export default class HtmlEditor extends Component {
         let options = {
             entityStyleFn: (entity) => {
                 const entityType = entity.get('type').toLowerCase();
-                /* if (entityType === 'link') {
+                if (entityType === 'link') {
                     const data = entity.getData();
-                    return {
+                    let url = data.url || data.href;
+                    console.log('setting link ' + url);
+                    let args = {
                         element: 'a',
-                        attributes: {
-                            href: data.href,
-                            target:'_blank'
-                        },
+                        attributes: { href: url}
                     };
-                } else */ if (entityType === 'image') {
+                    if (url.indexOf(document.location.protocol + '//' + document.location.host) !== 0) {
+                        args.attributes.target = '_blank';
+                    }
+                    return args;
+
+                } else if (entityType === 'image') {
                     const data = entity.getData();
-                    if(data.src.includes("docs.google.com")){
+                    if(data.src.indexOf("https://docs.google.com") === 0){
+                        console.log('setting iframe ', data)
                         return {
                             element: 'iframe',
                             attributes: {
@@ -116,6 +121,7 @@ export default class HtmlEditor extends Component {
                             }
                         }
                     }
+                    // console.log('setting image ', data)
                     return {
                         element: 'img',
                         attributes: {
