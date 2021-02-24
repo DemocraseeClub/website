@@ -4,8 +4,7 @@ import SpeakerNotes from '@material-ui/icons/SpeakerNotes';
 import HtmlEditor from "./HtmlEditor";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-import '../AgendaItemOverride.css';
+import '../theme/AgendaItemOverride.css';
 
 class AgendaItemTools extends React.Component {
 
@@ -29,17 +28,17 @@ class AgendaItemTools extends React.Component {
         } else {
             showNotes.push(type);
         }
-        
+
         let selected = new Set();
         document.querySelectorAll('.MuiTabs-flexContainer>.MuiButtonBase-root').forEach((btn, idx) => {
              btn.style.backgroundColor = "white"
              showNotes.forEach(n => {
-           
+
                 if(btn.firstElementChild.firstElementChild.classList.contains(n))
                     selected.add(btn)
-                 
+
              })
-             
+
         })
 
         selected.forEach(btn => {
@@ -54,14 +53,14 @@ class AgendaItemTools extends React.Component {
 
         return (
                         <React.Fragment>
-                       
+
                             <Tabs
                                 orientation={this.state.showNotes.length > 0 ? "horizontal" : "vertical"}
                                 variant="standard"
                                 id={"noteTabs"}
                                 value={this.state.showNotes}
                                 onChange={(e, index) => {
-                                    
+
                                     let type = index === 0 ? 'gsheets' : index === 1 ? 'gdocs' : 'private';
                                     this.toggleNotes(type);
                                 }}
@@ -73,7 +72,7 @@ class AgendaItemTools extends React.Component {
                                 <Tab icon={<img alt={'docs'} className="gdocs"  src={'/images/Google_Docs_logo.png'} />}  classes={{root:classes.tabsIcon}} />
                                 <Tab icon={<SpeakerNotes className="private" />}  classes={{root:classes.tabsIcon}} />
                             </Tabs>
-                        
+
                             <div style={{maxHeight:'460px', overflowY:'auto',overflowX:'hidden'}}>
                                 <TabPanel value={this.state.showNotes} index={'gsheets'}>
                                     <iframe

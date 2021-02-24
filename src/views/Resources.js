@@ -34,7 +34,7 @@ class Resources extends React.Component {
                                         component="img"
                                         alt="TaylorMadeTraffic Logo"
                                         height="200"
-                                        image="http://taylormadetraffic.com/wwwroot/images/tmm_logo_tl.jpg"
+                                        image="https://taylormadetraffic.com/wwwroot/images/tmm_logo_tl.jpg"
                                         title="TaylorMadeTraffic Logo"
                                     />
                                     <CardContent>
