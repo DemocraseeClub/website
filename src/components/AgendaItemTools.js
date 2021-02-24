@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SpeakerNotes from '@material-ui/icons/SpeakerNotes';
 import HtmlEditor from "./HtmlEditor";
+import SpeakerNotes from '@material-ui/icons/SpeakerNotes';
+import Sms from '@material-ui/icons/Sms';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import '../theme/AgendaItemOverride.css';
@@ -10,7 +11,7 @@ class AgendaItemTools extends React.Component {
 
     constructor(p) {
         super(p);
-        this.state = {showNotes: [], notes: {'private':'', 'gdocs':'', 'gsheets':''}}
+        this.state = {showNotes: [], notes: {'private':'', 'chat':''}}
         this.toggleNotes = this.toggleNotes.bind(this);
     }
 
@@ -61,30 +62,20 @@ class AgendaItemTools extends React.Component {
                                 value={this.state.showNotes}
                                 onChange={(e, index) => {
 
-                                    let type = index === 0 ? 'gsheets' : index === 1 ? 'gdocs' : 'private';
+                                    let type = index === 0 ? 'chat' : 'private';
                                     this.toggleNotes(type);
                                 }}
                                 aria-label="Note Controls"
                                 className={this.state.showNotes.length > 0 ? classes.tabsHorz : classes.tabsVert}
                                 classes={{flexContainer:classes.spaceAround}}
                             >
-                                <Tab icon={<img alt={'sheets'} className="gsheets"   src={'/images/Google_Sheets_logo.png'} />}  classes={{root:classes.tabsIcon}} />
-                                <Tab icon={<img alt={'docs'} className="gdocs"  src={'/images/Google_Docs_logo.png'} />}  classes={{root:classes.tabsIcon}} />
-                                <Tab icon={<SpeakerNotes className="private" />}  classes={{root:classes.tabsIcon}} />
+                                <Tab icon={<Sms className="chat" />} classes={{root:classes.tabsIcon}} />
+                                <Tab icon={<SpeakerNotes className="private" />} classes={{root:classes.tabsIcon}} />
                             </Tabs>
 
                             <div style={{maxHeight:'460px', overflowY:'auto',overflowX:'hidden'}}>
-                                <TabPanel value={this.state.showNotes} index={'gsheets'}>
-                                    <iframe
-                                        title='Google Sheets'
-                                        src='https://docs.google.com/spreadsheets/d/1RO1mgOJoZjhGFnh0SnW4ev212LHd3byP1J-zi2BKMp8/edit?usp=sharing&rm=minimal'
-                                        width={'100%'} height={'450'} seamless />
-                                </TabPanel>
-                                <TabPanel value={this.state.showNotes} index={'gdocs'}>
-                                    <iframe
-                                        title='Google Docs'
-                                        src='https://docs.google.com/document/d/1bg5p_GKXJ81CX9YhpvMVepakOcgBYDlLAYaRdFrIV0M/edit?usp=sharing&&rm=minimal'
-                                        width={'100%'} height={'450'} seamless />
+                                <TabPanel value={this.state.showNotes} index={'chat'}>
+                                    <div style={{padding:30, textAlign:'center'}}> Chat service coming soon</div>
                                 </TabPanel>
                                 <TabPanel value={this.state.showNotes} index={'private'}>
                                     <HtmlEditor

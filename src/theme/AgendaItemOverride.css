@@ -1,4 +1,4 @@
-.WithSnackbar\(MeetingHome\)-drawer-29 {
+#notesDrawer {
     right: 5px !important;
     position: fixed !important;
     top: 150px !important;
@@ -12,29 +12,14 @@
     -o-border-radius: 5px;
 }
 
-.WithSnackbar\(MeetingHome\)-tabsVert-22 {
+#noteTabs {
     border:none !important
 }
 
-
-div[role="tabpanel"] {
-    width: 500px;
-}
-
-.WithSnackbar\(MeetingHome\)-tabsIcon-25 {
-    min-width: 45px !important;
-    width: 33% !important;
-}
-
-.MuiTabs-flexContainer>.MuiButtonBase-root {
+#notesDrawer .MuiTabs-flexContainer > .MuiButtonBase-root {
     transition: background-color 0.3s ease;
     -webkit-transition: background-color 0.3s ease;
     -moz-transition: background-color 0.3s ease;
     -ms-transition: background-color 0.3s ease;
     -o-transition: background-color 0.3s ease;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
 }
