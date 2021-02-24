@@ -38,33 +38,10 @@ class PlanList extends React.Component {
 
         this.runTimers = this.runTimers.bind(this);
         this.stopTimers = this.stopTimers.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
-    }
-
-    componentWillUnmount() {
-        if (this.state.showDrawer === true) {
-            document.removeEventListener('scroll', this.handleScroll);
-        }
     }
 
     toggleDrawer() {
-        if (this.state.showDrawer === false) {
-            document.addEventListener('scroll', this.handleScroll);
-        } else {
-            document.removeEventListener('scroll', this.handleScroll);
-        }
         this.setState({showDrawer:!this.state.showDrawer});
-
-    }
-
-    handleScroll() {
-        let pos = document.getElementById("noteTabs").getBoundingClientRect().top;
-        if (pos < 120) {
-            pos = Math.abs(pos) + 120; // window.scrollY;
-            this.setState({topPad: pos});
-            //window.requestAnimationFrame(() => this.setState({topPad: pos}));
-
-        }
     }
 
     handleNext = () => {
@@ -209,6 +186,7 @@ class PlanList extends React.Component {
                     <Drawer
                         variant="persistent"
                         anchor="right"
+                        id={'notesDrawer'}
                         className={this.state.showDrawer ? classes.drawer :[classes.drawer, classes.hide].join(' ')}
                         classes={{paper: classes.drawerInner}}
                         open={this.state.showDrawer}
