@@ -9474,7 +9474,7 @@ redent@^3.0.0:
 
 redux-immer@^1.0.5:
   version "1.0.5"
-  resolved "https://registry.npmjs.org/redux-immer/-/redux-immer-1.0.5.tgz"
+  resolved "https://registry.yarnpkg.com/redux-immer/-/redux-immer-1.0.5.tgz#7ef375a3a06397fcc8575a2d017b3bedc07e25e2"
   integrity sha512-sjYgK2a7aFm0Mx8dmBZ3jfSjIsWmPqIkVjQQIn7VLiDPMNrphjcAIZ8C3L75LxidkJDolHcj/MSbBVlllO/CXg==
 
 redux-immutable-state-invariant@^2.1.0:
