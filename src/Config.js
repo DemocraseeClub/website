@@ -21,7 +21,7 @@ const Config = {
                     'stun:stun2.l.google.com:19302',
                 ]
             },
-            {urls: 'turn:numb.viagenie.ca', 'credential': 'beaver', 'username': 'webrtc.websitebeaver@gmail.com'}
+            {urls: 'turn:numb.viagenie.ca', 'credential': 'KD@)*SDL.ms!4ad', 'username': 'webrtc.eli@taylormadetraffic.com'}
         ],
         iceCandidatePoolSize: 10
     }
