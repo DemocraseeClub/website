@@ -7,6 +7,7 @@ import {
   buildProperty,
   CMSApp,
   EntityCollection,
+  buildAdditionalColumnDelegate,
 } from "@camberi/firecms";
 import firebase from "firebase/app";
 import "typeface-rubik";
@@ -35,47 +36,152 @@ const userSchema = buildSchema({
   properties: {
     email: {
       title: "Email",
+      dataType: "string",
       validation: {
         required: true,
         trim: true,
         email: true
       },
-      dataType: "string",
     },
     userName: {
       title: "Username",
+      dataType: "string",
       validation: {
         required: true,
         trim: true,
       },
-      dataType: "string",
     },
     realName: {
       title: "Real Name",
+      dataType: "string",
       validation: {
         trim: true,
       },
-      dataType: "string",
     },
     website: {
         title: "Website",
+        dataType: "string",
           validation: {
             url: true,
           },
           config: {
             url: true
           },
-      dataType: "string",
     },
     bio: {
         title: "Bio",
+        dataType: "string",
         config: {
             multiline: true
         },
-        dataType: "string",
+    },
+    picture: {
+      title: "Picture",
+      dataType: "string",
+      config: {
+        storageMeta: {
+          mediaType: "image",
+          storagePath: "pictures",
+          acceptedFiles: ["image/*"],
+        },
+      },
+    },
+    coverPhoto: {
+      title: "Cover Photo",
+      dataType: "string",
+      config: {
+        storageMeta: {
+          mediaType: "image",
+          storagePath: "cover_photos",
+          acceptedFiles: ["image/*"],
+        },
+      },
+    },
+    password: {
+      title: "Password",
+      dataType: "string",
+      validation: {
+        required: true,
+        trim: true,
+      },
+    },
+    resource_types: {
+      title: "Resource",
+      dataType: "string"
     }
+
+
   },
 });
+
+const resourceSchema = buildSchema({
+
+      name: "Resource",
+      properties: {
+        title: {
+          title: "Title",
+          dataType: "string",
+          validation: {
+            required: true,
+            trim: true
+          }
+        },
+        descriptionHTML: {
+          title: "Description HTML",
+          dataType: "string",
+          validation: {
+            required: true
+          },
+          config: {
+            multiline: true
+          },
+        },
+        image: {
+          title: "Image",
+          dataType: "string",
+          validation: {required: true},
+          config: {
+            storageMeta: {
+              mediaType: "image",
+              storagePath: "resource_image",
+              acceptedFiles: ["image/*"],
+            },
+          },
+        },
+        postalAddress: {
+          title: "Postal Address",
+          dataType: "string",
+        },
+        price_ccoin: {
+          title: "Price (citizencoin)",
+          dataType: "number",
+          validation: {
+            required: true,
+            positive: true
+          }
+        },
+       resource_type: {
+          title: "Resource Type",
+          dataType: "string",
+          validation: {required: true},
+          config: {
+            enumValues: {
+              consulting: "Consulting",
+              sales: "Sales",
+              labor: "Labor"
+            },
+       }
+      }
+
+      },
+     
+      
+
+
+
+
+})
+
 
 const productSchema = buildSchema({
   name: "Product",
@@ -238,7 +344,11 @@ export function FirebaseCMS() {
       relativePath: "users",
       schema: userSchema,
       name: "Users",
+      //TODO estudiar el uso de additional COlumns
+      additionalColumns: [ ]
+      
     }),
+    
   ];
 
   const myAuthenticator: Authenticator = (user?: firebase.User) => {
