@@ -1,6 +1,6 @@
 {
   "title": "Universal Food Stamps",
-  "desc": "How can we subsidize US farming through a universal food stamp / EBT program.",
+  "desc": "<p>Imagine if every single individual in the country received $40 / week to spend only on locally grown groceries.</p> <p>I've calculated that below and it would cost ~$685 billion dollars. For some context the SNAP (ebt) program distributed ~$75 billion, providing ~40 million people with $150 / month for eligible food. (see footnotes below).</p><p>From reading the retail data, one problem I see is that so much of that money is spent on imported food. And only .05% at farmers markets.</p><p>If we could ensure the money spent stays circulating in the US, I would think we could get a lot closer to that $685 billion.</p><p>But this is not my area of expertise at all. I'm a developer and believe I can develop a food credits system for subsidizing locally grown food, especially in communities where their most common options are McDonalds and liquor stores.</p><p>So this is an invitation to share your insights, experience or ideas.</p>",
   "profile": "https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg",
   "cover": null,
   "type": "meeting",
@@ -24,84 +24,68 @@
       "title": "CASE STUDY: Universal Farmers Markets For Los Angeles",
       "img":"https://static1.squarespace.com/static/5bc50618ab1a624d324ecd81/t/5e3c66859301431f40d059c8/1613161874231/?format=1500w",
       "link": "https://www.goodfoodla.org/fsd-affordable/2020/2/4/universal-ebt-at-farmers-markets-case-study"
+    },
+    {
+      "title": "Total costs of the U.S. supplemental nutrition assistance program (SNAP) from 1969 to 2019",
+      "img":"https://upload.wikimedia.org/wikipedia/commons/d/d3/Statista.png",
+      "link": "https://www.statista.com/statistics/315032/us-supplemental-nutrition-assistance-program-total-costs"
     }
   ],
   "speakers": [],
   "lineItems": [
     {
-      "nest": "Economic Effects",
-      "title": "How might this effect US agriculture?",
-      "outline": "",
+      "nest": "Shared Interests",
+      "title": "What are the shared interests for local food stamp program?",
+      "seconds": 300,
+      "html": "<ul><li>Subsidize small agriculture</li><li>Feed people</li><li>Job transitions</li><li>Circulate capital</li><li>?</li></ul>"
+    },
+    {
+      "nest": "Shared Interests",
+      "title": "Who are the shared stakeholders for local food stamp program?",
+      "seconds": 300,
+      "html": "<ul><li>Farmers</li><li>Hungry people</li><li>Soil &amp; ag retailers</li><li>Farmers markets</li><li>?</li></ul>"
+    },
+    {
+      "nest": "Shared Interests",
+      "title": "Any there any auxilary benefits or concerns worth noting?",
+      "seconds": 300,
+      "html": "<ul><li>Water usage</li><li>Pest concerns</li><li>Climate change</li><li>Fraud</li><li>?</li></ul>"
+    },
+    {
+      "nest": "Budgeting",
+      "title": "What do local / state / federal programs currently spend on food subsidies?",
+      "seconds": 600,
+      "html": "<div><p>In 2020 The <a href='https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap' target='_blank'>SNAP (ebt) program</a> distributed ~$75 billion to ~12% of the population, through $150 / month for eligible food: </p><figure><iframe src='https://docs.google.com/spreadsheets/d/1J3tMo_N0uSvcxpjxtOTIgR3v1ApbFKrSAEsQW01EAwA/edit?usp=sharingg&rm=minimal&gid=1537459819#gid=1537459819' width={'100%'} height={'450'} seamless /></figure> <small>* Check out their <a href='https://fns-prod.azureedge.net/sites/default/files/resource-files/2019-SNAP-Retailer-Management-Year-End-Summary.pdf' target='_blank'>Retailer Data</a> to note where that money is spent. Only %.05 is spent with Farmers.</small></div>"
+    },
+    {
+      "nest": "Budgeting",
+      "title": "Who and What qualifies?",
       "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
+      "html": "<div><p><strong>WHO</strong>: By income? By zip code? ...?</p> <p><strong>WHAT</strong>: By organic? By retailer zone? By approved retailer? By FDA <a href='https://www.fda.gov/industry/import-program-resources/product-codes-and-product-code-builder' target='_blank'>SKU codes</a></p><p><strong>HOW MUCH</strong>: Feel free to <strong>edit the green fields</strong> below to see cost scenarios. Add columns to target specific regions.</p><figure><iframe src='https://docs.google.com/spreadsheets/d/1J3tMo_N0uSvcxpjxtOTIgR3v1ApbFKrSAEsQW01EAwA/edit?usp=sharingg&rm=minimal' width={'100%'} height={'450'} seamless /></figure> <small>* this budget does not account for program management or IT</small></div>"
     },
     {
-      "nest": "Economic Effects",
-      "title": "How might this effect foreign agriculture and trade?",
-      "outline": "",
-      "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
+      "nest": "Budgeting",
+      "title": "Can we afford this?",
+      "seconds": 600,
+      "html": "<p>If so, can we identify existing budgetary measures as potential funding sources?</p>"
     },
     {
-      "nest": "Environmental Effects",
-      "title": "How might this effect soil?",
-      "outline": "",
-      "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
+      "nest": "Next Steps",
+      "title": "Research existing platforms and organizations distributing cash credits for food",
+      "seconds": 180,
+      "html": "<ul><li>EBT</li><li>?</li></ul>"
     },
     {
-      "nest": "Environmental Effects",
-      "title": "How might this effect climate change?",
-      "outline": "",
-      "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
+      "nest": "Next Steps",
+      "title": "Research farmers market organizers and vendors",
+      "seconds": 180,
+      "html": ""
     },
     {
-      "nest": "Environmental Effects",
-      "title": "How might this effect water resources?",
-      "outline": "",
-      "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
-    },
-    {
-      "nest": "Health Effects",
-      "title": "How might this effect public health?",
-      "outline": "",
-      "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
-    },
-    {
-      "nest": "Health Effects",
-      "title": "How might this effect homelessness?",
-      "outline": "",
-      "seconds": 1200,
-      "html": "<p><br></p>",
-      "countdown": 1200
-    }
-  ],
-  "countRemains": 7200,
-  "countScheduled": 7200,
-  "headers": [
-    {
-      "label": "Economic Effects",
-      "order": 0,
-      "count": 2
-    },
-    {
-      "label": "Environmental Effects",
-      "order": 1,
-      "count": 3
-    },
-    {
-      "label": "Health Effects",
-      "order": 2,
-      "count": 1
+      "nest": "Next Steps",
+      "title": "Program Branding",
+      "seconds": 180,
+      "html": "<ul><li>Crop Cash</li><li>?</li></ul>"
     }
   ]
 }

@@ -18,7 +18,7 @@ import Dialog from '@material-ui/core/Dialog';
 import {NavLink} from "react-router-dom";
 
 function App() {
-    const [isOpen, closeWarning] = React.useState(true);
+    const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === 'production');
 
     return (
         <div className="App">
