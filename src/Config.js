@@ -5,7 +5,7 @@ const Config = {
     },
     allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt', // https://www.npmjs.com/package/sanitize-html
         'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div', 'figure', 'img', 'video', 'audio', 'iframe',
-        'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'h2', 'h3', 'h4', 'h5', 'h6', 'small',
         'sup', 'sub', 'center', 'button', 'a', 'u'],
     allowedAttributes: {
         'a': ['href', 'target', 'style'],
