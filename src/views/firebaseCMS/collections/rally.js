@@ -21,6 +21,8 @@ const rallySchema = buildSchema({
       dataType: "string",
     },
     picture: {
+      title: "Picture",
+      dataType: "string",
       config: {
         storageMeta: {
           mediaType: "image",
