@@ -31,15 +31,12 @@ const userSchema = buildSchema({
     },
     website: {
       title: "Website",
-      dataType: "array",
-      of: {
-        dataType: "string",
-        validation: {
-          url: true,
-        },
-        config: {
-          url: true,
-        },
+      dataType: "string",
+      validation: {
+        url: true,
+      },
+      config: {
+        url: true,
       },
     },
     bio: {
@@ -89,9 +86,9 @@ const userSchema = buildSchema({
         storageMeta: {
           mediaType: "json",
           storagePath: "topic_def_json",
-          acceptedFiles: ["application/json"]
-        }
-      }
+          acceptedFiles: ["application/json"],
+        },
+      },
     },
     resources: {
       title: "Resources",
