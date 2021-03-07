@@ -14,6 +14,13 @@ import partyCollection from "./collections/party";
 import cityCollection from "./collections/city";
 import stateCollection from "./collections/state";
 import rallyCollection from "./collections/rally";
+import topicCollection from "./collections/topic";
+import meetingCollection from "./collections/meeting";
+import meetingTypesCollection from "./collections/meeting_types";
+import stakeholderCollection from "./collections/stakeholder";
+import actionPlanCollection from "./collections/action_plan";
+import pageCollection from "./collections/page";
+import inviteCollection from "./collections/invite";
 
 // This is for test
 const firebaseConfig = {
@@ -35,6 +42,13 @@ export function FirebaseCMS() {
     cityCollection,
     stateCollection,
     rallyCollection,
+    topicCollection,
+    meetingCollection,
+    meetingTypesCollection,
+    stakeholderCollection,
+    actionPlanCollection,
+    pageCollection,
+    inviteCollection
   ];
 
   const myAuthenticator: Authenticator = (user?: firebase.User) => {
