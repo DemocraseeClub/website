@@ -82,6 +82,17 @@ const userSchema = buildSchema({
         field: CustomPasswordField,
       },
     },
+    topic_def_json: {
+      title: "Topic Definitions JSON",
+      dataType: "string",
+      config: {
+        storageMeta: {
+          mediaType: "json",
+          storagePath: "topic_def_json",
+          acceptedFiles: ["application/json"]
+        }
+      }
+    },
     resources: {
       title: "Resources",
       dataType: "array",

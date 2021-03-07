@@ -30,6 +30,49 @@ const rallySchema = buildSchema({
           acceptedFiles: ["image/*"],
         },
       },
+    },
+    topics: {
+      title: "Topics",
+      dataType: "array",
+      validation: {
+        required: true,
+        max: 3,
+      },
+
+      of: {
+        dataType: "reference",
+        collectionPath: "topics",
+        previewProperties: ["name"],
+      },
+    },
+    meetings: {
+      title: "Meetings",
+      dataType: "array",
+      of: {
+        dataType: "reference",
+        collectionPath: "meetings",
+        previewProperties: ["title"],
+      },
+    },
+    stakeholders: {
+      title: "Stakeholders",
+      dataType: "array",
+      of: {
+        dataType: "reference",
+        collectionPath: "stakeholders",
+        previewProperties: ["name"]
+      }
+    },
+    research: {
+      title: "Research JSON",
+      dataType: "string",
+      config: {
+        storageMeta: {
+          mediaType: "json",
+          storagePath: "meeting_research",
+          acceptedFiles: ["application/json"],
+        },
+      },
     }
   },
 });
