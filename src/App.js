@@ -8,7 +8,7 @@ import Rallies from "./views/Rallies";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import FirebaseCMS from "./views/FirebaseCMS";
+import FirebaseCMS from "./views/firebaseCMS/FirebaseCMS";
 import Topics from "./views/Topics";
 import Resources from "./views/Resources";
 import RallyHome from "./views/RallyHome";
