@@ -6,14 +6,16 @@ import "typeface-rubik";
 import navigation from "./navigation";
 import "../../theme/FirebaseCMS.css";
 
-// This is for test
+// This is the actual config
 const firebaseConfig = {
-  apiKey: "AIzaSyBXelhalX-QVA2V9DImADLkGo9GdjAsLEY",
-  authDomain: "firecms-test.firebaseapp.com",
-  projectId: "firecms-test",
-  storageBucket: "firecms-test.appspot.com",
-  messagingSenderId: "720140535017",
-  appId: "1:720140535017:web:2f7550d8c2bb37a0095c78",
+  apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
+    authDomain: "democraseeclub.firebaseapp.com",
+    databaseURL: "https://democraseeclub.firebaseio.com",
+    projectId: "democraseeclub",
+    storageBucket: "democraseeclub.appspot.com",
+    messagingSenderId: "1051506392090",
+    appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
+    measurementId: "G-XYVYDC8L1N"
 };
 
 export function FirebaseCMS() {
