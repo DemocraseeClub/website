@@ -8,6 +8,7 @@ import Rallies from "./views/Rallies";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FirebaseCMS from "./views/firebaseCMS/FirebaseCMS";
 import Topics from "./views/Topics";
 import Resources from "./views/Resources";
 import RallyHome from "./views/RallyHome";
@@ -35,7 +36,9 @@ function App() {
 
                     <Header />
                     <Switch>
-
+                        
+                        <Route path="/cms"><FirebaseCMS/></Route>
+                        <Route path="/c/:entity"><FirebaseCMS/></Route>
                         <Route path="/rallies"><Rallies/></Route>
                         <Route path="/cities"><City /></Route>
                         <Route path="/values"><Topics/></Route>
