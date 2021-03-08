@@ -116,14 +116,14 @@ class Rallies extends React.Component {
                             <CardActionArea>
                                 <NavLink to={'/rally/universal-food-stamps'}><CardMedia
                                     component="img"
-                                    alt="Universal Food Stamps"
+                                    alt="Cash for Local Crops"
                                     height="200"
                                     image="https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg"
-                                    title="Universal Food Stamps"
+                                    title="Cash for Local Crops"
                                 /></NavLink>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Universal Food Stamps
+                                        Cash for Local Crops
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
                                         How can we subsidize US farming through a universal food stamp / EBT program.
