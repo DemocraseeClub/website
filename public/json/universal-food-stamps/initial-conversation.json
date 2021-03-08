@@ -1,7 +1,8 @@
 {
-  "title": "Universal Food Stamps",
+  "title": "Universal Food Credits",
   "desc": "<p>Imagine if every single individual in the country received $40 / week to spend only on locally grown groceries.</p> <p>I've calculated that below and it would cost ~$685 billion dollars. For some context the SNAP (ebt) program distributed ~$75 billion, providing ~40 million people with $150 / month for eligible food. (see footnotes below).</p><p>From reading the retail data, one problem I see is that so much of that money is spent on imported food. And only .05% at farmers markets.</p><p>If we could ensure the money spent stays circulating in the US, I would think we could get a lot closer to that $685 billion.</p><p>But this is not my area of expertise at all. I'm a developer and believe I can develop a food credits system for subsidizing locally grown food, especially in communities where their most common options are McDonalds and liquor stores.</p><p>So this is an invitation to share your insights, experience or ideas.</p>",
   "profile": "https://api.trackauthoritymusic.com/sites/default/files/playlists/urban-farming_0.jpg",
+  "videofile" : "https://clock.taylormadetraffic.com/screencasts/cropcash-take2.mp4",
   "cover": null,
   "type": "meeting",
   "wisedemo": ["Interaction"],
@@ -16,19 +17,19 @@
   ],
   "research_json" : [
     {
-      "title": "How the Civil-Rights Movement Aimed to End Poverty",
-      "img": "https://cdn.theatlantic.com/thumbor/FWfTNbnuj9vOL7qmzjVFCE_2D38=/80x50:2000x1125/media/img/2018/04/02/Budget_lead/original.jpg",
-      "link": "https://www.theatlantic.com/magazine/archive/2018/02/a-freedom-budget-for-all-americans-annotated/557024/"
-    },
-    {
       "title": "CASE STUDY: Universal Farmers Markets For Los Angeles",
       "img":"https://static1.squarespace.com/static/5bc50618ab1a624d324ecd81/t/5e3c66859301431f40d059c8/1613161874231/?format=1500w",
       "link": "https://www.goodfoodla.org/fsd-affordable/2020/2/4/universal-ebt-at-farmers-markets-case-study"
     },
     {
       "title": "Total costs of the U.S. supplemental nutrition assistance program (SNAP) from 1969 to 2019",
-      "img":"https://upload.wikimedia.org/wikipedia/commons/d/d3/Statista.png",
-      "link": "https://www.statista.com/statistics/315032/us-supplemental-nutrition-assistance-program-total-costs"
+      "img":"https://www.usda.gov/sites/default/files/Organic%20Seal%20-%20small.png",
+      "link": "https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+    },
+    {
+      "title": "How the Civil-Rights Movement Aimed to End Poverty",
+      "img": "https://cdn.theatlantic.com/thumbor/FWfTNbnuj9vOL7qmzjVFCE_2D38=/80x50:2000x1125/media/img/2018/04/02/Budget_lead/original.jpg",
+      "link": "https://www.theatlantic.com/magazine/archive/2018/02/a-freedom-budget-for-all-americans-annotated/557024/"
     }
   ],
   "speakers": [],
