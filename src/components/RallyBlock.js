@@ -9,7 +9,6 @@ import Box from "@material-ui/core/Box";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
-import Create from "@material-ui/icons/Create";
 import {withSnackbar} from "notistack";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
@@ -54,12 +53,13 @@ class RallyHome extends Component {
                         {tags}
                     </Typography>
                 </Box>
-                <Grid container justify={'space-around'} alignContent={'center'}>
-                    <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
-                        {rally.videofile ?
-                            <video style={{width:'100%'}} height="240" controls>
+                <Grid container justify={'space-around'} alignContent={'center'} spacing={2}>
+                    {rally.videofile ?
+                        <Grid item xs={12} sm={6} style={{textAlign:'center'}} alignContent={'center'} >
+                            <video controls width={'100%'}>
                                 <source src={rally.videofile} type="video/mp4" />
-                            </video> : ''}
+                            </video></Grid> : ''}
+                    <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
                         {(rally.profile) ?
                             <img alt={rally.title} src={rally.profile} style={{maxWidth: '100%', textAlign:'center'}} />
                             :
@@ -69,7 +69,8 @@ class RallyHome extends Component {
                             </Box>
                         }
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item >
+                        <Box p={1}>
                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
                         {rally.desc ? <SanitizedHTML
                             allowedIframeDomains={['youtube.com', 'google.com']}
@@ -97,8 +98,9 @@ class RallyHome extends Component {
                             :
                             <Typography variant='h6' >{rally.start}</Typography>
                         }
+                        </Box>
 
-                        <Box mt={4}>
+                        <Box mt={4} p={1}>
                             <div>Hosts</div>
                             <AvatarGroup>
                                 {rally.hosts.map(r => <Avatar key={r.img} alt={r.name} src={r.img}/>)}

@@ -2,6 +2,7 @@
   "title": "5G Infrastructure",
   "desc": "5G improves internet speeds, but only at very short distances. This is a conversation about whether that makes it a worthwhile public investment",
   "profile": "https://api.trackauthoritymusic.com/sites/default/files/playlists/communications.png",
+  "videofile" : "https://clock.taylormadetraffic.com/screencasts/5g-take1.mp4",
   "cover": null,
   "type": "rally",
   "wisedemo": ["Interaction"],
