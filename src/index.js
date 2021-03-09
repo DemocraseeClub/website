@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
 import App from './App';
-import { SnackbarProvider } from 'notistack';
 import * as serviceWorker from './serviceWorker';
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
 import configureStore, { history } from './redux/configureStore';
 const store = configureStore({});
+
 
 let appTheme = createMuiTheme({
     palette: {
@@ -39,9 +39,7 @@ ReactDOM.render(
         <Provider store={store}>
             <ConnectedRouter history={history} >
                 <ThemeProvider theme={appTheme}>
-                    <SnackbarProvider maxSnack={3}>
                         <App history={history} dispatch={store.dispatch} />
-                    </SnackbarProvider>
                 </ThemeProvider>
             </ConnectedRouter>
         </Provider>
