@@ -118,8 +118,23 @@ const meetingSchema = buildSchema({
   },
 });
 
+meetingSchema.onPreSave = ({values}) => {
+  if (values.agenda.trim()) {
+      const value = JSON.parse(values.agenda.trim());
+
+      if (!value) 
+        throw new Error("This value (Agenda JSON) must be a valid JSON");
+
+      if (typeof value !== "object") 
+        throw new Error("This value (Agenda JSON) must be a valid JSON");
+  }
+
+  return values;
+};
+
 export default buildCollection({
   relativePath: "meetings",
   schema: meetingSchema,
   name: "Meetings",
+  pagination: true
 });

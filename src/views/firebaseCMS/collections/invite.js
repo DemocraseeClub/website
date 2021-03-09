@@ -43,4 +43,5 @@ export default buildCollection({
   relativePath: "invites",
   schema: inviteSchema,
   name: "Invites",
+  pagination: true
 });

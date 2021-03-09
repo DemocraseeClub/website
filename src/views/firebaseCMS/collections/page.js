@@ -14,7 +14,7 @@ const pageSchema = buildSchema({
       validation: {required: true},
       config: {
         storageMeta: {
-          mediaType: "json",
+          mediaType: "html",
           storagePath: "page_descriptionHTML",
           acceptedFiles: ["text/html"],
         },
@@ -27,4 +27,5 @@ export default buildCollection({
   relativePath: "pages",
   schema: pageSchema,
   name: "Pages",
+  pagination: true
 });
