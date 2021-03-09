@@ -92,13 +92,6 @@ const meetingSchema = buildSchema({
     agenda: {
       title: "Agenda JSON",
       dataType: "string",
-      config: {
-        storageMeta: {
-          mediaType: "json",
-          storagePath: "meeting_agenda",
-          acceptedFiles: ["application/json"],
-        },
-      },
     },
     duration: {
       title: "Duration",
