@@ -54,8 +54,8 @@ class RallyHome extends Component {
                     :
                         <React.Fragment>
                             <Typography variant='subtitle1'>Meetings</Typography>
-                            {rally.meetings.map(r => {
-                                return <Grid item key={r.title}>
+                            {rally.meetings.map((r, i) => {
+                                return <Grid item key={r.title + '-' + i}>
                                     <NavLink to={r.link}>
                                         <Typography variant={'h4'}>{r.title}</Typography>
                                     </NavLink>

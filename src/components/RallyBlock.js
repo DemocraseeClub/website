@@ -118,9 +118,9 @@ class RallyHome extends Component {
                             <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
                             <List component="nav" aria-label="research links">
                                 {rally.research_json.map(r => {
-                                    return <ListItem button>
+                                    return <ListItem button key={r.link}>
                                         <ListItemIcon>
-                                            <img src={r.img} height={20} />
+                                            <img src={r.img} height={20} alt={'source logo'} />
                                         </ListItemIcon>
                                         <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
                                     </ListItem>

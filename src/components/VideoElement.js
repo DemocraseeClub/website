@@ -7,7 +7,7 @@ class VideoElement extends Component {
         super(p);
         this.listener = false;
         this.vidEl = React.createRef();
-        this.state = {mounted:false, showRoomId:false, viewers: this.props.viewers, listener: null}
+        this.state = {mounted:false, viewers: this.props.viewers, listener: null}
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -42,7 +42,7 @@ class VideoElement extends Component {
         }
     }
 
-    componentDidMount() { 
+    componentDidMount() {
         this.setState({mounted:true})
     }
 
@@ -50,30 +50,16 @@ class VideoElement extends Component {
         if(this.state.listener) this.state.listener();
     }
 
-
     render() {
         return (
-            <React.Fragment>
-                <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.vidEl} />
-                {(!this.props.roomId) ? '' :
-                    <p style={{display:'inline-flex', margin:0}} >
-                        {this.props.viewers === -1 ? '' : <span style={{marginRight:5}} >viewers: {this.state.viewers}</span>}
-                        { this.props.notShowCode ? null :
-                        <div>
-                            <span style={{marginRight:5, fontWeight:'bold'}}>{this.state.showRoomId === true ? this.props.roomId : ' **** '}</span>
-                            <u onClick={() => this.setState({showRoomId:!this.state.showRoomId})}>{this.state.showRoomId === true ? 'hide' : 'show'}</u>
-                        </div>
-                        }
-                    </p>
-                }
-            </React.Fragment>
+            <video controls style={{height: 250, width: '100%'}} autoPlay ref={this.vidEl} />
         );
     }
 }
 
 VideoElement.defaultProps = {
     stream : new MediaStream(),
-    roomId : false,
+    roomId : '',
     viewers : -1,
     muted : false,
 }
