@@ -13,6 +13,13 @@ import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import UnfoldLess from '@material-ui/icons/UnfoldLess';
 // import VideoCall from '@material-ui/icons/VideoCall';
 // import VideoCamOff from '@material-ui/icons/VideocamOff';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import FolderIcon from '@material-ui/icons/Folder';
+import RestoreIcon from '@material-ui/icons/Restore';
+import TimerIcon from '@material-ui/icons/Timer';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import {countDown} from "../redux/entityDataReducer";
@@ -62,7 +69,8 @@ class PlanList extends React.Component {
 
     runTimers() {
         if (this.state.activeStep === -1) {
-            this.setState({activeStep: 0, running: true}, this.runTimers)
+            this.setState({activeStep: 0, running: true}, this.runTimers);
+            document.getElementById('meetingAgenda').scrollIntoView({block:'start', behavior:'smooth'})
         } else if (this.state.running === false) {
             this.setState({running: true}, this.runTimers)
         } else {
@@ -90,6 +98,14 @@ class PlanList extends React.Component {
         this.setState({running: false});
     }
 
+    toggleAll() {
+        this.setState({showAll: !this.state.showAll}, () => {
+            if (this.state.showAll === true) {
+                document.getElementById('meetingAgenda').scrollIntoView({block:'start', behavior:'smooth'})
+            }
+        })
+    }
+
     render() {
         if (!this.props.rallyData || !this.props.rallyData.headers) return 'loading agenda...'
 
@@ -101,6 +117,10 @@ class PlanList extends React.Component {
             <div className={classes.root} style={{marginTop: 20, textAlign: 'left'}}>
 
                 <AppBar position={'sticky'} className={classes.appBar} >
+                    {this.state.videoOpen === true ? <Room classes={classes} /> : null}
+                </AppBar>
+
+                <AppBar position="fixed" color="primary" style={{top: 'auto', bottom: 0}} >
                     <Toolbar>
                         <Grid container justify={'space-between'} alignItems={'center'}>
 
@@ -109,7 +129,7 @@ class PlanList extends React.Component {
                                         startIcon={<StopIcon/>}>Pause</Button>
                                 :
                                 <Button variant={'contained'} color={'secondary'} onClick={this.runTimers}
-                                        startIcon={<PlayIcon/>}>Start Clock</Button>
+                                        startIcon={<TimerIcon />}>Start Clock</Button>
                             }
 
                             <Typography variant='h6' >
@@ -123,11 +143,11 @@ class PlanList extends React.Component {
                             {this.state.showAll === true ?
                                 <Button style={{alignSelf: 'center'}} startIcon={<UnfoldLess/>} variant='contained'
                                         color={'secondary'}
-                                        onClick={e => this.setState({showAll: !this.state.showAll})}>Close All</Button>
+                                        onClick={e => this.toggleAll()}>Close All</Button>
                                 :
                                 <Button style={{alignSelf: 'center'}} startIcon={<UnfoldMore/>} variant='contained'
                                         color={'secondary'}
-                                        onClick={e => this.setState({showAll: !this.state.showAll})}>Read All</Button>
+                                        onClick={e => this.toggleAll()}>Read Agenda</Button>
                             }
 
 
@@ -142,10 +162,9 @@ class PlanList extends React.Component {
 
                         </Grid>
                     </Toolbar>
-                    {this.state.videoOpen === true ? <Room classes={classes} /> : null}
                 </AppBar>
 
-                <div className={classes.agendaContent}>
+                <div className={classes.agendaContent} id={'meetingAgenda'}>
 
                     <Stepper activeStep={activeStep} orientation="vertical" className={classes.vertStepper} >
                         {this.props.rallyData.lineItems.map((curItem, index) => {
