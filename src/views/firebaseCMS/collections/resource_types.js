@@ -18,4 +18,5 @@ export default buildCollection({
   relativePath: "resource_types",
   schema: resourceTypeSchema,
   name: "Resource Types",
+  pagination: true
 });

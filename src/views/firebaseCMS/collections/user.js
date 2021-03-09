@@ -83,11 +83,10 @@ const userSchema = buildSchema({
       title: "Topic Definitions JSON",
       dataType: "string",
       config: {
-        storageMeta: {
-          mediaType: "json",
-          storagePath: "topic_def_json",
-          acceptedFiles: ["application/json"],
-        },
+        multiline: true,
+      },
+      validation: {
+        trim: true,
       },
     },
     resources: {
@@ -102,8 +101,23 @@ const userSchema = buildSchema({
   },
 });
 
+userSchema.onPreSave = ({values}) => {
+  if (values.topic_def_json.trim()) {
+      const value = JSON.parse(values.topic_def_json.trim());
+
+      if (!value) 
+        throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
+
+      if (typeof value !== "object") 
+        throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
+  }
+
+  return values;
+};
+
 export default buildCollection({
   relativePath: "users",
   schema: userSchema,
   name: "Users",
+  pagination: true
 });
