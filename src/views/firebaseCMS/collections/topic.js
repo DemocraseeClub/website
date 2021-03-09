@@ -37,4 +37,5 @@ export default buildCollection({
   relativePath: "topics",
   schema: topicSchema,
   name: "Topics",
+  pagination: true
 });
