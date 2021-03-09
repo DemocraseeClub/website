@@ -28,6 +28,7 @@ class Room extends React.Component {
             myRoom: null,
             showRoomId : false,
             enabled: {'video': false, 'audio': false, 'screen': false},
+            startingRoom:false,
             roomsViewing: [],
             myStream:null,
             viewers: [],
@@ -48,7 +49,7 @@ class Room extends React.Component {
         if (roomId.length === 20) {
             this.setState({roomFieldText:roomId});
             document.getElementById('roomIdField').scrollIntoView({block:'start', behavior:'smooth'})
-            this.props.enqueueSnackbar(`Enable your Camera/Mic/Screen then click CONNECT when you are ready to join`, {variant:'success', persist:true});
+            this.props.enqueueSnackbar(`Enable your Cam/Mic/Screen & click connect when you are ready to join`, {variant:'success', persist:true});
         }
     }
 
@@ -166,13 +167,14 @@ class Room extends React.Component {
     }
 
     async createRoom() {
+        this.setState({startingRoom:true}); // because this function can lag and we need to disable the button
+
         if (!this.db) {
             this.db = window.firebase.firestore();
         }
         const roomRef = await this.db.collection('rooms').doc();
 
         this.peerConnection = this.createPeerConnection();
-
 
         this.peerConnection.onaddstream = (event => {
             console.log("ON ADDED STREAM createRoom", event);
@@ -199,24 +201,24 @@ class Room extends React.Component {
         const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0, roomsViewing: []};
         await roomRef.set(roomWithOffer);
 
-        // this.peerConnection.addEventListener('track', event => {
-        //     console.log('Got viewer track: ', event);
-        //     console.log('event streams: ', event.streams);
-        //     let rooms = [...this.state.viewers];
-        //     rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
-        //     this.setState({viewers: rooms})
-        // });
+        /*
+         this.peerConnection.addEventListener('track', event => {
+             console.log('Got viewer track: ', event);
+             console.log('event streams: ', event.streams);
+             let rooms = [...this.state.viewers];
+             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+             this.setState({viewers: rooms})
+         });
+         this.peerConnection.ontrack = event => {
+             console.log('Got viewer track2:', event);
+             console.log('event streams: ', event.streams);
+             let rooms = [...this.state.viewers];
+             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+             this.setState({viewers: rooms})
+         }
+         */
 
-        // this.peerConnection.ontrack = event => {
-        //     console.log('Got viewer track2:', event);
-        //     console.log('event streams: ', event.streams);
-        //     let rooms = [...this.state.viewers];
-        //     rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
-        //     this.setState({viewers: rooms})
-        // }
-
-        // Listening for remote session description below
-        const auxList1 =roomRef.onSnapshot(async snapshot => {
+        const auxList1 = roomRef.onSnapshot(async snapshot => {
 
             const data = snapshot.data();
             console.log(data);
@@ -232,8 +234,6 @@ class Room extends React.Component {
                 if(auxRoomsViewing.indexOf(viewers[i])!==-1)
                     viewers.splice(i,1);
             }
-
-
             this.setState({viewers: viewers})
         });
         // Listening for remote session description above
@@ -266,16 +266,25 @@ class Room extends React.Component {
         let i = rooms.find(o => o.roomId === newRoomId);
         if (!i) {
             let room = {roomId: newRoomId, stream: new MediaStream()};
-
             console.log('adding room', room);
             rooms.push(room);
             this.setState({roomsViewing: rooms}, e => {
                 this.setState({roomFieldText: ''})
             })
-
-
         } else {
             console.log('room already exists');
+        }
+    }
+
+    handleHangUp(id) {
+        let rooms = [...this.state.roomsViewing];
+        let i = rooms.findIndex(o => o.roomId === id);
+        if (i > -1) {
+            rooms.splice(i, 1);
+            this.setState({roomsViewing: rooms})
+            this.props.enqueueSnackbar('This room was closed');
+        } else {
+            console.log('room already hung up');
         }
     }
 
@@ -311,20 +320,13 @@ class Room extends React.Component {
             }
             await roomRef.delete();
         }
-        this.setState({myRoom:null, myStream:null, enabled: {'video': false, 'audio': false, 'screen': false}});
+        this.setState({myRoom:null, startingRoom:false, myStream:null, enabled: {'video': false, 'audio': false, 'screen': false}});
     }
-
-    handleClose(event) {
-        if (this.castBtnRef.current && this.castBtnRef.current.contains(event.target)) {
-            return;
-        }
-        this.setState({showCastOptions:false});
-    };
 
     copyRoomUrl() {
         let url = `${document.location.href}${document.location.href.indexOf('?') > -1 ? '&' : '?'}roomId=${this.state.myRoom}`;
         navigator.clipboard.writeText(url);
-        this.props.enqueueSnackbar(`Your room URL has been copied to your clipboard`, {variant:'success', persist:false});
+        this.props.enqueueSnackbar(`Your room URL has been copied to your clipboard`, {variant:'success'});
     }
 
     render() {
@@ -335,30 +337,30 @@ class Room extends React.Component {
             <Box p={1}>
                     <Grid container justify={'space-between'} alignItems="center" spacing={2} alignContent={'center'}>
 
-                            { (this.state.myRoom) ?
-                                <React.Fragment>
-                                    <Grid item>
-                                        <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
-                                    </Grid>
-                                    <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewers.length} ><VisibilityIcon /></Badge></Grid>
-                                    <Grid item>
-                                        <Button variant="contained" color="primary"
-                                                onClick={() => {
-                                                    if (!this.state.showRoomId) this.copyRoomUrl();
-                                                    this.setState({showRoomId:!this.state.showRoomId})
-                                                }}
-                                                endIcon={<PasswordIcon color={this.state.showRoomId === true ?  'error' : 'default'} />}
-                                        >{this.state.showRoomId === true ? this.state.myRoom : ' **** '}</Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <ShareIcon onClick={() => this.copyRoomUrl()} />
-                                    </Grid>
-                                </React.Fragment>
-                                :
-                                <Grid item>
-                                <Button variant="contained" color="primary" disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
-                                </Grid>
-                            }
+                    { (this.state.myRoom) ?
+                        <React.Fragment>
+                            <Grid item>
+                                <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
+                            </Grid>
+                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewers.length} ><VisibilityIcon /></Badge></Grid>
+                            <Grid item>
+                                <Button variant="contained" color="primary"
+                                        onClick={() => {
+                                            if (!this.state.showRoomId) this.copyRoomUrl();
+                                            this.setState({showRoomId:!this.state.showRoomId})
+                                        }}
+                                        endIcon={<PasswordIcon color={this.state.showRoomId === true ?  'error' : 'default'} />}
+                                >{this.state.showRoomId === true ? this.state.myRoom : ' **** '}</Button>
+                            </Grid>
+                            <Grid item>
+                                <ShareIcon onClick={() => this.copyRoomUrl()} />
+                            </Grid>
+                        </React.Fragment>
+                        :
+                        <Grid item>
+                        <Button variant="contained" color="primary" disabled={isEnabled === false || this.state.startingRoom} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                        </Grid>
+                    }
 
                         <Grid item style={{flexGrow:1}} >
                             <ButtonGroup variant="contained" color="primary" aria-label="broadcast options" style={{marginLeft:10}}>
@@ -378,6 +380,7 @@ class Room extends React.Component {
                                 label="Enter Room ID"
                                 variant={'filled'}
                                 color="secondary"
+                                inputProps={{maxlength:20}}
                                 id={'roomIdField'}
                                 value={this.state.roomFieldText}
                                 onChange={e => this.setState({roomFieldText: e.target.value})}
@@ -385,7 +388,8 @@ class Room extends React.Component {
                                     endAdornment: (
                                         <Button onClick={() => this.joinRoom()} variant={'contained'}
                                                 color={'secondary'}
-                                                disabled={this.state.roomFieldText === ''}>Connect</Button>
+                                                style={this.state.roomFieldText.length !== 20 ? {} : {backgroundColor:'#D83933', color:'#ffffff'}}
+                                                disabled={this.state.roomFieldText.length !== 20}>Connect</Button>
                                     )
                                 }}
                             />
@@ -398,9 +402,9 @@ class Room extends React.Component {
                         {this.state.myStream ?
                             <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={this.db} /></div> : ''}
                         {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom}  stream={new MediaStream()} db={this.db} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom} stream={new MediaStream()} db={this.db} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                     </div>
                 </div> }
             </Box>

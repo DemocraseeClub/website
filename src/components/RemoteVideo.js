@@ -20,7 +20,7 @@ class RemoteVideo extends React.Component {
       this.hangUp();
     }
 
-    if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {  
+    if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {
       console.log('actualizando')
       this.handleViewers('add')
     }
@@ -44,7 +44,6 @@ class RemoteVideo extends React.Component {
     const viewers = roomSnapshot.data().viewers;
     const roomsViewing = roomSnapshot.data().roomsViewing;
 
-    
 
     switch (action) {
       case "add":
@@ -52,14 +51,14 @@ class RemoteVideo extends React.Component {
         if (this.props.myRoomId) {
           auxRoomsAdd.add(this.props.myRoomId);
           this.setState({added:true})
-        } 
+        }
         console.log(auxRoomsAdd, Array.from(auxRoomsAdd).length, "rommsadd")
         roomRef.update({
           viewers: this.props.myRoomId ? Array.from(auxRoomsAdd).length : viewers + 1,
           roomsViewing: Array.from(auxRoomsAdd),
         });
         this.setState({viewers: this.props.myRoomId ? Array.from(auxRoomsAdd).length : viewers + 1})
-        
+
         break;
       case "remove":
         let auxRoomsRemove = [...roomsViewing];
@@ -169,6 +168,9 @@ class RemoteVideo extends React.Component {
         });
       });
       // Listening for remote ICE candidates above
+    } else {
+      this.hangUp();
+      console.log("BAD ROOM", roomSnapshot);
     }
   }
 
@@ -228,7 +230,9 @@ class RemoteVideo extends React.Component {
       this.peerConnection.close();
     }
 
-    this.setState({ remoteStream: null });
+    this.setState({ remoteStream: null }, () => {
+      this.props.handleHangUp(this.props.roomId);
+    });
   }
 
   async handleBeforeUnload(e) {
