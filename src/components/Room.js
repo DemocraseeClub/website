@@ -7,16 +7,12 @@ import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import RemoteVideo from "./RemoteVideo";
 import Config from "../Config";
-import Check from '@material-ui/icons/CheckBox';
-import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import {withSnackbar} from 'notistack';
 import VideoElement from "./VideoElement";
-
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import VideoCamIcon from '@material-ui/icons/Videocam';
+import MicIcon from '@material-ui/icons/Mic';
+import ScreenShareIcon from '@material-ui/icons/ScreenShare';
+import {getParam} from '../Util/WindowUtils';
 const VideoStreamMerger = require('video-stream-merger')
 
 
@@ -32,7 +28,7 @@ class Room extends React.Component {
             viewers: [],
             roomFieldText: '',
             listener:[]
-            
+
         }
 
         this.peerConnection = null;
@@ -40,6 +36,15 @@ class Room extends React.Component {
         this.camStream = null;
 
         this.castBtnRef = React.createRef('');
+    }
+
+    componentDidMount() {
+        let roomId = getParam('roomId', document.location.search);
+        if (roomId.length === 20) {
+            this.setState({roomFieldText:roomId});
+            document.getElementById('roomIdField').scrollIntoView({block:'start', behavior:'smooth'})
+            this.props.enqueueSnackbar(`Click CONNECT when you are ready to join`);
+        }
     }
 
     async componentWillUnmount() {
@@ -163,7 +168,7 @@ class Room extends React.Component {
 
         this.peerConnection = this.createPeerConnection();
 
-       
+
         this.peerConnection.onaddstream = (event => {
             console.log("ON ADDED STREAM createRoom", event);
             this.setState({myStream:event.stream})
@@ -222,7 +227,7 @@ class Room extends React.Component {
                 if(auxRoomsViewing.indexOf(viewers[i])!==-1)
                     viewers.splice(i,1);
             }
-         
+
 
             this.setState({viewers: viewers})
         });
@@ -242,7 +247,7 @@ class Room extends React.Component {
 
 
         this.setState({myRoom: roomRef.id, listener: [auxList1, auxList2]});
-        
+
         this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`);
         return this.peerConnection;
 
@@ -320,60 +325,25 @@ class Room extends React.Component {
             <React.Fragment>
                 <Toolbar>
                     <Grid container justify={'space-between'} alignItems="center">
+                        <Grid item>
+                            { (this.state.myRoom) ?
+                                <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
+                                :
+                                <Button variant="contained" color="primary" disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                            }
+                        </Grid>
 
-                        {(this.state.myRoom) ? '' :
-                            <Grid item>
-                                <ButtonGroup variant="contained" color="secondary" aria-label="broadcast options" >
-                                    { (this.state.myRoom) ?
-                                        <Button onClick={e => this.hangUp()}>Hangup</Button>
-                                        :
-                                        <Button disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
-                                    }
-                                    <Button
-                                        ref={this.castBtnRef}
-                                        color="primary"
-                                        aria-controls={this.state.showCastOptions ? 'split-button-menu' : undefined}
-                                        aria-expanded={this.state.showCastOptions ? 'true' : undefined}
-                                        aria-label="broadcast options"
-                                        aria-haspopup="menu"
-                                        onClick={() => this.setState({showCastOptions:!this.state.showCastOptions})}
-                                    >
-                                        <ArrowDropDownIcon />
-                                    </Button>
-                                </ButtonGroup>
-                                <Popper open={this.state.showCastOptions}
-                                        anchorEl={this.castBtnRef.current}
-                                        transition disablePortal
-                                        anchororigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        transformorigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'left',
-                                        }}
-                                >
-                                    {({ TransitionProps, placement }) => (
-                                        <Grow
-                                            {...TransitionProps}
-                                            style={{transformOrigin: 'left bottom'}} >
-                                            <Paper>
-                                                <ClickAwayListener onClickAway={e => this.handleClose(e)}>
-                                                    <ButtonGroup variant="contained" color="primary" aria-label="broadcast options"  >
-                                                        <Button endIcon={this.state.enabled.video === true ? <Check/> : <Unchecked/>}
-                                                                onClick={e => this.toggleCamMic('video')}>Cam</Button>
-                                                        <Button endIcon={this.state.enabled.audio === true ? <Check/> : <Unchecked/>}
-                                                                onClick={e => this.toggleCamMic('audio')}>Mic</Button>
-                                                        <Button endIcon={this.state.enabled.screen === true ? <Check/> : <Unchecked/>}
-                                                                onClick={e => this.shareScreen()}>Screen</Button>
-                                                        </ButtonGroup>
-                                                </ClickAwayListener>
-                                            </Paper>
-                                        </Grow>
-                                    )}
-                                </Popper>
-                            </Grid>
-                        }
+                        <Grid item>
+                            <ButtonGroup variant="contained" color="primary" aria-label="broadcast options" style={{marginLeft:10}}>
+                                <Button endIcon={<VideoCamIcon color={this.state.enabled.video === true ?  'error' : 'default'} />}
+                                        onClick={e => this.toggleCamMic('video')}>Cam</Button>
+                                <Button endIcon={<MicIcon color={this.state.enabled.audio === true ?  'error' : 'default'} />}
+                                        onClick={e => this.toggleCamMic('audio')}>Mic</Button>
+                                <Button endIcon={<ScreenShareIcon color={this.state.enabled.screen === true ? 'error' : 'default'} />}
+                                        onClick={e => this.shareScreen()}>Screen</Button>
+                            </ButtonGroup>
+                        </Grid>
+
                         <Divider orientation="vertical" style={{flexGrow:1}} />
 
                         <TextField
@@ -382,6 +352,7 @@ class Room extends React.Component {
                             label="Enter Room ID"
                             variant={'filled'}
                             color="secondary"
+                            id={'roomIdField'}
                             value={this.state.roomFieldText}
 
                             onChange={e => this.setState({roomFieldText: e.target.value})}
