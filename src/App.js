@@ -17,11 +17,22 @@ import RallyTemplates from "./views/RallyTemplates";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {NavLink} from "react-router-dom";
+import {SnackbarProvider} from "notistack";
+import CancelIcon from '@material-ui/icons/Cancel';
+
 
 function App() {
-    const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === 'production');
+    const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === 'production' && document.location.pathname.indexOf('/rally/') !== 0);
+
+    const notistackRef = React.useRef();
+    const onClickDismiss = (key) => {
+        notistackRef.current.handleDismissSnack(key);
+    }
 
     return (
+        <SnackbarProvider maxSnack={3}
+                          ref={notistackRef}
+                          action={(key) => (<CancelIcon onClick={() => onClickDismiss(key)} />)} >
         <div className="App">
                 <Router>
                     <Dialog open={isOpen} >
@@ -36,7 +47,6 @@ function App() {
 
                     <Header />
                     <Switch>
-                        
                         <Route path="/cms"><FirebaseCMS/></Route>
                         <Route path="/c/:entity"><FirebaseCMS/></Route>
                         <Route path="/rallies"><Rallies/></Route>
@@ -64,6 +74,7 @@ function App() {
                     <Footer />
                 </Router>
         </div>
+        </SnackbarProvider>
     );
 }
 

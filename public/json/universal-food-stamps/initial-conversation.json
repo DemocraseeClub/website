@@ -36,15 +36,15 @@
   "lineItems": [
     {
       "nest": "Shared Interests",
-      "title": "What are the shared interests for local food stamp program?",
+      "title": "What are the shared interests for a local food credit program?",
       "seconds": 300,
       "html": "<ul><li>Subsidize small agriculture</li><li>Feed people</li><li>Job transitions</li><li>Circulate capital</li><li>?</li></ul>"
     },
     {
       "nest": "Shared Interests",
-      "title": "Who are the shared stakeholders for local food stamp program?",
+      "title": "Who are the shared stakeholders for a local food credit program?",
       "seconds": 300,
-      "html": "<ul><li>Farmers</li><li>Hungry people</li><li>Soil &amp; ag retailers</li><li>Farmers markets</li><li>?</li></ul>"
+      "html": "<ul><li>Farmers</li><li>Farmers markets & grocers</li><li>Hungry people</li><li>Soil &amp; AG retailers</li><li>?</li></ul>"
     },
     {
       "nest": "Shared Interests",
@@ -54,15 +54,21 @@
     },
     {
       "nest": "Budgeting",
-      "title": "What do local / state / federal programs currently spend on food subsidies?",
+      "title": "What do governments currently spend on food assistant?",
       "seconds": 600,
-      "html": "<div><p>In 2020 The <a href='https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap' target='_blank'>SNAP (ebt) program</a> distributed ~$75 billion to ~12% of the population, through $150 / month for eligible food: </p><figure><iframe src='https://docs.google.com/spreadsheets/d/1J3tMo_N0uSvcxpjxtOTIgR3v1ApbFKrSAEsQW01EAwA/edit?usp=sharingg&rm=minimal&gid=1537459819#gid=1537459819' width={'100%'} height={'450'} seamless /></figure> <small>* Check out their <a href='https://fns-prod.azureedge.net/sites/default/files/resource-files/2019-SNAP-Retailer-Management-Year-End-Summary.pdf' target='_blank'>Retailer Data</a> to note where that money is spent. Only %.05 is spent with Farmers.</small></div>"
+      "html": "<div><p>In 2020 The <a href='https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap' target='_blank'>SNAP (ebt) program</a> distributed ~$75 billion to ~12% of the population, through $150 / month for eligible food: </p><figure><iframe src='https://docs.google.com/spreadsheets/d/1J3tMo_N0uSvcxpjxtOTIgR3v1ApbFKrSAEsQW01EAwA/edit?usp=sharingg&rm=minimal&gid=1537459819#gid=1537459819' width={'100%'} height={'450'} seamless /></figure> <small>* Check out their <a href='https://fns-prod.azureedge.net/sites/default/files/resource-files/2019-SNAP-Retailer-Management-Year-End-Summary.pdf' target='_blank'>Retailer Data</a> to note where that money is spent. Only %.05 is spent with Farmers.</small><p>What about other programs like Corn subsidies?</p></div>"
+    },
+    {
+      "nest": "Budgeting",
+      "title": "What do governments currently spend on food subsidies?",
+      "seconds": 600,
+      "html": "<p>Whether as tax discounts or crop buy backs: <ul><li>Corn subsidies</li><li>Chicken</li><li>?</li></ul>"
     },
     {
       "nest": "Budgeting",
       "title": "Who and What qualifies?",
       "seconds": 1200,
-      "html": "<div><p><strong>WHO</strong>: By income? By zip code? ...?</p> <p><strong>WHAT</strong>: By organic? By retailer zone? By approved retailer? By FDA <a href='https://www.fda.gov/industry/import-program-resources/product-codes-and-product-code-builder' target='_blank'>SKU codes</a></p><p><strong>HOW MUCH</strong>: Feel free to <strong>edit the green fields</strong> below to see cost scenarios. Add columns to target specific regions.</p><figure><iframe src='https://docs.google.com/spreadsheets/d/1J3tMo_N0uSvcxpjxtOTIgR3v1ApbFKrSAEsQW01EAwA/edit?usp=sharingg&rm=minimal' width={'100%'} height={'450'} seamless /></figure> <small>* this budget does not account for program management or IT</small></div>"
+      "html": "<div><p><strong>WHO</strong>:By source distance? By income? By zip code? ...?</p> <p><strong>WHAT</strong>: By organic? By retailer zone? By approved retailer? By FDA <a href='https://www.fda.gov/industry/import-program-resources/product-codes-and-product-code-builder' target='_blank'>SKU codes</a></p><p><strong>HOW MUCH</strong>: Feel free to <strong>edit the green fields</strong> below to see cost scenarios. Add columns to target specific regions.</p><figure><iframe src='https://docs.google.com/spreadsheets/d/1J3tMo_N0uSvcxpjxtOTIgR3v1ApbFKrSAEsQW01EAwA/edit?usp=sharingg&rm=minimal' width={'100%'} height={'450'} seamless /></figure> <small>* this budget does not account for program management or IT</small></div>"
     },
     {
       "nest": "Budgeting",

@@ -2,9 +2,9 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+import Badge from '@material-ui/core/Badge';
 import RemoteVideo from "./RemoteVideo";
 import Config from "../Config";
 import {withSnackbar} from 'notistack';
@@ -13,6 +13,10 @@ import VideoCamIcon from '@material-ui/icons/Videocam';
 import MicIcon from '@material-ui/icons/Mic';
 import ScreenShareIcon from '@material-ui/icons/ScreenShare';
 import {getParam} from '../Util/WindowUtils';
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import ShareIcon from "@material-ui/icons/Share";
+import PasswordIcon from "@material-ui/icons/VpnKey";
+
 const VideoStreamMerger = require('video-stream-merger')
 
 
@@ -22,6 +26,7 @@ class Room extends React.Component {
         super(p);
         this.state = {
             myRoom: null,
+            showRoomId : false,
             enabled: {'video': false, 'audio': false, 'screen': false},
             roomsViewing: [],
             myStream:null,
@@ -43,7 +48,7 @@ class Room extends React.Component {
         if (roomId.length === 20) {
             this.setState({roomFieldText:roomId});
             document.getElementById('roomIdField').scrollIntoView({block:'start', behavior:'smooth'})
-            this.props.enqueueSnackbar(`Click CONNECT when you are ready to join`);
+            this.props.enqueueSnackbar(`Enable your Camera/Mic/Screen then click CONNECT when you are ready to join`, {variant:'success', persist:true});
         }
     }
 
@@ -248,9 +253,8 @@ class Room extends React.Component {
 
         this.setState({myRoom: roomRef.id, listener: [auxList1, auxList2]});
 
-        this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`);
+        this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`, {variant:'success'});
         return this.peerConnection;
-
     }
 
     async joinRoom() {
@@ -317,6 +321,12 @@ class Room extends React.Component {
         this.setState({showCastOptions:false});
     };
 
+    copyRoomUrl() {
+        let url = `${document.location.href}${document.location.href.indexOf('?') > -1 ? '&' : '?'}roomId=${this.state.myRoom}`;
+        navigator.clipboard.writeText(url);
+        this.props.enqueueSnackbar(`Your room URL has been copied to your clipboard`, {variant:'success', persist:false});
+    }
+
     render() {
         const isEnabled = this.state.enabled.video === true || this.state.enabled.audio === true || this.state.enabled.screen === true;
         const hasVideos = (this.state.myStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
@@ -324,51 +334,71 @@ class Room extends React.Component {
         return (
             <Box p={1}>
                     <Grid container justify={'space-between'} alignItems="center" spacing={2} alignContent={'center'}>
-                        <Grid item>
-                            { (this.state.myRoom) ?
-                                <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
-                                :
-                                <Button variant="contained" color="primary" disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
-                            }
-                        </Grid>
 
-                        <Grid item>
+                            { (this.state.myRoom) ?
+                                <React.Fragment>
+                                    <Grid item>
+                                        <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
+                                    </Grid>
+                                    <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewers.length} ><VisibilityIcon /></Badge></Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color="primary"
+                                                onClick={() => {
+                                                    if (!this.state.showRoomId) this.copyRoomUrl();
+                                                    this.setState({showRoomId:!this.state.showRoomId})
+                                                }}
+                                                endIcon={<PasswordIcon color={this.state.showRoomId === true ?  'error' : 'default'} />}
+                                        >{this.state.showRoomId === true ? this.state.myRoom : ' **** '}</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <ShareIcon onClick={() => this.copyRoomUrl()} />
+                                    </Grid>
+                                </React.Fragment>
+                                :
+                                <Grid item>
+                                <Button variant="contained" color="primary" disabled={isEnabled === false} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                                </Grid>
+                            }
+
+                        <Grid item style={{flexGrow:1}} >
                             <ButtonGroup variant="contained" color="primary" aria-label="broadcast options" style={{marginLeft:10}}>
-                                <Button endIcon={<VideoCamIcon color={this.state.enabled.video === true ?  'error' : 'default'} />}
+                                <Button endIcon={<VideoCamIcon color={this.state.enabled.video === true ?  'error' : 'inherit'} />}
                                         onClick={e => this.toggleCamMic('video')}>Cam</Button>
-                                <Button endIcon={<MicIcon color={this.state.enabled.audio === true ?  'error' : 'default'} />}
+                                <Button endIcon={<MicIcon color={this.state.enabled.audio === true ?  'error' : 'inherit'} />}
                                         onClick={e => this.toggleCamMic('audio')}>Mic</Button>
-                                <Button endIcon={<ScreenShareIcon color={this.state.enabled.screen === true ? 'error' : 'default'} />}
+                                <Button endIcon={<ScreenShareIcon color={this.state.enabled.screen === true ? 'error' : 'inherit'} />}
                                         onClick={e => this.shareScreen()}>Screen</Button>
                             </ButtonGroup>
                         </Grid>
 
-                        <TextField
-                            size={'small'}
-                            margin={'dense'}
-                            label="Enter Room ID"
-                            variant={'filled'}
-                            color="secondary"
-                            id={'roomIdField'}
-                            value={this.state.roomFieldText}
-
-                            onChange={e => this.setState({roomFieldText: e.target.value})}
-                            InputProps={{
-                                endAdornment: (
-                                    <Button onClick={e => this.joinRoom()} variant={'contained'} color={'secondary'}  size={'small'}
-                                            disabled={this.state.roomFieldText === ''}>Connect</Button>
-                                )
-                            }}
-                        />
+                        <Grid item>
+                            <TextField
+                                size={'small'}
+                                margin={'dense'}
+                                label="Enter Room ID"
+                                variant={'filled'}
+                                color="secondary"
+                                id={'roomIdField'}
+                                value={this.state.roomFieldText}
+                                onChange={e => this.setState({roomFieldText: e.target.value})}
+                                InputProps={{
+                                    endAdornment: (
+                                        <Button onClick={() => this.joinRoom()} variant={'contained'}
+                                                color={'secondary'}
+                                                disabled={this.state.roomFieldText === ''}>Connect</Button>
+                                    )
+                                }}
+                            />
+                        </Grid>
 
                     </Grid>
                 {hasVideos === false ? '' :
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
                         {this.state.myStream ?
-                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={window.firebase.firestore()}/></div> : ''}
+                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={this.db} /></div> : ''}
                         {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom}  stream={new MediaStream()} db={window.firebase.firestore()} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom}  stream={new MediaStream()} db={this.db} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
                             <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} /></div>)}
                     </div>
