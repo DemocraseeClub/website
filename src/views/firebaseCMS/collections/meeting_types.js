@@ -18,4 +18,5 @@ export default buildCollection({
   relativePath: "meeting_types",
   schema: meetingTypeSchema,
   name: "Meeting Types",
+  pagination: true
 });
