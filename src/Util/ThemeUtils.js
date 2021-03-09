@@ -43,7 +43,7 @@ export function lightOrDark(color) {
 
 export const rallyStyles = theme => ({
     root: {
-        width: '100%',
+        width: '100%'
     },
     title : {
         fontSize:46,

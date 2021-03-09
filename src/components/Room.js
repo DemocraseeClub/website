@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
-import Divider from '@material-ui/core/Divider';
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import RemoteVideo from "./RemoteVideo";
 import Config from "../Config";
@@ -322,9 +322,8 @@ class Room extends React.Component {
         const hasVideos = (this.state.myStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
 
         return (
-            <React.Fragment>
-                <Toolbar>
-                    <Grid container justify={'space-between'} alignItems="center">
+            <Box p={1}>
+                    <Grid container justify={'space-between'} alignItems="center" spacing={2} alignContent={'center'}>
                         <Grid item>
                             { (this.state.myRoom) ?
                                 <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
@@ -344,8 +343,6 @@ class Room extends React.Component {
                             </ButtonGroup>
                         </Grid>
 
-                        <Divider orientation="vertical" style={{flexGrow:1}} />
-
                         <TextField
                             size={'small'}
                             margin={'dense'}
@@ -358,14 +355,13 @@ class Room extends React.Component {
                             onChange={e => this.setState({roomFieldText: e.target.value})}
                             InputProps={{
                                 endAdornment: (
-                                    <Button onClick={e => this.joinRoom()} variant={'contained'} color={'secondary'}
+                                    <Button onClick={e => this.joinRoom()} variant={'contained'} color={'secondary'}  size={'small'}
                                             disabled={this.state.roomFieldText === ''}>Connect</Button>
                                 )
                             }}
                         />
 
                     </Grid>
-                </Toolbar>
                 {hasVideos === false ? '' :
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
@@ -377,7 +373,7 @@ class Room extends React.Component {
                             <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} /></div>)}
                     </div>
                 </div> }
-            </React.Fragment>
+            </Box>
         );
     }
 }
