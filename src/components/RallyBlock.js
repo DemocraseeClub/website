@@ -47,15 +47,15 @@ class RallyHome extends Component {
         }
 
         return (
-            <div className={classes.root} style={{height: '100%'}}>
+            <React.Fragment>
                 <Box p={1} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} z>
                     <Typography variant={'subtitle2'}>
                         {tags}
                     </Typography>
                 </Box>
-                <Grid container justify={'space-around'} alignContent={'center'} spacing={2}>
+                <Grid container justify={'space-around'} alignContent={'center'} >
                     {rally.videofile ?
-                        <Grid item xs={12} sm={6} style={{textAlign:'center'}} >
+                        <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
                             <video controls width={'100%'}>
                                 <source src={rally.videofile} type="video/mp4" />
                             </video></Grid> : ''}
@@ -131,7 +131,7 @@ class RallyHome extends Component {
 
                 </Grid>
 
-            </div>
+            </React.Fragment>
         );
     }
 }
