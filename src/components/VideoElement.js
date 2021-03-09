@@ -26,19 +26,21 @@ class VideoElement extends Component {
             this.setState({listener:auxListener})
         }
 
-        let doUpdate = prevState.mounted === false && this.state.mounted === true;
-        if (doUpdate === false) {
-            if (this.props.stream.id !== prevProps.stream.id || this.props.roomId !== prevProps.roomId) {
-                doUpdate = true;
+        if (this.props.stream) {
+            let doUpdate = prevState.mounted === false && this.state.mounted === true; // first time
+            if (doUpdate === false) {
+                if (this.props.stream.id !== prevProps.stream.id || this.props.roomId !== prevProps.roomId) {
+                    doUpdate = true;
+                }
             }
-        }
-        if (doUpdate === true ) {
-            this.vidEl.current.srcObject = this.props.stream;
-            console.log(this.vidEl.current.srcObject)
-            if (this.props.muted === true) {
-                this.vidEl.current.volume = 0;
-            }
+            if (doUpdate === true ) {
+                this.vidEl.current.srcObject = this.props.stream;
+                console.log(this.vidEl.current.srcObject)
+                if (this.props.muted === true) {
+                    this.vidEl.current.volume = 0;
+                }
 
+            }
         }
     }
 
