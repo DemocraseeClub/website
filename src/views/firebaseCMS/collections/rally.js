@@ -77,8 +77,23 @@ const rallySchema = buildSchema({
   },
 });
 
+rallySchema.onPreSave = ({values}) => {
+  if (values.research.trim()) {
+      const value = JSON.parse(values.research.trim());
+
+      if (!value) 
+        throw new Error("This value (Research JSON) must be a valid JSON");
+
+      if (typeof value !== "object") 
+        throw new Error("This value (Research JSON) must be a valid JSON");
+  }
+
+  return values;
+};
+
 export default buildCollection({
   relativePath: "rallies",
   schema: rallySchema,
   name: "Rallies",
+  pagination: true
 });

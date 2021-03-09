@@ -37,4 +37,5 @@ export default buildCollection({
   relativePath: "states",
   schema: stateSchema,
   name: "States",
+  pagination: true
 });

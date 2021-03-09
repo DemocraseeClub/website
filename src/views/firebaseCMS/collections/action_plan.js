@@ -87,4 +87,5 @@ export default buildCollection({
   relativePath: "action_plans",
   schema: actionPlanSchema,
   name: "Action Plans",
+  pagination: true
 });
