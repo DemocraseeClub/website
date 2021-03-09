@@ -15,7 +15,7 @@ import actionPlanCollection from "./collections/action_plan";
 import pageCollection from "./collections/page";
 import inviteCollection from "./collections/invite";
 
-const navigation: EntityCollection[] = [
+export const navigationAdmin: EntityCollection[] = [
   userCollection,
   resourceCollection,
   resourceTypesCollection,
@@ -33,4 +33,21 @@ const navigation: EntityCollection[] = [
   inviteCollection,
 ];
 
-export default navigation
+export const navigationUser: EntityCollection[] = [
+  resourceCollection,
+  resourceTypesCollection,
+  officialCollection,
+  partyCollection,
+  cityCollection,
+  stateCollection,
+  rallyCollection,
+  topicCollection,
+  meetingCollection,
+  meetingTypesCollection,
+  stakeholderCollection,
+  actionPlanCollection,
+  pageCollection,
+];
+
+
+
