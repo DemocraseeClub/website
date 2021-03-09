@@ -36,4 +36,5 @@ export default buildCollection({
   relativePath: "parties",
   schema: partySchema,
   name: "Parties",
+  pagination: true
 });

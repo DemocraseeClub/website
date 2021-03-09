@@ -138,4 +138,5 @@ export default buildCollection({
   relativePath: "cities",
   schema: citySchema,
   name: "Cities",
+  pagination: true
 });

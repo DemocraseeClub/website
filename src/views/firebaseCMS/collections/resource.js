@@ -58,4 +58,5 @@ export default buildCollection({
   relativePath: "resources",
   schema: resourceSchema,
   name: "Resources",
+  pagination: true
 });

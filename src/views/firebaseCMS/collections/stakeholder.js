@@ -27,4 +27,5 @@ export default buildCollection({
   relativePath: "stakeholders",
   schema: stakeholderSchema,
   name: "Stakeholders",
+  pagination: true
 });

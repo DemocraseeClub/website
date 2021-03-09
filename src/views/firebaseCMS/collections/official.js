@@ -57,4 +57,5 @@ export default buildCollection({
   relativePath: "officials",
   schema: officialSchema,
   name: "Officials",
+  pagination: true
 });
