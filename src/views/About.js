@@ -4,10 +4,11 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 
-const TEAM = [
+export const TEAM = [
     {
         name: 'Polina',
         img: '/images/polina.png',
+        tagline : 'Online Marketing Consultant',
         html: <div><p>I lived in Moscow, Russia until I was 14 years old. I didn't know any english, only some french I learned in middle school. My family moved to Staten Island, NY right after 9/11 and I went to school in Manhattan. The dust was still in the air. After a few years we moved to New Jersey and then South Jersey. When I was 16 years old my entrepreneurial father started a company with me. After 8 years of college, and building websites for my teachers and classmates, I moved to Los Angeles, California.</p>
             <p>I'm so glad to have had this cultural variety from my experience of moving around, because it allows me to look at politics from different angles. Political views in my family are split, and I didn't notice how much until I moved away and lived in California for a few years. Suddenly I found myself disagreeing with my parents on most major issues, such as climate change, healthcare, gun control - big topics suddenly seemed out of reach of agreement yet close to everyone's heart. We want the same things and have mutual goals, so why are our opinions so opposite?</p>
             <p>Through love and understanding, I'd like to find a form of discussion that is more productive than a facebook post with a political meme, or a family dinner full of yelling. What are the things we can actually affect and have a true impact on? What are the physical, informational and systematic issues that can be solved by crowd-sourcing data?</p>
