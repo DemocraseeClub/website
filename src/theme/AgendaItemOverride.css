@@ -3,7 +3,8 @@
     position: fixed !important;
     top: 150px !important;
     height: max-content;
-    border: 2px solid rgb(199, 199, 199) !important;
+    padding:0;
+    box-shadow:-2px 2px 4px #6f6f6f;
     z-index: 2000 !important;
     border-radius: 5px;
     -webkit-border-radius: 5px;

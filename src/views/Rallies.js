@@ -21,8 +21,11 @@ class Rallies extends React.Component {
 
     render() {
         return (
-            <Box m={4} >
-                <Typography variant={'subtitle1'}>Rallying</Typography>
+            <Box p={4} >
+                <Box style={{textAlign:'right'}}>
+                    <NavLink style={{textDecoration:'none'}} to={'/rally/templates'}><Button variant={'contained'} className={this.props.classes.redBtn} >Start a Rally</Button></NavLink>
+                </Box>
+                <Typography variant={'h3'}>Rallying</Typography>
                 <Grid container justify={'space-around'} spacing={4}>
                     <Grid item xs={12} sm={6} md={4}>
                         <Card>
@@ -126,7 +129,7 @@ class Rallies extends React.Component {
                                         Cash for Local Crops
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        How can we subsidize US farming through a universal food stamp / EBT program.
+                                        How can we subsidize US farming through our food stamp program?
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
@@ -167,9 +170,6 @@ class Rallies extends React.Component {
                         </Card>
                     </Grid>
                 </Grid>
-                <Box mt={10} >
-                    <NavLink to={'/rally/templates'}>Create a Rally</NavLink>
-                </Box>
             </Box>
         );
     }
@@ -180,6 +180,11 @@ class Rallies extends React.Component {
 const useStyles = theme => ({
     root: {
         width: '100%',
+    },
+    redBtn : {
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.error.contrastText,
+        textDecoration:'none!important'
     }
 });
 
