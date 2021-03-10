@@ -31,7 +31,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-firestore.js"></script>
+<script  src="https://www.gstatic.com/firebasejs/8.2.4/firebase-firestore.js"></script>
 
 <script>
     window.fbApp = firebase.initializeApp({
@@ -44,6 +44,8 @@
         appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
         measurementId: "G-XYVYDC8L1N"
     });
+    console.log("xd", firebase.firestore())
+    window.db = firebase.firestore()
     window.logUse = window.fbApp.analytics();
 </script>
 </body>
