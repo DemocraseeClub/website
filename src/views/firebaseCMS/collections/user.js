@@ -10,7 +10,6 @@ const userSchema = buildSchema({
       dataType: "string",
       validation: {
         required: true,
-        trim: true,
         email: true,
       },
     },
@@ -19,14 +18,12 @@ const userSchema = buildSchema({
       dataType: "string",
       validation: {
         required: true,
-        trim: true,
       },
     },
     realName: {
       title: "Real Name",
       dataType: "string",
       validation: {
-        trim: true,
       },
     },
     website: {
@@ -86,7 +83,6 @@ const userSchema = buildSchema({
         multiline: true,
       },
       validation: {
-        trim: true,
       },
     },
     resources: {
@@ -98,11 +94,18 @@ const userSchema = buildSchema({
         previewProperties: ["title", "image"],
       },
     },
+    roles: {
+      title: "Roles",
+      dataType: "array",
+      of: {
+        dataType:"string"
+      }
+    }
   },
 });
 
 userSchema.onPreSave = ({values}) => {
-  if (values.topic_def_json.trim()) {
+  if (values.topic_def_json?.trim()) {
       const value = JSON.parse(values.topic_def_json.trim());
 
       if (!value) 

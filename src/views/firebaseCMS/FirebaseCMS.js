@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { Authenticator, CMSApp } from "@camberi/firecms";
-import firebase from "firebase/app";
+import  firebase from "firebase/app";
 import "typeface-rubik";
-import navigation from "./navigation";
+import {navigationAdmin, navigationUser} from "./navigation";
 import "../../theme/FirebaseCMS.css";
-
 // This is the actual config
 const firebaseConfig = {
   apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
@@ -19,8 +18,28 @@ const firebaseConfig = {
 };
 
 export function FirebaseCMS() {
-  const myAuthenticator: Authenticator = (user?: firebase.User) => {
+
+  const [navigation, setNavigation] = useState(navigationUser)
+
+  const myAuthenticator = (user) => {
     console.log("Allowing access to", user?.email);
+    //TODO get udsuario de fb
+     window.db.collection('users')
+     .where('email', "==", user.email).get()
+     .then(data => {
+            data.forEach(d => {
+              const user = d.data()
+              const isAdmin = user.roles.some(r => r === "ROLE_ADMIN")
+              if(isAdmin)
+                setNavigation(navigationAdmin)
+
+            }
+          
+            )
+     }
+            )
+     .catch(e => console.log(e))
+     console.log(navigation)
     return true;
   };
 
