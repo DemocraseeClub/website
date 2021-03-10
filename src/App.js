@@ -3,7 +3,7 @@ import './App.css';
 import Home from './views/Home';
 import About from './views/About';
 import Ethics from './views/Ethics';
-import City from './views/City';
+import Sponsors from './views/Sponsors';
 import Rallies from "./views/Rallies";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./components/Header";
@@ -19,6 +19,7 @@ import Dialog from '@material-ui/core/Dialog';
 import {NavLink} from "react-router-dom";
 import {SnackbarProvider} from "notistack";
 import CancelIcon from '@material-ui/icons/Cancel';
+import Citizen from "./views/Citizen";
 
 
 function App() {
@@ -52,10 +53,8 @@ function App() {
                         <Route path="/rallies"><Rallies/></Route>
                         <Route path="/values"><Topics/></Route>
                         <Route path="/resources"><Resources/></Route>
-
-                        <Route path="/user/create"><City/></Route>
-                        <Route path="/user/:uid/update"><City/></Route>
-                        <Route path="/user/:uid"><City/></Route>
+                        <Route path="/citizens/:uid"><Citizen/></Route>
+                        <Route path="/sponsors/cities"><Sponsors/></Route>
 
                         <Route path="/rally/:rid/meeting/:mid"><MeetingHome /></Route>
                         <Route path="/rally/templates"><RallyTemplates /></Route>

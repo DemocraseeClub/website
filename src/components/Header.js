@@ -29,9 +29,6 @@ class Header extends React.Component {
                     <Grid container style={{flexGrow: 1}} justify={'space-around'} alignContent={'center'}>
                         <NavLink to={'/rallies'}>Rallies</NavLink>
                         <NavLink to={'/resources'}>Resources</NavLink>
-                        <Grid item>
-                            <CitySelector />
-                        </Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>
