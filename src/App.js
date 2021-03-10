@@ -50,16 +50,12 @@ function App() {
                         <Route path="/cms"><FirebaseCMS/></Route>
                         <Route path="/c/:entity"><FirebaseCMS/></Route>
                         <Route path="/rallies"><Rallies/></Route>
-                        <Route path="/cities"><City /></Route>
                         <Route path="/values"><Topics/></Route>
                         <Route path="/resources"><Resources/></Route>
 
                         <Route path="/user/create"><City/></Route>
                         <Route path="/user/:uid/update"><City/></Route>
-
-                        <Route path="/city/officials/:oid"><City/></Route>
-                        <Route path="/city/officials"><City/></Route>
-                        <Route path="/city/:cid"><City/></Route>
+                        <Route path="/user/:uid"><City/></Route>
 
                         <Route path="/rally/:rid/meeting/:mid"><MeetingHome /></Route>
                         <Route path="/rally/templates"><RallyTemplates /></Route>
