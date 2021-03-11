@@ -38,12 +38,19 @@ export function FirebaseCMS() {
     console.log(navigation);
     return true;
   };
-
+  console.log( firebase.auth);
   return (
     <div className="cms-container">
       <CMSApp
         name={"Democraseeclub"}
         authentication={myAuthenticator}
+        allowSkipLogin={true}
+        signInOptions={[
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+            firebase.auth.OAuthProvider.providerId
+        ]}
         navigation={navigation}
         firebaseConfig={firebaseConfig}
         primaryColor={"#000000"}
