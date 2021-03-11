@@ -94,12 +94,10 @@ const userSchema = buildSchema({
         previewProperties: ["title", "image"],
       },
     },
-    roles: {
-      title: "Roles",
-      dataType: "array",
-      of: {
-        dataType:"string"
-      }
+    admin: {
+      title: "Admin",
+      dataType: "boolean",
+      
     }
   },
 });

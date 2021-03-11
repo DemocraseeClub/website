@@ -30,7 +30,7 @@ export function FirebaseCMS() {
       .then((data) => {
         data.forEach((d) => {
           const user = d.data();
-          const isAdmin = user.roles.some((r) => r === "ROLE_ADMIN");
+          const isAdmin = user.admin === true
           if (isAdmin) setNavigation(navigationAdmin);
         });
       })
@@ -49,7 +49,6 @@ export function FirebaseCMS() {
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
             firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-            firebase.auth.OAuthProvider.providerId
         ]}
         navigation={navigation}
         firebaseConfig={firebaseConfig}
