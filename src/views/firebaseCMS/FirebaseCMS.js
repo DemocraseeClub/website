@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Authenticator, CMSApp } from "@camberi/firecms";
+import { CMSApp } from "@camberi/firecms";
 import firebase from "firebase/app";
 import "typeface-rubik";
 import { navigationAdmin, navigationUser } from "./navigation";
@@ -20,25 +20,61 @@ const firebaseConfig = {
 export function FirebaseCMS() {
   const [navigation, setNavigation] = useState(navigationUser);
 
-  const myAuthenticator = (user) => {
-    console.log("Allowing access to", user?.email);
-    //TODO get udsuario de fb
-    window.db
-      .collection("users")
-      .where("email", "==", user.email)
-      .get()
-      .then((data) => {
+  const myAuthenticator = async (user) => {
+ 
+      console.log("Allowing access to", user?.email, user?.phoneNumber);
+      console.log(user);
+      try {
+
+        const ref = user?.phoneNumber 
+                      ?  
+                      window.db.collection('users').where("phone", "==", user.phoneNumber)
+                      :
+                      window.db.collection('users').where("email", "==", user.email)
+               
+
+        const data = await ref.get()
+        let id = '';
         data.forEach((d) => {
-          const user = d.data();
-          const isAdmin = user.admin === true
-          if (isAdmin) setNavigation(navigationAdmin);
-        });
-      })
-      .catch((e) => console.log(e));
-    console.log(navigation);
+          const userDB = d.data();
+          console.log(userDB)
+
+          const userRef =  window.db.collection('users').doc(`${d.id}`);
+          const rolesRef =  window.db.collection('roles').doc(user.uid);
+          
+          userRef.update({
+            uid: user.uid
+          }).then(() => console.log("uid updated"))
+
+          
+          const isAdmin = userDB.admin === true
+          
+          if (isAdmin){
+            setNavigation(navigationAdmin);
+
+            rolesRef.set({
+              role : "ROLE_ADMIN",
+              email: user?.email,
+              phone: user?.phoneNumber 
+            })
+          } else {
+            rolesRef.set({
+              role : "ROLE_USER",
+              email: user?.email,
+              phone: user?.phoneNumber
+            })
+          }
+          
+        })
+       
+        
+      } catch(e) {
+        console.log(e)
+      }
+   
     return true;
-  };
-  console.log( firebase.auth);
+  }
+  
   return (
     <div className="cms-container">
       <CMSApp
