@@ -1,6 +1,8 @@
 import { buildCollection, buildSchema } from "@camberi/firecms";
 
 import CustomPasswordField from "../customTextFields/CustomPasswordField";
+import CustomPhoneField from "../customTextFields/CustomPhoneField";
+
 
 const userSchema = buildSchema({
   name: "User",
@@ -11,6 +13,13 @@ const userSchema = buildSchema({
       validation: {
         required: true,
         email: true,
+      },
+    },
+    phone: {
+      title: "phone",
+      dataType: "string",
+      config: {
+        field: CustomPhoneField,
       },
     },
     userName: {
