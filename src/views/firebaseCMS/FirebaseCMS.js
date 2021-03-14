@@ -34,18 +34,21 @@ export function FirebaseCMS() {
                
 
         const data = await ref.get()
-        let id = '';
         data.forEach((d) => {
           const userDB = d.data();
-          console.log(userDB)
 
           const userRef =  window.db.collection('users').doc(`${d.id}`);
           const rolesRef =  window.db.collection('roles').doc(user.uid);
           
-          userRef.update({
-            uid: user.uid
-          }).then(() => console.log("uid updated"))
+          let uids;
+          console.log(userDB?.uids)
+          if(!userDB?.uids) {
+            uids = [user.uid];
 
+          } else {
+            let uidsAux = new Set([...userDB.uids, user.uid])
+            uids = Array.from(uidsAux)
+          }
           
           const isAdmin = userDB.admin === true
           
@@ -56,14 +59,32 @@ export function FirebaseCMS() {
               role : "ROLE_ADMIN",
               email: user?.email,
               phone: user?.phoneNumber 
+            }).then(() => {
+
+              userRef.update({
+                uids
+              }).then(() => console.log("uids updated"))
+
             })
+
           } else {
             rolesRef.set({
               role : "ROLE_USER",
               email: user?.email,
               phone: user?.phoneNumber
+            }).then(() => {
+
+              userRef.update({
+                uids
+              }).then(() => console.log("uids updated"))
+
             })
           }
+
+
+          
+
+          
           
         })
        
