@@ -111,7 +111,7 @@ const userSchema = buildSchema({
   },
 });
 
-userSchema.onPreSave = ({values}) => {
+userSchema.onPreSave =  ({values}) => {
   if (values.topic_def_json?.trim()) {
       const value = JSON.parse(values.topic_def_json.trim());
 
@@ -120,6 +120,29 @@ userSchema.onPreSave = ({values}) => {
 
       if (typeof value !== "object") 
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
+  }
+
+  console.log("values", values);
+
+  if(values?.uids) {
+
+    if(values.admin) {
+
+      values.uids.forEach(async (uid) => {
+        window.db.collection('roles').doc(uid).update({
+          role: "ROLE_ADMIN"
+        });
+      }) 
+
+    } else {
+
+      values.uids.forEach(async (uid) => {
+        window.db.collection('roles').doc(uid).update({
+          role: "ROLE_USER"
+        })
+      }) 
+    }
+
   }
 
   return values;
