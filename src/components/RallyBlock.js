@@ -57,7 +57,7 @@ class RallyHome extends Component {
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = rally.hosts.concat(rally.speakers);
+        let profiles = (rally.speakers) ? rally.hosts.concat(rally.speakers) : rally.hosts;
         while(profiles.length < 7) {
             profiles.push({name:'Apply to Speak', img:<PersonIcon />})
         }
