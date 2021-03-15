@@ -21,7 +21,6 @@ import {SnackbarProvider} from "notistack";
 import CancelIcon from '@material-ui/icons/Cancel';
 import Citizen from "./views/Citizen";
 
-
 function App() {
     const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === 'production' && document.location.pathname.indexOf('/rally/') !== 0);
 
@@ -56,9 +55,9 @@ function App() {
                         <Route path="/citizens/:uid"><Citizen/></Route>
                         <Route path="/sponsors/cities"><Sponsors/></Route>
 
-                        <Route path="/rally/:rid/meeting/:mid"><MeetingHome /></Route>
-                        <Route path="/rally/templates"><RallyTemplates /></Route>
-                        <Route path="/rally/:rid"><RallyHome /></Route>
+                        <Route exact path="/rally/:rid/meeting/:mid"component={MeetingHome} />
+                        <Route exact path="/rally/templates"component={RallyTemplates} />
+                        <Route exact path="/rally/:rid" component={RallyHome} />
 
                         <Route path="/about"><About/></Route>
                         <Route path="/ethics"><Ethics/></Route>
