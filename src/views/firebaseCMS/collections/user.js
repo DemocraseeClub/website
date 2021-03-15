@@ -1,6 +1,8 @@
 import { buildCollection, buildSchema } from "@camberi/firecms";
 
 import CustomPasswordField from "../customTextFields/CustomPasswordField";
+import CustomPhoneField from "../customTextFields/CustomPhoneField";
+
 
 const userSchema = buildSchema({
   name: "User",
@@ -11,6 +13,13 @@ const userSchema = buildSchema({
       validation: {
         required: true,
         email: true,
+      },
+    },
+    phone: {
+      title: "phone",
+      dataType: "string",
+      config: {
+        field: CustomPhoneField,
       },
     },
     userName: {
@@ -94,17 +103,15 @@ const userSchema = buildSchema({
         previewProperties: ["title", "image"],
       },
     },
-    roles: {
-      title: "Roles",
-      dataType: "array",
-      of: {
-        dataType:"string"
-      }
+    admin: {
+      title: "Admin",
+      dataType: "boolean",
+      
     }
   },
 });
 
-userSchema.onPreSave = ({values}) => {
+userSchema.onPreSave =  ({values}) => {
   if (values.topic_def_json?.trim()) {
       const value = JSON.parse(values.topic_def_json.trim());
 
@@ -113,6 +120,29 @@ userSchema.onPreSave = ({values}) => {
 
       if (typeof value !== "object") 
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
+  }
+
+  console.log("values", values);
+
+  if(values?.uids) {
+
+    if(values.admin) {
+
+      values.uids.forEach(async (uid) => {
+        window.db.collection('roles').doc(uid).update({
+          role: "ROLE_ADMIN"
+        });
+      }) 
+
+    } else {
+
+      values.uids.forEach(async (uid) => {
+        window.db.collection('roles').doc(uid).update({
+          role: "ROLE_USER"
+        })
+      }) 
+    }
+
   }
 
   return values;
