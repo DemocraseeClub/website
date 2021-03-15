@@ -172,5 +172,31 @@ export const rallyStyles = theme => ({
     hScrollItem : {
         display:'inline-block',
         textAlign:'center',
+    },
+    roundtable : {
+        position:'relative',
+        textAlign:'center', backgroundImage:"url('/images/roundtable.png')",
+        backgroundPosition:'center center',
+        backgroundRepeat:'no-repeat',
+        objectFit:'contain',
+        backgroundSize:'contain',
+        height:400, width:400, margin:'auto'
+    },
+    roundtableSeat : {
+        backgroundColor:theme.palette.divider,
+        width:300,
+        padding:3,
+        borderRadius:5,
+        position:'absolute',
+        '& .MuiListItemText-multiline' : {
+            margin:0,
+            overflow:'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+        },
+        '& .MuiListItemText-secondary' : {
+            fontSize:10
+        }
+
     }
 });
