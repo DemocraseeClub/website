@@ -8,6 +8,7 @@ import {withStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import PersonIcon from "@material-ui/icons/Person";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
 import {withSnackbar} from "notistack";
 import Config from "../Config";
@@ -16,6 +17,16 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+
+const ROUNDTABLEMAP = [
+    {top:39, left:181},
+    {top:97, left:300},
+    {top:218, left:334},
+    {top:321, left:255},
+    {top:325, left:-118, flexDirection:'row-reverse'},
+    {top:227, left:-204, flexDirection:'row-reverse'},
+    {top:103, left:-179, flexDirection:'row-reverse'}
+]
 
 class RallyHome extends Component {
 
@@ -45,6 +56,12 @@ class RallyHome extends Component {
             let href = document.location.pathname.split('/').slice(0, 3).join('/');
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
+
+        let profiles = rally.hosts.concat(rally.speakers);
+        while(profiles.length < 7) {
+            profiles.push({name:'Apply to Speak', img:<PersonIcon />})
+        }
+
 
         return (
             <React.Fragment>
@@ -100,14 +117,23 @@ class RallyHome extends Component {
                         }
                         </Box>
 
-                        <Box mt={4} p={1}>
-                            <div>Hosts</div>
+                        <Box mt={4} p={1} display={{ xs: 'block', md: 'none' }}>
                             <AvatarGroup>
-                                {rally.hosts.map(r => <Avatar key={r.img} alt={r.name} src={r.img}/>)}
-                                {rally.speakers && rally.speakers.map(r => <Avatar key={r.img} alt={r.name} src={r.img}/>)}
-                                <Avatar alt="add" onClick={e => alert('TODO: Join rally')}>+</Avatar>
+                                {profiles.map((r, i) => <Avatar key={'speaker-'+ i} alt={r.name} src={r.img || r.name}/>)}
                             </AvatarGroup>
                         </Box>
+
+                        <Box mt={4} p={1} display={{ xs: 'none', md: 'block' }} className={classes.roundtable} >
+                            {profiles.map((r,i) =>
+                                <ListItem key={'speaker-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
+                                    <ListItemIcon>
+                                        <Avatar alt={r.name} src={r.img || r.name} />
+                                    </ListItemIcon>
+                                    <ListItemText primary={r.name} secondary={r.tagline}/>
+                                </ListItem>
+                                )}
+                        </Box>
+
 
                     </Grid>
 
