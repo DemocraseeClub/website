@@ -13,7 +13,8 @@
     {"img":"/images/eli.png", "name":"Eli"}
   ],
   "hosts": [
-    {"img":"/images/eli.png", "name":"Eli"}
+    {"img":"/images/eli.png", "name":"Eli"},
+    {"img":"/images/indy.png", "name":"Indy"}
   ],
   "research_json" : [
     {
