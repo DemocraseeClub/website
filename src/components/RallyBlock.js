@@ -8,7 +8,7 @@ import {withStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import PersonIcon from "@material-ui/icons/Person";
+// import PersonIcon from "@material-ui/icons/Person";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
 import {withSnackbar} from "notistack";
 import Config from "../Config";
@@ -59,13 +59,12 @@ class RallyHome extends Component {
 
         let profiles = (rally.speakers) ? rally.hosts.concat(rally.speakers) : rally.hosts;
         while(profiles.length < 7) {
-            profiles.push({name:'Apply to Speak', img:<PersonIcon />})
+            profiles.push({name:'Apply to Speak', icon:'+'})
         }
-
 
         return (
             <React.Fragment>
-                <Box p={1} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} z>
+                <Box p={1} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} >
                     <Typography variant={'subtitle2'}>
                         {tags}
                     </Typography>
@@ -119,16 +118,21 @@ class RallyHome extends Component {
 
                         <Box mt={4} p={1} display={{ xs: 'block', md: 'none' }}>
                             <AvatarGroup>
-                                {profiles.map((r, i) => <Avatar key={'speaker-'+ i} alt={r.name} src={r.img || r.name}/>)}
+                                {profiles.map((r, i) => r.img ?
+                                    <Avatar key={'speakerGroup-'+ i} alt={r.name} src={r.img} />
+                                    :
+                                    <Avatar key={'speakerGroup-'+ i} >{r.icon || r.name}</Avatar>)}
                             </AvatarGroup>
                         </Box>
 
                         <Box mt={4} p={1} display={{ xs: 'none', md: 'block' }} className={classes.roundtable} >
                             {profiles.map((r,i) =>
-                                <ListItem key={'speaker-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
+                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
                                     <ListItemIcon>
-                                        <Avatar alt={r.name} src={r.img || r.name} />
-                                    </ListItemIcon>
+                                        {r.img ? <Avatar alt={r.name} src={r.img} />
+                                        :
+                                        <Avatar>{r.icon || r.name}</Avatar>}
+ƒ                                    </ListItemIcon>
                                     <ListItemText primary={r.name} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
@@ -145,9 +149,9 @@ class RallyHome extends Component {
                             <List component="nav" aria-label="research links">
                                 {rally.research_json.map(r => {
                                     return <ListItem button key={r.link}>
-                                        <ListItemIcon>
+                                        {r.img && <ListItemIcon>
                                             <img src={r.img} height={20} alt={'source logo'} />
-                                        </ListItemIcon>
+                                        </ListItemIcon>}
                                         <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
                                     </ListItem>
                                 })}

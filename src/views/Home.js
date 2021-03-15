@@ -8,7 +8,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from '@material-ui/core/Typography';
-import CitySelector from "../components/CitySelector";
 
 class Home extends React.Component {
 
@@ -16,11 +15,6 @@ class Home extends React.Component {
         super(p);
         this.state = { dialog : false, coinDef:false }
         this.toggleCoinDef =this.toggleCoinDef.bind(this);
-        this.toggleDialog = this.toggleDialog.bind(this);
-    }
-
-    toggleDialog() {
-        this.setState({dialog:!this.state.dialog});
     }
 
     toggleCoinDef(e) {
@@ -42,22 +36,13 @@ class Home extends React.Component {
                        </div>
                     </Grid>
                     <Grid item style={{padding:30}} >
-                    <Button style={{backgroundColor:this.props.theme.palette.error.main, color:this.props.theme.palette.error.contrastText}}
-                            onClick={e => this.setState({dialog:true})}
-                            variant={'contained'} disableElevation={true}>Get Started</Button>
+                        <NavLink className={classes.linkButton} to={'/rallies'}><Button style={{backgroundColor:this.props.theme.palette.error.main, color:this.props.theme.palette.error.contrastText, marginRight:10}}
+                            variant={'contained'} disableElevation={true}>Join a Rally</Button></NavLink>
+                        <NavLink className={classes.linkButton} to={'/rally/templates'}><Button color={'secondary'}
+                               variant={'contained'} disableElevation={true}>Start a Rally</Button></NavLink>
+
                     </Grid>
                 </Grid>
-
-                <Dialog onClose={this.toggleDialog} aria-labelledby="customized-dialog-title" open={this.state.dialog}>
-                    <DialogTitle id="customized-dialog-title" onClose={this.toggleDialog}>
-                        Get Started
-                    </DialogTitle>
-                    <DialogContent dividers>
-                        <Typography gutterBottom>
-                            <CitySelector />
-                        </Typography>
-                    </DialogContent>
-                </Dialog>
 
                 <div style={{padding:5}}>
 
@@ -143,6 +128,9 @@ const useStyles = theme => ({
         lineHeight:'23px',
         paddingLeft:10,
         paddingRight:10
+    },
+    linkButton : {
+      textDecoration:'none',
     },
     infoDark : {
         color: theme.palette.info.dark

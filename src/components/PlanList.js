@@ -31,7 +31,6 @@ class PlanList extends React.Component {
             headers: [],
             topPad:0,
             showDrawer:false,
-            videoOpen : true,
             rallyData: p.rallyData || false
         }
 
@@ -54,10 +53,6 @@ class PlanList extends React.Component {
     handleReset = () => {
         this.setState({activeStep: 0});
     };
-
-    toggleRoom() {
-        this.setState({videoOpen:!this.state.videoOpen} );
-    }
 
     runTimers() {
         if (this.state.activeStep === -1) {
@@ -109,7 +104,7 @@ class PlanList extends React.Component {
             <div className={classes.root} style={{marginTop: 20, textAlign: 'left'}}>
 
                 <AppBar position={'sticky'} className={classes.appBar} >
-                    {this.state.videoOpen === true ? <Room classes={classes} /> : null}
+                    <Room classes={classes} />
                 </AppBar>
 
                 <AppBar position="fixed" color="primary" style={{top: 'auto', bottom: 0}} >

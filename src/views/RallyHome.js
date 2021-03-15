@@ -4,8 +4,6 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
 import ProgressLoading from "../components/ProgressLoading";
-import {rallyStyles} from '../Util/ThemeUtils';
-import {withStyles} from "@material-ui/core/styles";
 import RallyBlock from "../components/RallyBlock";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -29,11 +27,10 @@ class RallyHome extends Component {
     }
 
     refresh() {
-        // var url = this.props.location.pathname;
         // TODO: connect to Firebase DB (https://github.com/eliataylor/clock-agendas/issues/5)
         let url = '/json/' + this.props.match.params.rid + '/index.json';
         console.log(url);
-        return this.props.refreshEntity(url);
+        return this.props.dispatch(entityData(url));
     }
 
     render() {
@@ -44,7 +41,7 @@ class RallyHome extends Component {
 
         return (
             <React.Fragment>
-                <RallyBlock rally={this.props.entity.apiData} />
+                <RallyBlock rally={rally} />
 
                 <Box p={3}>
                 {!rally.meetings ? '' :
@@ -78,16 +75,4 @@ const mapStateToProps = (state) => {
     return newState;
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        refreshEntity: url => {
-            dispatch(entityData(url));
-        },
-        dispatch
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withRouter(withStyles(rallyStyles, {withTheme: true})(RallyHome)));
+export default connect(mapStateToProps, null)(withRouter(RallyHome));
