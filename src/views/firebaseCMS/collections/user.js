@@ -85,15 +85,15 @@ const userSchema = buildSchema({
       validation: {
       },
     },
-    resources: {
-      title: "Resources",
-      dataType: "array",
-      of: {
-        dataType: "reference",
-        collectionPath: "resources",
-        previewProperties: ["title", "image"],
-      },
-    },
+    // resources: {
+    //   title: "Resources",
+    //   dataType: "array",
+    //   of: {
+    //     dataType: "reference",
+    //     collectionPath: "resources",
+    //     previewProperties: ["title", "image"],
+    //   },
+    // },
     admin: {
       title: "Admin",
       dataType: "boolean",
@@ -116,9 +116,11 @@ userSchema.onPreSave = ({values}) => {
   return values;
 };
 
-export default buildCollection({
-  relativePath: "users",
-  schema: userSchema,
-  name: "Users",
-  pagination: true
-});
+export default userSchema;
+
+// export default buildCollection({
+//   relativePath: "users",
+//   schema: userSchema,
+//   name: "Users",
+//   pagination: true
+// });

@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 
-import { Authenticator, CMSApp } from "@camberi/firecms";
+import {
+  Authenticator,
+  buildCollection,
+  buildProperty,
+  buildSchema,
+  CMSApp,
+  NavigationBuilder,
+  NavigationBuilderProps,
+  PermissionsBuilder
+} from "@camberi/firecms"
 import firebase from "firebase/app";
 import "typeface-rubik";
-import { navigationAdmin, navigationUser } from "./navigation";
 import "../../theme/FirebaseCMS.css";
+
+import userSchema from "./collections/user"
+
+
 // This is the actual config
 const firebaseConfig = {
   apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
@@ -18,27 +30,39 @@ const firebaseConfig = {
 };
 
 export function FirebaseCMS() {
-  const [navigation, setNavigation] = useState(navigationUser);
 
-  const myAuthenticator = (user) => {
+  const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => ({
+    collections: [
+        buildCollection({
+            relativePath: "users",
+            schema: userSchema,
+            name: "Users",
+            permissions:
+             ({user, entity}) => 
+              {
+                if(entity) {
+                  console.log("entity", entity )
+                  entity.reference.get().then(data => console.log(data.data()))
+
+                }
+
+                return {
+                  edit: false,
+                  create: false,
+                  delete: false
+                }
+              },
+        })
+    ]
+});
+
+  const myAuthenticator : Authenticator = (user? : firebase.User) => {
     console.log("Allowing access to", user?.email);
-    //TODO get udsuario de fb
-    window.db
-      .collection("users")
-      .where("email", "==", user.email)
-      .get()
-      .then((data) => {
-        data.forEach((d) => {
-          const user = d.data();
-          const isAdmin = user.admin === true
-          if (isAdmin) setNavigation(navigationAdmin);
-        });
-      })
-      .catch((e) => console.log(e));
-    console.log(navigation);
+    
     return true;
   };
-  console.log( firebase.auth);
+
+
   return (
     <div className="cms-container">
       <CMSApp
