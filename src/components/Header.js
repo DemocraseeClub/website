@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import {NavLink} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
-import CitySelector from "./CitySelector";
 
 class Header extends React.Component {
 

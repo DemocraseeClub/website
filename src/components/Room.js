@@ -59,7 +59,7 @@ class Room extends React.Component {
             this.state.listener[1]();
         }
 
-        await this.hangUp();
+        this.hangUp();
     }
 
     displayLocalStreams() {
