@@ -34,17 +34,24 @@
 <script  src="https://www.gstatic.com/firebasejs/8.2.4/firebase-firestore.js"></script>
 
 <script>
-    window.fbApp = firebase.initializeApp({
-        apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
-        authDomain: "democraseeclub.firebaseapp.com",
-        databaseURL: "https://democraseeclub.firebaseio.com",
-        projectId: "democraseeclub",
-        storageBucket: "democraseeclub.appspot.com",
-        messagingSenderId: "1051506392090",
-        appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
-        measurementId: "G-XYVYDC8L1N"
-    });
-    window.db = firebase.firestore()
-    window.logUse = window.fbApp.analytics();
+
+    if (document.location.port.length === 0) { // ignore dev environments
+        window.fbApp = firebase.initializeApp({
+            apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
+            authDomain: "democraseeclub.firebaseapp.com",
+            databaseURL: "https://democraseeclub.firebaseio.com",
+            projectId: "democraseeclub",
+            storageBucket: "democraseeclub.appspot.com",
+            messagingSenderId: "1051506392090",
+            appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
+            measurementId: "G-XYVYDC8L1N"
+        });
+        console.log("xd", firebase.firestore())
+        window.db = firebase.firestore()
+        window.logUse = window.fbApp.analytics();
+    } else {
+        window.logUse = { logEvent: (e, d) => console.log('FB LOG ' + e, d), setUserProperties: o => console.log('FB SET ', o) };
+    }
+
 </script>
 </body>
