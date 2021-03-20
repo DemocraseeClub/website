@@ -1,0 +1,107 @@
+{
+  "title": "Worker/Housing/Community Cooperatives to solve budget crisis",
+  "desc": "<p>The city of El Cerrito is going through a financial crisis during a national and international emergency. It's critical that the city and community explore ventures that can significantly improve social mobility, economic justice, and the social emotional health of the community while empowering the city's infrastructure to outlast the emergency and be resilient for future ones.</p> \n\n<p>This kickoff includes experts on the subject of worker and housing cooperatives, City stakeholders, and curious community members.</p>",
+  "start": "tomorrow",
+  "profile": "/images/worker-coops.jpg",
+  "videofile": "https://clock.taylormadetraffic.com/screencasts/indy-cooperatives-take1.mp4",
+  "city": "El Cerrito",
+  "type": "rally",
+  "template": "kickoff",
+  "wisedemo": [
+    "Interaction"
+  ],
+  "targets": [
+    "Cities", "Towns", "Rural communities"
+  ],
+  "topics": [
+    "Lifestyle",
+    "Economics"
+  ],
+  "stakeholders": [
+    "Citizens"
+  ],
+  "author": [
+    {
+      "img": "/images/indy.png",
+      "name": "Indy"
+    }
+  ],
+  "hosts": [
+    {
+      "img": "/images/indy.png",
+      "tagline": "El Cerrito educator and community member",
+      "name": "Indy"
+    }
+  ],
+  "speakers": [
+    {
+      "img": false,
+      "tagline": "Involved in cooperatives since the early 1970’s",
+      "name": "Dr. Lisabeth Ryder"
+    },
+    {
+      "img": false,
+      "tagline": "Director of Development worcsusa.org",
+      "name": "Patrick Conlon"
+    },
+    {
+      "img": false,
+      "tagline": "El Cerrito Councilwoman",
+      "name": "Tessa Rudnick"
+    },
+    {
+      "img": false,
+      "tagline": "Founder of Senior Strolls and Sunday Synthesis",
+      "name": "Buddy Akacic"
+    }
+  ],
+  "research_json": [
+    {
+      "title": "Pandemic Crash Shows Worker Co-ops Are More Resilient Than Traditional Business",
+      "img": "https://truthout.org/wp-content/uploads/2020/05/2020_0508-closing-business-covid-1200x800.jpg",
+      "link": "https://truthout.org/articles/pandemic-crash-shows-worker-co-ops-are-more-resilient-than-traditional-business/"
+    },
+    {
+      "title": "Worker-Owned Cooperatives Are Creating Their Own Funding Networks",
+      "img": "https://i1.wp.com/www.yesmagazine.org/wp-content/uploads/2021/02/Cooperation-Richmond-Next-City.jpg?resize=1024%2C615&quality=90&ssl=1",
+      "link": "https://www.yesmagazine.org/economy/2021/02/22/worker-owned-cooperatives-investment-network/"
+    },
+    {
+      "title": "Mitigating the pandemic — social work was built for this",
+      "img": "https://thehill.com/sites/all/themes/thehill/images/redesign/thehill-logo-big.png",
+      "link": "https://thehill.com/opinion/healthcare/501474-mitigating-the-pandemic-social-work-was-built-for-this?rl=1"
+    },
+    {
+      "title": "Co-ops in Spain’s Basque Region Soften Capitalism’s Rough Edges",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/New_York_Times_logo_variation.jpg/1280px-New_York_Times_logo_variation.jpg",
+      "link": "https://www.nytimes.com/2020/12/29/business/cooperatives-basque-spain-economy.html"
+    },
+    {
+      "title": "About People's Coop",
+      "img": "https://www.obpeoplesfood.coop/uploads/5/6/0/3/56035807/1479349912.png",
+      "link": "https://www.obpeoplesfood.coop/about.html"
+    },
+    {
+      "title": "AskProfWolff: How do worker co-ops acquire the capital needed to run the businesses?",
+      "img": "https://img.youtube.com/vi/87395oUPDR0/default.jpg",
+      "link": "https://www.youtube.com/watch?v=87395oUPDR0"
+    },
+    {
+      "title": "Seed Commons is a national network of locally rooted, non-extractive loan funds that brings the power of big finance under community control",
+      "img": "https://seedcommons.org/wp-content/uploads/2019/07/SeedCommonsLogoWhite_2lines-300x77.png",
+      "link": "https://seedcommons.org"
+    },
+    {
+      "title": "Worker Ownership Resources and Cooperative Services is a catalyst in the building of the cooperative sector",
+      "img": "https://static1.squarespace.com/static/5f9395064d9e150400faaf9e/t/5fa1a3ac6b1e332fe7308d76/1611038971490/?format=1500w",
+      "link": "https://www.worcsusa.org/"
+    }
+  ],
+  "meetings": [
+    {
+      "title": "El Cerrito",
+      "link": "/rally/cooperatives/meeting/elcerrito",
+      "start": "tomorrow"
+    }
+  ]
+}

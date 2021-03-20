@@ -10,6 +10,8 @@ import {
   NavigationBuilderProps,
   PermissionsBuilder
 } from "@camberi/firecms"
+
+
 import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
@@ -62,7 +64,7 @@ export function FirebaseCMS() {
     return true;
   };
 
-
+ 
   return (
     <div className="cms-container">
       <CMSApp
