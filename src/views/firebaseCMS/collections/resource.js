@@ -54,9 +54,55 @@ const resourceSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "resources",
-  schema: resourceSchema,
-  name: "Resources",
-  pagination: true
-});
+
+
+export default (userDB) => {
+  //TODO que solo busque la referencia que no tenga
+  const resourceIds = [];
+  const resourcesData = {};
+  
+
+  return buildCollection({
+     relativePath: "resources",
+     schema: resourceSchema,
+     name: "Resources",
+     pagination: true,
+     permissions: async ({ user, entity }) => {
+
+      if(!resourceSchema.onPreSave) {
+          resourceSchema.onPreSave = ({ values }) => {
+            values.uid = user.uid;
+            return values;
+          };
+      }
+     
+      
+
+
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       }
+
+      if (entity?.id) {
+
+        if (!resourceIds.includes(entity.id)) {
+          resourceIds.push(entity.id);
+          const data = await entity.reference.get()
+          resourcesData[entity.id] = data.data();
+        }
+
+      }
+   
+   
+       return {
+         edit: false,
+         create: false,
+         delete: false,
+       };
+     },
+   })
+ }
