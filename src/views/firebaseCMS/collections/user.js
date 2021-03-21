@@ -3,7 +3,6 @@ import { buildCollection, buildSchema } from "@camberi/firecms";
 import CustomPasswordField from "../customTextFields/CustomPasswordField";
 import CustomPhoneField from "../customTextFields/CustomPhoneField";
 
-
 const userSchema = buildSchema({
   name: "User",
   properties: {
@@ -32,8 +31,7 @@ const userSchema = buildSchema({
     realName: {
       title: "Real Name",
       dataType: "string",
-      validation: {
-      },
+      validation: {},
     },
     website: {
       title: "Website",
@@ -91,68 +89,66 @@ const userSchema = buildSchema({
       config: {
         multiline: true,
       },
-      validation: {
+      validation: {},
+    },
+    resources: {
+      title: "Resources",
+      dataType: "array",
+      of: {
+        dataType: "reference",
+        collectionPath: "resources",
+        previewProperties: ["title", "image"],
       },
     },
-    // resources: {
-    //   title: "Resources",
-    //   dataType: "array",
-    //   of: {
-    //     dataType: "reference",
-    //     collectionPath: "resources",
-    //     previewProperties: ["title", "image"],
-    //   },
-    // },
     admin: {
       title: "Admin",
       dataType: "boolean",
-      
-    }
+    },
   },
 });
 
-userSchema.onPreSave =  ({values}) => {
+userSchema.onPreSave = ({ values }) => {
   if (values.topic_def_json?.trim()) {
-      const value = JSON.parse(values.topic_def_json.trim());
+    const value = JSON.parse(values.topic_def_json.trim());
 
-      if (!value) 
-        throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
+    if (!value)
+      throw new Error(
+        "This value (Topic Definitions JSON) must be a valid JSON"
+      );
 
-      if (typeof value !== "object") 
-        throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
+    if (typeof value !== "object")
+      throw new Error(
+        "This value (Topic Definitions JSON) must be a valid JSON"
+      );
   }
 
   console.log("values", values);
 
-  if(values?.uids) {
-
-    if(values.admin) {
-
-      values.uids.forEach(async (uid) => {
-        window.db.collection('roles').doc(uid).update({
-          role: "ROLE_ADMIN"
-        });
-      }) 
-
-    } else {
-
-      values.uids.forEach(async (uid) => {
-        window.db.collection('roles').doc(uid).update({
-          role: "ROLE_USER"
-        })
-      }) 
-    }
-
-  }
-
   return values;
 };
 
-export default userSchema;
-
-// export default buildCollection({
-//   relativePath: "users",
-//   schema: userSchema,
-//   name: "Users",
-//   pagination: true
-// });
+export default (userDB) => {
+  const userIds = [];
+  const usersData = [];
+  return buildCollection({
+    relativePath: "users",
+    schema: userSchema,
+    name: "Users",
+    permissions: ({ user, entity }) => {
+      if (userDB?.admin) {
+        return {
+          edit: true,
+          create: true,
+          delete: true,
+        };
+      } else {
+     
+        return {
+          edit: false,
+          create: false,
+          delete: false,
+        };
+      }
+    },
+  });
+};

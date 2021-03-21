@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef} from "react";
 
 import {
   Authenticator,
@@ -8,16 +8,16 @@ import {
   CMSApp,
   NavigationBuilder,
   NavigationBuilderProps,
-  PermissionsBuilder
-} from "@camberi/firecms"
-
+  PermissionsBuilder,
+} from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
 
-import userSchema from "./collections/user"
-
+import buildUserCollection from "./collections/user";
+import buildResourceCollection from "./collections/resource";
+import buildResourceTypeCollection from "./collections/resource_types";
 
 // This is the actual config
 const firebaseConfig = {
@@ -31,40 +31,80 @@ const firebaseConfig = {
   measurementId: "G-XYVYDC8L1N",
 };
 
+
+const updateUserRole = (userDB : firebase.firestore.DocumentData) => {
+  if(userDB?.uids) {
+
+    if(userDB?.admin) {
+
+      userDB.uids.forEach(async (uid : string) => {
+        firebase.firestore().collection('roles').doc(uid).update({
+          role: "ROLE_ADMIN"
+        });
+      }) 
+
+    } else {
+
+      userDB.uids.forEach(async (uid : string) => {
+        firebase.firestore().collection('roles').doc(uid).update({
+          role: "ROLE_USER"
+        })
+      }) 
+    }
+
+  } 
+}
+
 export function FirebaseCMS() {
+  const [userDB, setUserDB] = useState<firebase.firestore.DocumentData>();
+  const flag = useRef(false);
+  useEffect(() => {
+
+    if(userDB && !flag.current) {
+      flag.current = true;
+      updateUserRole(userDB)
+    }
+
+  }, [userDB])
+
 
   const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => ({
     collections: [
-        buildCollection({
-            relativePath: "users",
-            schema: userSchema,
-            name: "Users",
-            permissions:
-             ({user, entity}) => 
-              {
-                if(entity) {
-                  console.log("entity", entity )
-                  entity.reference.get().then(data => console.log(data.data()))
+      buildUserCollection(userDB),
+      buildResourceCollection(userDB),
+      buildResourceTypeCollection(userDB)
+    ],
+  });
 
-                }
-
-                return {
-                  edit: false,
-                  create: false,
-                  delete: false
-                }
-              },
-        })
-    ]
-});
-
-  const myAuthenticator : Authenticator = (user? : firebase.User) => {
+  const myAuthenticator: Authenticator = async (user?: firebase.User) => {
     console.log("Allowing access to", user?.email);
+    const resp = await firebase.firestore()
+                               .collection("users")
+                               .where("email", "==", user ? user?.email : null)
+                               .get();
+
+    let auxUser : any                        
+    resp.forEach(doc =>{ auxUser ={...doc.data(), id: doc.id} });
     
+    let uids = new Set([...auxUser.uids])
+    uids.add(user?.uid)
+
+    await firebase.firestore().collection("users").doc(auxUser?.id).update({
+      uids: Array.from(uids)
+    })
+
+    await firebase.firestore().collection('roles').doc(user?.uid).set({
+      email: user?.email,
+      phone: user?.phoneNumber,
+    })
+
+
+    auxUser.uids = Array.from(uids);
+    setUserDB(auxUser);
+
     return true;
   };
 
- 
   return (
     <div className="cms-container">
       <CMSApp
@@ -72,9 +112,9 @@ export function FirebaseCMS() {
         authentication={myAuthenticator}
         allowSkipLogin={true}
         signInOptions={[
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          firebase.auth.PhoneAuthProvider.PROVIDER_ID,
         ]}
         navigation={navigation}
         firebaseConfig={firebaseConfig}
