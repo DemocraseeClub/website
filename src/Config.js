@@ -35,16 +35,30 @@ const Config = {
     },
     peerConfig: {
         iceServers: [
-            {urls: 'turn:turn.trackauthoritymusic.com', 'credential': process.env.REACT_APP_TURNUSER, 'username': process.env.REACT_APP_TURNPASS},
-            {urls: 'turn:numb.viagenie.ca', 'credential': 'KD@)*SDL.ms!4ad', 'username': 'eli@taylormadetraffic.com'},
-            {urls: 'stun:stun.services.mozilla.com'},
+            {urls: ['turn:turn.trackauthoritymusic.com:5349'], 'credential': process.env.REACT_APP_TURNPASS, 'username': process.env.REACT_APP_TURNUSER},
+//            {urls: ['turn:numb.viagenie.ca'], 'credential': 'KD@)*SDL.ms!4ad', 'username': 'eli@taylormadetraffic.com'},
+//            {urls: 'stun:stun.services.mozilla.com'},
             {urls: [
-                    'stun:stun1.l.google.com:19302',
-                    'stun:stun2.l.google.com:19302',
+                    'stun:turn.trackauthoritymusic.com:3478'
+//                    'stun:stun1.l.google.com:19302',
+//                    'stun:stun2.l.google.com:19302'
                 ]
             }
         ],
+        iceTransportPolicy : "all",
         iceCandidatePoolSize: 10
     }
 };
+
+export const fbConfig = {
+    apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
+    authDomain: "democraseeclub.firebaseapp.com",
+    databaseURL: "https://democraseeclub.firebaseio.com",
+    projectId: "democraseeclub",
+    storageBucket: "democraseeclub.appspot.com",
+    messagingSenderId: "1051506392090",
+    appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
+    measurementId: "G-XYVYDC8L1N"
+}
+
 export default Config;
