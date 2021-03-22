@@ -125,6 +125,7 @@ class RallyHome extends Component {
                             </AvatarGroup>
                         </Box>
 
+                        {rally.start && new Date(rally.start) > new Date().getTime() ?
                         <Box mt={4} p={1} display={{ xs: 'none', md: 'block' }} className={classes.roundtable} >
                             {profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
@@ -136,7 +137,7 @@ class RallyHome extends Component {
                                     <ListItemText primary={r.name} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
-                        </Box>
+                        </Box> : ''}
 
 
                     </Grid>
