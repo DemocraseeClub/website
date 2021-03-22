@@ -8,7 +8,6 @@ class RemoteVideo extends React.Component {
   constructor(p) {
     super(p);
     this.state = { remoteStream: p.stream, view: false, added: false, viewers: null};
-    this.db = p.db;
   }
 
   componentDidMount() {
@@ -36,7 +35,7 @@ class RemoteVideo extends React.Component {
   }
 
   async handleViewers(action) {
-    const roomRef = this.db.collection("rooms").doc(this.props.roomId);
+    const roomRef = window.fireDB.collection("rooms").doc(this.props.roomId);
     const roomSnapshot = await roomRef.get();
 
     if(!roomSnapshot.data()) return -1;
@@ -81,10 +80,8 @@ class RemoteVideo extends React.Component {
   }
 
   async joinRoomById(room) {
-    if (!this.props.db) {
-      this.db = window.firebase.firestore();
-    }
-    const roomRef = this.db.collection("rooms").doc(room);
+
+    const roomRef = window.fireDB.collection("rooms").doc(room);
 
     const roomSnapshot = await roomRef.get();
 
@@ -103,7 +100,6 @@ class RemoteVideo extends React.Component {
       await this.handleViewers("add");
       this.view = true;
       this.setState({ view: true });
-      /** */
 
       // Code for collecting ICE candidates below
       const calleeCandidatesCollection = roomRef.collection("calleeCandidates");
@@ -249,9 +245,7 @@ class RemoteVideo extends React.Component {
         <VideoElement
           stream={this.state.remoteStream}
           roomId={this.props.roomId}
-          db={this.db}
           notShowCode={true}
-          viewers={this.state.viewers}
         />
       </Beforeunload>
     );
