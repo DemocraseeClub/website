@@ -1,3 +1,23 @@
+/*
+for turn server's oauth method
+const crypto = require('crypto');
+
+function getTURNCredentials(name, secret){
+    var unixTimeStamp = parseInt(Date.now()/1000) + 24*3600,
+        username = [unixTimeStamp, name].join(':'),
+        password,
+        hmac = crypto.createHmac('sha1', secret);
+    hmac.setEncoding('base64');
+    hmac.write(username);
+    hmac.end();
+    password = hmac.read();
+    return {
+        username: username,
+        password: password
+    };
+}
+*/
+
 const Config = {
     api: {
         base: process.env.REACT_APP_API_URL, // set in .env
@@ -15,6 +35,7 @@ const Config = {
     },
     peerConfig: {
         iceServers: [
+            {urls: 'turn:turn.trackauthoritymusic.com', 'credential': process.env.REACT_APP_TURNUSER, 'username': process.env.REACT_APP_TURNPASS},
             {urls: 'turn:numb.viagenie.ca', 'credential': 'KD@)*SDL.ms!4ad', 'username': 'eli@taylormadetraffic.com'},
             {urls: 'stun:stun.services.mozilla.com'},
             {urls: [
