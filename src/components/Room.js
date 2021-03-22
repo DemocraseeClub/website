@@ -139,6 +139,14 @@ class Room extends React.Component {
         this.setState({enabled: enable}, () => this.displayLocalStreams());
     }
 
+    setMuting(pc, muting) {
+        let senderList = pc.getSenders();
+
+        senderList.forEach(sender => {
+            sender.track.enabled = !muting;
+        })
+    }
+
     createPeerConnection(roomRef) {
         let peerConnection = new RTCPeerConnection(Config.peerConfig);
 
@@ -183,7 +191,7 @@ class Room extends React.Component {
         const auxList1 = roomRef.onSnapshot(async snapshot => {
             const data = snapshot.data();
             console.log("ONSNAP", data);
-            if (data.ownerId !== this.userId) {
+            if (data.ownerId === this.userId) {
                 console.log("update viewerCount with my userID: " + this.userId);
                 this.setState({viewerCount:data.viewerIds.length});
                 // TODO: loop over viewerIds and display names
@@ -378,7 +386,7 @@ class Room extends React.Component {
                             <Grid item>
                                 <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
                             </Grid>
-                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewerStreams.length} ><VisibilityIcon /></Badge></Grid>
+                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewerCount} ><VisibilityIcon /></Badge></Grid>
                             <Grid item>
                                 <Button variant="contained" color="primary"
                                         onClick={() => {
