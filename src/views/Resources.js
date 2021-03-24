@@ -11,7 +11,10 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
 import Avatar from '@material-ui/core/Avatar';
-
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 class Resources extends React.Component {
 
@@ -21,13 +24,33 @@ class Resources extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props
+
+        const currencies = [
+            {
+                value: 'USD',
+                label: '$',
+            },
+            {
+                value: 'EUR',
+                label: '€',
+            },
+            {
+                value: 'BTC',
+                label: '฿',
+            },
+            {
+                value: 'JPY',
+                label: '¥',
+            },
+        ];
+
         return (
             <Box>
                 <Grid container className={classes.blueSection}>
                     <Grid item xs={8}>
                         <Typography variant={'h5'} className={classes.blueSectionTitle}><b>Request and Receive Help From Your Community</b></Typography>
-                        <Typography variant={'h6'} className={classes.blueSectionSubtitle}>All action with plans will receive a percentage of the current city pot of <b>2000 Citize Coins</b></Typography>
+                        <Typography variant={'h6'} className={classes.blueSectionSubtitle}> All action with plans will receive a percentage of the current city pot of <b>2000 Citize Coins</b></Typography>
                         <Grid container spacing={3} className={classes.blueSectionItemsContainer }>
                             <Grid item>
                                 <Box display="flex" alignItems="center">
@@ -57,6 +80,62 @@ class Resources extends React.Component {
                         </Box>
                     </Grid>
                 </Grid>
+                <Box className={classes.whiteSection}>
+                    <Grid container>
+                        <Grid item xs={5}>
+                            <Typography variant={'h4'}>Local Resources</Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Grid container spacing={1} justify="flex-end"  >
+                                <Grid item>
+                                    <TextField
+                                        id="standard-multiline-flexible"
+                                        label="Search"
+                                        size="normal"
+                                        variant="outlined"
+                                        InputProps={{
+                                            endAdornment : <InputAdornment position="end">
+                                                                <SearchIcon/>
+                                                            </InputAdornment>
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        className={classes.whiteSectionSelect}
+                                        id="standard-select-currency"
+                                        select
+                                        label="Filter"
+                                        size="normal"
+                                        variant="outlined"
+                                    >
+                                    {currencies.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                    ))}
+                                </TextField>
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        className={classes.whiteSectionSelect}
+                                        id="standard-select-currency"
+                                        select
+                                        label="Sort by"
+                                        size="normal"
+                                        variant="outlined"
+                                    >
+                                        {currencies.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Box>
                 {/* <Box m={4}>
                     <Grid container justify={'space-around'} spacing={4}>
                         <Grid item xs={12} sm={6} md={4}>
@@ -231,6 +310,15 @@ const useStyles = theme => ({
     },
     blueSectionItemsContainer: {
         marginBottom: '15px'
+    },
+    whiteSection: {
+        padding: '60px 70px'
+    },
+    whiteSectionSelect: {
+        width: '15ch'
+    },
+    whiteSectionInput: {
+        width: '20ch'
     }
 });
 
