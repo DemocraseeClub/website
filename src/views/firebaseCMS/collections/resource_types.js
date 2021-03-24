@@ -22,10 +22,6 @@ export default (userDB) => {
     name: "Resource Types",
     pagination: true,
      permissions: ({ user, entity }) => {
-       if (entity) {
-         console.log("entity", entity);
-         entity.reference.get().then((data) => console.log(data.data()));
-       }
    
        if(userDB?.admin) {
          return {
@@ -33,13 +29,13 @@ export default (userDB) => {
            create: true,
            delete: true,
          };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
        }
-   
-       return {
-         edit: false,
-         create: false,
-         delete: false,
-       };
      },
    })
  }
