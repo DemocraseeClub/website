@@ -83,9 +83,28 @@ const actionPlanSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "action_plans",
-  schema: actionPlanSchema,
-  name: "Action Plans",
-  pagination: true
-});
+
+export default (userDB) => {
+    return buildCollection({
+        relativePath: "action_plans",
+        schema: actionPlanSchema,
+        name: "Action Plans",
+        pagination: true,
+       permissions: ({ user, entity }) => {
+     
+         if(userDB?.admin) {
+           return {
+             edit: true,
+             create: true,
+             delete: true,
+           };
+         } else {
+           return {
+             edit: false,
+             create: false,
+             delete: false,
+           };
+         }
+       },
+     })
+   }

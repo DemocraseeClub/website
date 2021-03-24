@@ -14,9 +14,28 @@ const meetingTypeSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "meeting_types",
-  schema: meetingTypeSchema,
-  name: "Meeting Types",
-  pagination: true
-});
+
+export default (userDB) => {
+  return buildCollection({
+    relativePath: "meeting_types",
+    schema: meetingTypeSchema,
+    name: "Meeting Types",
+    pagination: true,
+     permissions: ({ user, entity }) => {
+   
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+     },
+   })
+ }

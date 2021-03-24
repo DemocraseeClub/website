@@ -39,9 +39,28 @@ const inviteSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "invites",
-  schema: inviteSchema,
-  name: "Invites",
-  pagination: true
-});
+
+export default (userDB) => {
+  return buildCollection({
+    relativePath: "invites",
+    schema: inviteSchema,
+    name: "Invites",
+    pagination: true,
+     permissions: ({ user, entity }) => {
+   
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+     },
+   })
+ }

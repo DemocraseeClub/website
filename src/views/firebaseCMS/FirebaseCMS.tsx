@@ -18,6 +18,19 @@ import "../../theme/FirebaseCMS.css";
 import buildUserCollection from "./collections/user";
 import buildResourceCollection from "./collections/resource";
 import buildResourceTypeCollection from "./collections/resource_types";
+import buildTopicCollection from "./collections/topic";
+import buildStateCollection from "./collections/state";
+import buildStakeholderCollection from "./collections/stakeholder";
+import buildRallyCollection from "./collections/rally";
+import buildPartyCollection from "./collections/party";
+import buildPageCollection from "./collections/page";
+import buildOfficialCollection from "./collections/official";
+import buildMeetingCollection from "./collections/meeting";
+import buildMeetingTypeCollection from "./collections/meeting_types";
+import buildInviteCollection from "./collections/invite";
+import buildCityCollection from "./collections/city";
+import buildActionPlanCollection from "./collections/action_plan";
+
 
 // This is the actual config
 const firebaseConfig = {
@@ -68,13 +81,53 @@ export function FirebaseCMS() {
   }, [userDB])
 
 
-  const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => ({
-    collections: [
-      buildUserCollection(userDB),
-      buildResourceCollection(userDB),
-      buildResourceTypeCollection(userDB)
-    ],
-  });
+  const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => {
+
+    if(userDB?.admin) {
+
+      return  {
+          collections: [
+            buildUserCollection(userDB),
+            buildResourceCollection(userDB),
+            buildResourceTypeCollection(userDB),
+            buildTopicCollection(userDB),
+            buildStateCollection(userDB),
+            buildStakeholderCollection(userDB),
+            buildRallyCollection(userDB),
+            buildPartyCollection(userDB),
+            buildPageCollection(userDB),
+            buildOfficialCollection(userDB),
+            buildMeetingCollection(userDB),
+            buildMeetingTypeCollection(userDB),
+            buildInviteCollection(userDB),
+            buildCityCollection(userDB),
+            buildActionPlanCollection(userDB)
+          ],
+        }
+
+    } else {
+
+      return  {
+        collections: [
+          buildResourceCollection(userDB),
+          buildResourceTypeCollection(userDB),
+          buildTopicCollection(userDB),
+          buildStateCollection(userDB),
+          buildStakeholderCollection(userDB),
+          buildRallyCollection(userDB),
+          buildPartyCollection(userDB),
+          buildPageCollection(userDB),
+          buildOfficialCollection(userDB),
+          buildMeetingCollection(userDB),
+          buildMeetingTypeCollection(userDB),
+          buildCityCollection(userDB),
+          buildActionPlanCollection(userDB)
+        ],
+      }
+
+    }
+
+  };
 
   const myAuthenticator: Authenticator = async (user?: firebase.User) => {
     console.log("Allowing access to", user?.email);
