@@ -128,8 +128,7 @@ userSchema.onPreSave = ({ values }) => {
 };
 
 export default (userDB) => {
-  const userIds = [];
-  const usersData = [];
+  
   return buildCollection({
     relativePath: "users",
     schema: userSchema,

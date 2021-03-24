@@ -23,9 +23,28 @@ const pageSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "pages",
-  schema: pageSchema,
-  name: "Pages",
-  pagination: true
-});
+
+export default (userDB) => {
+  return buildCollection({
+    relativePath: "pages",
+    schema: pageSchema,
+    name: "Pages",
+    pagination: true,
+     permissions: ({ user, entity }) => {
+   
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+     },
+   })
+ }
