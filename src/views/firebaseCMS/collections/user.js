@@ -103,7 +103,10 @@ const userSchema = buildSchema({
     admin: {
       title: "Admin",
       dataType: "boolean",
-
+    },
+    boardmember: {
+      title: "Board Member",
+      dataType: "boolean",
     }
   },
 });
