@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import CardHeader from '@material-ui/core/CardHeader';
 
 class Resources extends React.Component {
 
@@ -45,6 +46,29 @@ class Resources extends React.Component {
             },
         ];
 
+        const cards = [
+            {
+                image: "/images/democrasee_logo_black.png",
+                badge: "Technology",
+                title: "1 Hour Online Marketing Consultation",
+                subtitle: "with Polina Tolkacheva",
+                links: [ "Nov 13-6:30pm", "Nov 16-6:30pm"]
+            },
+            {
+                image: "/images/democrasee_logo_black.png",
+                badge: "Technology",
+                title: "1 Hour Online Marketing Consultation",
+                subtitle: "with Polina Tolkacheva",
+                links: [ "Nov 13-6:30pm", "Nov 16-6:30pm"]
+            },
+            {
+                image: "/images/democrasee_logo_black.png",
+                badge: "Technology",
+                title: "1 Hour Online Marketing Consultation",
+                subtitle: "with Polina Tolkacheva",
+                links: [ "Nov 13-6:30pm", "Nov 16-6:30pm"]
+            }
+        ]
         return (
             <Box>
                 <Grid container className={classes.blueSection}>
@@ -134,6 +158,29 @@ class Resources extends React.Component {
                                 </Grid>
                             </Grid>
                         </Grid>
+                    </Grid>
+                    <Grid container spacing={10} justify="center">
+                        {
+                            cards.map(item =>
+                                <Grid item>
+                                    <Card className={classes.card}>
+                                        <Grid container justify="space-between" alignItems="center" className={classes.cardHeader}>
+                                            <Grid item >
+                                                <Avatar src={item.image} alt="card-img" className={classes.cardImg}/>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button variant="contained" color="primary" className={classes.cardButton}>View</Button>
+                                            </Grid>
+                                        </Grid>
+                                            <Typography variant={'body2'} className={classes.cardBadge}>{item.badge}</Typography>
+                                        <Typography variant={'body1'}><b>{item.title}</b></Typography>
+                                        <Typography variant={'body1'} className={classes.cardSubtitle}>{item.subtitle}</Typography>
+                                        {
+                                            item.links.map(link => <Typography variant={'body1'} className={classes.cardLink}>{link}</Typography>)
+                                        }
+                                    </Card>
+                                </Grid>)
+                        }
                     </Grid>
                 </Box>
                 {/* <Box m={4}>
@@ -319,6 +366,30 @@ const useStyles = theme => ({
     },
     whiteSectionInput: {
         width: '20ch'
+    },
+    card: {
+        padding: '25px'
+    },
+    cardImg: {
+        width: '80px',
+        height: '80px',
+    },
+    cardButton: {
+        padding: '10px 40px'
+    },
+    cardHeader: {
+        marginBottom: '15px'
+    },
+    cardSubtitle: {
+        marginBottom: '15px'
+    },
+    cardLink: {
+        color: '#2196f3',
+        textDecoration: 'underline'
+    },
+    cardBadge: {
+        color: 'gray',
+        margin: '-10px 0 10px 0'
     }
 });
 
