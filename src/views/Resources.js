@@ -159,7 +159,7 @@ class Resources extends React.Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={10} justify="center">
+                    <Grid container spacing={10} justify="center" className={classes.cardsContainer}>
                         {
                             cards.map(item =>
                                 <Grid item>
@@ -169,10 +169,10 @@ class Resources extends React.Component {
                                                 <Avatar src={item.image} alt="card-img" className={classes.cardImg}/>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="contained" color="primary" className={classes.cardButton}>View</Button>
+                                                <Button className={classes.cardButton}>View</Button>
                                             </Grid>
                                         </Grid>
-                                            <Typography variant={'body2'} className={classes.cardBadge}>{item.badge}</Typography>
+                                        <Typography variant={'body2'} className={classes.cardBadge}>{item.badge}</Typography>
                                         <Typography variant={'body1'}><b>{item.title}</b></Typography>
                                         <Typography variant={'body1'} className={classes.cardSubtitle}>{item.subtitle}</Typography>
                                         {
@@ -181,6 +181,69 @@ class Resources extends React.Component {
                                     </Card>
                                 </Grid>)
                         }
+                    </Grid>
+                    <Grid container className={classes.helpSection}>
+                        <Grid item xs={5}>
+                            <Typography variant={'h4'}>Request for Help</Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Grid container spacing={1} justify="flex-end"  >
+                                <Grid item>
+                                    <TextField
+                                        id="standard-multiline-flexible"
+                                        label="Search"
+                                        size="normal"
+                                        variant="outlined"
+                                        InputProps={{
+                                            endAdornment : <InputAdornment position="end">
+                                                                <SearchIcon/>
+                                                            </InputAdornment>
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        className={classes.whiteSectionSelect}
+                                        id="standard-select-currency"
+                                        select
+                                        label="Filter"
+                                        size="normal"
+                                        variant="outlined"
+                                    >
+                                    {currencies.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                    ))}
+                                </TextField>
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        className={classes.whiteSectionSelect}
+                                        id="standard-select-currency"
+                                        select
+                                        label="Sort by"
+                                        size="normal"
+                                        variant="outlined"
+                                    >
+                                        {currencies.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid container justify="space-between" alignItems="center" className={classes.helpSectionFooter}>
+                        <Grid item className={classes.helpSectionLinkContainer}>
+                            <Avatar src="/images/indy.png" alt="card-img" className={classes.cardImg}/>
+                            <Typography variant={'body1'} className={classes.helpSectionLink}>Need Volunters for Upcoming Rally on Nov 16th</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Button variant="outlined" color="primary" className={classes.helpSectionButton}>Offer Help</Button>
+                        </Grid>
                     </Grid>
                 </Box>
                 {/* <Box m={4}>
@@ -320,7 +383,7 @@ const useStyles = theme => ({
     },
     blueSection: {
         background: theme.palette.secondary.main,
-        padding: '20px 70px'
+        padding: '50px 70px'
     },
     blueSectionTitle: {
         marginBottom: '10px'
@@ -349,7 +412,11 @@ const useStyles = theme => ({
         background: theme.palette.error.main,
         color: 'white',
         textTransform: 'none',
-        padding: "5px 20px"
+        padding: "5px 20px",
+        '&:hover': {
+            background: theme.palette.error.main,
+            color: 'white',
+        },
     },
     blueSectionHero: {
         width: "150px",
@@ -367,6 +434,9 @@ const useStyles = theme => ({
     whiteSectionInput: {
         width: '20ch'
     },
+    cardsContainer: {
+        marginTop: '10px'
+    },
     card: {
         padding: '25px'
     },
@@ -375,7 +445,14 @@ const useStyles = theme => ({
         height: '80px',
     },
     cardButton: {
-        padding: '10px 40px'
+        padding: '10px 40px',
+        background: '#1c54b2',
+        color: 'white',
+        textTransform: 'none',
+        '&:hover': {
+            background: '#1c54b2',
+            color: 'white',
+        },
     },
     cardHeader: {
         marginBottom: '15px'
@@ -390,7 +467,29 @@ const useStyles = theme => ({
     cardBadge: {
         color: 'gray',
         margin: '-10px 0 10px 0'
+    },
+    helpSection: {
+        marginTop: '90px'
+    },
+    helpSectionLinkContainer: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+    helpSectionLink: {
+        color: '#2196f3',
+        textDecoration: 'underline',
+        marginLeft: '100px'
+    },
+    helpSectionFooter: {
+        marginTop: '50px'
+    },
+    helpSectionButton: {
+        padding: '10px 40px',
+        border: `1px solid #1c54b2`,
+        color: '#1c54b2',
+        textTransform: 'none',
     }
+
 });
 
 export default withStyles(useStyles, {withTheme: true})(withSnackbar(Resources));
