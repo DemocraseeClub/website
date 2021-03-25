@@ -88,11 +88,8 @@ const userSchema = buildSchema({
     topic_def_json: {
       title: "Topic Definitions JSON",
       dataType: "string",
-      config: {
-        multiline: true,
-      },
-      validation: {
-      },
+      config: {multiline: true},
+      validation: {}
     },
     resources: {
       title: "Resources",
