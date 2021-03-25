@@ -12,8 +12,7 @@ const meetingSchema = buildSchema({
       title: "City",
       dataType: "reference",
       collectionPath: "cities",
-      previewProperties: ["name", "picture"],
-      validation: { required: true },
+      previewProperties: ["name", "picture"]
     },
     meeting_type: {
       title: "Meeting Type",
@@ -75,9 +74,7 @@ const meetingSchema = buildSchema({
     start_end_times: {
       title: "Date & Time Start - End",
       dataType: "map",
-      validation: {
-        required: true,
-      },
+      validation: {required: false},
       properties: {
         date_start: {
           title: "Date Start",
@@ -92,6 +89,7 @@ const meetingSchema = buildSchema({
     agenda: {
       title: "Agenda JSON",
       dataType: "string",
+      config: {multiline: true}
     },
     duration: {
       title: "Duration",
@@ -112,13 +110,13 @@ const meetingSchema = buildSchema({
 });
 
 meetingSchema.onPreSave = ({values}) => {
-  if (values.agenda.trim()) {
+  if (values.agenda && values.agenda.trim()) {
       const value = JSON.parse(values.agenda.trim());
 
-      if (!value) 
+      if (!value)
         throw new Error("This value (Agenda JSON) must be a valid JSON");
 
-      if (typeof value !== "object") 
+      if (typeof value !== "object")
         throw new Error("This value (Agenda JSON) must be a valid JSON");
   }
 

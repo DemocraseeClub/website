@@ -3,6 +3,13 @@ import { buildCollection, buildSchema } from "@camberi/firecms";
 const resourceSchema = buildSchema({
   name: "Resource",
   properties: {
+    author: {
+      title: "User",
+      dataType: "reference",
+      validation: {required: true},
+      collectionPath: "users",
+      previewProperties: ["userName"]
+    },
     title: {
       title: "Title",
       dataType: "string",
@@ -15,7 +22,7 @@ const resourceSchema = buildSchema({
       title: "Description HTML",
       dataType: "string",
       validation: {
-        required: true,
+        required: false,
       },
       config: {
         multiline: true,
@@ -41,7 +48,7 @@ const resourceSchema = buildSchema({
       title: "Price (citizencoin)",
       dataType: "number",
       validation: {
-        required: true,
+        required: false,
         positive: true,
       },
     },

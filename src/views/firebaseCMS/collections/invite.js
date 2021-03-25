@@ -3,7 +3,7 @@ import { buildCollection, buildSchema } from "@camberi/firecms";
 const inviteSchema = buildSchema({
   name: "Invite",
   properties: {
-     metting: {
+     meeting: {
        title: "Meeting",
        dataType: "reference",
        validation: {required: true},
@@ -30,7 +30,7 @@ const inviteSchema = buildSchema({
        config: {
         enumValues: {
             invited: "Invited",
-            rsvpd: "Rsvpd",
+            rsvpd: "RSVPd",
             attending: "Attending",
             attended: "Attended",
         }
