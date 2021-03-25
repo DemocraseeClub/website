@@ -88,6 +88,17 @@ const rallySchema = buildSchema({
       dataType: "string",
       config: {multiline: true},
       validation: {}
+    },
+    promo_video: {
+      title: "Promo Video",
+      dataType: "string",
+      config: {
+        storageMeta: {
+          mediaType: "video",
+          storagePath: "promo_video",
+          acceptedFiles: ["video/*"],
+        },
+      },
     }
   },
 });
