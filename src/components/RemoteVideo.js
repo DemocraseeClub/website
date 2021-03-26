@@ -21,7 +21,7 @@ class RemoteVideo extends React.Component {
 
     if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {
       console.log('actualizando')
-      this.handleViewers('add')
+      // this.handleViewers('add')
     }
 
   }
@@ -97,7 +97,7 @@ class RemoteVideo extends React.Component {
       };
 
       //Updating viewers in Firestore
-      await this.handleViewers("add");
+      // await this.handleViewers("add");
       this.view = true;
       this.setState({ view: true });
 
@@ -250,6 +250,10 @@ class RemoteVideo extends React.Component {
       </Beforeunload>
     );
   }
+}
+
+RemoteVideo.defaultProps = {
+  stream : new MediaStream(),
 }
 
 RemoteVideo.propTypes = {
