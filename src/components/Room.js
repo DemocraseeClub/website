@@ -448,8 +448,11 @@ class Room extends React.Component {
                         {this.state.roomsViewing.map((o, i) =>
                             <div className={this.props.classes.hScrollItem} key={o.roomId+i} >
                                 <label>{o.roomId}</label>
-                                <VideoElement roomId={o.roomId}
-                                              roomId={o} myRoomId={this.state.myRoom} stream={o.stream}  /></div>)}
+                                {/* <VideoElement roomId={o.roomId}
+                                              roomId={o} myRoomId={this.state.myRoom} stream={o.stream}  /> */}
+                                  <RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom}> </RemoteVideo>
+                            </div>
+                        )}
                     </div>
                 </div> }
             </Box>
