@@ -21,7 +21,7 @@ class RemoteVideo extends React.Component {
 
     if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {
       console.log('actualizando')
-      // this.handleViewers('add')
+      this.handleViewers('add')
     }
 
   }
@@ -80,7 +80,6 @@ class RemoteVideo extends React.Component {
   }
 
   async joinRoomById(room) {
-
     const roomRef = window.fireDB.collection("rooms").doc(room);
 
     const roomSnapshot = await roomRef.get();
@@ -97,9 +96,10 @@ class RemoteVideo extends React.Component {
       };
 
       //Updating viewers in Firestore
-      // await this.handleViewers("add");
+      await this.handleViewers("add");
       this.view = true;
       this.setState({ view: true });
+      /** */
 
       // Code for collecting ICE candidates below
       const calleeCandidatesCollection = roomRef.collection("calleeCandidates");
@@ -246,14 +246,11 @@ class RemoteVideo extends React.Component {
           stream={this.state.remoteStream}
           roomId={this.props.roomId}
           notShowCode={true}
+          viewers={this.state.viewers}
         />
       </Beforeunload>
     );
   }
-}
-
-RemoteVideo.defaultProps = {
-  stream : new MediaStream(),
 }
 
 RemoteVideo.propTypes = {

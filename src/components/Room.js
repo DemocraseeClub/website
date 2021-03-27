@@ -31,17 +31,17 @@ class Room extends React.Component {
             startingRoom:false,
             roomsViewing: [],
             myStream:null,
-            viewerStreams: [],
-            viewerCount: [],
+            viewers: [],
             roomFieldText: '',
-            listeners:[]
+            listener:[]
+
         }
 
-        this.userId = window.navigator.userAgent.substr(window.navigator.userAgent.lastIndexOf(' ') + 1);
-        this.allConnections = {};
+        this.peerConnection = null;
         this.screenStream = null;
         this.camStream = null;
-        this.myStream = null;
+
+        this.castBtnRef = React.createRef('');
     }
 
     componentDidMount() {
@@ -54,7 +54,12 @@ class Room extends React.Component {
     }
 
     async componentWillUnmount() {
-        await this.hangUp();
+        if(this.state.listener.length > 0) {
+            this.state.listener[0]();
+            this.state.listener[1]();
+        }
+
+        this.hangUp();
     }
 
     displayLocalStreams() {
@@ -89,29 +94,15 @@ class Room extends React.Component {
             stream = this.screenStream;
         } else if (this.camStream) {
             stream = this.camStream;
-        } else {
-            this.myStream = stream;
-            this.setState({myStream:stream});
-            return false;
         }
 
-        stream.onremovetrack = function(event) {
-            // TODO: recursive call?
-            console.log("MY STREAM REMOVE", event);
-        };
-        stream.onaddtrack = function(event) {
-            // TODO: recursive call?
-            console.log("MY STREAM ADD", event);
-        };
-
-        for (let p in this.allConnections) {
-            let tracks = stream.getTracks();
-            console.log("adding myStream to peer in roomID: " + p, tracks);
-            tracks.forEach(track => {
-                this.allConnections[p].addTrack(track, stream);
+        if (this.peerConnection) {
+            console.log("adding local stream on display");
+            stream.getTracks().forEach(track => {
+                this.peerConnection.addTrack(track, stream);
             });
         }
-        this.myStream = stream;
+
         this.setState({myStream:stream});
 
     }
@@ -135,98 +126,62 @@ class Room extends React.Component {
         let enable = {...this.state.enabled}
         enable.screen = !enable.screen;
         if (enable.screen === false) {
-            // TODO: remove from peerConnection
+            this.setState({enabled: enable});
         } else {
             let stream = await navigator.mediaDevices.getDisplayMedia({cursor: true});
             this.screenStream = stream;
+            this.setState({enabled: enable}, () => this.displayLocalStreams());
         }
-        this.setState({enabled: enable}, () => this.displayLocalStreams());
     }
 
-    setMuting(pc, muting) {
-        let senderList = pc.getSenders();
-
-        senderList.forEach(sender => {
-            sender.track.enabled = !muting;
-        })
-    }
-
-    createPeerConnection(roomRef) {
+    createPeerConnection() {
+        console.log('Create PeerConnection with configuration: ', Config.peerConfig);
         let peerConnection = new RTCPeerConnection(Config.peerConfig);
-
-        peerConnection.addEventListener('icegatheringstatechange', event => {
-            if (peerConnection.iceGatheringState === 'complete') {
-                console.log(`ICE gathering: ${peerConnection.iceGatheringState}`, event);
-            }
+        peerConnection.addEventListener('icegatheringstatechange', () => {
+            console.log(`ICE gathering state changed: ${peerConnection.iceGatheringState}`);
         });
 
-        peerConnection.addEventListener('isolationchange', event => {
-            console.log('A track is isolated if its content cannot be accessed by the owning document due to lack of authentication or if the track comes from a cross-origin source.', event);
+        peerConnection.addEventListener('connectionstatechange', () => {
+            console.log(`Connection state change: ${peerConnection.connectionState}`);
         });
 
-        peerConnection.addEventListener('icecandidateerror', event => {
-            console.log('CONNECTION ERROR: ' + event.errorText, event);
+        peerConnection.addEventListener('signalingstatechange', () => {
+            console.log(`Signaling state change: ${peerConnection.signalingState}`);
         });
 
-        peerConnection.addEventListener('datachannel', event => {
-            console.log('NEW DATACHANNEL!', event);
+        peerConnection.addEventListener('iceconnectionstatechange ', () => {
+            console.log(`ICE connection state change: ${peerConnection.iceConnectionState}`);
         });
 
-        peerConnection.onaddstream = event => {
-            // TODO add to viewerStreams?
-            console.log("ON ADDED STREAM createRoom - remote stream", event);
-        };
 
-        peerConnection.ontrack = event => {
-            // TODO add to viewerStreams?
-            console.log("ON TRACK STREAM createRoom - remote stream", event);
-        };
-
-        peerConnection.addEventListener('onaddstream', event => {
-            // TODO add to viewerStreams?
-            console.log("ON LISTEN ADDED STREAM createRoom - remote stream", event);
-        });
-
-        peerConnection.addEventListener('track', event => {
-            // TODO add to viewerStreams?
-            console.log('Got peerconnection track!!!: ', event);
-        });
-
-        const auxList1 = roomRef.onSnapshot(async snapshot => {
-            const data = snapshot.data();
-            console.log("ONSNAP", data);
-            if (!data) return false;
-            if (data.ownerId === this.userId) {
-                console.log("update viewerCount with my userID: " + this.userId);
-                this.setState({viewerCount:data.viewerIds.length});
-                // TODO: loop over viewerIds and display names
-            }
-            if (!peerConnection.currentRemoteDescription && data.answer) {
-                console.log('Got remote description: ', data.answer);
-                const rtcSessionDescription = new RTCSessionDescription(data.answer);
-                await peerConnection.setRemoteDescription(rtcSessionDescription);
-            }
-        });
-
-        // Listen for remote ICE candidates below
-        const auxList2 =  roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(async change => {
-                if (change.type === 'added') {
-                    let data = change.doc.data();
-                    console.log(`Got new remote calleeCandidates:`, data);
-                    await peerConnection.addIceCandidate(new RTCIceCandidate(data));
-                } else {
-                    console.log('calleeCandidate change type ' + change.type, change);
-                }
+        if (this.state.myStream) {
+            console.log("adding local stream");
+            let stream = this.state.myStream;
+            stream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, stream);
             });
+            this.setState({myStream:stream})
+        }
+
+        return peerConnection;
+    }
+
+    async createRoom() {
+        this.setState({startingRoom:true}); // because this function can lag and we need to disable the button
+        const roomRef = await window.fireDB.collection('rooms').doc();
+
+        this.peerConnection = this.createPeerConnection();
+
+        this.peerConnection.onaddstream = (event => {
+            console.log("ON ADDED STREAM createRoom", event);
+            this.setState({myStream:event.stream})
         });
-        // Listen for remote ICE candidates above
 
         // Code for collecting ICE candidates below
         const callerCandidatesCollection = roomRef.collection('callerCandidates');
-        peerConnection.addEventListener('icecandidate', event => {
+        this.peerConnection.addEventListener('icecandidate', event => {
             if (!event.candidate) {
-                console.log('Got final candidate!', event);
+                console.log('Got final candidate!');
                 return;
             }
             console.log('Got candidate: ', event.candidate);
@@ -234,101 +189,95 @@ class Room extends React.Component {
         });
         // Code for collecting ICE candidates above
 
-        let newState = {listeners:[...this.state.listeners]};
-        newState.listeners.concat([auxList1, auxList2]);
-
-        if (this.myStream) {
-            let tracks = this.myStream.getTracks();
-            console.log("adding local stream to " + roomRef.id, tracks);
-            tracks.forEach(track => {
-                peerConnection.addTrack(track, this.myStream);
-            });
-            newState.myStream = this.myStream;
-        }
-        this.setState(newState)
-
-        return peerConnection;
-    }
-
-    async createRoom() {
-        this.setState({startingRoom:true}); // because this function can lag and we need to disable the button
-
-        const roomRef = await window.fireDB.collection('rooms').doc();
-
-        const peerConnection = this.createPeerConnection(roomRef);
-
-        const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
-        this.allConnections[roomRef.id] = peerConnection;
+        // Code for creating a room below
+        const offer = await this.peerConnection.createOffer();
+        await this.peerConnection.setLocalDescription(offer);
         console.log('Created offer:', offer);
 
-        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, ownerId:this.userId, viewerIds:[]}; // sdp:peerConnection.localDescription
+        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0, roomsViewing: []};
         await roomRef.set(roomWithOffer);
 
-        this.setState({myRoom: roomRef.id});
+        /*
+         this.peerConnection.addEventListener('track', event => {
+             console.log('Got viewer track: ', event);
+             console.log('event streams: ', event.streams);
+             let rooms = [...this.state.viewers];
+             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+             this.setState({viewers: rooms})
+         });
+         this.peerConnection.ontrack = event => {
+             console.log('Got viewer track2:', event);
+             console.log('event streams: ', event.streams);
+             let rooms = [...this.state.viewers];
+             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
+             this.setState({viewers: rooms})
+         }
+         */
+
+        const auxList1 = roomRef.onSnapshot(async snapshot => {
+
+            const data = snapshot.data();
+            console.log(data);
+            if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
+                console.log('Got remote description: ', data.answer);
+                const rtcSessionDescription = new RTCSessionDescription(data.answer);
+                await this.peerConnection.setRemoteDescription(rtcSessionDescription);
+            }
+
+            let viewers = snapshot.data().roomsViewing;
+            let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
+            for(let i = viewers.length - 1; i>=0 ;i--){
+                if(auxRoomsViewing.indexOf(viewers[i])!==-1)
+                    viewers.splice(i,1);
+            }
+            this.setState({viewers: viewers})
+        });
+        // Listening for remote session description above
+
+        // Listen for remote ICE candidates below
+        const auxList2 =  roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(async change => {
+                if (change.type === 'added') {
+                    let data = change.doc.data();
+                    console.log(`Got new remote calleeCandidates: ${JSON.stringify(data)}`);
+                    await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
+                }
+            });
+        });
+        // Listen for remote ICE candidates above
+
+
+        this.setState({myRoom: roomRef.id, listener: [auxList1, auxList2]});
+
         this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`, {variant:'success'});
+        return this.peerConnection;
     }
 
     async joinRoom() {
         let newRoomId = this.state.roomFieldText;
-        if (newRoomId === this.state.myRoom) {
-            return console.log("no reason to join your own room");
-        }
-
-        this.setState({startingRoom:true}); // because this function can lag and we need to disable the button
-
         let rooms = [...this.state.roomsViewing];
-        let i = rooms.findIndex(o => o.roomId === newRoomId);
-        if (i > -1) {
-            return console.log('you are already viewing this room');
+        let i = rooms.find(o => o.roomId === newRoomId);
+        if (!i) {
+            let room = {roomId: newRoomId, stream: new MediaStream()};
+            console.log('adding room', room);
+            rooms.push(room);
+            this.setState({roomsViewing: rooms}, e => {
+                this.setState({roomFieldText: ''})
+            })
+        } else {
+            console.log('room already exists');
         }
-
-        const roomRef = window.fireDB.collection("rooms").doc(newRoomId);
-        let roomData = await roomRef.get();
-        if (!roomData.exists) {
-            return console.log("Room is broken:", roomData);
-        }
-        roomData = roomData.data();
-        console.log("Got remote room:", roomData);
-
-        const peerConnection = this.createPeerConnection(roomRef);
-
-        roomRef.update({viewerIds:window.firebase.firestore.FieldValue.arrayUnion(this.userId)});
-
-        // Code for collecting ICE candidates below
-        const calleeCandidatesCollection = roomRef.collection("calleeCandidates");
-        peerConnection.addEventListener("icecandidate", (event) => {
-            if (!event.candidate) {
-                console.log("Got final calleeCandidate!", event);
-                return;
-            } else {
-                console.log("Got calleeCandidate: ", event.candidate);
-            }
-            calleeCandidatesCollection.add(event.candidate.toJSON());
-        });
-        // Code for collecting ICE candidates above
-
-        let room = {roomId: newRoomId, peer:peerConnection, stream:new MediaStream()};
-        console.log('adding room', room);
-        rooms.push(room);
-
-        this.setState({roomsViewing: rooms, roomFieldText: '', startingRoom:false})
-
     }
 
-    handleHangUp(id) { // TODO: respond to room owner hanging up on viewers
-        if (id === this.state.myRoom) {
-            this.props.enqueueSnackbar('Your room was closed');
+    handleHangUp(id) {
+        let rooms = [...this.state.roomsViewing];
+        let i = rooms.findIndex(o => o.roomId === id);
+        if (i > -1) {
+            rooms.splice(i, 1);
+            this.setState({roomsViewing: rooms})
+            this.props.enqueueSnackbar('This room was closed');
         } else {
-            let rooms = [...this.state.roomsViewing];
-            let i = rooms.findIndex(o => o.roomId === id);
-            if (i > -1) {
-                rooms.splice(i, 1);
-                this.setState({roomsViewing: rooms})
-                this.props.enqueueSnackbar('This room was closed');
-            } else {
-                console.log('room already hung up');
-            }
+            console.log('room already hung up');
         }
     }
 
@@ -347,14 +296,10 @@ class Room extends React.Component {
         this.camStream = null;
         this.screenStream = null;
 
-        if(this.state.listeners.length > 0) {
-            this.state.listeners.forEach(o => o());
+        if (this.peerConnection) {
+            this.peerConnection.close();
+            this.peerConnection = null;
         }
-
-        for(let roomId in this.allConnections) {
-            this.allConnections[roomId].close();
-        }
-        this.allConnections = {};
 
         if (this.state.myRoom) {
             const roomRef = window.fireDB.collection('rooms').doc(this.state.myRoom);
@@ -368,7 +313,6 @@ class Room extends React.Component {
             }
             await roomRef.delete();
         }
-        this.myStream = null;
         this.setState({myRoom:null, startingRoom:false, myStream:null, enabled: {'video': false, 'audio': false, 'screen': false}});
     }
 
@@ -380,7 +324,7 @@ class Room extends React.Component {
 
     render() {
         const isEnabled = this.state.enabled.video === true || this.state.enabled.audio === true || this.state.enabled.screen === true;
-        const hasVideos = (this.myStream || this.state.viewerStreams.length > 0 || this.state.roomsViewing.length > 0);
+        const hasVideos = (this.state.myStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
 
         return (
             <Box p={1}>
@@ -391,14 +335,14 @@ class Room extends React.Component {
                             <Grid item>
                                 <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
                             </Grid>
-                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewerCount} ><VisibilityIcon /></Badge></Grid>
+                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewers.length} ><VisibilityIcon /></Badge></Grid>
                             <Grid item>
                                 <Button variant="contained" color="primary"
                                         onClick={() => {
                                             if (!this.state.showRoomId) this.copyRoomUrl();
                                             this.setState({showRoomId:!this.state.showRoomId})
                                         }}
-                                        endIcon={<PasswordIcon color={this.state.showRoomId === true ?  'error' : 'inherit'} />}
+                                        endIcon={<PasswordIcon color={this.state.showRoomId === true ?  'error' : 'default'} />}
                                 >{this.state.showRoomId === true ? this.state.myRoom : ' **** '}</Button>
                             </Grid>
                             <Grid item>
@@ -438,7 +382,7 @@ class Room extends React.Component {
                                         <Button onClick={() => this.joinRoom()} variant={'contained'}
                                                 color={'secondary'}
                                                 style={this.state.roomFieldText.length !== 20 ? {} : {backgroundColor:'#D83933', color:'#ffffff'}}
-                                                disabled={this.state.roomFieldText.length !== 20 || this.state.startingRoom === true}>Connect</Button>
+                                                disabled={this.state.roomFieldText.length !== 20}>Connect</Button>
                                     )
                                 }}
                             />
@@ -448,16 +392,12 @@ class Room extends React.Component {
                 {hasVideos === false ? '' :
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
-                        {this.myStream ?
-                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.myStream} muted={true} /></div> : ''}
+                        {this.state.myStream ?
+                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} /></div> : ''}
+                        {this.state.viewers.map((o, i) =>
+                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom} stream={new MediaStream()} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} >
-                                <label>{o.roomId}</label>
-                                {/* <VideoElement roomId={o.roomId}
-                                              roomId={o} myRoomId={this.state.myRoom} stream={o.stream}  /> */}
-                                  <RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom}> </RemoteVideo>
-                            </div>
-                        )}
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                     </div>
                 </div> }
             </Box>
