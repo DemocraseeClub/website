@@ -89,6 +89,10 @@ class Room extends React.Component {
             stream = this.screenStream;
         } else if (this.camStream) {
             stream = this.camStream;
+        } else {
+            this.myStream = stream;
+            this.setState({myStream:stream});
+            return false;
         }
 
         stream.onremovetrack = function(event) {
@@ -191,6 +195,7 @@ class Room extends React.Component {
         const auxList1 = roomRef.onSnapshot(async snapshot => {
             const data = snapshot.data();
             console.log("ONSNAP", data);
+            if (!data) return false;
             if (data.ownerId === this.userId) {
                 console.log("update viewerCount with my userID: " + this.userId);
                 this.setState({viewerCount:data.viewerIds.length});
