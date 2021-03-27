@@ -14,6 +14,7 @@ import stakeholderCollection from "./collections/stakeholder";
 import actionPlanCollection from "./collections/action_plan";
 import pageCollection from "./collections/page";
 import inviteCollection from "./collections/invite";
+import WiseDemo from './collections/wise_demo';
 
 export const navigationAdmin: EntityCollection[] = [
   userCollection,
@@ -31,23 +32,16 @@ export const navigationAdmin: EntityCollection[] = [
   actionPlanCollection,
   pageCollection,
   inviteCollection,
+  WiseDemo
 ];
 
 export const navigationUser: EntityCollection[] = [
   resourceCollection,
-  resourceTypesCollection,
-  officialCollection,
-  partyCollection,
   cityCollection,
-  stateCollection,
   rallyCollection,
-  topicCollection,
   meetingCollection,
   meetingTypesCollection,
   stakeholderCollection,
   actionPlanCollection,
-  pageCollection,
+  WiseDemo
 ];
-
-
-
