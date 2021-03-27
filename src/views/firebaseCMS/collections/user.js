@@ -88,11 +88,8 @@ const userSchema = buildSchema({
     topic_def_json: {
       title: "Topic Definitions JSON",
       dataType: "string",
-      config: {
-        multiline: true,
-      },
-      validation: {
-      },
+      config: {multiline: true},
+      validation: {}
     },
     resources: {
       title: "Resources",
@@ -106,7 +103,10 @@ const userSchema = buildSchema({
     admin: {
       title: "Admin",
       dataType: "boolean",
-      
+    },
+    boardmember: {
+      title: "Board Member",
+      dataType: "boolean",
     }
   },
 });
@@ -115,10 +115,10 @@ userSchema.onPreSave =  ({values}) => {
   if (values.topic_def_json?.trim()) {
       const value = JSON.parse(values.topic_def_json.trim());
 
-      if (!value) 
+      if (!value)
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
 
-      if (typeof value !== "object") 
+      if (typeof value !== "object")
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
   }
 
@@ -129,18 +129,18 @@ userSchema.onPreSave =  ({values}) => {
     if(values.admin) {
 
       values.uids.forEach(async (uid) => {
-        window.db.collection('roles').doc(uid).update({
+        window.fireDB.collection('roles').doc(uid).update({
           role: "ROLE_ADMIN"
         });
-      }) 
+      })
 
     } else {
 
       values.uids.forEach(async (uid) => {
-        window.db.collection('roles').doc(uid).update({
+        window.fireDB.collection('roles').doc(uid).update({
           role: "ROLE_USER"
         })
-      }) 
+      })
     }
 
   }

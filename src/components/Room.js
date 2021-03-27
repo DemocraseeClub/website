@@ -168,11 +168,7 @@ class Room extends React.Component {
 
     async createRoom() {
         this.setState({startingRoom:true}); // because this function can lag and we need to disable the button
-
-        if (!this.db) {
-            this.db = window.firebase.firestore();
-        }
-        const roomRef = await this.db.collection('rooms').doc();
+        const roomRef = await window.fireDB.collection('rooms').doc();
 
         this.peerConnection = this.createPeerConnection();
 
@@ -258,9 +254,6 @@ class Room extends React.Component {
     }
 
     async joinRoom() {
-        if (!this.db) {
-            this.db = window.firebase.firestore();
-        }
         let newRoomId = this.state.roomFieldText;
         let rooms = [...this.state.roomsViewing];
         let i = rooms.find(o => o.roomId === newRoomId);
@@ -309,7 +302,7 @@ class Room extends React.Component {
         }
 
         if (this.state.myRoom) {
-            const roomRef = this.db.collection('rooms').doc(this.state.myRoom);
+            const roomRef = window.fireDB.collection('rooms').doc(this.state.myRoom);
             const calleeCandidates = await roomRef.collection('calleeCandidates').get();
             for (let l = 0; l < calleeCandidates.length; l++) {
                 await calleeCandidates[l].ref.delete();
@@ -400,11 +393,11 @@ class Room extends React.Component {
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
                         {this.state.myStream ?
-                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} db={this.db} /></div> : ''}
+                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} /></div> : ''}
                         {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom} stream={new MediaStream()} db={this.db} handleHangUp={id => this.handleHangUp(id)} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom} stream={new MediaStream()} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} db={this.db} handleHangUp={id => this.handleHangUp(id)} /></div>)}
+                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                     </div>
                 </div> }
             </Box>
