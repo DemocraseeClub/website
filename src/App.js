@@ -20,6 +20,7 @@ import {NavLink} from "react-router-dom";
 import {SnackbarProvider} from "notistack";
 import CancelIcon from '@material-ui/icons/Cancel';
 import Citizen from "./views/Citizen";
+import RallyCreate from "./views/RallyCreate";
 
 function App() {
     const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === 'production' && document.location.pathname.indexOf('/rally/') !== 0);
@@ -31,8 +32,8 @@ function App() {
 
     return (
         <SnackbarProvider maxSnack={3}
-                          ref={notistackRef}
-                          action={(key) => (<CancelIcon onClick={() => onClickDismiss(key)} />)} >
+                           ref={notistackRef}
+                           action={(key) => (<CancelIcon onClick={() => onClickDismiss(key)} />)} >
         <div className="App">
                 <Router>
                     <Dialog open={isOpen} >
@@ -54,16 +55,14 @@ function App() {
                         <Route path="/resources"><Resources/></Route>
                         <Route path="/citizens/:uid"><Citizen/></Route>
                         <Route path="/sponsors/cities"><Sponsors/></Route>
-
                         <Route exact path="/rally/:rid/meeting/:mid"component={MeetingHome} />
                         <Route exact path="/rally/templates"component={RallyTemplates} />
                         <Route exact path="/rally/:rid" component={RallyHome} />
-
                         <Route path="/about"><About/></Route>
                         <Route path="/ethics"><Ethics/></Route>
                         <Route path="/users"><Ethics/></Route>
-
-                        <Route path="/"><Home/></Route>
+                        <Route path="/"><Home /></Route>
+                        <Route exact path="/rally/create" component={RallyCreate}/>
                     </Switch>
                     <Footer />
                 </Router>
