@@ -32,6 +32,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-analytics.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
 <script  src="https://www.gstatic.com/firebasejs/8.2.4/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
 
 <script>
     window.fbApp = firebase.initializeApp({
@@ -44,8 +45,8 @@
         appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
         measurementId: "G-XYVYDC8L1N"
     });
-    // console.log("xd", firebase.firestore())
     window.fireDB = window.fbApp.firestore();
+    window.storage = window.fbApp.storage();
     if (document.location.port.length === 0) { // ignore dev environments
         window.logUse = window.fbApp.analytics();
     } else {
