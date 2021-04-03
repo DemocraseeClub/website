@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {withSnackbar} from 'notistack';
-import {withStyles} from '@material-ui/core/styles';
-
+import {withStyles, makeStyles} from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -12,6 +12,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepConnector from '@material-ui/core/StepConnector';
+import clsx from 'clsx';
+import Check from '@material-ui/icons/Check';
 
 class RallyCreate extends Component {
   constructor(props){
@@ -50,8 +55,78 @@ class RallyCreate extends Component {
             img: "/images/democrasee_logo_black.png", title: "Organizer Badge"
         }
     ]
+    const QontoConnector = withStyles({
+      alternativeLabel: {
+        top: 10,
+        left: 'calc(-50% + 16px)',
+        right: 'calc(50% + 16px)',
+      },
+      active: {
+        '& $line': {
+          borderColor: '#1c54b2',
+        },
+      },
+      completed: {
+        '& $line': {
+          borderColor: '#1c54b2',
+        },
+      },
+      line: {
+        borderColor: '#eaeaf0',
+        borderTopWidth: 10,
+        borderRadius: 1,
+      },
+    })(StepConnector);
+
+    const useQontoStepIconStyles = makeStyles({
+      root: {
+        color: '#eaeaf0',
+        display: 'flex',
+        height: 22,
+        alignItems: 'center',
+      },
+      active: {
+        color: '#1c54b2',
+      },
+      circle: {
+        width: 8,
+        height: 8,
+        borderRadius: '50%',
+        backgroundColor: 'currentColor',
+      },
+      completed: {
+        color: '#1c54b2',
+        zIndex: 1,
+        fontSize: 18,
+      },
+    });
+    function QontoStepIcon(props) {
+      const classes = useQontoStepIconStyles();
+      const { active, completed } = props;
+      return (
+        <div
+          className={clsx(classes.root, {
+            [classes.active]: active,
+          })}
+        >
+          {completed ? <Check className={classes.completed} /> : <div className={classes.circle} />}
+        </div>
+      );
+    }
+    function getSteps() {
+      return ['Create a Rally', 'Meeting Details', 'Meeting Agenda', 'Research & Speakers' ,' Review & Share'];
+    }
+    const steps = getSteps();
+
     return (
-      <Box className={classes.createRallySection}>
+      <Box className={classes.createRallySection} >
+        <Stepper alternativeLabel activeStep={1} connector={<QontoConnector />} className={classes.stepper}>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
       <Typography variant={'h5'} className={classes.createRallyTitle}> <b>Create a Rally</b></Typography>
       <Typography variant={'body1'} className={classes.createRallyDescription}>A rally is an event that people can join to discuss specific topics and come up with solutions to the most pressing problems</Typography>
       <Grid container spacing={4} className={classes.itemsContainer}>
@@ -156,6 +231,9 @@ const useStyles = theme => ({
   },
   itemsContainer: {
       marginBottom: '30px'
+  },
+  stepper: {
+    margin: '40px 0 60px 0'
   }
 });
 
