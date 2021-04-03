@@ -61,8 +61,8 @@ function App() {
                         <Route path="/about"><About/></Route>
                         <Route path="/ethics"><Ethics/></Route>
                         <Route path="/users"><Ethics/></Route>
+                        <Route path="/rallyCreate" component={RallyCreate}/>
                         <Route path="/"><Home /></Route>
-                        <Route exact path="/rally/create" component={RallyCreate}/>
                     </Switch>
                     <Footer />
                 </Router>
