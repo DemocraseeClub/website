@@ -14,10 +14,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import { Input } from "@material-ui/core";
-
-class CreateRallyMeetingDetailsTab extends Component {
-  constructor(props) {
     super(props);
     this.state = {
       selectedDate: new Date("2014-08-18T21:11:54"),
