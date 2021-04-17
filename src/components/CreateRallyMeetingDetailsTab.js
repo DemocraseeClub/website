@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { withSnackbar } from "notistack";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -14,6 +14,9 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+
+class CreateRallyMeetingDetailsTab extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       selectedDate: new Date("2014-08-18T21:11:54"),
