@@ -37,6 +37,7 @@
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "firebase": "^8.2.9",
+    "material-ui-dropzone": "^3.5.0",
     "moment": "^2.24.0",
     "notistack": "^0.8.8",
     "react": "^16.14.0",
