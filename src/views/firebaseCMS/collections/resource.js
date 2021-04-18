@@ -71,19 +71,19 @@ const resourceSchema = buildSchema({
           title: "Date End",
           dataType: "timestamp",
         },
-      },
-    },
-    office_hours_recurring: {
-      title: "Repeats",
-      dataType: "string",
-      config: {
-        enumValues: {
-          daily: "Daily",
-          weekly: "Weekly on %dayofweek%",
-          monthly: "Monthly on %weekofmonth%",
-          weekdays: "Every weekday (monday to friday)"
+        recurring: {
+          title: "Repeats",
+          dataType: "string",
+          config: {
+            enumValues: {
+              daily: "Daily",
+              weekly: "Weekly on %dayofweek%",
+              monthly: "Monthly on %weekofmonth%",
+              weekdays: "Every weekday (monday to friday)"
+            }
+          }
         }
-      }
+      },
     }
   },
 });
