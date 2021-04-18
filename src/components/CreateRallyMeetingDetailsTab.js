@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { withSnackbar } from "notistack";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +8,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  KeyboardTimePicker,
 } from "@material-ui/pickers";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -68,32 +69,24 @@ class CreateRallyMeetingDetailsTab extends Component {
           />
           <Grid container spacing={5}>
             <Grid item>
-              <TextField
-                id="time"
+              <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
                 label="Start time"
-                type="time"
-                defaultValue="07:30"
-                className={classes.input}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  step: 300, // 5 min
+                value={this.state.selectedDate}
+                KeyboardButtonProps={{
+                  "aria-label": "change time",
                 }}
               />
             </Grid>
             <Grid item>
-              <TextField
-                id="time"
+              <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
                 label="End time"
-                type="time"
-                defaultValue="07:30"
-                className={classes.input}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  step: 300, // 5 min
+                value={this.state.selectedDate}
+                KeyboardButtonProps={{
+                  "aria-label": "change time",
                 }}
               />
             </Grid>
@@ -148,10 +141,56 @@ class CreateRallyMeetingDetailsTab extends Component {
               <TextField
                 className={classes.lastSecondInput}
                 id="outlined-textarea"
-                label="Video meeting URL"
-                placeholder="https://zoom.com"
+                label="Address"
+                placeholder="123 Street"
                 variant="outlined"
               />
+            </Grid>
+            <Grid item>
+              <Grid
+                container
+                className={classes.addressInputsContainer}
+                spacing={5}
+              >
+                <Grid item>
+                  <TextField
+                    className={classes.input}
+                    id="outlined-textarea"
+                    label="City"
+                    placeholder="Los angeles"
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    className={classes.stateInput}
+                    id="outlined-select-currency"
+                    select
+                    label="State"
+                    value={this.state.currency}
+                    variant="outlined"
+                    placeholder="California"
+                  >
+                    {currencies.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item>
+                  <TextField
+                    className={classes.zipInput}
+                    id="outlined-number"
+                    label="Zip"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item>
               <TextField
@@ -216,6 +255,15 @@ const useStyles = () => ({
       color: "white",
     },
     margin: "30px 0",
+  },
+  addressInputsContainer: {
+    marginTop: "20px",
+  },
+  stateInput: {
+    width: "175px",
+  },
+  zipInput: {
+    width: "100px",
   },
 });
 
