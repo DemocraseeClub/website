@@ -58,6 +58,33 @@ const resourceSchema = buildSchema({
       collectionPath: "resource_types",
       previewProperties: ["type"],
     },
+    office_hours: {
+      title: "Office Hours",
+      dataType: "map",
+      validation: {required: false},
+      properties: {
+        date_start: {
+          title: "Date Start",
+          dataType: "timestamp",
+        },
+        date_end: {
+          title: "Date End",
+          dataType: "timestamp",
+        },
+      },
+    },
+    office_hours_recurring: {
+      title: "Repeats",
+      dataType: "string",
+      config: {
+        enumValues: {
+          daily: "Daily",
+          weekly: "Weekly on %dayofweek%",
+          monthly: "Monthly on %weekofmonth%",
+          weekdays: "Every weekday (monday to friday)"
+        }
+      }
+    }
   },
 });
 
