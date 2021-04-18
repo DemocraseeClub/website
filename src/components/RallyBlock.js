@@ -116,17 +116,8 @@ class RallyHome extends Component {
                         }
                         </Box>
 
-                        <Box mt={4} p={1} display={{ xs: 'block', md: 'none' }}>
-                            <AvatarGroup>
-                                {profiles.map((r, i) => r.img ?
-                                    <Avatar key={'speakerGroup-'+ i} alt={r.name} src={r.img} />
-                                    :
-                                    <Avatar key={'speakerGroup-'+ i} >{r.icon || r.name}</Avatar>)}
-                            </AvatarGroup>
-                        </Box>
-
                         {rally.start && new Date(rally.start) > new Date().getTime() ?
-                        <Box mt={4} p={1} display={{ xs: 'none', md: 'block' }} className={classes.roundtable} >
+                        <Box mt={4} p={1} className={classes.roundtable} >
                             {profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
                                     <ListItemIcon>
@@ -137,7 +128,17 @@ class RallyHome extends Component {
                                     <ListItemText primary={r.name} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
-                        </Box> : ''}
+                        </Box>
+                        :
+                        <Box mt={4} p={1} >
+                            <AvatarGroup>
+                                {profiles.map((r, i) => r.img ?
+                                    <Avatar key={'speakerGroup-'+ i} alt={r.name} src={r.img} />
+                                    :
+                                    <Avatar key={'speakerGroup-'+ i} >{r.icon || r.name}</Avatar>)}
+                            </AvatarGroup>
+                        </Box>
+                        }
 
 
                     </Grid>
