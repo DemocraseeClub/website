@@ -1,7 +1,7 @@
-import { connect } from 'react-redux';
-import { entityData } from '../redux/entityDataReducer';
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import {connect} from 'react-redux';
+import {entityData} from '../redux/entityDataReducer';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
 import PlanList from '../components/PlanList';
 import ProgressLoading from "../components/ProgressLoading";

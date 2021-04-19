@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
-import { TextField } from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
-import { FieldDescription } from "@camberi/firecms";
+import {FieldDescription} from "@camberi/firecms";
 import LockIcon from '@material-ui/icons/Lock';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
@@ -37,11 +37,11 @@ function CustomPasswordField({
         required={property.validation?.required}
         error={!!error}
         disabled={isSubmitting}
-        InputLabelProps={{ className: classes.root }} 
+        InputLabelProps={{ className: classes.root }}
         label={
             <>
                     <LockIcon />
-                    <span style={{marginLeft:"8px"}}>{property.title}</span>    
+                    <span style={{marginLeft:"8px"}}>{property.title}</span>
             </>
           }
         value={value ?? ""}
@@ -62,7 +62,7 @@ function CustomPasswordField({
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                 </InputAdornment>
-                
+
         }}
       />
 

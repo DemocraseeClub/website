@@ -1,4 +1,3 @@
-import Logger from './logger';
 import Config from '../Config';
 //import oauth2 from 'simple-oauth2';
 var ClientOAuth2 = require('client-oauth2');

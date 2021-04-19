@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import PlanList from './components/PlanList';
 import rallyData from './data/libel.js';
-import {createMuiTheme, ThemeProvider, responsiveFontSizes} from '@material-ui/core/styles';
+import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 
 let appTheme = createMuiTheme({
     palette: {

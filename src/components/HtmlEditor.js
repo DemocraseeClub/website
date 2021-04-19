@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React, {Component} from 'react';
-import {ContentState, EditorState, convertFromHTML} from 'draft-js';
-import Editor, {createEditorStateWithText, composeDecorators} from '@draft-js-plugins/editor';
+import {ContentState, convertFromHTML, EditorState} from 'draft-js';
+import Editor, {composeDecorators, createEditorStateWithText} from '@draft-js-plugins/editor';
 
 import createLinkPlugin from '@draft-js-plugins/anchor';
 import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
@@ -12,7 +12,15 @@ import createVideoPlugin from '@draft-js-plugins/video';
 import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
 import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
 import createResizeablePlugin from '@draft-js-plugins/resizeable';
-import {ItalicButton, BoldButton, UnderlineButton, CodeButton, UnorderedListButton, OrderedListButton, BlockquoteButton} from '@draft-js-plugins/buttons';
+import {
+    BlockquoteButton,
+    BoldButton,
+    CodeButton,
+    ItalicButton,
+    OrderedListButton,
+    UnderlineButton,
+    UnorderedListButton
+} from '@draft-js-plugins/buttons';
 import {stateToHTML} from 'draft-js-export-html';
 
 import '@draft-js-plugins/static-toolbar/lib/plugin.css';
