@@ -1,4 +1,4 @@
-import { readFile } from '@draft-js-plugins/drag-n-drop-upload';
+import {readFile} from '@draft-js-plugins/drag-n-drop-upload';
 
 export default function MockUpload(data, success, failed, progress) {
     function doProgress(percent) {

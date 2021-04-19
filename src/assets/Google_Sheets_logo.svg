@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 18.2 25" style="enable-background:new 0 0 18.2 25;" xml:space="preserve">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+     viewBox="0 0 18.2 25" style="enable-background:new 0 0 18.2 25;" xml:space="preserve">
 <style type="text/css">
 	.st0{filter:url(#Adobe_OpacityMaskFilter);}
 	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
@@ -76,7 +76,7 @@
 										c0.9,0,1.7-0.8,1.7-1.7V5.9L10.5-1z"/>
 								</g>
 							</mask>
-							
+
 								<linearGradient id="Path_7_" gradientUnits="userSpaceOnUse" x1="-880.0161" y1="471.8466" x2="-880.0161" y2="471.4954" gradientTransform="matrix(16.452 0 0 -16.4483 14492.2393 7766.9932)">
 								<stop  offset="0" style="stop-color:#263238;stop-opacity:0.2"/>
 								<stop  offset="1" style="stop-color:#263238;stop-opacity:2.000000e-02"/>
@@ -153,7 +153,7 @@
 							<path id="Path_5_" class="st15" d="M12.2,5.9c-0.9,0-1.7-0.8-1.7-1.7v0.1c0,0.9,0.8,1.7,1.7,1.7h5.1V5.9H12.2z"/>
 						</g>
 					</g>
-					
+
 						<radialGradient id="Path_11_" cx="-916.0853" cy="493.9521" r="0.6194" gradientTransform="matrix(47.3333 0 0 -47.3334 43361.1094 23380.1309)" gradientUnits="userSpaceOnUse">
 						<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0.1"/>
 						<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>

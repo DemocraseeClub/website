@@ -1,4 +1,4 @@
-import { EntityCollection } from "@camberi/firecms";
+import {EntityCollection} from "@camberi/firecms";
 import userCollection from "./collections/user";
 import resourceCollection from "./collections/resource";
 import resourceTypesCollection from "./collections/resource_types";

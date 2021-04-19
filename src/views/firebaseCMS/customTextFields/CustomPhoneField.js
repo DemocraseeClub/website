@@ -1,10 +1,10 @@
 import React from "react";
 
-import { TextField } from "@material-ui/core";
-import { FieldDescription } from "@camberi/firecms";
+import {TextField} from "@material-ui/core";
+import {FieldDescription} from "@camberi/firecms";
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
@@ -38,7 +38,7 @@ function CustomPhoneField({
         label={
             <>
                     <PhoneIphoneIcon />
-                    <span style={{marginLeft:"8px"}}>{property.title}</span>    
+                    <span style={{marginLeft:"8px"}}>{property.title}</span>
             </>
             }
         value={value ?? ""}
@@ -49,7 +49,7 @@ function CustomPhoneField({
         fullWidth
         variant={"filled"}
         type={"tel"}
-        
+
       />
 
       <FieldDescription property={property} />
