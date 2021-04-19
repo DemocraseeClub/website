@@ -1,8 +1,9 @@
 import API from '../Util/API';
 import Drupal2Json from '../Util/Drupal2Json';
 import Grammer from "../Util/Grammer";
-import { _showNotice} from "./formsReducer";
+import {_showNotice} from "./formsReducer";
 import {nextPage} from "./listDataReducer";
+
 const MP3_PLAY = 'mp3s:PLAY'; // play track
 const MP3_LOAD = 'mp3s:LOAD'; // set, display and preload for current track
 const MP3_PLAYLIST = 'mp3s:PLAYLIST'; // set active playlist for current track

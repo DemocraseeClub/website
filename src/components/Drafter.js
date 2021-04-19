@@ -1,6 +1,6 @@
 import React, {Component} from "react"
-import { convertToRaw, convertFromHTML } from "draft-js"
-import { DraftailEditor, ENTITY_TYPE, BLOCK_TYPE, INLINE_STYLE } from "draftail"
+import {convertFromHTML, convertToRaw} from "draft-js"
+import {BLOCK_TYPE, DraftailEditor, ENTITY_TYPE, INLINE_STYLE} from "draftail"
 // import LinkSource from "../Draftail/sources/LinkSource";
 // import {NavLink} from "react-router-dom";
 

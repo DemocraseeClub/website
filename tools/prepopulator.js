@@ -10,7 +10,14 @@ const firebaseConfig = {
 };
 // loop over public/json and ... create docs:
 
+let list = {
+    'capec': 'stix-capec.json',
+    'enterprise-attack': 'enterprise-attack.json'
+}
+
+
 const docRef = db.collection('users').doc('alovelace');
+
 
 await docRef.set({
     first: 'Ada',

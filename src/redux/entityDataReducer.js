@@ -1,5 +1,4 @@
 import API from '../Util/API';
-import {getIdbySegment} from './authActions';
 
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
 const ITEM_DATA_FAILURE = 'entity:ITEM_DATA_FAILURE';
@@ -59,30 +58,17 @@ export const entityData = (url) => {
 
     const state = getState();
     if (state.entity.loading === true) return false;
-
     dispatch(entityDataStarted(url));
-
     API.Get(url).then((res) => {
       const msg = API.checkError(res.data);
-      const tdata = getIdbySegment(url);
-      tdata.bundle = url.split('/');
-      tdata.bundle = tdata.bundle[tdata.bundle.length - 2];
       if (msg.length > 0) {
-        tdata.verb = 'failed';
         dispatch(entityDataFailure(msg));
       } else {
         dispatch(entityDataSuccess(res.data));
         if (res.data.type === 'meeting') {
           dispatch(initCounter());
         }
-        tdata.verb = 'view';
       }
-
-      if (state.auth.me && state.auth.me.profile) {
-          tdata.uid = state.auth.me.profile.uid[0].value;
-      }
-      window.logUse.logEvent('load_entity', tdata);
-
     }).catch((err) => {
       var msg = API.getErrorMsg(err);
       dispatch(entityDataFailure(msg));

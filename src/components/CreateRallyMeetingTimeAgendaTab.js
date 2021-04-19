@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { withSnackbar } from "notistack";
+import React, {Component} from "react";
+import {withStyles} from "@material-ui/core/styles";
+import {withSnackbar} from "notistack";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import MeetingTimeAgendaCard from "./MeetingTimeAgendaCard";

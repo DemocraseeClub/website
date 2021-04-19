@@ -1,12 +1,8 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {withSnackbar} from 'notistack';
-import CardActionArea from "@material-ui/core/CardActionArea";
 import Grid from "@material-ui/core/Grid";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
@@ -15,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import CardHeader from '@material-ui/core/CardHeader';
 
 class Resources extends React.Component {
 
@@ -79,7 +74,7 @@ class Resources extends React.Component {
                             <Grid item>
                                 <Box display="flex" alignItems="center">
                                     <Avatar src="/images/democrasee_logo_black.png" className={classes.blueSectionItemImg} alt="citizen-coin"/>
-                                    <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Earn 2 - 2000 Citizen Coins</b></Typography>                                    
+                                    <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Earn 2 - 2000 Citizen Coins</b></Typography>
                                 </Box>
                             </Grid>
                             <Grid item>

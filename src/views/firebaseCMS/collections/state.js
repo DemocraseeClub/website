@@ -1,4 +1,4 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const stateSchema = buildSchema({
   name: "State",
@@ -16,7 +16,7 @@ const stateSchema = buildSchema({
           mediaType: "image",
           storagePath: "state_icon",
           acceptedFiles: ["image/*"],
-          
+
         },
       },
     },

@@ -5,9 +5,12 @@ import Button from '@material-ui/core/Button';
 import {NavLink} from "react-router-dom";
 
 import Dialog from '@material-ui/core/Dialog';
-// import Typography from '@material-ui/core/Typography';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
+import {setThemeMode} from "../redux/authActions";
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 class Footer extends React.Component {
 
@@ -15,7 +18,12 @@ class Footer extends React.Component {
         super(p);
         this.state = { dialog : false }
         this.toggleDialog = this.toggleDialog.bind(this);
+        this.changeTheme = this.changeTheme.bind(this);
     }
+
+    changeTheme(event) {
+        this.props.dispatch(setThemeMode(event.target.checked === true ? 'dark' : 'light'));
+    };
 
     toggleDialog() {
         this.setState({dialog:!this.state.dialog});
@@ -64,6 +72,20 @@ class Footer extends React.Component {
                             <li><NavLink to={'/'}>Home</NavLink></li>
                             <li><NavLink to={'/about'}>Team</NavLink></li>
                             <li><NavLink to={'/ethics'}>Ethics</NavLink></li>
+                            <li>
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={this.props.theme.palette.type === 'dark'}
+                                            onChange={this.changeTheme}
+                                            color="primary"
+                                            inputProps={{'aria-label': 'Dark mode'}}
+                                        />
+                                    }
+                                    labelPlacement={"end"}
+                                    label="Dark Mode"
+                                />
+                            </li>
                         </ul>
                     </Grid>
                 </Grid>
