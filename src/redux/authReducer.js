@@ -10,7 +10,6 @@ export const VERIFY_STARTED = 'VERIFY_STARTED'
 export const VERIFY_SUCCESS = 'VERIFY_SUCCESS' // an opportunity for the client to route what's next
 export const VERIFY_FAILURE = 'VERIFY_FAILURE'
 
-export const GROUP_CHANGED = 'GROUP_CHANGED';
 export const LOG_OUT = 'LOG_OUT' // generally async anyway (client kills token, doesn't need callback for revoking on server)
 
 export const SET_THEME_COLORS = 'SET_THEME_COLORS';
@@ -35,7 +34,7 @@ let lightMode = {
         },
         background: {
             default: '#ffffff',
-            paper: '#f1f1f1',
+            paper: '#f9f9f9',
         }
     }
 };
