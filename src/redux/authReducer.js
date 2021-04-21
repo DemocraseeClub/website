@@ -34,7 +34,7 @@ let lightMode = {
         },
         background: {
             default: '#ffffff',
-            paper: '#f0f9f9',
+            paper: '#fbffff',
         }
     }
 };
