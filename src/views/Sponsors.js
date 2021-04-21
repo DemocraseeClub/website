@@ -11,6 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -91,23 +92,56 @@ class Sponsors extends React.Component {
                     https://github.com/eliataylor/clock-agendas - README.md
                 </Typography>
                 <Typography variant={'body2'}>
-                spending choices are controlled by our Board - http://localhost:3000/about
+                    Spending choices are controlled by our Board - /about
                 </Typography>
             </div>)
         } else if (type === 'citizencoin') {
             return (<div>
-                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>How to earn CitizenCoin?</Typography>
-                    <Typography variant={'body2'}>
-                        Speak at a Rally Meeting - $10
-                    </Typography>
-                    <Typography variant={'body2'}>
+                    <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>How to earn
+                        CitizenCoin?</Typography>
+                    <List>
+                        <ListItem>
+                            <ListItemIcon></ListItemIcon>
+                            <ListItemText primary={"Host a Rally"} secondary={"$20"}/>
+                        </ListItem>
 
+                        <ListItem>
+                            <ListItemIcon></ListItemIcon>
+                            <ListItemText primary={"Speak at a Rally Meeting"} secondary={"$15"}/>
+                        </ListItem>
+
+                        <ListItem>
+                            <ListItemIcon></ListItemIcon>
+                            <ListItemText primary={"Offer Office Hours"} secondary={"$5 / hour"}/>
+                        </ListItem>
+                    </List>
+
+                    <Typography variant={'body2'}>
+                        You may also receive promotional offers to earn CitizenCoin just for your participation in rallies and
+                        office hours, or just promoting the platform.
                     </Typography>
                 </div>
-                )
+            )
         } else if (type === 'resources') {
             return (<div>
-                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>What Resources can I Offer?</Typography>
+                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>What Resources can I offer?</Typography>
+
+                <List>
+                    <ListItem>
+                        <ListItemIcon></ListItemIcon>
+                        <ListItemText primary={"Legal Consul, Technical Writing, Sales support, Digital Marketing, Manual Labor, Professional Services..."} secondary={"and basically anything that can help someone fulfill their mission"} />
+                    </ListItem>
+
+                </List>
+
+                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>What Resources can I not offer?</Typography>
+
+                <List>
+                    <ListItem>
+                        <ListItemIcon></ListItemIcon>
+                        <ListItemText primary={"Products"} secondary={"If you distribute raw material goods that support our Rallies, please add them as 'Raw Materials'"} />
+                    </ListItem>
+                </List>
 
             </div>)
         }
@@ -140,22 +174,31 @@ class Sponsors extends React.Component {
                 </Box>
 
                 <Box mb={4}>
-                    <Typography variant={'h6'} style={{textAlign: 'center'}}>Where your money goes?</Typography>
+                    <Typography variant={'h5'} style={{textAlign: 'center'}}>Where your money goes?</Typography>
 
-                    <Grid container alignContent={'center'} justify={'space-between'} alignItems={'flex-start'} spacing={2}>
-                        <Grid item xs={6} style={{textAlign:"center"}}>
-                            <Typography variant={'h1'}>50%</Typography>
-                            <Typography variant={'h4'}>CitizenCoin & Resource payouts</Typography>
-                            <Typography variant={'body2'}>We pay you <u onClick={() => this.setState({showDialog: 'citizencoin'})}>CitizenCoin</u> so you can pay for <u onClick={() => this.setState({showDialog: 'resources'})}>Resources</u> that invest in the outcomes and action plans of your Rallies.</Typography>
-                            <br />
-                            <NavLink to={'/c/resources#new'} style={{textDecoration:'none'}}>
-                                <Button disableElevation={true} variant={'contained'} color={'secondary'} size={'small'}>Offer your services</Button>
+                    <Grid container alignContent={'center'} justify={'space-between'} alignItems={'flex-start'}
+                          spacing={2}>
+                        <Grid item xs={6} style={{textAlign: "center"}}>
+                            <Typography variant={'h5'}>50%</Typography>
+                            <Typography variant={'h3'}>CitizenCoin & Resource payouts</Typography>
+                            <Typography variant={'body2'}>We pay you <u
+                                onClick={() => this.setState({showDialog: 'citizencoin'})}>CitizenCoin</u> so you can
+                                pay for <u onClick={() => this.setState({showDialog: 'resources'})}>Resources</u> that
+                                invest in the outcomes and action plans of your Rallies.</Typography>
+                            <br/>
+                            <NavLink to={'/c/resources#new'} style={{textDecoration: 'none'}}>
+                                <Button disableElevation={true} variant={'contained'} color={'secondary'}
+                                        size={'small'}>Offer your services</Button>
                             </NavLink>
                         </Grid>
-                        <Grid item xs={6} style={{textAlign:"center"}}>
-                            <Typography variant={'h1'}>50%</Typography>
-                            <Typography variant={'h4'}>Platform Hosting, Design, Writing, Counsel & Software Development</Typography>
-                            <Typography variant={'body2'}>We all fund this platform so it will remain <u onClick={() => this.setState({showDialog: 'opensource'})}>Open Source</u> and <u onClick={() => this.setState({showDialog: 'opensource'})}>Community Developed</u>.</Typography>
+                        <Grid item xs={6} style={{textAlign: "center"}}>
+                            <Typography variant={'h5'}>50%</Typography>
+                            <Typography variant={'h3'}>Platform Hosting, Design, Writing, Counsel & Software
+                                Development</Typography>
+                            <Typography variant={'body2'}>We collectively fund this platform, so it will always remain <u
+                                onClick={() => this.setState({showDialog: 'opensource'})}>Open Source</u> and <u
+                                onClick={() => this.setState({showDialog: 'opensource'})}>Community
+                                Developed</u>.</Typography>
                         </Grid>
                     </Grid>
 
@@ -187,7 +230,7 @@ class Sponsors extends React.Component {
                                                 <Avatar variant={'circular'} aria-label="tool" src={user.img}
                                                         alt={user.name}/>
                                             </ListItemIcon>
-                                            <ListItemText primary={user.name} secondary={'March sponsor'}/>
+                                            <ListItemText primary={user.name} secondary={'Civic Sponsor'}/>
                                         </ListItem>)
                                     })}
                                 </CardActions>

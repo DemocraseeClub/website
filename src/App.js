@@ -90,7 +90,7 @@ function App(props) {
                             <Route path="/rallies"><Rallies/></Route>
                             <Route path="/values"><Topics/></Route>
                             <Route path="/resources"><Resources/></Route>
-                            <Route path="/sponsors/cities"><Sponsors/></Route>
+                            <Route path="/sponsors"><Sponsors/></Route>
                             <Route exact path="/rally/:rid/meeting/:mid" component={MeetingHome}/>
                             <Route exact path="/rally/templates" component={RallyTemplates}/>
                             <Route exact path="/rally/:rid" component={RallyHome}/>

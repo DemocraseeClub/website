@@ -44,7 +44,12 @@ class Footer extends React.Component {
                                 <div className={classes.slogan}>Incentivizing Civic Action</div>
                             </Grid>
                         </Grid>
-                        <Button variant={'contained'} color={'secondary'} onClick={e => this.setState({dialog:true})}>Subscribe</Button>
+
+                        <Button disableElevation={true}  variant={'contained'} color={'secondary'} fullWidth={true} onClick={e => this.setState({dialog:true})}>Subscribe</Button>
+
+                        <NavLink to={'/sponsors'} style={{textDecoration:'none', marginTop:20}}>
+                            <Button disableElevation={true} variant={'contained'} color={'primary'} fullWidth={true}>Sponsor</Button>
+                        </NavLink>
 
                         <Dialog onClose={this.toggleDialog} aria-labelledby="customized-dialog-title" open={this.state.dialog}>
                             <DialogTitle id="customized-dialog-title" onClose={this.toggleDialog}>
@@ -69,6 +74,7 @@ class Footer extends React.Component {
                         <h4>Learn</h4>
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/'}>Home</NavLink></li>
+                            <li><NavLink to={'/sponsors'}>Sponsors</NavLink></li>
                             <li><NavLink to={'/about'}>Team</NavLink></li>
                             <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
                             <li>
