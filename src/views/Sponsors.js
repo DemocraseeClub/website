@@ -85,7 +85,7 @@ class Sponsors extends React.Component {
                 <Typography variant={'h2'}>How to help build this platform?</Typography>
 
                 <br />
-                
+
                 <Typography variant={'body2'}>
                     This site and all its tools are available on <a href={"https://github.com/eliataylor/clock-agendas"} target={"_blank"}>Github</a>.
                     and available via the <a href={"https://www.gnu.org/licenses/gpl-3.0.html"} target={"_blank"}>GNU License</a>.
@@ -103,22 +103,30 @@ class Sponsors extends React.Component {
             </div>)
         } else if (type === 'citizencoin') {
             return (<div>
-                    <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>How to earn
-                        CitizenCoin?</Typography>
+                    <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>
+                        <img src={"/images/citizencoin.png"} alt={"citizen coin"} height={40} style={{marginRight:10}} />
+                        How to earn CitizenCoin?
+                    </Typography>
                     <List>
                         <ListItem>
-                            <ListItemIcon></ListItemIcon>
-                            <ListItemText primary={"Host a Rally"} secondary={"$20"}/>
+                            <ListItemIcon>
+                                <img src="/images/roundtable.svg" alt='Roundtable' height={25} />
+                            </ListItemIcon>
+                            <ListItemText primary={"Host a Rally"} secondary={"Earns $20"}/>
                         </ListItem>
 
                         <ListItem>
-                            <ListItemIcon></ListItemIcon>
-                            <ListItemText primary={"Speak at a Rally Meeting"} secondary={"$15"}/>
+                            <ListItemIcon>
+                                <img src="/images/campaign_black_24dp.svg" alt='Campaign speaker' />
+                            </ListItemIcon>
+                            <ListItemText primary={"Speak at a Rally Meeting"} secondary={"Earns $15"}/>
                         </ListItem>
 
                         <ListItem>
-                            <ListItemIcon></ListItemIcon>
-                            <ListItemText primary={"Offer Office Hours"} secondary={"$5 / hour"}/>
+                            <ListItemIcon>
+                                <img src="/images/volunteer_activism_black_24dp.svg" alt='Volunteer' />
+                            </ListItemIcon>
+                            <ListItemText primary={"Offer Office Hours"} secondary={"Earns $5 / hour"}/>
                         </ListItem>
                     </List>
 
@@ -130,17 +138,19 @@ class Sponsors extends React.Component {
             )
         } else if (type === 'resources') {
             return (<div>
-                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>What Resources can I offer?</Typography>
+                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>
+                    What Resources can I sell or offer?
+                </Typography>
 
                 <List>
                     <ListItem>
-                        <ListItemIcon></ListItemIcon>
-                        <ListItemText primary={"Legal Consul, Technical Writing, Sales support, Digital Marketing, Manual Labor, Professional Services..."} secondary={"and basically anything that can help someone fulfill their mission"} />
+                        <ListItemIcon><img src="/images/volunteer_activism_black_24dp.svg" alt='Volunteer' /></ListItemIcon>
+                        <ListItemText primary={"Legal Consul, Technical Writing, Graphic Design, Sales support, Digital Marketing, Manual Labor, Professional Services..."} secondary={"& anything that can help someone fulfill their mission"} />
                     </ListItem>
 
                 </List>
 
-                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>What Resources can I not offer?</Typography>
+                <Typography variant={'h2'} onClick={() => this.setState({showDialog: 'citizencoin'})}>What can I not offer?</Typography>
 
                 <List>
                     <ListItem>
@@ -160,18 +170,20 @@ class Sponsors extends React.Component {
             <Box p={4}>
 
                 <Box mb={4}>
-                    <Grid container alignContent={'center'} justify={'space-between'} alignItems={'center'}>
+                    <Grid container alignContent={'center'} justify={'space-between'} alignItems={'center'} spacing={2}>
                         <Grid item>
                             <CitySelector/>
                         </Grid>
 
+                        <Grid item style={{flexGrow:1}}>
                         <Select value={this.state.level} onChange={e => this.handleSponsorshipLevel(e)}
-                                displayEmpty={true}>
+                                displayEmpty={true} fullWidth={true} >
                             <MenuItem value={''}>Contribute</MenuItem>
                             <MenuItem value={'civic'}>Civic Sponsor: ($1 / month)</MenuItem>
                             <MenuItem value={'county'}>County Sponsor: ($25 / year)</MenuItem>
                             <MenuItem value={'regional'}>Regional Sponsors: ($100 / year) </MenuItem>
                         </Select>
+                        </Grid>
 
                         <Grid item>
                             <Button variant={'contained'} className={this.props.classes.redBtn}>Sponsor</Button>
@@ -180,14 +192,14 @@ class Sponsors extends React.Component {
                 </Box>
 
                 <Box mb={4}>
-                    <Typography variant={'h5'} style={{textAlign: 'center'}}>Where your money goes?</Typography>
+                    <Typography variant={'h5'} color={'error'} style={{textAlign: 'center'}}>Where your money goes:</Typography>
 
                     <Grid container alignContent={'center'} justify={'space-between'} alignItems={'flex-start'}
                           spacing={2}>
                         <Grid item xs={6} style={{textAlign: "center"}}>
-                            <Typography variant={'h5'}>50%</Typography>
-                            <Typography variant={'h3'}>CitizenCoin & Resource payouts</Typography>
-                            <Typography variant={'body2'}>We pay you <u
+                            <Typography variant={'h5'} color={'error'}>50%</Typography>
+                            <Typography variant={'h3'} color={'primary'}>CitizenCoin & Resource payouts</Typography>
+                            <Typography variant={'body1'}>We pay you <u
                                 onClick={() => this.setState({showDialog: 'citizencoin'})}>CitizenCoin</u> so you can
                                 pay for <u onClick={() => this.setState({showDialog: 'resources'})}>Resources</u> that
                                 invest in the outcomes and action plans of your Rallies.</Typography>
@@ -198,13 +210,14 @@ class Sponsors extends React.Component {
                             </NavLink>
                         </Grid>
                         <Grid item xs={6} style={{textAlign: "center"}}>
-                            <Typography variant={'h5'}>50%</Typography>
-                            <Typography variant={'h3'}>Platform Hosting, Design, Writing, Counsel & Software
-                                Development</Typography>
-                            <Typography variant={'body2'}>We collectively fund this platform, so it will always remain <u
+                            <Typography variant={'h5'} color={'error'}>50%</Typography>
+                            <Typography variant={'h3'} color={'primary'}>Platform hosting, design, writing, counsel & software
+                                development</Typography>
+                            <Typography variant={'body1'}>We collectively fund this platform, so it will always remain <u
                                 onClick={() => this.setState({showDialog: 'opensource'})}>Open Source</u> and <u
                                 onClick={() => this.setState({showDialog: 'opensource'})}>Community
-                                Developed</u>.</Typography>
+                                Developed</u>.
+                            </Typography>
                         </Grid>
                     </Grid>
 
@@ -212,7 +225,7 @@ class Sponsors extends React.Component {
 
                 <Grid container justify={'space-around'} spacing={4}>
                     {CITIES.map((o, i) => {
-                        return (<Grid item xs={12} sm={6} md={4}>
+                        return (<Grid item xs={12} sm={6} md={3} key={'citysponsor'+i}>
                             <Card>
                                 <CardActionArea>
                                     <CardMedia
