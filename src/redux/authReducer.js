@@ -34,7 +34,7 @@ let lightMode = {
         },
         background: {
             default: '#ffffff',
-            paper: '#f9f9f9',
+            paper: '#f0f9f9',
         }
     }
 };
@@ -66,7 +66,7 @@ let darkMode = {
 
 const initialState = {
     me: false,
-    siteTheme: (document.location.hostname === 'localhost') ? darkMode : lightMode,
+    siteTheme: lightMode,
     loading: false,
     signUpError: false,
     verifyError: false,
