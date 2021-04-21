@@ -82,17 +82,23 @@ class Sponsors extends React.Component {
 
         } else if (type === 'opensource') {
             return (<div>
-                <Typography variant={'button'}>How to help build this platform?</Typography>
+                <Typography variant={'h2'}>How to help build this platform?</Typography>
+
+                <br />
+                
                 <Typography variant={'body2'}>
-                    This site and all its tools are available Open Source under the GNU License.
+                    This site and all its tools are available on <a href={"https://github.com/eliataylor/clock-agendas"} target={"_blank"}>Github</a>.
+                    and available via the <a href={"https://www.gnu.org/licenses/gpl-3.0.html"} target={"_blank"}>GNU License</a>.
+                    Feel free to fork the code and publish this platform for another Country than the USA.
                 </Typography>
+
+                <br />
+
                 <Typography variant={'body2'}>
-                    After Hosting services are paid, we
-                    https://github.com/eliataylor/clock-agendas/issues?q=is%3Aopen+is%3Aissue
-                    https://github.com/eliataylor/clock-agendas - README.md
-                </Typography>
-                <Typography variant={'body2'}>
-                    Spending choices are controlled by our Board - /about
+                    Choices for spending this fund are made by our <NavLink to={'/about'}>Board</NavLink>.
+                    If you would like to earn from your code contributions, please comment on any of our
+                    existing <a href={"https://github.com/eliataylor/clock-agendas/issues?q=is%3Aopen+is%3Aissue"} target={"_blank"}>Issues</a> and
+                    we'll discuss a fair rate.
                 </Typography>
             </div>)
         } else if (type === 'citizencoin') {
