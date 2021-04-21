@@ -18,7 +18,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {SnackbarProvider} from "notistack";
 import CancelIcon from '@material-ui/icons/Cancel';
-import Citizen from "./views/Citizen";
 import RallyCreate from "./views/RallyCreate";
 import {useSelector} from "react-redux";
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
@@ -91,7 +90,6 @@ function App(props) {
                             <Route path="/rallies"><Rallies/></Route>
                             <Route path="/values"><Topics/></Route>
                             <Route path="/resources"><Resources/></Route>
-                            <Route path="/citizens/:uid"><Citizen/></Route>
                             <Route path="/sponsors/cities"><Sponsors/></Route>
                             <Route exact path="/rally/:rid/meeting/:mid" component={MeetingHome}/>
                             <Route exact path="/rally/templates" component={RallyTemplates}/>

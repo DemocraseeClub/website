@@ -61,7 +61,6 @@ class Footer extends React.Component {
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/register'}>Register</NavLink></li>
                             <li><NavLink to={'/login'}>Login</NavLink></li>
-                            <li><NavLink to={'/values'}>Values</NavLink></li>
                             <li><NavLink to={'/rallies'}>Rallies</NavLink></li>
                             <li><NavLink to={'/resources'}>Resources</NavLink></li>
                         </ul>
@@ -71,7 +70,7 @@ class Footer extends React.Component {
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/'}>Home</NavLink></li>
                             <li><NavLink to={'/about'}>Team</NavLink></li>
-                            <li><NavLink to={'/ethics'}>Ethics</NavLink></li>
+                            <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
                             <li>
                                 <FormControlLabel
                                     control={
