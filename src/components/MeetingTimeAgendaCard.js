@@ -1,9 +1,9 @@
-import React, {Component} from "react";
-import {withStyles} from "@material-ui/core/styles";
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import {DropzoneArea} from "material-ui-dropzone";
+import { DropzoneArea } from "material-ui-dropzone";
 import Box from "@material-ui/core/Box";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
@@ -94,7 +94,12 @@ class MeetingTimeAgendaCard extends Component {
         >
           Add related research (optional)
         </Typography>
-        <Box display="flex" justifyContent="space-around" alignItems="center">
+        <Box
+          display="flex"
+          justifyContent="space-around"
+          alignItems="center"
+          className={classes.agendaItemSaved}
+        >
           <img
             src="/images/democrasee_logo_black.png"
             alt="example logo"
@@ -143,7 +148,7 @@ const useStyles = () => ({
     marginTop: "30px",
   },
   addRelatedContentLink: {
-    marginTop: "30px",
+    margin: "30px 0",
     color: "#1c54b2",
     textDecoration: "underline",
   },
@@ -190,6 +195,9 @@ const useStyles = () => ({
   },
   agendaItemSavedImg: {
     width: "60px",
+  },
+  agendaItemSaved: {
+    border: "1px solid gray",
   },
 });
 
