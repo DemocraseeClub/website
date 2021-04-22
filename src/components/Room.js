@@ -33,7 +33,8 @@ class Room extends React.Component {
             myStream:null,
             viewers: [],
             roomFieldText: '',
-            listener:[]
+            listener:[],
+            numberOfViewers: 0
 
         }
 
@@ -217,20 +218,24 @@ class Room extends React.Component {
         const auxList1 = roomRef.onSnapshot(async snapshot => {
 
             const data = snapshot.data();
-            console.log(data);
-            if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
-                console.log('Got remote description: ', data.answer);
-                const rtcSessionDescription = new RTCSessionDescription(data.answer);
-                await this.peerConnection.setRemoteDescription(rtcSessionDescription);
+            
+            if(data) {
+
+                if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
+                    console.log('Got remote description: ', data.answer);
+                    const rtcSessionDescription = new RTCSessionDescription(data.answer);
+                    await this.peerConnection.setRemoteDescription(rtcSessionDescription);
+                }
+    
+                let viewers = snapshot.data().roomsViewing;
+                let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
+                for(let i = viewers.length - 1; i>=0 ;i--){
+                    if(auxRoomsViewing.indexOf(viewers[i])!==-1)
+                        viewers.splice(i,1);
+                }
+                this.setState({viewers: viewers, numberOfViewers:  snapshot.data().viewers })
             }
 
-            let viewers = snapshot.data().roomsViewing;
-            let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
-            for(let i = viewers.length - 1; i>=0 ;i--){
-                if(auxRoomsViewing.indexOf(viewers[i])!==-1)
-                    viewers.splice(i,1);
-            }
-            this.setState({viewers: viewers})
         });
         // Listening for remote session description above
 
@@ -335,7 +340,7 @@ class Room extends React.Component {
                             <Grid item>
                                 <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
                             </Grid>
-                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.viewers.length} ><VisibilityIcon /></Badge></Grid>
+                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.numberOfViewers} ><VisibilityIcon /></Badge></Grid>
                             <Grid item>
                                 <Button variant="contained" color="primary"
                                         onClick={() => {
@@ -393,7 +398,7 @@ class Room extends React.Component {
                 <div className={this.props.classes.hScrollContainer}>
                     <div className={this.props.classes.hScroller} >
                         {this.state.myStream ?
-                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.viewers.length} /></div> : ''}
+                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.numberOfViewers} /></div> : ''}
                         {this.state.viewers.map((o, i) =>
                             <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom} stream={new MediaStream()} handleHangUp={id => this.handleHangUp(id)} /></div>)}
                         {this.state.roomsViewing.map((o, i) =>
