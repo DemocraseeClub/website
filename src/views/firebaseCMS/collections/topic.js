@@ -1,4 +1,4 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const topicSchema = buildSchema({
   name: "Topic",
