@@ -11,7 +11,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
-import {updateRallyItem, moveRallyItem, initCounter} from "../redux/entityDataReducer";
+import {initCounter, moveRallyItem, updateRallyItem} from "../redux/entityDataReducer";
 import HtmlEditor from "./HtmlEditor";
 
 class AgendaItemForm extends Component {

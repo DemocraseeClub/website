@@ -1,6 +1,6 @@
 import API from '../Util/API';
-import { push } from 'connected-react-router';
-import { _showNotice } from './formsReducer';
+import {push} from 'connected-react-router';
+import {_showNotice} from './formsReducer';
 //import { getParam } from '../Util/WindowUtils';
 
 export const EMAIL_LIST = 'EMAIL_LIST';

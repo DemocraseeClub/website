@@ -1,24 +1,15 @@
-import React, { Component } from "react";
-import { withSnackbar } from "notistack";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import React, {Component} from "react";
+import {withSnackbar} from "notistack";
+import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { DropzoneArea } from "material-ui-dropzone";
 import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import StepConnector from "@material-ui/core/StepConnector";
 import clsx from "clsx";
 import Check from "@material-ui/icons/Check";
-import CreateRallyMeetingDetailsTab from "../components/CreateRallyMeetingDetailsTab";
 import CreateRallyMeetingTimeAgendaTab from "../components/CreateRallyMeetingTimeAgendaTab";
+
 class RallyCreate extends Component {
   //   constructor(props){
   //     super(props)
