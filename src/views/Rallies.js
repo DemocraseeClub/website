@@ -69,10 +69,10 @@ class Rallies extends React.Component {
                                 /></NavLink>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Worker/Housing/Community Cooperatives to solve budget crisis
+                                        The city of El Cerrito is going through a financial crisis during a national and international emergency. It's critical that the city and community explore ventures that can significantly improve social mobility, economic justice, and the social emotional health of the community while empowering the city's infrastructure to outlast the emergency and be resilient for future ones.
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Open sourcing our development for a constructive solution to our biggest challenges
+
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>

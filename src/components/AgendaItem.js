@@ -13,7 +13,7 @@ import Unchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import Config from '../Config';
 import AgendaItemForm from "./AgendaItemForm";
 // import AgendaItemTools from "./AgendaItemTools";
-import { formatSeconds} from "../Util/WindowUtils";
+import {formatSeconds} from "../Util/WindowUtils";
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // import {ReactComponent as GoogleSheetsIcon} from '../assets/Google_Sheets_logo.png';
 // import {ReactComponent as GoogleDocsIcon} from '../assets/Google_Docs_logo.png';

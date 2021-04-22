@@ -2,7 +2,7 @@ import React from "react";
 import VideoElement from "./VideoElement";
 import PropTypes from "prop-types";
 import Config from "../Config";
-import { Beforeunload } from "react-beforeunload";
+import {Beforeunload} from "react-beforeunload";
 
 class RemoteVideo extends React.Component {
   constructor(p) {
