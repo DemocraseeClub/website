@@ -20,7 +20,8 @@ class VideoElement extends Component {
             this.listener = true;
             const auxListener = window.fireDB.collection('rooms').doc(this.props.roomId).onSnapshot((snap) => {
                 console.log(snap.data(), 'snap')
-                this.setState({viewers:snap.data().viewers}) ;
+                if(snap.data())
+                    this.setState({viewers:snap.data().viewers}) ;
             })
 
             this.setState({listener:auxListener})
