@@ -43,11 +43,11 @@ class CreateRallyTab extends Component {
 
     const CreateRallyItems = [
       {
-        img: "/images/democrasee_logo_black.png",
+        img: "/images/coin.png",
         title: "Get 100 Citizen Coins",
       },
       {
-        img: "/images/democrasee_logo_black.png",
+        img: "/images/storyteller.jpeg",
         title: "Organizer Badge",
       },
     ];
@@ -71,7 +71,11 @@ class CreateRallyTab extends Component {
               <>
                 <Grid item>
                   <Box display="flex" alignItems="center">
-                    <Avatar variant="square" src={item.img} />
+                    <Avatar
+                      variant="square"
+                      src={item.img}
+                      className={classes.createRallyItemImg}
+                    />
                     <Typography variant="body2">{item.title}</Typography>
                   </Box>
                 </Grid>
@@ -159,6 +163,9 @@ const useStyles = (theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  createRallyItemImg: {
+    marginRight: "10px",
+  },
   createRallyTitle: {
     marginBottom: "20px",
   },
@@ -187,9 +194,6 @@ const useStyles = (theme) => ({
   },
   itemsContainer: {
     marginBottom: "30px",
-  },
-  stepper: {
-    margin: "40px 0 60px 0",
   },
 });
 
