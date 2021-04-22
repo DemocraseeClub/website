@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import {withSnackbar} from "notistack";
-import {makeStyles, withStyles} from "@material-ui/core/styles";
+import React, { Component } from "react";
+import { withSnackbar } from "notistack";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Box from "@material-ui/core/Box";
 import Step from "@material-ui/core/Step";
@@ -9,7 +9,7 @@ import StepConnector from "@material-ui/core/StepConnector";
 import clsx from "clsx";
 import Check from "@material-ui/icons/Check";
 import CreateRallyMeetingTimeAgendaTab from "../components/CreateRallyMeetingTimeAgendaTab";
-
+import CreateRallyTab from "../components/CreateRallyTab";
 class RallyCreate extends Component {
   //   constructor(props){
   //     super(props)
@@ -137,7 +137,8 @@ class RallyCreate extends Component {
           ))}
         </Stepper>
         {/* <CreateRallyMeetingDetailsTab /> */}
-        <CreateRallyMeetingTimeAgendaTab />
+        {/* <CreateRallyMeetingTimeAgendaTab /> */}
+        <CreateRallyTab />
       </Box>
       //     <Typography variant={'h5'} className={classes.createRallyTitle}> <b>Create a Rally</b></Typography>
       //     <Typography variant={'body1'} className={classes.createRallyDescription}>A rally is an event that people can join to discuss specific topics and come up with solutions to the most pressing problems</Typography>
