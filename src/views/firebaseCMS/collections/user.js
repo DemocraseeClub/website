@@ -1,4 +1,4 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 import CustomPasswordField from "../customTextFields/CustomPasswordField";
 import CustomPhoneField from "../customTextFields/CustomPhoneField";
@@ -86,10 +86,8 @@ const userSchema = buildSchema({
     topic_def_json: {
       title: "Topic Definitions JSON",
       dataType: "string",
-      config: {
-        multiline: true,
-      },
-      validation: {},
+      config: {multiline: true},
+      validation: {}
     },
     resources: {
       title: "Resources",
@@ -104,6 +102,10 @@ const userSchema = buildSchema({
       title: "Admin",
       dataType: "boolean",
     },
+    boardmember: {
+      title: "Board Member",
+      dataType: "boolean",
+    }
   },
 });
 
@@ -111,24 +113,37 @@ userSchema.onPreSave = ({ values }) => {
   if (values.topic_def_json?.trim()) {
     const value = JSON.parse(values.topic_def_json.trim());
 
-    if (!value)
-      throw new Error(
-        "This value (Topic Definitions JSON) must be a valid JSON"
-      );
+      if (!value)
+        throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
 
-    if (typeof value !== "object")
-      throw new Error(
-        "This value (Topic Definitions JSON) must be a valid JSON"
-      );
+      if (typeof value !== "object")
+        throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
   }
 
   console.log("values", values);
+  if(values?.uids) {
 
+    if(values.admin) {
+
+      values.uids.forEach(async (uid) => {
+        window.fireDB.collection('roles').doc(uid).update({
+          role: "ROLE_ADMIN"
+        });
+      })
+
+    } else {
+
+      values.uids.forEach(async (uid) => {
+        window.fireDB.collection('roles').doc(uid).update({
+          role: "ROLE_USER"
+        })
+      })
+    }
+  }
   return values;
 };
 
 export default (userDB) => {
-  
   return buildCollection({
     relativePath: "users",
     schema: userSchema,
@@ -141,7 +156,6 @@ export default (userDB) => {
           delete: true,
         };
       } else {
-     
         return {
           edit: false,
           create: false,

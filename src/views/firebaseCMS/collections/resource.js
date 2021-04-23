@@ -1,8 +1,15 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const resourceSchema = buildSchema({
   name: "Resource",
   properties: {
+    author: {
+      title: "User",
+      dataType: "reference",
+      validation: {required: true},
+      collectionPath: "users",
+      previewProperties: ["userName"]
+    },
     title: {
       title: "Title",
       dataType: "string",
@@ -15,7 +22,7 @@ const resourceSchema = buildSchema({
       title: "Description HTML",
       dataType: "string",
       validation: {
-        required: true,
+        required: false,
       },
       config: {
         multiline: true,
@@ -41,7 +48,7 @@ const resourceSchema = buildSchema({
       title: "Price (citizencoin)",
       dataType: "number",
       validation: {
-        required: true,
+        required: false,
         positive: true,
       },
     },
@@ -51,6 +58,33 @@ const resourceSchema = buildSchema({
       collectionPath: "resource_types",
       previewProperties: ["type"],
     },
+    office_hours: {
+      title: "Office Hours",
+      dataType: "map",
+      validation: {required: false},
+      properties: {
+        date_start: {
+          title: "Date Start",
+          dataType: "timestamp",
+        },
+        date_end: {
+          title: "Date End",
+          dataType: "timestamp",
+        },
+        recurring: {
+          title: "Repeats",
+          dataType: "string",
+          config: {
+            enumValues: {
+              daily: "Daily",
+              weekly: "Weekly on %dayofweek%",
+              monthly: "Monthly on %weekofmonth%",
+              weekdays: "Every weekday (monday to friday)"
+            }
+          }
+        }
+      },
+    }
   },
 });
 

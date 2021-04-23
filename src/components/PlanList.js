@@ -16,7 +16,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import {countDown} from "../redux/entityDataReducer";
 import AgendaItem from "./AgendaItem";
-import { formatSeconds} from "../Util/WindowUtils";
+import {formatSeconds} from "../Util/WindowUtils";
 import Room from "./Room";
 import AgendaItemTools from "./AgendaItemTools";
 

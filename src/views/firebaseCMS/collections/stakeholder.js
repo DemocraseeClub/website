@@ -1,4 +1,4 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const stakeholderSchema = buildSchema({
   name: "Stakeholder",
@@ -19,7 +19,7 @@ const stakeholderSchema = buildSchema({
         },
       },
     },
-    
+
   },
 });
 
