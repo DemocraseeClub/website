@@ -1,4 +1,4 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const actionPlanSchema = buildSchema({
   name: "Action Plan",
@@ -79,7 +79,7 @@ const actionPlanSchema = buildSchema({
         collectionPath: "rallies",
         previewProperties: ["title", "picture"]
     }
-    
+
   },
 });
 

@@ -1,4 +1,3 @@
-import Observer from 'fontfaceobserver';
 import store from 'store-css';
 
 // import external font stylesheet

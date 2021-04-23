@@ -54,7 +54,7 @@ const updateUserRole = (userDB : firebase.firestore.DocumentData) => {
         firebase.firestore().collection('roles').doc(uid).update({
           role: "ROLE_ADMIN"
         });
-      }) 
+      })
 
     } else {
 
@@ -62,10 +62,10 @@ const updateUserRole = (userDB : firebase.firestore.DocumentData) => {
         firebase.firestore().collection('roles').doc(uid).update({
           role: "ROLE_USER"
         })
-      }) 
+      })
     }
 
-  } 
+  }
 }
 
 export function FirebaseCMS() {
@@ -110,17 +110,8 @@ export function FirebaseCMS() {
       return  {
         collections: [
           buildResourceCollection(userDB),
-          buildResourceTypeCollection(userDB),
-          buildTopicCollection(userDB),
-          buildStateCollection(userDB),
-          buildStakeholderCollection(userDB),
           buildRallyCollection(userDB),
-          buildPartyCollection(userDB),
-          buildPageCollection(userDB),
-          buildOfficialCollection(userDB),
           buildMeetingCollection(userDB),
-          buildMeetingTypeCollection(userDB),
-          buildCityCollection(userDB),
           buildActionPlanCollection(userDB)
         ],
       }
@@ -136,9 +127,9 @@ export function FirebaseCMS() {
                                .where("email", "==", user ? user?.email : null)
                                .get();
 
-    let auxUser : any                        
+    let auxUser : any
     resp.forEach(doc =>{ auxUser ={...doc.data(), id: doc.id} });
-    
+
     let uids = new Set([...auxUser.uids])
     uids.add(user?.uid)
 
@@ -171,7 +162,8 @@ export function FirebaseCMS() {
         ]}
         navigation={navigation}
         firebaseConfig={firebaseConfig}
-        primaryColor={"#000000"}
+        primaryColor={"#095760"}
+        secondaryColor={"#B9DFF4"}
       />
     </div>
   );

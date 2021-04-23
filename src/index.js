@@ -1,46 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'connected-react-router';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
-import configureStore, { history } from './redux/configureStore';
+import configureStore, {history} from './redux/configureStore';
+
 const store = configureStore({});
-
-
-let appTheme = createMuiTheme({
-    palette: {
-        primary: {
-            main : '#095760',
-            contrastText: '#C1D5D7'
-        },
-        secondary: {
-            main: '#B9DFF4',
-            contrastText: '#002866'
-        },
-        info : {
-            main : "#005ea2",
-            contrastText : '#ffffff'
-        },
-        error: {
-            light: '#D83933',
-            main: '#D83933',
-            dark: '#D83933'
-        }
-    },
-});
-
-appTheme = responsiveFontSizes(appTheme, {factor: 20});
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <ConnectedRouter history={history} >
-                <ThemeProvider theme={appTheme}>
-                        <App history={history} dispatch={store.dispatch} />
-                </ThemeProvider>
+            <ConnectedRouter history={history}>
+                <App history={history} dispatch={store.dispatch}/>
             </ConnectedRouter>
         </Provider>
     </React.StrictMode>,

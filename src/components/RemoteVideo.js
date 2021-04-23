@@ -2,13 +2,12 @@ import React from "react";
 import VideoElement from "./VideoElement";
 import PropTypes from "prop-types";
 import Config from "../Config";
-import { Beforeunload } from "react-beforeunload";
+import {Beforeunload} from "react-beforeunload";
 
 class RemoteVideo extends React.Component {
   constructor(p) {
     super(p);
     this.state = { remoteStream: p.stream, view: false, added: false, viewers: null};
-    this.db = p.db;
   }
 
   componentDidMount() {
@@ -36,7 +35,7 @@ class RemoteVideo extends React.Component {
   }
 
   async handleViewers(action) {
-    const roomRef = this.db.collection("rooms").doc(this.props.roomId);
+    const roomRef = window.fireDB.collection("rooms").doc(this.props.roomId);
     const roomSnapshot = await roomRef.get();
 
     if(!roomSnapshot.data()) return -1;
@@ -81,10 +80,7 @@ class RemoteVideo extends React.Component {
   }
 
   async joinRoomById(room) {
-    if (!this.props.db) {
-      this.db = window.firebase.firestore();
-    }
-    const roomRef = this.db.collection("rooms").doc(room);
+    const roomRef = window.fireDB.collection("rooms").doc(room);
 
     const roomSnapshot = await roomRef.get();
 
@@ -249,7 +245,6 @@ class RemoteVideo extends React.Component {
         <VideoElement
           stream={this.state.remoteStream}
           roomId={this.props.roomId}
-          db={this.db}
           notShowCode={true}
           viewers={this.state.viewers}
         />
