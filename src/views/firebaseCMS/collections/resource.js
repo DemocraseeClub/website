@@ -88,9 +88,31 @@ const resourceSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "resources",
-  schema: resourceSchema,
-  name: "Resources",
-  pagination: true
-});
+export default (userDB) => {
+
+  return buildCollection({
+     relativePath: "resources",
+     schema: resourceSchema,
+     name: "Resources",
+     pagination: true,
+     permissions: async ({ user, entity }) => {
+
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+
+   
+     },
+   })
+ }
