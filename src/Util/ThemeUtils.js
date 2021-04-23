@@ -53,6 +53,11 @@ export const rallyStyles = theme => ({
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(1),
     },
+    redBtn : {
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.error.contrastText,
+        textDecoration:'none!important'
+    },
     popPadding: {
         padding: theme.spacing(1),
     },
