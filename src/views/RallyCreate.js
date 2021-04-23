@@ -9,12 +9,16 @@ import StepConnector from "@material-ui/core/StepConnector";
 import clsx from "clsx";
 import Check from "@material-ui/icons/Check";
 import CreateRallyMeetingTimeAgendaTab from "../components/CreateRallyMeetingTimeAgendaTab";
+import {rallySchema} from "./firebaseCMS/collections/rally";
 
 class RallyCreate extends Component {
-  //   constructor(props){
-  //     super(props)
-  //     this.state = {selectValue: null, files: []}
-  // }
+
+  constructor(props){
+       super(props);
+       // TODO: render fields individually from rallySchema
+       this.state = {selectValue: null, files: []}
+  }
+
   render() {
     const { classes } = this.props;
 
