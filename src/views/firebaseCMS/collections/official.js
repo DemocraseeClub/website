@@ -53,9 +53,28 @@ const officialSchema = buildSchema({
   },
 });
 
-export default buildCollection({
-  relativePath: "officials",
-  schema: officialSchema,
-  name: "Officials",
-  pagination: true
-});
+
+export default (userDB) => {
+  return buildCollection({
+    relativePath: "officials",
+    schema: officialSchema,
+    name: "Officials",
+    pagination: true,
+     permissions: ({ user, entity }) => {
+   
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+     },
+   })
+ }

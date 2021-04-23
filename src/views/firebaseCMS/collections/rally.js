@@ -117,9 +117,28 @@ rallySchema.onPreSave = ({values}) => {
   return values;
 };
 
-export default buildCollection({
-  relativePath: "rallies",
-  schema: rallySchema,
-  name: "Rallies",
-  pagination: true
-});
+
+export default (userDB) => {
+  return buildCollection({
+    relativePath: "rallies",
+    schema: rallySchema,
+    name: "Rallies",
+    pagination: true,
+     permissions: ({ user, entity }) => {
+   
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+     },
+   })
+ }
