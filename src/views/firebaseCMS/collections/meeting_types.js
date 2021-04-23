@@ -1,4 +1,4 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const meetingTypeSchema = buildSchema({
   name: "Meeting Type",

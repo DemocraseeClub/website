@@ -1,8 +1,15 @@
-import { buildCollection, buildSchema } from "@camberi/firecms";
+import {buildCollection, buildSchema} from "@camberi/firecms";
 
 const rallySchema = buildSchema({
   name: "Rally",
   properties: {
+    author: {
+      title: "User",
+      dataType: "reference",
+      validation: {required: true},
+      collectionPath: "users",
+      previewProperties: ["userName"]
+    },
     title: {
       title: "Title",
       dataType: "string",
@@ -45,6 +52,19 @@ const rallySchema = buildSchema({
         previewProperties: ["name"],
       },
     },
+    wise_demo: {
+      title: "Wise Democracy",
+      dataType: "array",
+      validation: {
+        required: true,
+        max: 3,
+      },
+      of: {
+        dataType: "reference",
+        collectionPath: "wise_democracy",
+        previewProperties: ["name"],
+      },
+    },
     meetings: {
       title: "Meetings",
       dataType: "array",
@@ -66,11 +86,17 @@ const rallySchema = buildSchema({
     research: {
       title: "Research JSON",
       dataType: "string",
+      config: {multiline: true},
+      validation: {}
+    },
+    promo_video: {
+      title: "Promo Video",
+      dataType: "string",
       config: {
         storageMeta: {
-          mediaType: "json",
-          storagePath: "meeting_research",
-          acceptedFiles: ["application/json"],
+          mediaType: "video",
+          storagePath: "promo_video",
+          acceptedFiles: ["video/*"],
         },
       },
     }
@@ -78,13 +104,13 @@ const rallySchema = buildSchema({
 });
 
 rallySchema.onPreSave = ({values}) => {
-  if (values.research.trim()) {
+  if (values.research && values.research.trim()) {
       const value = JSON.parse(values.research.trim());
 
-      if (!value) 
+      if (!value)
         throw new Error("This value (Research JSON) must be a valid JSON");
 
-      if (typeof value !== "object") 
+      if (typeof value !== "object")
         throw new Error("This value (Research JSON) must be a valid JSON");
   }
 

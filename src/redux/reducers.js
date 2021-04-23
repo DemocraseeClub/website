@@ -1,6 +1,6 @@
-import { combineReducers } from 'redux-immer';
+import {combineReducers} from 'redux-immer';
 import producer from 'immer';
-import { connectRouter } from 'connected-react-router'
+import {connectRouter} from 'connected-react-router'
 import entityDataReducer from './entityDataReducer';
 import authReducer from './authReducer';
 

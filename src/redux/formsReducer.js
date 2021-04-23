@@ -1,7 +1,7 @@
 import API from '../Util/API';
 import {push} from 'connected-react-router';
 import {requestDeposit} from './walletReducer';
-import {initApp, getIdbySegment} from './authActions';
+import {getIdbySegment, initApp} from './authActions';
 import {getParam} from '../Util/WindowUtils';
 import {updateListTrack} from "./listDataReducer";
 import {updatePlayerTrack} from "./playerReducer";
