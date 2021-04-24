@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import {withStyles} from "@material-ui/core/styles";
-import {withSnackbar} from "notistack";
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import { withSnackbar } from "notistack";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import MeetingTimeAgendaCard from "./MeetingTimeAgendaCard";
@@ -9,11 +9,31 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import SwapVerticalCircleIcon from "@material-ui/icons/SwapVerticalCircle";
 import Button from "@material-ui/core/Button";
-
+import MeetingTimeAgendaSavedItem from "../components/MeetingTimeAgendaSavedItem";
 class CreateRallyMeetingTimeAgendaTab extends Component {
   render() {
     const { classes } = this.props;
-
+    const savedItems = [
+      {
+        time: "10 mins",
+        title: "First agenda item-speaker introduction",
+        img: null,
+        relatedResearchItems: null,
+      },
+      {
+        time: "45 mins",
+        title: "Second item with image and research",
+        img: null,
+        relatedResearchItems: 2,
+      },
+      {
+        time: "10 mins",
+        title:
+          "Third item - no image, really long title on two + lines and overshoots the time - so time highlights red",
+        img: null,
+        relatedResearchItems: null,
+      },
+    ];
     return (
       <Box>
         <Typography variant={"h5"} className={classes.title}>
@@ -24,7 +44,7 @@ class CreateRallyMeetingTimeAgendaTab extends Component {
           Create a plan to give structure and timing to your meeting.
         </Typography>
         <Grid container>
-          <Grid item xs={12} sm={8}>
+          {/* <Grid item xs={12} sm={8}>
             <Typography variant={"body1"}>
               <b>Meeting Agenda</b>
             </Typography>
@@ -56,15 +76,18 @@ class CreateRallyMeetingTimeAgendaTab extends Component {
                 </Typography>
               </Box>
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
+        {savedItems.map(() => (
+          <MeetingTimeAgendaSavedItem />
+        ))}
         <Button className={classes.nextButton}>Next</Button>
       </Box>
     );
   }
 }
 
-const useStyles = () => ({
+const useStyles = theme => ({
   title: {
     marginBottom: "20px",
   },
@@ -73,7 +96,7 @@ const useStyles = () => ({
   },
   icon: {
     fontSize: "70px",
-    color: "#1c54b2",
+    color: theme.palette.info.main,
   },
   buttonLabel: {
     marginLeft: "10px",
@@ -83,11 +106,11 @@ const useStyles = () => ({
   },
   nextButton: {
     padding: "10px 40px",
-    background: "#1c54b2",
+    background: theme.palette.info.main,
     color: "white",
     textTransform: "none",
     "&:hover": {
-      background: "#1c54b2",
+      background: theme.palette.info.main,
       color: "white",
     },
     margin: "30px 0",

@@ -73,19 +73,19 @@ class Resources extends React.Component {
                         <Grid container spacing={3} className={classes.blueSectionItemsContainer }>
                             <Grid item>
                                 <Box display="flex" alignItems="center">
-                                    <Avatar src="/images/democrasee_logo_black.png" className={classes.blueSectionItemImg} alt="citizen-coin"/>
+                                    <Avatar src="/images/coin.png" className={classes.blueSectionItemImg} alt="citizen-coin"/>
                                     <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Earn 2 - 2000 Citizen Coins</b></Typography>
                                 </Box>
                             </Grid>
                             <Grid item>
                                 <Box display="flex" alignItems="center">
-                                    <Avatar src="/images/democrasee_logo_black.png" className={classes.blueSectionItemImg} alt="hero-badge"/>
+                                    <Avatar src="/images/hero.jpg" className={classes.blueSectionItemImg} alt="hero-badge"/>
                                     <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Explorer or Hero Badge</b></Typography>
                                 </Box>
                             </Grid>
                             <Grid item>
                                 <Box display="flex" alignItems="center">
-                                    <Avatar src="/images/democrasee_logo_black.png" className={classes.blueSectionItemImg} alt="Time-knowledge"/>
+                                    <Avatar src="/images/lighbulb.png" className={classes.blueSectionItemImg} alt="Time-knowledge"/>
                                     <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Time and Knowledge</b></Typography>
                                 </Box>
                             </Grid>
@@ -95,7 +95,7 @@ class Resources extends React.Component {
                     </Grid>
                     <Grid item xs={4}>
                         <Box display="flex" alignItems="center" justifyContent="center">
-                            <img src="/images/democrasee_logo_black.png" alt="blueSection-hero" className={classes.blueSectionHero}/>
+                            <img src="/images/lighbulb.png" alt="blueSection-hero" className={classes.blueSectionHero}/>
                         </Box>
                     </Grid>
                 </Grid>
@@ -290,7 +290,6 @@ const useStyles = theme => ({
         },
     },
     blueSectionHero: {
-        width: "150px",
         height: "200px"
     },
     blueSectionItemsContainer: {
@@ -317,11 +316,11 @@ const useStyles = theme => ({
     },
     cardButton: {
         padding: '10px 40px',
-        background: '#1c54b2',
+        background: theme.palette.info.main,
         color: 'white',
         textTransform: 'none',
         '&:hover': {
-            background: '#1c54b2',
+            background: theme.palette.info.main,
             color: 'white',
         },
     },
@@ -332,7 +331,7 @@ const useStyles = theme => ({
         marginBottom: '15px'
     },
     cardLink: {
-        color: '#2196f3',
+        color: theme.palette.info.main,
         textDecoration: 'underline'
     },
     cardBadge: {
@@ -347,7 +346,7 @@ const useStyles = theme => ({
         alignItems: 'center'
     },
     helpSectionLink: {
-        color: '#2196f3',
+        color: theme.palette.info.main,
         textDecoration: 'underline',
         marginLeft: '100px'
     },
@@ -356,8 +355,8 @@ const useStyles = theme => ({
     },
     helpSectionButton: {
         padding: '10px 40px',
-        border: `1px solid #1c54b2`,
-        color: '#1c54b2',
+        border: `1px solid ${theme.palette.info.main}`,
+        color: theme.palette.info.main,
         textTransform: 'none',
     }
 
