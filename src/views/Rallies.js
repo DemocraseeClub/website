@@ -25,6 +25,10 @@ function withCmsHooks(Component) {
 
 class Rallies extends React.Component {
 
+    constructor(p) {
+        super(p);
+    }
+
     trackSubscribe(id) {
         this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
         window.logUse.logEvent('rally-subscribe', {'id':id});
