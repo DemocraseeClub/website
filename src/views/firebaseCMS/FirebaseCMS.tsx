@@ -25,139 +25,152 @@ import buildActionPlanCollection from "./collections/action_plan";
 
 // This is the actual config
 const firebaseConfig = {
-  apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
-  authDomain: "democraseeclub.firebaseapp.com",
-  databaseURL: "https://democraseeclub.firebaseio.com",
-  projectId: "democraseeclub",
-  storageBucket: "democraseeclub.appspot.com",
-  messagingSenderId: "1051506392090",
-  appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
-  measurementId: "G-XYVYDC8L1N",
+    apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
+    authDomain: "democraseeclub.firebaseapp.com",
+    databaseURL: "https://democraseeclub.firebaseio.com",
+    projectId: "democraseeclub",
+    storageBucket: "democraseeclub.appspot.com",
+    messagingSenderId: "1051506392090",
+    appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
+    measurementId: "G-XYVYDC8L1N",
 };
 
+/*
+const updateUserRole = (userDB: firebase.firestore.DocumentData) => {
+    if (userDB?.uids) {
 
-const updateUserRole = (userDB : firebase.firestore.DocumentData) => {
-  if(userDB?.uids) {
+        // ??? shouldn't this already be defined!?!?
+        if (userDB?.admin) {
+            userDB.uids.forEach(async (uid: string) => {
+                firebase.firestore().collection('roles').doc(uid).update({
+                    role: "ROLE_ADMIN"
+                });
+            })
 
-    if(userDB?.admin) {
-
-      userDB.uids.forEach(async (uid : string) => {
-        firebase.firestore().collection('roles').doc(uid).update({
-          role: "ROLE_ADMIN"
-        });
-      })
-
-    } else {
-
-      userDB.uids.forEach(async (uid : string) => {
-        firebase.firestore().collection('roles').doc(uid).update({
-          role: "ROLE_USER"
-        })
-      })
+        } else {
+            userDB.uids.forEach(async (uid: string) => {
+                firebase.firestore().collection('roles').doc(uid).update({
+                    role: "ROLE_USER"
+                })
+            })
+        }
     }
-
-  }
 }
+ */
 
 export function FirebaseCMS() {
-  const [userDB, setUserDB] = useState<firebase.firestore.DocumentData>();
-  const flag = useRef(false);
-  useEffect(() => {
 
-    if(userDB && !flag.current) {
-      flag.current = true;
-      updateUserRole(userDB)
-    }
+    const [userDB, setUserDB] = useState<firebase.firestore.DocumentData>();
 
-  }, [userDB])
+    /*
+    const flag = useRef(false);
+    useEffect(() => {
 
-
-  const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => {
-
-    if(userDB?.admin) {
-
-      return  {
-          collections: [
-            buildUserCollection(userDB),
-            buildResourceCollection(userDB),
-            buildResourceTypeCollection(userDB),
-            buildTopicCollection(userDB),
-            buildStateCollection(userDB),
-            buildStakeholderCollection(userDB),
-            buildRallyCollection(userDB),
-            buildPartyCollection(userDB),
-            buildPageCollection(userDB),
-            buildOfficialCollection(userDB),
-            buildMeetingCollection(userDB),
-            buildMeetingTypeCollection(userDB),
-            buildInviteCollection(userDB),
-            buildCityCollection(userDB),
-            buildActionPlanCollection(userDB)
-          ],
+        if (userDB && !flag.current) {
+            flag.current = true;
+            updateUserRole(userDB)
         }
 
-    } else {
+    }, [userDB])
+     */
 
-      return  {
-        collections: [
-          buildResourceCollection(userDB),
-          buildRallyCollection(userDB),
-          buildMeetingCollection(userDB),
-          buildActionPlanCollection(userDB)
-        ],
-      }
+    const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
 
-    }
+        if (userDB?.admin) {
 
-  };
+            return {
+                collections: [
+                    buildUserCollection(userDB),
+                    buildResourceCollection(userDB),
+                    buildResourceTypeCollection(userDB),
+                    buildTopicCollection(userDB),
+                    buildStateCollection(userDB),
+                    buildStakeholderCollection(userDB),
+                    buildRallyCollection(userDB),
+                    buildPartyCollection(userDB),
+                    buildPageCollection(userDB),
+                    buildOfficialCollection(userDB),
+                    buildMeetingCollection(userDB),
+                    buildMeetingTypeCollection(userDB),
+                    buildInviteCollection(userDB),
+                    buildCityCollection(userDB),
+                    buildActionPlanCollection(userDB)
+                ],
+            }
 
-  const myAuthenticator: Authenticator = async (user?: firebase.User) => {
-    console.log("Allowing access to", user?.email);
-    const resp = await firebase.firestore()
-                               .collection("users")
-                               .where("email", "==", user ? user?.email : null)
-                               .get();
+        } else {
 
-    let auxUser : any
-    resp.forEach(doc =>{ auxUser ={...doc.data(), id: doc.id} });
+            return {
+                collections: [
+                    buildResourceCollection(userDB),
+                    buildRallyCollection(userDB),
+                    buildMeetingCollection(userDB),
+                    buildActionPlanCollection(userDB)
+                ],
+            }
 
-    let uids = new Set([...auxUser.uids])
-    uids.add(user?.uid)
+        }
 
-    await firebase.firestore().collection("users").doc(auxUser?.id).update({
-      uids: Array.from(uids)
-    })
+    };
 
-    await firebase.firestore().collection('roles').doc(user?.uid).set({
-      email: user?.email,
-      phone: user?.phoneNumber,
-    })
+    const myAuthenticator: Authenticator = async (user?: firebase.User) => {
+        console.log("Allowing access to", user);
+        if (user) {
+            let prop = user.email ? 'email' : 'phone'
+
+            const resp = await firebase.firestore()
+                .collection("users")
+                .where(prop, "==", prop === 'email' ? user.email : user.phoneNumber)
+                .get();
+            if (resp.size > 0) {
+                let auxUser: any
+                if (resp.size > 1) {
+                    console.error("!!!!DUPLICATE USERS!!!!", resp);
+                }
+
+                resp.forEach(doc => {
+                    auxUser = {...doc.data(), id: doc.id}
+                });
 
 
-    auxUser.uids = Array.from(uids);
-    setUserDB(auxUser);
+                // porque uids???
+                let uids = new Set([...auxUser.uids])
+                uids.add(user?.uid)
 
-    return true;
-  };
+                await firebase.firestore().collection("users").doc(auxUser?.id).update({
+                    uids: Array.from(uids)
+                })
 
-  return (
-    <div className="cms-container">
-      <CMSApp
-        name={"Democraseeclub"}
-        authentication={myAuthenticator}
-        allowSkipLogin={true}
-        signInOptions={[
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-        ]}
-        navigation={navigation}
-        firebaseConfig={firebaseConfig}
-        primaryColor={"#095760"}
-        secondaryColor={"#B9DFF4"}
-      />
-    </div>
-  );
+                await firebase.firestore().collection('roles').doc(user?.uid).set({ // huh?
+                    email: user?.email, phone: user?.phoneNumber
+                })
+
+                auxUser.uids = Array.from(uids);
+                setUserDB(auxUser);
+            }
+        }
+
+        return true;
+    };
+
+    return (
+        <div className="cms-container">
+            <CMSApp
+                name={"Democraseeclub"}
+                authentication={myAuthenticator}
+                allowSkipLogin={true}
+                signInOptions={[
+                    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                ]}
+                navigation={navigation}
+                firebaseConfig={firebaseConfig}
+                primaryColor={"#095760"}
+                secondaryColor={"#B9DFF4"}
+            />
+        </div>
+    );
 }
 
 export default FirebaseCMS;
