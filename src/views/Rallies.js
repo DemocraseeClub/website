@@ -11,6 +11,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import {withSnackbar} from "notistack";
+import { useSideEntityController, useAuthContext } from "@camberi/firecms";
+import {rallySchema} from "./firebaseCMS/collections/rally";
+import {rallyStyles} from "../Util/ThemeUtils";
+
+function withCmsHooks(Component) {
+    return function WrappedComponent(props) {
+        const sideEntityController = useSideEntityController();
+        const authContext = useAuthContext();
+        return <Component {...props} sideEntityController={sideEntityController} authContext={authContext} />;
+    }
+}
 
 class Rallies extends React.Component {
 
@@ -19,11 +30,25 @@ class Rallies extends React.Component {
         window.logUse.logEvent('rally-subscribe', {'id':id});
     }
 
+    showRallyForm() {
+        console.log(this.props.sideEntityController.sidePanels);
+        this.props.sideEntityController.open({
+            // entityId: false,
+            collectionPath: "rallies"
+            // , schema: rallySchema // TODO: customize visible fields by user
+        })
+    }
+
     render() {
         return (
             <Box p={4} >
-                <Box style={{textAlign:'right'}}>
-                    <NavLink style={{textDecoration:'none'}} to={'/rally/templates'}><Button variant={'contained'} className={this.props.classes.redBtn} >Start a Rally</Button></NavLink>
+                <Box style={{textAlign:'right'}} >
+                    <NavLink style={{textDecoration:'none', marginRight:5}} to={'/rally/templates'}>
+                        <Button variant={'contained'} color={'secondary'} >Rally Templates</Button>
+                    </NavLink>
+
+                    <Button variant={'contained'} className={this.props.classes.redBtn}
+                        onClick={() => this.showRallyForm()} >Start a Rally</Button>
                 </Box>
                 <Typography variant={'h3'}>Rallying</Typography>
                 <Grid container justify={'space-around'} spacing={4}>
@@ -202,19 +227,6 @@ class Rallies extends React.Component {
             </Box>
         );
     }
-
 }
 
-
-const useStyles = theme => ({
-    root: {
-        width: '100%',
-    },
-    redBtn : {
-        backgroundColor: theme.palette.error.main,
-        color: theme.palette.error.contrastText,
-        textDecoration:'none!important'
-    }
-});
-
-export default withStyles(useStyles, {withTheme:true})(withSnackbar(Rallies));
+export default withStyles(rallyStyles)(withSnackbar(withCmsHooks(Rallies)));

@@ -123,9 +123,27 @@ meetingSchema.onPreSave = ({values}) => {
     return values;
 };
 
-export default buildCollection({
+export default (userDB) => {
+  return buildCollection({
     relativePath: "meetings",
     schema: meetingSchema,
     name: "Meetings",
-    pagination: true
-});
+    pagination: true,
+     permissions: ({ user, entity }) => {
+
+       if(userDB?.admin) {
+         return {
+           edit: true,
+           create: true,
+           delete: true,
+         };
+       } else {
+         return {
+           edit: false,
+           create: false,
+           delete: false,
+         };
+       }
+     },
+   })
+ }
