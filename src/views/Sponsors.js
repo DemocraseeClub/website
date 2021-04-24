@@ -19,7 +19,7 @@ import Avatar from "@material-ui/core/Avatar";
 import {withSnackbar} from "notistack";
 import CitySelector from "../components/CitySelector";
 import Dialog from '@material-ui/core/Dialog';
-import {BrowserRouter as Router, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 const CITIES = [
     {

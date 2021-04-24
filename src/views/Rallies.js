@@ -11,7 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import {withSnackbar} from "notistack";
-import { useSideEntityController, useAuthContext } from "@camberi/firecms";
+import {useAuthContext, useSideEntityController} from "@camberi/firecms";
 import {rallySchema} from "./firebaseCMS/collections/rally";
 import {rallyStyles} from "../Util/ThemeUtils";
 

@@ -1,15 +1,6 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
-import {
-  Authenticator,
-  buildCollection,
-  buildProperty,
-  buildSchema,
-  CMSApp,
-  NavigationBuilder,
-  NavigationBuilderProps,
-  PermissionsBuilder,
-} from "@camberi/firecms";
+import {Authenticator, CMSApp, NavigationBuilder, NavigationBuilderProps,} from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
