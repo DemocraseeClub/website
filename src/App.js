@@ -59,7 +59,7 @@ function App(props) {
 
     let appTheme = createMuiTheme(Object.assign(baseTheme, auth.siteTheme));
     appTheme = responsiveFontSizes(appTheme, {factor: 20});
-    console.log(appTheme)
+    // console.log(appTheme)
 
     return (
         <ThemeProvider theme={appTheme}>
@@ -82,7 +82,6 @@ function App(props) {
                                 </p>
                             </div>
                         </Dialog>
-
                         <Header/>
                         <Switch>
                             <Route path="/cms"><FirebaseCMS/></Route>
