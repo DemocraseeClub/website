@@ -316,11 +316,11 @@ const useStyles = theme => ({
     },
     cardButton: {
         padding: '10px 40px',
-        background: '#1c54b2',
+        background: theme.palette.info.main,
         color: 'white',
         textTransform: 'none',
         '&:hover': {
-            background: '#1c54b2',
+            background: theme.palette.info.main,
             color: 'white',
         },
     },
@@ -331,7 +331,7 @@ const useStyles = theme => ({
         marginBottom: '15px'
     },
     cardLink: {
-        color: '#2196f3',
+        color: theme.palette.info.main,
         textDecoration: 'underline'
     },
     cardBadge: {
@@ -346,7 +346,7 @@ const useStyles = theme => ({
         alignItems: 'center'
     },
     helpSectionLink: {
-        color: '#2196f3',
+        color: theme.palette.info.main,
         textDecoration: 'underline',
         marginLeft: '100px'
     },
@@ -355,8 +355,8 @@ const useStyles = theme => ({
     },
     helpSectionButton: {
         padding: '10px 40px',
-        border: `1px solid #1c54b2`,
-        color: '#1c54b2',
+        border: `1px solid ${theme.palette.info.main}`,
+        color: theme.palette.info.main,
         textTransform: 'none',
     }
 

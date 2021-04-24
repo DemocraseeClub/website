@@ -183,11 +183,11 @@ const useStyles = (theme) => ({
   },
   nextButton: {
     padding: "10px 40px",
-    background: "#1c54b2",
+    background: theme.palette.info.main,
     color: "white",
     textTransform: "none",
     "&:hover": {
-      background: "#1c54b2",
+      background: theme.palette.info.main,
       color: "white",
     },
     margin: "30px 0",

@@ -44,13 +44,13 @@ class MeetingTimeAgendaSavedItem extends Component {
   }
 }
 
-const useStyles = () => ({
+const useStyles = theme => ({
   container: {
     margin: "20px 0",
   },
   icon: {
     fontSize: "60px",
-    color: "#1c54b2",
+    color: theme.palette.info.main,
   },
   buttonsContainer: {
     display: "flex",

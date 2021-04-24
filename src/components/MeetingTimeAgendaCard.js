@@ -129,7 +129,7 @@ class MeetingTimeAgendaCard extends Component {
   }
 }
 
-const useStyles = () => ({
+const useStyles = theme => ({
   container: {
     padding: "30px 50px",
     margin: "10px 0",
@@ -149,7 +149,7 @@ const useStyles = () => ({
   },
   addRelatedContentLink: {
     margin: "30px 0",
-    color: "#1c54b2",
+    color: theme.palette.info.main,
     textDecoration: "underline",
   },
   modal: {
@@ -172,11 +172,11 @@ const useStyles = () => ({
   },
   modalCancelButton: {
     padding: "10px 40px",
-    background: "#1c54b2",
+    background: theme.palette.info.main,
     color: "white",
     textTransform: "none",
     "&:hover": {
-      background: "#1c54b2",
+      background: theme.palette.info.main,
       color: "white",
     },
     margin: "30px 0",
@@ -184,14 +184,14 @@ const useStyles = () => ({
   modalSaveButton: {
     padding: "10px 40px",
     background: "white",
-    color: "#1c54b2",
+    color: theme.palette.info.main,
     textTransform: "none",
     "&:hover": {
       background: "white",
-      color: "#1c54b2",
+      color: theme.palette.info.main,
     },
     margin: "30px 20px 30px 0",
-    border: "1px solid #1c54b2 ",
+    border: `1px solid ${theme.palette.info.main}`,
   },
   agendaItemSavedImg: {
     width: "60px",

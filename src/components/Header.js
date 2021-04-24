@@ -41,7 +41,7 @@ export const DemoStyles = theme => ({
     root: {
         alignContent: 'center',
         '& a': {
-            color:'#002866',
+            color:theme.palette.secondary.constrastText,
             textDecorationLine: 'none',
             alignSelf: 'center'
         }
@@ -49,12 +49,12 @@ export const DemoStyles = theme => ({
     title: {
         fontWeight: 900,
         fontSize: 22,
-        color: '#fff'
+        color: theme.palette.background.default
     },
     slogan: {
         fontWeight: 600,
         fontSize: 11,
-        color: '#fff'
+        color: theme.palette.background.default
     },
     redStripe : {
         backgroundColor:theme.palette.error.main,

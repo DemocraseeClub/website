@@ -215,7 +215,7 @@ class CreateRallyMeetingDetailsTab extends Component {
   }
 }
 
-const useStyles = () => ({
+const useStyles = theme => ({
   container: {
     padding: "0 100px",
   },
@@ -243,11 +243,11 @@ const useStyles = () => ({
   },
   nextButton: {
     padding: "10px 40px",
-    background: "#1c54b2",
+    background: theme.palette.info.main,
     color: "white",
     textTransform: "none",
     "&:hover": {
-      background: "#1c54b2",
+      background: theme.palette.info.main,
       color: "white",
     },
     margin: "30px 0",
