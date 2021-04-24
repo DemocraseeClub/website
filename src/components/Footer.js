@@ -110,18 +110,18 @@ const useStyles = theme => ({
     root: {
         width: '100%',
         textAlign: 'left',
-        backgroundColor: '#095760',
-        color: '#ffffff',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.background.default,
         '& a': {
             color: 'inherit',
             textDecorationLine: 'none'
         }
     },
     redBg: {
-        backgroundColor: '#D6524C'
+        backgroundColor: theme.palette.error.main
     },
     lightBlue: {
-        backgroundColor: '#b9dff4'
+        backgroundColor: theme.palette.secondary.main
     },
     menuList: {
         listStyle: 'none',
@@ -133,12 +133,12 @@ const useStyles = theme => ({
     title: {
         fontWeight: 900,
         fontSize: 22,
-        color: '#fff'
+        color: theme.palette.background.default
     },
     slogan: {
         fontWeight: 600,
         fontSize: 11,
-        color: '#fff'
+        color: theme.palette.background.default
     },
 });
 

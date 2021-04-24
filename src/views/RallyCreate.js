@@ -14,7 +14,7 @@ class RallyCreate extends Component {
   render() {
     const { classes } = this.props;
 
-    const QontoConnector = withStyles({
+    const QontoConnector = withStyles(theme => ({
       alternativeLabel: {
         top: 10,
         left: "calc(-50% + 16px)",
@@ -22,30 +22,30 @@ class RallyCreate extends Component {
       },
       active: {
         "& $line": {
-          borderColor: "#1c54b2",
+          borderColor: theme.palette.info.main,
         },
       },
       completed: {
         "& $line": {
-          borderColor: "#1c54b2",
+          borderColor: theme.palette.info.main,
         },
       },
       line: {
-        borderColor: "#eaeaf0",
+        borderColor: theme.palette.info.constrastText,
         borderTopWidth: 10,
         borderRadius: 1,
       },
-    })(StepConnector);
+    }))(StepConnector);
 
-    const useQontoStepIconStyles = makeStyles({
+    const useQontoStepIconStyles = makeStyles(theme => ({
       root: {
-        color: "#eaeaf0",
+        color: theme.palette.info.main,
         display: "flex",
         height: 22,
         alignItems: "center",
       },
       active: {
-        color: "#1c54b2",
+        color: theme.palette.info.main,
       },
       circle: {
         width: 8,
@@ -54,11 +54,11 @@ class RallyCreate extends Component {
         backgroundColor: "currentColor",
       },
       completed: {
-        color: "#1c54b2",
+        color: theme.palette.info.main,
         zIndex: 1,
         fontSize: 18,
       },
-    });
+    }));
     function QontoStepIcon(props) {
       const classes = useQontoStepIconStyles();
       const { active, completed } = props;
@@ -109,7 +109,7 @@ class RallyCreate extends Component {
   }
 }
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
   createRallySection: {
     padding: "0 100px",
   },
