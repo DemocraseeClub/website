@@ -11,7 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import {withSnackbar} from "notistack";
-import { useSideEntityController, useAuthContext } from "@camberi/firecms";
+import {useAuthContext, useSideEntityController} from "@camberi/firecms";
 import {rallySchema} from "./firebaseCMS/collections/rally";
 import {rallyStyles} from "../Util/ThemeUtils";
 
@@ -25,13 +25,17 @@ function withCmsHooks(Component) {
 
 class Rallies extends React.Component {
 
+    constructor(p) {
+        super(p);
+    }
+
     trackSubscribe(id) {
         this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
         window.logUse.logEvent('rally-subscribe', {'id':id});
     }
 
     showRallyForm() {
-        console.log(this.props.sideEntityController.sidePanels);
+        console.log(this.props.authContext, this.props.sideEntityController.sidePanels);
         this.props.sideEntityController.open({
             // entityId: false,
             collectionPath: "rallies"

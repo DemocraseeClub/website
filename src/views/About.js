@@ -21,7 +21,7 @@ class About extends React.Component {
   componentWillMount() {
     window.fireDB
       .collection("users")
-      .where("boardmember", "==", true)
+      .where("roles", "array-contains", "board")
       .get()
       .then((users) => {
         let auxTeam = [];
@@ -31,11 +31,12 @@ class About extends React.Component {
       .then((auxTeam) => {
         (async function () {
           for (let i = 0; i < auxTeam.length; i++) {
-            let path = window.storage.ref(auxTeam[i].picture);
-            const url = await path.getDownloadURL();
-            auxTeam[i].picture = url;
+            if (auxTeam[i].picture) {
+              let path = window.storage.ref(auxTeam[i].picture);
+              const url = await path.getDownloadURL();
+              auxTeam[i].picture = url;
+            }
           }
-
           return auxTeam;
         })().then((t) => {
           this.setState({ team: t, loading: false });
@@ -49,11 +50,7 @@ class About extends React.Component {
     const { team, loading } = this.state;
 
     if (loading) {
-      return (
-      <div style={{display: "grid", placeItems: "center", width: "100%"}}>
-            <CircularProgress />;
-      </div>
-      )
+      return (<div style={{display: "grid", placeItems: "center", width: "100%"}}><CircularProgress /></div>)
     } else {
       return (
         <div style={{ marginTop: 30, marginBottom: 30 }}>
