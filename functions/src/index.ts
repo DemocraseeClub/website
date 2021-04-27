@@ -10,6 +10,7 @@ import * as functions from "firebase-functions";
 
 /*
 auth.currentUser.linkWithRedirect(provider).then().catch();
+explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 */
 
 exports.createUser = functions.firestore
