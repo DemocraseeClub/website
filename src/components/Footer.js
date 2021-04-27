@@ -45,11 +45,16 @@ class Footer extends React.Component {
                             </Grid>
                         </Grid>
 
-                        <Button disableElevation={true}  variant={'contained'} color={'secondary'} fullWidth={true} onClick={e => this.setState({dialog:true})}>Subscribe</Button>
-
-                        <NavLink to={'/sponsors'} style={{textDecoration:'none', marginTop:20}}>
-                            <Button disableElevation={true} variant={'contained'} color={'primary'} fullWidth={true}>Sponsor</Button>
-                        </NavLink>
+                        <Grid item container alignContent={'center'} spacing={4} >
+                            <Grid item xs={6}>
+                                <Button disableElevation={true}  variant={'contained'} className={classes.redBtn} fullWidth={true} onClick={e => this.setState({dialog:true})}>Subscribe</Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                            <NavLink to={'/sponsors'} style={{textDecoration:'none', marginTop:20}}>
+                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Sponsor</Button>
+                            </NavLink>
+                            </Grid>
+                        </Grid>
 
                         <Dialog onClose={this.toggleDialog} aria-labelledby="customized-dialog-title" open={this.state.dialog}>
                             <DialogTitle id="customized-dialog-title" onClose={this.toggleDialog}>
@@ -62,7 +67,7 @@ class Footer extends React.Component {
 
                     </Grid>
                     <Grid item>
-                        <h4>Citizen Up!</h4>
+                        <h6>Citizen Up!</h6>
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/register'}>Register</NavLink></li>
                             <li><NavLink to={'/login'}>Login</NavLink></li>
@@ -71,11 +76,12 @@ class Footer extends React.Component {
                         </ul>
                     </Grid>
                     <Grid item>
-                        <h4>Learn</h4>
+                        <h6>Learn</h6>
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/'}>Home</NavLink></li>
                             <li><NavLink to={'/sponsors'}>Sponsors</NavLink></li>
                             <li><NavLink to={'/about'}>Team</NavLink></li>
+                            {process.env.NODE_ENV === 'development' && <li><NavLink to={'/cms'}>CMS</NavLink></li>}
                             <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
                             <li>
                                 <FormControlLabel
@@ -119,6 +125,11 @@ const useStyles = theme => ({
     },
     redBg: {
         backgroundColor: theme.palette.error.main
+    },
+    redBtn : {
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.error.contrastText,
+        textDecoration:'none!important'
     },
     lightBlue: {
         backgroundColor: theme.palette.secondary.main
