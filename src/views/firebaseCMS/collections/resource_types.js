@@ -9,9 +9,9 @@ const resourceTypeSchema = buildSchema({
       validation: {
         required: true,
         trim: true,
-      },
-    },
-  },
+      }
+    }
+  }
 });
 
 
@@ -22,7 +22,7 @@ export default (userDB) => {
     name: "Resource Types",
     pagination: true,
      permissions: ({ user, entity }) => {
-   
+
        if(userDB?.admin) {
          return {
            edit: true,
