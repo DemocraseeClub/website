@@ -43,7 +43,7 @@ let darkMode = {
     palette: {
         type: 'dark',
         primary: {
-            main: '#095760',
+            main: '#1194A3',
             contrastText: '#C1D5D7'
         },
         secondary: {
@@ -64,9 +64,10 @@ let darkMode = {
     }
 };
 
+
 const initialState = {
     me: false,
-    siteTheme: lightMode,
+    siteTheme: process.env.NODE_ENV === 'development' ? darkMode : lightMode,
     loading: false,
     signUpError: false,
     verifyError: false,
