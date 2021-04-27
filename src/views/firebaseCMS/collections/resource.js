@@ -98,21 +98,12 @@ export default (userDB) => {
      permissions: async ({ user, entity }) => {
 
        if(userDB?.admin) {
-         return {
-           edit: true,
-           create: true,
-           delete: true,
-         };
+         return {edit: true, create: true, delete: true};
        } else {
-         
-         return {
-           edit: false,
-           create: false,
-           delete: false,
-         };
+         return {edit: false, create: false, delete: false};
        }
 
-   
+
      },
    })
  }

@@ -15,7 +15,6 @@ let list = {
     'enterprise-attack': 'enterprise-attack.json'
 }
 
-
 const docRef = db.collection('users').doc('alovelace');
 
 

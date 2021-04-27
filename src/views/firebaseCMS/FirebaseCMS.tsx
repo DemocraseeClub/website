@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
+import React from "react";
 
-import {Authenticator, CMSApp, NavigationBuilder, NavigationBuilderProps,} from "@camberi/firecms";
+import {Authenticator, CMSApp, NavigationBuilder, NavigationBuilderProps} from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
@@ -16,14 +16,12 @@ import buildRallyCollection from "./collections/rally";
 import buildPartyCollection from "./collections/party";
 import buildPageCollection from "./collections/page";
 import buildOfficialCollection from "./collections/official";
-import buildMeetingCollection from "./collections/meeting";
 import buildMeetingTypeCollection from "./collections/meeting_types";
 import buildInviteCollection from "./collections/invite";
 import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
+import wiseDemoCollection from "./collections/wise_demo";
 
-
-// This is the actual config
 const firebaseConfig = {
     apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
     authDomain: "democraseeclub.firebaseapp.com",
@@ -35,48 +33,27 @@ const firebaseConfig = {
     measurementId: "G-XYVYDC8L1N",
 };
 
-/*
-const updateUserRole = (userDB: firebase.firestore.DocumentData) => {
-    if (userDB?.uids) {
-
-        // ??? shouldn't this already be defined!?!?
-        if (userDB?.admin) {
-            userDB.uids.forEach(async (uid: string) => {
-                firebase.firestore().collection('roles').doc(uid).update({
-                    role: "ROLE_ADMIN"
-                });
-            })
-
-        } else {
-            userDB.uids.forEach(async (uid: string) => {
-                firebase.firestore().collection('roles').doc(uid).update({
-                    role: "ROLE_USER"
-                })
-            })
-        }
-    }
+async function getUserData(uid:string) {
+    const roomRef = firebase.firestore().collection("users").doc(uid)
+    const data = await roomRef.get();
+    return (data.exists) ? data.data() : {};
 }
- */
 
 export function FirebaseCMS() {
 
-    const [userDB, setUserDB] = useState<firebase.firestore.DocumentData>();
-
-    /*
-    const flag = useRef(false);
-    useEffect(() => {
-
-        if (userDB && !flag.current) {
-            flag.current = true;
-            updateUserRole(userDB)
-        }
-
-    }, [userDB])
-     */
+    // const [userDB] = useState<firebase.firestore.DocumentData>();
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
 
-        if (userDB?.admin) {
+        let userDB = user;
+
+        if (user && user !== null) {
+            /* if (user.uid === '6ofNl8umwIzcB8AEJSC2' || user.uid === 'DJOKTiAz17pEx9o9vNIY' || user.uid === 'LkiBXF99GQlWCcDSN8Qk' || user.uid === 'XKNZEbK5h6tigCFoCuDV') {
+                // userDB.admin = true;
+            } */
+            // console.log("USER " + user.uid, user.toJSON())
+            // let userDB = getUserData(user.uid);
+            console.log(userDB?.toJSON());
 
             return {
                 collections: [
@@ -90,66 +67,40 @@ export function FirebaseCMS() {
                     buildPartyCollection(userDB),
                     buildPageCollection(userDB),
                     buildOfficialCollection(userDB),
-                    buildMeetingCollection(userDB),
                     buildMeetingTypeCollection(userDB),
                     buildInviteCollection(userDB),
                     buildCityCollection(userDB),
-                    buildActionPlanCollection(userDB)
-                ],
+                    buildActionPlanCollection(userDB),
+                    wiseDemoCollection
+                ]
             }
-
         } else {
-
             return {
                 collections: [
                     buildResourceCollection(userDB),
                     buildRallyCollection(userDB),
-                    buildMeetingCollection(userDB),
                     buildActionPlanCollection(userDB)
-                ],
+                ]
             }
-
         }
-
     };
 
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
         console.log("Allowing access to", user);
         if (user) {
-            let prop = user.email ? 'email' : 'phone'
+            /* TODO: user.providerData
 
-            const resp = await firebase.firestore()
-                .collection("users")
-                .where(prop, "==", prop === 'email' ? user.email : user.phoneNumber)
-                .get();
-            if (resp.size > 0) {
-                let auxUser: any
-                if (resp.size > 1) {
-                    console.error("!!!!DUPLICATE USERS!!!!", resp);
-                }
+            let firestoreUser = ...
 
-                resp.forEach(doc => {
-                    auxUser = {...doc.data(), id: doc.id}
-                });
-
-
-                // porque uids???
-                let uids = new Set([...auxUser.uids])
-                uids.add(user?.uid)
-
-                await firebase.firestore().collection("users").doc(auxUser?.id).update({
-                    uids: Array.from(uids)
-                })
-
-                await firebase.firestore().collection('roles').doc(user?.uid).set({ // huh?
-                    email: user?.email, phone: user?.phoneNumber
-                })
-
-                auxUser.uids = Array.from(uids);
-                setUserDB(auxUser);
+            let mergedUser = {
+                displayName:
+                cover: firebase.user.photoURL
             }
-        }
 
+            firebase.firestore().collection('USERS').doc(user.uid).set(mergedUser)
+             */
+
+        }
         return true;
     };
 
@@ -158,7 +109,7 @@ export function FirebaseCMS() {
             <CMSApp
                 name={"Democraseeclub"}
                 authentication={myAuthenticator}
-                allowSkipLogin={true}
+                allowSkipLogin={false}
                 signInOptions={[
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,

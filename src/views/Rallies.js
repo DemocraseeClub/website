@@ -35,7 +35,7 @@ class Rallies extends React.Component {
     }
 
     showRallyForm() {
-        console.log(this.props.sideEntityController.sidePanels);
+        console.log(this.props.authContext, this.props.sideEntityController.sidePanels);
         this.props.sideEntityController.open({
             // entityId: false,
             collectionPath: "rallies"

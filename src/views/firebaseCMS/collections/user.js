@@ -1,26 +1,11 @@
 import {buildCollection, buildSchema} from "@camberi/firecms";
 
-import CustomPasswordField from "../customTextFields/CustomPasswordField";
+// import CustomPasswordField from "../customTextFields/CustomPasswordField";
 import CustomPhoneField from "../customTextFields/CustomPhoneField";
 
 const userSchema = buildSchema({
   name: "User",
   properties: {
-    email: {
-      title: "Email",
-      dataType: "string",
-      validation: {
-        required: true,
-        email: true,
-      },
-    },
-    phone: {
-      title: "phone",
-      dataType: "string",
-      config: {
-        field: CustomPhoneField,
-      },
-    },
     userName: {
       title: "Username",
       dataType: "string",
@@ -72,17 +57,6 @@ const userSchema = buildSchema({
         },
       },
     },
-    password: {
-      title: "Password",
-      dataType: "string",
-      validation: {
-        required: true,
-        trim: true,
-      },
-      config: {
-        field: CustomPasswordField,
-      },
-    },
     topic_def_json: {
       title: "Topic Definitions JSON",
       dataType: "string",
@@ -98,15 +72,24 @@ const userSchema = buildSchema({
         previewProperties: ["title", "image"],
       },
     },
-    admin: {
-      title: "Admin",
-      dataType: "boolean",
-    },
-    boardmember: {
-      title: "Board Member",
-      dataType: "boolean",
+    roles: {
+      title: "Roles",
+      validation: { required: false },
+      dataType: "array",
+      disabled:true,
+      of: {
+        dataType: "string",
+        config: {
+          enumValues: {
+            admin: "Admin",
+            board: "Board Member",
+            dev:"Dev Team",
+            editor:"Editorial Team"
+          }
+        }
+      }
     }
-  },
+  }
 });
 
 userSchema.onPreSave = ({ values }) => {
@@ -120,26 +103,6 @@ userSchema.onPreSave = ({ values }) => {
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
   }
 
-  console.log("values", values);
-  if(values?.uids) {
-
-    if(values.admin) {
-
-      values.uids.forEach(async (uid) => {
-        window.fireDB.collection('roles').doc(uid).update({
-          role: "ROLE_ADMIN"
-        });
-      })
-
-    } else {
-
-      values.uids.forEach(async (uid) => {
-        window.fireDB.collection('roles').doc(uid).update({
-          role: "ROLE_USER"
-        })
-      })
-    }
-  }
   return values;
 };
 
@@ -157,8 +120,8 @@ export default (userDB) => {
         };
       } else {
         return {
-          edit: false,
-          create: false,
+          edit: true,
+          create: true,
           delete: false,
         };
       }

@@ -13,7 +13,7 @@ const citySchema = buildSchema({
       dataType: "string",
       config: {
         multiline: true,
-      },
+      }
     },
     postal_address: {
       title: "Postal Address",
@@ -28,7 +28,7 @@ const citySchema = buildSchema({
           storagePath: "city_picture",
           acceptedFiles: ["image/*"],
         },
-      },
+      }
     },
     coverPhoto: {
       title: "Cover Photo",
@@ -39,7 +39,7 @@ const citySchema = buildSchema({
           storagePath: "city_cover_photo",
           acceptedFiles: ["image/*"],
         },
-      },
+      }
     },
     sponsors: {
       title: "Sponsors",
@@ -48,7 +48,7 @@ const citySchema = buildSchema({
         dataType: "reference",
         collectionPath: "users",
         previewProperties: ["userName"],
-      },
+      }
     },
     website: {
       title: "Website",
@@ -64,7 +64,7 @@ const citySchema = buildSchema({
         config: {
           url: true,
         },
-      },
+      }
     },
     population: {
       title: "Population",
@@ -141,21 +141,16 @@ export default (userDB) => {
     schema: citySchema,
     name: "Cities",
     pagination: true,
-     permissions: ({ user, entity }) => {
-   
+    permissions: ({ user, entity }) => {
        if(userDB?.admin) {
          return {
-           edit: true,
-           create: true,
-           delete: true,
+           edit: true, create: true, delete: true
          };
        } else {
          return {
-           edit: false,
-           create: false,
-           delete: false,
+           edit: false, create: false, delete: false
          };
        }
-     },
+    },
    })
  }
