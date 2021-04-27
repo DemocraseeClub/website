@@ -14,6 +14,53 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 class Resources extends React.Component {
 
+    constructor(p) {
+        super(p);
+        this.state = {
+            rTypes : [], city:'', county:'', state:'',
+            error:false,
+            loading:true
+        }
+
+    }
+
+    componentDidMount() {
+
+        /*
+        const handler = Promise.all(
+
+        );
+
+        handler.then(e => {
+            this.setState({loading:false});
+        })
+         */
+
+        window.fireDB
+            .collection("resource_types").get().then((types) => {
+                let rTypes = [];
+                types.forEach((doc) => rTypes.push(doc.data().type));
+                this.setState({rTypes:rTypes})
+            })
+            .catch((err) => console.log(err));
+
+        window.fireDB.collection("resources")
+            .get()
+            .then((users) => {
+                let team = [];
+                users.forEach(async (doc) => {
+                    let user = {key: doc.id, ...doc.data()};
+                    if (user.picture) {
+                        let path = window.storage.ref(user.picture);
+                        user.picture = await path.getDownloadURL();
+                    }
+                    team.push(user)
+                });
+                this.setState({ team: team, loading: false });
+            })
+            .catch((err) => console.log(err));
+    }
+
     redeem(email) {
         this.props.enqueueSnackbar('Email: ' + email);
         window.logUse.logEvent('resource-redeem', {email: email});
@@ -360,7 +407,6 @@ const useStyles = theme => ({
         color: theme.palette.info.main,
         textTransform: 'none',
     }
-
 });
 
 export default withStyles(useStyles, {withTheme: true})(withSnackbar(Resources));

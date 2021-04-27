@@ -1,8 +1,15 @@
-import {buildCollection, buildSchema} from "@camberi/firecms";
+import {buildSchema} from "@camberi/firecms";
 
 const meetingSchema = buildSchema({
     name: "Meeting",
     properties: {
+        author: {
+            title: "User",
+            dataType: "reference",
+            validation: {required: true},
+            collectionPath: "users",
+            previewProperties: ["userName"]
+        },
         title: {
             title: "Title",
             dataType: "string",
@@ -41,15 +48,6 @@ const meetingSchema = buildSchema({
                 required: false,
                 max: 2,
             },
-            of: {
-                dataType: "reference",
-                collectionPath: "users",
-                previewProperties: ["userName"],
-            },
-        },
-        sponsors: {
-            title: "Sponsors",
-            dataType: "array",
             of: {
                 dataType: "reference",
                 collectionPath: "users",
@@ -123,27 +121,4 @@ meetingSchema.onPreSave = ({values}) => {
     return values;
 };
 
-export default (userDB) => {
-  return buildCollection({
-    relativePath: "meetings",
-    schema: meetingSchema,
-    name: "Meetings",
-    pagination: true,
-     permissions: ({ user, entity }) => {
-
-       if(userDB?.admin) {
-         return {
-           edit: true,
-           create: true,
-           delete: true,
-         };
-       } else {
-         return {
-           edit: false,
-           create: false,
-           delete: false,
-         };
-       }
-     },
-   })
- }
+export default meetingSchema;
