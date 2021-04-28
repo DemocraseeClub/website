@@ -25,7 +25,7 @@ class Home extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container direction={'column'} style={{marginBottom:30}} className={this.props.classes.section}>
+            <Grid container direction={'column'} className={this.props.classes.section}>
 
                 <Grid style={{backgroundImage:"url('/images/cityscape.png')", backgroundPosition:'bottom right', backgroundRepeat:'no-repeat', minHeight:400, marginBottom:30}}
                      container justify={'space-around'} direction={'column'} alignItems={'flex-start'} >

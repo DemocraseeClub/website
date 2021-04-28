@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import {rallyStyles} from "../Util/ThemeUtils";
 
 class Resources extends React.Component {
 
@@ -111,42 +112,50 @@ class Resources extends React.Component {
                 links: [ "Schedule Meeting"]
             }
         ]
+
+        const items = [
+            {
+                img: "/images/coin.png",
+                alt: "citizen-coin",
+                text: "Earn 2 - 2000 Citizen Coins"
+            },
+            {
+                img: "/images/hero.jpg",
+                alt: "hero-badge",
+                text: "Explorer or Hero Badge"
+            },
+            {
+                img: "/images/lighbulb.png",
+                alt: "Time-knowledge",
+                text: "Time and Knowledge"
+            },
+        ]
         return (
             <Box>
-                <Grid container className={classes.blueSection}>
+                <Grid container className={classes.sectionSecondary}>
                     <Grid item xs={8}>
-                        <Typography variant={'h5'} className={classes.blueSectionTitle}><b>Request and Receive Help From Your Community</b></Typography>
-                        <Typography variant={'h6'} className={classes.blueSectionSubtitle}> All action with plans will receive a percentage of the current city pot of <b>2000 Citize Coins</b></Typography>
-                        <Grid container spacing={3} className={classes.blueSectionItemsContainer }>
-                            <Grid item>
+                        <Typography variant={'h5'} className={classes.sectionTitle}><b>Request and Receive Help From Your Community</b></Typography>
+                        <Typography variant={'h6'} className={classes.sectionSubtitle}> All action with plans will receive a percentage of the current city pot of <b>2000 Citize Coins</b></Typography>
+                        <Grid container spacing={3} className={classes.sectionItemsContainer}>
+                            {
+                                items.map(({img, alt, text}) => <Grid item>
                                 <Box display="flex" alignItems="center">
-                                    <Avatar src="/images/coin.png" className={classes.blueSectionItemImg} alt="citizen-coin"/>
-                                    <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Earn 2 - 2000 Citizen Coins</b></Typography>
+                                        <Avatar src={img} className={classes.sectionItemImg} alt={ alt}/>
+                                    <Typography variant={'body2'} className={classes.sectionItemText}><b>Earn 2 - 2000 Citizen Coins</b></Typography>
                                 </Box>
-                            </Grid>
-                            <Grid item>
-                                <Box display="flex" alignItems="center">
-                                    <Avatar src="/images/hero.jpg" className={classes.blueSectionItemImg} alt="hero-badge"/>
-                                    <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Explorer or Hero Badge</b></Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item>
-                                <Box display="flex" alignItems="center">
-                                    <Avatar src="/images/lighbulb.png" className={classes.blueSectionItemImg} alt="Time-knowledge"/>
-                                    <Typography variant={'body2'} className={classes.blueSectionItemText}><b>Time and Knowledge</b></Typography>
-                                </Box>
-                            </Grid>
+                            </Grid>)
+                            }
                         </Grid>
-                        <Button variant="outlined" className={classes.blueSectionLeftButton}>Request Help</Button>
-                        <Button className={classes.blueSectionRightButton}>Offer Your Expertise</Button>
+                        <Button variant="outlined" className={classes.sectionLeftButton}>Request Help</Button>
+                        <Button className={classes.sectionRightButton}>Offer Your Expertise</Button>
                     </Grid>
                     <Grid item xs={4}>
                         <Box display="flex" alignItems="center" justifyContent="center">
-                            <img src="/images/lighbulb.png" alt="blueSection-hero" className={classes.blueSectionHero}/>
+                            <img src="/images/lighbulb.png" alt="blueSection-hero" className={classes.sectionHero}/>
                         </Box>
                     </Grid>
                 </Grid>
-                <Box className={classes.whiteSection}>
+                <Box className={classes.section}>
                     <Grid container>
                         <Grid item xs={5}>
                             <Typography variant={'h4'}>Local Resources</Typography>
@@ -168,7 +177,7 @@ class Resources extends React.Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
-                                        className={classes.whiteSectionSelect}
+                                        className={classes.sectionSelect}
                                         id="standard-select-currency"
                                         select
                                         label="Filter"
@@ -184,7 +193,7 @@ class Resources extends React.Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
-                                        className={classes.whiteSectionSelect}
+                                        className={classes.sectionSelect}
                                         id="standard-select-currency"
                                         select
                                         label="Sort by"
@@ -224,7 +233,9 @@ class Resources extends React.Component {
                                 </Grid>)
                         }
                     </Grid>
-                    <Grid container className={classes.helpSection}>
+                </Box>
+                <Box className={classes.section}>
+                <Grid container>
                         <Grid item xs={5}>
                             <Typography variant={'h4'}>Request for Help</Typography>
                         </Grid>
@@ -245,7 +256,7 @@ class Resources extends React.Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
-                                        className={classes.whiteSectionSelect}
+                                        className={classes.sectionSelect}
                                         id="standard-select-currency"
                                         select
                                         label="Filter"
@@ -261,7 +272,7 @@ class Resources extends React.Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
-                                        className={classes.whiteSectionSelect}
+                                        className={classes.sectionSelect}
                                         id="standard-select-currency"
                                         select
                                         label="Sort by"
@@ -278,15 +289,19 @@ class Resources extends React.Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid container justify="space-between" alignItems="center" className={classes.helpSectionFooter}>
-                        <Grid item className={classes.helpSectionLinkContainer}>
+                    <Grid container justify="space-between" alignItems="center" className={classes.sectionFooter}>
+                        <Grid item >
+                            <Box display="flex" alignItems="center">
                             <Avatar src="/images/indy.png" alt="card-img" className={classes.cardImg}/>
-                            <Typography variant={'body1'} className={classes.helpSectionLink}>Need Volunters for Upcoming Rally on Nov 16th</Typography>
+                            <Typography variant={'body1'} className={classes.sectionLink}>Need Volunters for Upcoming Rally on Nov 16th</Typography>
+                        </Box>
+
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined" color="primary" className={classes.helpSectionButton}>Offer Help</Button>
+                            <Button variant="outlined" color="primary" className={classes.outlinedButton}>Offer Help</Button>
                         </Grid>
                     </Grid>
+
                 </Box>
             </Box>
         );
@@ -294,119 +309,4 @@ class Resources extends React.Component {
 
 }
 
-
-const useStyles = theme => ({
-    root: {
-        width: '100%',
-    },
-    blueSection: {
-        background: theme.palette.secondary.main,
-        padding: '50px 70px'
-    },
-    blueSectionTitle: {
-        marginBottom: '10px'
-    },
-    blueSectionSubtitle: {
-        marginBottom: '20px',
-        fontWeight: 'normal',
-        width: '75%'
-    },
-    blueSectionItemText: {
-        width: '50%',
-        color: 'gray'
-    },
-    blueSectionItemImg: {
-        marginRight: '10px'
-    },
-    blueSectionLeftButton: {
-        border: `1px solid ${theme.palette.error.main}`,
-        color: theme.palette.error.main,
-        textTransform: 'none',
-        marginRight: '15px',
-        padding: "5px 10px"
-
-    },
-    blueSectionRightButton: {
-        background: theme.palette.error.main,
-        color: 'white',
-        textTransform: 'none',
-        padding: "5px 20px",
-        '&:hover': {
-            background: theme.palette.error.main,
-            color: 'white',
-        },
-    },
-    blueSectionHero: {
-        height: "200px"
-    },
-    blueSectionItemsContainer: {
-        marginBottom: '15px'
-    },
-    whiteSection: {
-        padding: '60px 70px',
-        background: theme.palette.background.default
-    },
-    whiteSectionSelect: {
-        width: '15ch'
-    },
-    whiteSectionInput: {
-        width: '20ch'
-    },
-    cardsContainer: {
-        marginTop: '10px'
-    },
-    card: {
-        padding: '25px'
-    },
-    cardImg: {
-        width: '80px',
-        height: '80px',
-    },
-    cardButton: {
-        padding: '10px 40px',
-        background: theme.palette.info.main,
-        color: theme.palette.info.contrastText,
-        textTransform: 'none',
-        '&:hover': {
-            background: theme.palette.info.main,
-            color: theme.palette.info.contrastText,
-        },
-    },
-    cardHeader: {
-        marginBottom: '15px'
-    },
-    cardSubtitle: {
-        marginBottom: '15px'
-    },
-    cardLink: {
-        color: theme.palette.info.main,
-        textDecoration: 'underline'
-    },
-    cardBadge: {
-        color: 'gray',
-        margin: '-10px 0 10px 0'
-    },
-    helpSection: {
-        marginTop: '90px'
-    },
-    helpSectionLinkContainer: {
-        display: 'flex',
-        alignItems: 'center'
-    },
-    helpSectionLink: {
-        color: theme.palette.info.main,
-        textDecoration: 'underline',
-        marginLeft: '100px'
-    },
-    helpSectionFooter: {
-        marginTop: '50px'
-    },
-    helpSectionButton: {
-        padding: '10px 40px',
-        border: `1px solid ${theme.palette.info.main}`,
-        color: theme.palette.info.main,
-        textTransform: 'none',
-    }
-});
-
-export default withStyles(useStyles, {withTheme: true})(withSnackbar(Resources));
+export default withStyles(rallyStyles)(withSnackbar(Resources));
