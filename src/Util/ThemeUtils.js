@@ -202,6 +202,8 @@ export const rallyStyles = theme => ({
         '& .MuiListItemText-secondary' : {
             fontSize:10
         }
-
+    },
+    section: {
+        background : theme.palette.background.default
     }
 });

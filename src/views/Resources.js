@@ -343,7 +343,8 @@ const useStyles = theme => ({
         marginBottom: '15px'
     },
     whiteSection: {
-        padding: '60px 70px'
+        padding: '60px 70px',
+        background: theme.palette.background.default
     },
     whiteSectionSelect: {
         width: '15ch'
@@ -364,11 +365,11 @@ const useStyles = theme => ({
     cardButton: {
         padding: '10px 40px',
         background: theme.palette.info.main,
-        color: 'white',
+        color: theme.palette.info.contrastText,
         textTransform: 'none',
         '&:hover': {
             background: theme.palette.info.main,
-            color: 'white',
+            color: theme.palette.info.contrastText,
         },
     },
     cardHeader: {

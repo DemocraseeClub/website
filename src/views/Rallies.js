@@ -45,7 +45,7 @@ class Rallies extends React.Component {
 
     render() {
         return (
-            <Box p={4} >
+            <Box p={4} className={this.props.classes.section}>
                 <Box style={{textAlign:'right'}} >
                     <NavLink style={{textDecoration:'none', marginRight:5}} to={'/rally/templates'}>
                         <Button variant={'contained'} color={'secondary'} >Rally Templates</Button>
