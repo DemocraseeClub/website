@@ -300,5 +300,19 @@ export const rallyStyles = theme => ({
         border: `1px solid ${theme.palette.info.main}`,
         color: theme.palette.info.main,
         textTransform: 'none',
-    }
+    },
+    infoColor: {
+        color: theme.palette.info.main,
+    },
+    primaryColor: {
+        color: theme.palette.primary.main,
+    },
+    errorColor: {
+        color: theme.palette.error.main,
+    },
+    paragraph : {
+        lineHeight:'23px',
+        paddingLeft:10,
+        paddingRight:10
+    },
 });
