@@ -8,6 +8,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from '@material-ui/core/Typography';
+import Card from "@material-ui/core/Card";
+
+import {rallyStyles} from "../Util/ThemeUtils";
 
 class Home extends React.Component {
 
@@ -25,28 +28,27 @@ class Home extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container direction={'column'} style={{marginBottom:30}} className={this.props.classes.section}>
+            <Grid container direction={'column'} className={this.props.classes.section}>
 
                 <Grid style={{backgroundImage:"url('/images/cityscape.png')", backgroundPosition:'bottom right', backgroundRepeat:'no-repeat', minHeight:400, marginBottom:30}}
                      container justify={'space-around'} direction={'column'} alignItems={'flex-start'} >
                     <Grid item xs={12} >
-                       <div style={{backgroundColor:'rgba(255,255,255,.65)', borderRadius:8, padding:'10px', margin:'10px 30px'}} >
-                           <h1 style={{marginBottom: 0}}>Conversations for a better community</h1>
-                           <p style={{marginTop:0, fontSize:22}}>Tools and resources to turn ideas and intentions into action</p>
-                       </div>
+                       <Card style={{borderRadius:8, padding:'10px', margin:'10px 30px', background: 'none', boxShadow: 'none'}} >
+                           <Typography variant={'h1'} style={{marginBottom: 0}}><b>Conversations for a better community</b></Typography>
+                           <Typography variant={'h3'} style={{marginTop:0, fontSize:22}}>Tools and resources to turn ideas and intentions into action</Typography>
+                       </Card>
                     </Grid>
                     <Grid item style={{padding:30}} >
-                        <NavLink className={classes.linkButton} to={'/rallies'}><Button style={{backgroundColor:this.props.theme.palette.error.main, color:this.props.theme.palette.error.contrastText, marginRight:10}}
+                        <NavLink style={{textDecoration: 'none'}} to={'/rallies'}><Button style={{backgroundColor:this.props.theme.palette.error.main, color:this.props.theme.palette.error.contrastText, marginRight:10}}
                             variant={'contained'} disableElevation={true}>Join a Rally</Button></NavLink>
-                        <NavLink className={classes.linkButton} to={'/rally/templates'}><Button color={'secondary'}
+                        <NavLink style={{textDecoration: 'none'}} to={'/rally/templates'}><Button color={'secondary'}
                                variant={'contained'} disableElevation={true}>Start a Rally</Button></NavLink>
-
                     </Grid>
                 </Grid>
 
-                <div style={{padding:5}}>
+                <Card style={{padding:5, background: 'none', boxShadow: 'none'}}>
 
-                <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} style={{textAlign:'center'}}>
+                <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} style={{textAlign:'center', marginBottom: '30px'}}>
                     <Grid item xs={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/researchicon.png' alt='research' width={45} />
                     </Grid>
@@ -58,44 +60,44 @@ class Home extends React.Component {
                     </Grid>
                 </Grid>
 
-                <Grid container justify={'space-around'} alignContent={'center'} style={{textAlign:'center'}}>
+                <Grid container justify={'space-around'} alignContent={'center'} style={{textAlign:'center',  marginBottom: '30px'}}>
 
                     <Grid item xs={4}>
-                        <h2 className={classes.errorDark} >Research & Report</h2>
+                        <Typography variant={'h2'} className={classes.errorColor} >Research & Report</Typography>
                     </Grid>
 
                     <Grid item xs={4}>
-                        <h2 className={classes.infoDark} >Rally & Refine</h2>
+                        <Typography variant={'h2'} className={classes.infoColor} >Rally & Refine</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <h2 className={classes.primaryDark} >Engage &amp; Exchange</h2>
+                        <Typography variant={'h2'} className={classes.primaryColor} >Engage &amp; Exchange</Typography>
                     </Grid>
                 </Grid>
 
-                <Grid container justify={'space-around'} alignContent={'center'} >
+                    <Grid container justify={'space-around'} alignContent={'center'} spacing={3} style={{ marginBottom: '30px'}}>
 
                     <Grid item xs={4}>
-                        <p className={classes.paragraph}>Select your values, define what they mean to you, and post the research that guides your position.</p>
+                        <Typography variant={'p'} className={classes.paragraph}>Select your values, define what they mean to you, and post the research that guides your position.</Typography>
                     </Grid>
 
                     <Grid item xs={4}>
-                        <p className={classes.paragraph}>Rally your friends and foes for the change you want to see. Use our Meeting tools to guide conversations towards a productive purpose.</p>
+                        <Typography variant={'p'} className={classes.paragraph}>Rally your friends and foes for the change you want to see. Use our Meeting tools to guide conversations towards a productive purpose.</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <p className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryDark} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</p>
+                        <Typography variant={'p'} className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryColor} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</Typography>
                     </Grid>
                 </Grid>
 
-                <Grid container justify={'space-around'} alignContent={'center'} style={{textAlign:'center'}}>
+                <Grid container justify={'space-around'} alignContent={'center'} style={{textAlign:'center',  marginBottom: '30px'}}>
                     <Grid item xs={4}>
-                        <NavLink className={classes.errorDark} to={'/values'}>Select your values</NavLink>
+                        <NavLink className={classes.errorColor} to={'/values'}>Select your values</NavLink>
                     </Grid>
 
                     <Grid item xs={4}>
-                        <NavLink className={classes.infoDark}  to={'/rallies'}>Rally for a Cause</NavLink>
+                        <NavLink className={classes.infoColor}  to={'/rallies'}>Rally for a Cause</NavLink>
                     </Grid>
                     <Grid item xs={4}>
-                        <NavLink className={classes.primaryDark}  to={'/resources'}>Find Support Resources</NavLink>
+                        <NavLink className={classes.primaryColor}  to={'/resources'}>Find Support Resources</NavLink>
                     </Grid>
                 </Grid>
 
@@ -113,7 +115,7 @@ class Home extends React.Component {
                 </Dialog>
 
 
-                </div>
+                </Card>
 
             </Grid>
 
@@ -122,28 +124,4 @@ class Home extends React.Component {
 
 }
 
-
-const useStyles = theme => ({
-    paragraph : {
-        lineHeight:'23px',
-        paddingLeft:10,
-        paddingRight:10
-    },
-    linkButton : {
-      textDecoration:'none',
-    },
-    infoDark : {
-        color: theme.palette.info.dark
-    },
-    primaryDark : {
-        color: theme.palette.primary.dark
-    },
-    errorDark : {
-       color: theme.palette.error.dark
-    },
-    section: {
-        background : theme.palette.background.default
-    }
-});
-
-export default withStyles(useStyles, {withTheme:true})(Home);
+export default withStyles(rallyStyles, {withTheme:true})(Home);
