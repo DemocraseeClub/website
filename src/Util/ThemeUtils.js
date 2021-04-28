@@ -204,6 +204,101 @@ export const rallyStyles = theme => ({
         }
     },
     section: {
-        background : theme.palette.background.default
+        background: theme.palette.background.default,
+        padding: '60px 70px',
+    },
+    sectionSecondary: {
+        background: theme.palette.secondary.main,
+        padding: '50px 70px'
+    },
+    sectionTitle: {
+        marginBottom: '10px',
+    },
+    sectionSubtitle: {
+        marginBottom: '20px',
+        fontWeight: 'normal',
+        width: '75%',
+    },
+    sectionItemsContainer: {
+        marginBottom: '15px'
+    },
+    sectionItemText: {
+        width: '50%',
+        color: 'gray'
+    },
+    sectionItemImg: {
+        marginRight: '10px'
+    },
+    sectionLeftButton: {
+        border: `1px solid ${theme.palette.error.main}`,
+        color: theme.palette.error.main,
+        textTransform: 'none',
+        marginRight: '15px',
+        padding: "5px 10px"
+
+    },
+    sectionRightButton: {
+        background: theme.palette.error.main,
+        color: 'white',
+        textTransform: 'none',
+        padding: "5px 20px",
+        '&:hover': {
+            background: theme.palette.error.main,
+            color: 'white',
+        },
+    },
+    sectionHero: {
+        height: "200px"
+    },
+    sectionSelect: {
+        width: '15ch'
+    },
+    cardsContainer: {
+        marginTop: '10px'
+    },
+    card: {
+        padding: '25px'
+    },
+    cardImg: {
+        width: '80px',
+        height: '80px',
+    },
+    cardButton: {
+        padding: '10px 40px',
+        background: theme.palette.info.main,
+        color: theme.palette.info.contrastText,
+        textTransform: 'none',
+        '&:hover': {
+            background: theme.palette.info.main,
+            color: theme.palette.info.contrastText,
+        },
+    },
+    cardHeader: {
+        marginBottom: '15px'
+    },
+    cardSubtitle: {
+        marginBottom: '15px'
+    },
+    cardLink: {
+        color: theme.palette.info.main,
+        textDecoration: 'underline'
+    },
+    cardBadge: {
+        color: 'gray',
+        margin: '-10px 0 10px 0'
+    },
+    sectionLink: {
+        color: theme.palette.info.main,
+        textDecoration: 'underline',
+        marginLeft: '100px'
+    },
+    sectionFooter: {
+        marginTop: '50px'
+    },
+    outlinedButton: {
+        padding: '10px 40px',
+        border: `1px solid ${theme.palette.info.main}`,
+        color: theme.palette.info.main,
+        textTransform: 'none',
     }
 });
