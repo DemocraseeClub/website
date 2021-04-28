@@ -158,7 +158,9 @@ class Resources extends React.Component {
                 <Box className={classes.section}>
                     <Grid container>
                         <Grid item xs={5}>
-                            <Typography variant={'h4'}>Local Resources</Typography>
+                            <Card style={{background: 'none', boxShadow: 'none'}}>
+                                <Typography variant={'h4'}>Local Resources</Typography>
+                            </Card>
                         </Grid>
                         <Grid item xs={7}>
                             <Grid container spacing={1} justify="flex-end"  >
@@ -237,7 +239,10 @@ class Resources extends React.Component {
                 <Box className={classes.section}>
                 <Grid container>
                         <Grid item xs={5}>
+                        <Card style={{background: 'none', boxShadow: 'none'}}>
+
                             <Typography variant={'h4'}>Request for Help</Typography>
+                            </Card>
                         </Grid>
                         <Grid item xs={7}>
                             <Grid container spacing={1} justify="flex-end"  >
