@@ -37,8 +37,35 @@ class RemoteVideo extends React.Component {
   async handleViewers(action) {
     const roomRef = window.fireDB.collection("rooms").doc(this.props.roomId);
     const roomSnapshot = await roomRef.get();
+    console.log(action, "action")
+    if(!roomSnapshot.data()){
 
-    if(!roomSnapshot.data()) return -1;
+      if(action === "disconnected") {
+
+        const myRoomRef = window.fireDB.collection("rooms").doc(this.props.myRoomId);
+        const myRoomSnapshot = await myRoomRef.get();
+  
+        const myViewers = myRoomSnapshot.data().viewers;
+        const myRoomsViewing = myRoomSnapshot.data().roomsViewing;
+
+
+        let pos = myRoomsViewing.indexOf( this.props.roomId );
+        myRoomsViewing.splice( pos, 1 );
+      
+  
+        myRoomRef.update({
+          viewers: myViewers - 1,
+          roomsViewing: myRoomsViewing,
+        });
+
+      }
+
+
+
+      return -1;
+    } 
+
+    
 
     const viewers = roomSnapshot.data().viewers;
     const roomsViewing = roomSnapshot.data().roomsViewing;
@@ -82,7 +109,9 @@ class RemoteVideo extends React.Component {
   async joinRoomById(room) {
     const roomRef = window.fireDB.collection("rooms").doc(room);
 
+    
     const roomSnapshot = await roomRef.get();
+    console.log("room exterior", roomSnapshot, roomRef)
 
     if (roomSnapshot.data()) {
       console.log("Got room:", roomSnapshot.exists, roomRef);
@@ -187,7 +216,8 @@ class RemoteVideo extends React.Component {
 
       switch (peerConnection.connectionState) {
         case "disconnected":
-          await this.handleViewers("remove");
+       
+          await this.handleViewers("disconnected");
           this.setState({ view: false });
 
           break;
