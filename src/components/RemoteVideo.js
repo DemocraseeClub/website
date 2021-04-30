@@ -7,7 +7,7 @@ import {Beforeunload} from "react-beforeunload";
 class RemoteVideo extends React.Component {
   constructor(p) {
     super(p);
-    this.state = { remoteStream: p.stream, view: false, added: false, viewers: null};
+    this.state = { remoteStream: p.stream, view: false, viewers: null};
   }
 
   componentDidMount() {
@@ -19,10 +19,14 @@ class RemoteVideo extends React.Component {
       this.hangUp();
     }
 
-    if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {
+    if( !prevProps.myRoomId && this.props.myRoomId) {
       console.log('actualizando')
       this.handleViewers('add')
     }
+
+    
+    console.log("update roomid",  this.props.myRoomId, this.state)
+
 
   }
 
@@ -45,22 +49,19 @@ class RemoteVideo extends React.Component {
         const myRoomRef = window.fireDB.collection("rooms").doc(this.props.myRoomId);
         const myRoomSnapshot = await myRoomRef.get();
   
-        const myViewers = myRoomSnapshot.data().viewers;
         const myRoomsViewing = myRoomSnapshot.data().roomsViewing;
-
 
         let pos = myRoomsViewing.indexOf( this.props.roomId );
         myRoomsViewing.splice( pos, 1 );
       
   
         myRoomRef.update({
-          viewers: myViewers - 1,
           roomsViewing: myRoomsViewing,
         });
 
+        
+
       }
-
-
 
       return -1;
     } 
@@ -76,7 +77,6 @@ class RemoteVideo extends React.Component {
         let auxRoomsAdd = new Set([...roomsViewing]);
         if (this.props.myRoomId) {
           auxRoomsAdd.add(this.props.myRoomId);
-          this.setState({added:true})
         }
         console.log(auxRoomsAdd, Array.from(auxRoomsAdd).length, "rommsadd")
         roomRef.update({
