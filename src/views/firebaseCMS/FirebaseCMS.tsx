@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
-import {Authenticator, CMSApp, NavigationBuilder, NavigationBuilderProps} from "@camberi/firecms";
+import { Authenticator, CMSApp, NavigationBuilder, NavigationBuilderProps, CMSAppProvider, CMSMainView } from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
@@ -22,6 +22,9 @@ import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
 
+import { Box, CircularProgress } from "@material-ui/core";
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
     authDomain: "democraseeclub.firebaseapp.com",
@@ -33,17 +36,34 @@ const firebaseConfig = {
     measurementId: "G-XYVYDC8L1N",
 };
 
-async function getUserData(uid:string) {
+async function getUserData(uid: string) {
     const roomRef = firebase.firestore().collection("users").doc(uid)
     const data = await roomRef.get();
     return (data.exists) ? data.data() : {};
 }
 
-export function FirebaseCMS() {
+export function FirebaseCMS({children} :React.PropsWithChildren<{}>) {
 
     // const [userDB] = useState<firebase.firestore.DocumentData>();
 
-    const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
+    const [
+        firebaseConfigInitialized,
+        setFirebaseConfigInitialized
+    ] = React.useState<boolean>(false);
+
+    useEffect(() => {
+        if (firebase.apps.length === 0) {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                firebase.analytics();
+                setFirebaseConfigInitialized(true);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }, []);
+
+    const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => {
 
         let userDB = user;
 
@@ -104,12 +124,24 @@ export function FirebaseCMS() {
         return true;
     };
 
+
+    if (!firebaseConfigInitialized) {
+        return <Box
+            display="flex"
+            width={"100%"} height={"100vh"}>
+            <Box m="auto">
+                <CircularProgress/>
+            </Box>
+        </Box>;
+    }
+
     return (
         <div className="cms-container">
-            <CMSApp
-                name={"Democraseeclub"}
+
+            <CMSAppProvider
+
                 authentication={myAuthenticator}
-                allowSkipLogin={false}
+
                 signInOptions={[
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -117,9 +149,12 @@ export function FirebaseCMS() {
                 ]}
                 navigation={navigation}
                 firebaseConfig={firebaseConfig}
-                primaryColor={"#095760"}
-                secondaryColor={"#B9DFF4"}
-            />
+
+            >
+            
+                {children}
+
+            </CMSAppProvider>
         </div>
     );
 }
