@@ -97,12 +97,22 @@ class Room extends React.Component {
             stream = this.camStream;
         }
 
-        if (this.peerConnection) {
-            console.log("adding local stream on display");
-            stream.getTracks().forEach(track => {
-                this.peerConnection.addTrack(track, stream);
-            });
+
+        if(stream !== null) {
+
+            if (this.peerConnection) {
+                console.log("adding local stream on display");
+                stream.getTracks().forEach(track => {
+                    this.peerConnection.addTrack(track, stream);
+                });
+            }
+
+        } else {
+
+             this.hangUp()   
+
         }
+
 
         this.setState({myStream:stream});
 
@@ -127,12 +137,16 @@ class Room extends React.Component {
         let enable = {...this.state.enabled}
         enable.screen = !enable.screen;
         if (enable.screen === false) {
-            this.setState({enabled: enable});
+          
+            this.screenStream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+            this.screenStream = null;
         } else {
             let stream = await navigator.mediaDevices.getDisplayMedia({cursor: true});
             this.screenStream = stream;
-            this.setState({enabled: enable}, () => this.displayLocalStreams());
         }
+        this.setState({enabled: enable}, () => this.displayLocalStreams());
     }
 
     createPeerConnection() {
@@ -226,6 +240,8 @@ class Room extends React.Component {
                     const rtcSessionDescription = new RTCSessionDescription(data.answer);
                     await this.peerConnection.setRemoteDescription(rtcSessionDescription);
                 }
+
+                console.log(data, "data onsnapshot")
     
                 let viewers = snapshot.data().roomsViewing;
                 let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
