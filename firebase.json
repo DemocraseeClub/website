@@ -19,6 +19,10 @@
     ],
     "rewrites": [
       {
+        "source": "/rally/**",
+        "function": "injectMeta"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
@@ -43,8 +47,7 @@
   },
   "functions": {
     "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run lint",
-      "npm --prefix \"$RESOURCE_DIR\" run build"
+      "npm --prefix functions run build"
     ]
   }
 }

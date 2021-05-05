@@ -16,11 +16,10 @@ module.exports = {
     sourceType: "module",
   },
   ignorePatterns: [
-    "/lib/**/*", // Ignore built files.
+    "/lib/**/*", "/node_modules/**" // Ignore built files.
   ],
   plugins: [
-    "@typescript-eslint",
-    "import",
+    "@typescript-eslint"
   ],
   rules: {
     quotes: ["error", "double"],
