@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { withSnackbar } from "notistack";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import React, {Component} from "react";
+import {withSnackbar} from "notistack";
+import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Box from "@material-ui/core/Box";
 import Step from "@material-ui/core/Step";
@@ -9,7 +9,7 @@ import StepConnector from "@material-ui/core/StepConnector";
 import clsx from "clsx";
 import Check from "@material-ui/icons/Check";
 import CreateRallyMeetingTimeAgendaTab from "../components/CreateRallyMeetingTimeAgendaTab";
-import CreateRallyTab from "../components/CreateRallyTab";
+
 class RallyCreate extends Component {
   render() {
     const { classes } = this.props;

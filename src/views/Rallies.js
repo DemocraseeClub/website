@@ -19,7 +19,7 @@ function withCmsHooks(Component) {
     return function WrappedComponent(props) {
         const sideEntityController = useSideEntityController();
         const authContext = useAuthContext();
-        return <Component {...props} sideEntityController={sideEntityController} authContext={authContext} />;
+        return <Component {...props} sideEntityController={sideEntityController} authContext={authContext}/>;
     }
 }
 
@@ -31,7 +31,7 @@ class Rallies extends React.Component {
 
     trackSubscribe(id) {
         this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
-        window.logUse.logEvent('rally-subscribe', {'id':id});
+        window.logUse.logEvent('rally-subscribe', {'id': id});
     }
 
     showRallyForm() {
@@ -46,13 +46,13 @@ class Rallies extends React.Component {
     render() {
         return (
             <Box p={4} className={this.props.classes.section}>
-                <Box style={{textAlign:'right'}} >
-                    <NavLink style={{textDecoration:'none', marginRight:5}} to={'/rally/templates'}>
-                        <Button variant={'contained'} color={'secondary'} >Rally Templates</Button>
+                <Box style={{textAlign: 'right'}}>
+                    <NavLink style={{textDecoration: 'none', marginRight: 5}} to={'/rally/templates'}>
+                        <Button variant={'contained'} color={'secondary'}>Rally Templates</Button>
                     </NavLink>
 
                     <Button variant={'contained'} className={this.props.classes.redBtn}
-                        onClick={() => this.showRallyForm()} >Start a Rally</Button>
+                            onClick={() => this.showRallyForm()}>Start a Rally</Button>
                 </Box>
                 <Typography variant={'h3'}>Rallying</Typography>
                 <Grid container justify={'space-around'} spacing={4}>
@@ -63,7 +63,7 @@ class Rallies extends React.Component {
                                     component="img"
                                     alt="Democrasee Logo"
                                     height="200"
-                                    style={{objectFit:'contain'}}
+                                    style={{objectFit: 'contain'}}
                                     image="/images/democrasee_logo_black.png"
                                     title="Democrasee Logo"
                                 /></NavLink>
@@ -72,15 +72,17 @@ class Rallies extends React.Component {
                                         Building Democrasee
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        Open sourcing our development for a constructive solution to our biggest challenges
+                                        Open sourcing our development for a constructive solution to our biggest
+                                        challenges
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions style={{justifyContent:'space-between'}}>
+                            <CardActions style={{justifyContent: 'space-between'}}>
                                 <NavLink to={'/rally/building-democrasee'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
-                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('building-democrasee')}>Subscribe</Button>
+                                <Button size="small" color="primary"
+                                        onClick={() => this.trackSubscribe('building-democrasee')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -92,24 +94,29 @@ class Rallies extends React.Component {
                                     component="img"
                                     alt="Democrasee Logo"
                                     height="200"
-                                    style={{objectFit:'contain'}}
+                                    style={{objectFit: 'contain'}}
                                     image="/images/worker-coops.jpg"
                                     title="Worker/Housing/Community Cooperatives to solve budget crisis"
                                 /></NavLink>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        The city of El Cerrito is going through a financial crisis during a national and international emergency. It's critical that the city and community explore ventures that can significantly improve social mobility, economic justice, and the social emotional health of the community while empowering the city's infrastructure to outlast the emergency and be resilient for future ones.
+                                        The city of El Cerrito is going through a financial crisis during a national and
+                                        international emergency. It's critical that the city and community explore
+                                        ventures that can significantly improve social mobility, economic justice, and
+                                        the social emotional health of the community while empowering the city's
+                                        infrastructure to outlast the emergency and be resilient for future ones.
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
 
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions style={{justifyContent:'space-between'}}>
+                            <CardActions style={{justifyContent: 'space-between'}}>
                                 <NavLink to={'/rally/cooperatives'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
-                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('cooperatives')}>Subscribe</Button>
+                                <Button size="small" color="primary"
+                                        onClick={() => this.trackSubscribe('cooperatives')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -121,7 +128,7 @@ class Rallies extends React.Component {
                                     component="img"
                                     alt="HGP Logo"
                                     height="200"
-                                    style={{objectFit:'contain'}}
+                                    style={{objectFit: 'contain'}}
                                     image="https://www.hiddengeniusproject.org/wp-content/uploads/2018/01/HGPAssets_SecondaryLogo_Yellow-7-e1515176540614.png"
                                     title="HGP Logo"
                                 /></NavLink>
@@ -130,15 +137,18 @@ class Rallies extends React.Component {
                                         Hidden Genius Project
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        A four part course for the young founders of Hidden Genius Project's <a href={"https://www.hiddengeniusproject.org/alumniventureseedfund/"} target={"_blank"} rel="noopener noreferrer">Alumni Venture Seed Fund</a>.
+                                        A four part course for the young founders of Hidden Genius Project's <a
+                                        href={"https://www.hiddengeniusproject.org/alumniventureseedfund/"}
+                                        target={"_blank"} rel="noopener noreferrer">Alumni Venture Seed Fund</a>.
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions style={{justifyContent:'space-between'}}>
+                            <CardActions style={{justifyContent: 'space-between'}}>
                                 <NavLink to={'/rally/hgp'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
-                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('hgp')}>Subscribe</Button>
+                                <Button size="small" color="primary"
+                                        onClick={() => this.trackSubscribe('hgp')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -150,7 +160,7 @@ class Rallies extends React.Component {
                                     component="img"
                                     alt="Libel"
                                     height="200"
-                                    style={{objectFit:'contain'}}
+                                    style={{objectFit: 'contain'}}
                                     image="https://democrasee.club/wp-content/uploads/2020/10/libel-150x150.jpg"
                                     title="Libel"
                                 /></NavLink>
@@ -163,11 +173,12 @@ class Rallies extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions style={{justifyContent:'space-between'}}>
+                            <CardActions style={{justifyContent: 'space-between'}}>
                                 <NavLink to={'/rally/fighting-defamation'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
-                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('fighting-defamation')}>Subscribe</Button>
+                                <Button size="small" color="primary"
+                                        onClick={() => this.trackSubscribe('fighting-defamation')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -191,11 +202,12 @@ class Rallies extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions style={{justifyContent:'space-between'}}>
+                            <CardActions style={{justifyContent: 'space-between'}}>
                                 <NavLink to={'/rally/universal-food-stamps'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
-                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('universal-food-stamps')}>Subscribe</Button>
+                                <Button size="small" color="primary"
+                                        onClick={() => this.trackSubscribe('universal-food-stamps')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -215,15 +227,17 @@ class Rallies extends React.Component {
                                         5G Infrastructure
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        5G improves internet speeds, but only at very short distances. This is a conversation about whether that makes it a worthwhile public investment
+                                        5G improves internet speeds, but only at very short distances. This is a
+                                        conversation about whether that makes it a worthwhile public investment
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions style={{justifyContent:'space-between'}}>
+                            <CardActions style={{justifyContent: 'space-between'}}>
                                 <NavLink to={'/rally/5G-infrastructure'}><Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
-                                <Button size="small" color="primary" onClick={() => this.trackSubscribe('5G-infrastructure')}>Subscribe</Button>
+                                <Button size="small" color="primary"
+                                        onClick={() => this.trackSubscribe('5G-infrastructure')}>Subscribe</Button>
                             </CardActions>
                         </Card>
                     </Grid>

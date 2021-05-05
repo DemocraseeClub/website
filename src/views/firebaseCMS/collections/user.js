@@ -1,7 +1,5 @@
 import {buildCollection, buildSchema} from "@camberi/firecms";
-
 // import CustomPasswordField from "../customTextFields/CustomPasswordField";
-import CustomPhoneField from "../customTextFields/CustomPhoneField";
 
 const userSchema = buildSchema({
   name: "User",
