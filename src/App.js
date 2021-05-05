@@ -65,7 +65,11 @@ function App(props) {
 
     return (
         <ThemeProvider theme={appTheme}>
-            <FirebaseCMS>
+            <FirebaseCMS allowSkipLogin={false}
+                         primaryColor={"#095760"}
+                         secondaryColor={"#B9DFF4"}
+                         name={"Democraseeclub"}
+                         allowSkipLogin={false}>
                 <SnackbarProvider maxSnack={3}
                                   ref={notistackRef}
                                   action={(key) => (<CancelIcon onClick={() => onClickDismiss(key)}/>)}>
@@ -87,31 +91,16 @@ function App(props) {
                                 </div>
                             </Dialog>
                             <Header/>
-ya
+
                             <Switch>
                                 <Route path="/cms">
-                                    <CMSMainView
-                                        name={"Democraseeclub"}
-                                        allowSkipLogin={false}
-                                        primaryColor={"#095760"}
-                                        secondaryColor={"#B9DFF4"}
-                                    />
+                                    <CMSMainView />
                                 </Route>
                                 <Route path="/login">
-                                    <CMSMainView
-                                        name={"Democraseeclub"}
-                                        allowSkipLogin={false}
-                                        primaryColor={"#095760"}
-                                        secondaryColor={"#B9DFF4"}
-                                    />
+                                    <CMSMainView />
                                 </Route>
                                 <Route path="/c/:entity">
-                                    <CMSMainView
-                                        name={"Democraseeclub"}
-                                        allowSkipLogin={false}
-                                        primaryColor={"#095760"}
-                                        secondaryColor={"#B9DFF4"}
-                                    />
+                                    <CMSMainView />
                                 </Route>
                                 <Route path="/rallies">
                                     <Rallies/>

@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     es6: true,
     node: true,
@@ -22,6 +23,18 @@ module.exports = {
     "@typescript-eslint"
   ],
   rules: {
-    quotes: ["error", "double"],
+    "consistent-return": 0,
+    "no-mixed-operators": 0,
+    "no-useless-constructor": 0,
+    "standard/computed-property-even-spacing": 0,
+    "import/first": 1,
+    "react/prop-types": 0,
+    "no-unused-vars": 0,
+    "no-console": 0,
+    "indent": ["error", 1, {"SwitchCase": 1}],
+    "semi": ["error", "always"],
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "radix": ["off"],
+    quotes: ["error", "double"]
   },
 };

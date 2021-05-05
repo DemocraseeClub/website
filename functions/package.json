@@ -2,7 +2,7 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "npm run lint && tsc",
+    "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
@@ -11,6 +11,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@types/testing-library__dom": "^7.5.0",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.11.0"
   },
