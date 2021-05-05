@@ -87,7 +87,7 @@ function App(props) {
                                 </div>
                             </Dialog>
                             <Header/>
-
+ya
                             <Switch>
                                 <Route path="/cms">
                                     <CMSMainView
@@ -105,7 +105,6 @@ function App(props) {
                                         secondaryColor={"#B9DFF4"}
                                     />
                                 </Route>
-
                                 <Route path="/c/:entity">
                                     <CMSMainView
                                         name={"Democraseeclub"}
