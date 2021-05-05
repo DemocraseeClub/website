@@ -1,0 +1,51 @@
+{
+  "answer": {
+    "spd": "",
+    "type": "answer"
+  },
+  "offer": {
+    "spd": "",
+    "type": "offer"
+  },
+  "live" : true,
+  "privacy" : "enum of public|private|members-only|?",
+  "scheduled" : "timestamp of when the room is schedule be go live",
+  "hosts": [
+    {
+      "uid": "uid of user",
+      "label": "defaults to profile name, but may be editable per room",
+      "timeEntered": "timestamp the viewer entered",
+      "timeLeft": "timestamp the viewer left",
+      "volume": 100,
+      "sharing": [
+        "screen",
+        "cam",
+        "mic"
+      ]
+    }
+  ],
+  "viewer": [
+    {
+      "uid": "uid of user",
+      "label": "defaults to profile name, but may be editable per room",
+      "timeEntered": "timestamp the viewer entered",
+      "timeLeft": "timestamp the viewer left",
+      "volume": 0,
+      "sharing": [
+        "screen",
+        "cam",
+        "mic"
+      ]
+    }
+  ],
+  "viewerCount": 99,
+  "chats": [
+    {
+      "from": "uid of from user",
+      "uids": [
+        "uid of from user. or '0' for everyone in the room"
+      ],
+      "msg": "the draftjs encoded message"
+    }
+  ]
+}

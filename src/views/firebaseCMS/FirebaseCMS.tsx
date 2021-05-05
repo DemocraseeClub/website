@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 
-import { Authenticator, CMSApp, NavigationBuilder, NavigationBuilderProps, CMSAppProvider, CMSMainView } from "@camberi/firecms";
+import {Authenticator, CMSAppProvider, NavigationBuilder, NavigationBuilderProps} from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
@@ -22,7 +22,7 @@ import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
 
-import { Box, CircularProgress } from "@material-ui/core";
+import {Box, CircularProgress} from "@material-ui/core";
 
 
 const firebaseConfig = {
@@ -42,7 +42,7 @@ async function getUserData(uid: string) {
     return (data.exists) ? data.data() : {};
 }
 
-export function FirebaseCMS({children} :React.PropsWithChildren<{}>) {
+export function FirebaseCMS({children}: React.PropsWithChildren<{}>) {
 
     // const [userDB] = useState<firebase.firestore.DocumentData>();
 
@@ -63,7 +63,7 @@ export function FirebaseCMS({children} :React.PropsWithChildren<{}>) {
         }
     }, []);
 
-    const navigation: NavigationBuilder = ({ user }: NavigationBuilderProps) => {
+    const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
 
         let userDB = user;
 
@@ -151,7 +151,7 @@ export function FirebaseCMS({children} :React.PropsWithChildren<{}>) {
                 firebaseConfig={firebaseConfig}
 
             >
-            
+
                 {children}
 
             </CMSAppProvider>

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { withSnackbar } from "notistack";
+import React, {Component} from "react";
+import {withStyles} from "@material-ui/core/styles";
+import {withSnackbar} from "notistack";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { DropzoneArea } from "material-ui-dropzone";
+import {DropzoneArea} from "material-ui-dropzone";
 import Button from "@material-ui/core/Button";
 
 class CreateRallyTab extends Component {
