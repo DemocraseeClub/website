@@ -9,7 +9,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "dependencies": {
     "@types/testing-library__dom": "^7.5.0",
     "firebase-admin": "^9.2.0",
