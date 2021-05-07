@@ -14,7 +14,7 @@ function logInStart() {
     }
 }
 
-function logInSuccess(payload) {
+export function logInSuccess(payload) {
     return {
         type: LOGIN_SUCCESS,
         me: payload
@@ -54,6 +54,7 @@ export function setThemeMode(mode) {
         mode: mode
     };
 }
+
 
 const segmentMap = { // expects /group/9/playlists/8321/tracks/8483/edit
     'rally':'rid',

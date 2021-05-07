@@ -65,7 +65,9 @@ function App(props) {
 
     return (
         <ThemeProvider theme={appTheme}>
-            <FirebaseCMS allowSkipLogin={false}
+            <FirebaseCMS 
+                         dispatch = {props.dispatch}
+                         allowSkipLogin={false}
                          primaryColor={"#095760"}
                          secondaryColor={"#B9DFF4"}
                          name={"Democraseeclub"}
@@ -97,7 +99,7 @@ function App(props) {
                                     <CMSMainView />
                                 </Route>
                                 <Route path="/login">
-                                    <CMSMainView />
+                                    <CMSMainView  />
                                 </Route>
                                 <Route path="/c/:entity">
                                     <CMSMainView />
