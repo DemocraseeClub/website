@@ -1,10 +1,14 @@
-import React, {useEffect} from "react";
+import React, {ReactNode, useEffect} from "react";
 
 import {Authenticator, CMSAppProvider, NavigationBuilder, NavigationBuilderProps} from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
+
+
+import {logInSuccess} from "../../redux/authActions";
+import { useSelector } from 'react-redux'
 
 import buildUserCollection from "./collections/user";
 import buildResourceCollection from "./collections/resource";
@@ -44,14 +48,21 @@ async function getUserData(uid: string) {
     return (data.exists) ? data.data() : {};
 }
 
-export function FirebaseCMS({children}: React.PropsWithChildren<{}>) {
+type Props = {
+    children : ReactNode,
+    dispatch: Function
+}
+
+export function FirebaseCMS({children, dispatch}: Props) {
 
     // const [userDB] = useState<firebase.firestore.DocumentData>();
 
     const {pathname} = useLocation()
     let history = useHistory();
 
+    const state: any = useSelector(state => state) //global state
 
+  
 
     const [
         firebaseConfigInitialized,
@@ -116,14 +127,16 @@ export function FirebaseCMS({children}: React.PropsWithChildren<{}>) {
         console.log("Allowing access to", user);
         if (user) {
 
-
-            if(pathname === "/login") {
-
-               window.location.pathname = "/home"
+            // console.log(state.auth, "auth")
+            
+            if(pathname === "/login") { //if there's already an user
+                
+                window.location.pathname = "/home"
             }
-
-            // console.log(user, "user")
-            console.log(firebase.auth)
+           
+            if(state.auth.me === false)
+                dispatch(logInSuccess(user)) //dispatch user to global state
+        
 
             /* TODO: user.providerData
 
