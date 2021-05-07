@@ -22,6 +22,8 @@ import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
 
+import {useLocation, useHistory} from "react-router-dom";
+
 import {Box, CircularProgress} from "@material-ui/core";
 
 
@@ -45,6 +47,11 @@ async function getUserData(uid: string) {
 export function FirebaseCMS({children}: React.PropsWithChildren<{}>) {
 
     // const [userDB] = useState<firebase.firestore.DocumentData>();
+
+    const {pathname} = useLocation()
+    let history = useHistory();
+
+
 
     const [
         firebaseConfigInitialized,
@@ -108,6 +115,16 @@ export function FirebaseCMS({children}: React.PropsWithChildren<{}>) {
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
         console.log("Allowing access to", user);
         if (user) {
+
+
+            if(pathname === "/login") {
+
+               window.location.pathname = "/home"
+            }
+
+            // console.log(user, "user")
+            console.log(firebase.auth)
+
             /* TODO: user.providerData
 
             let firestoreUser = ...
