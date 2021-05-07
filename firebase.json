@@ -46,6 +46,7 @@
     }
   },
   "functions": {
+    "runtime": "nodejs12",
     "predeploy": [
       "npm --prefix functions run build"
     ]
