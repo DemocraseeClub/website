@@ -80,16 +80,22 @@ export function FirebaseCMS(props: any) {
 
     useEffect(() => {
         if (firebase.apps.length === 0) {
-            // console.log(" FIREBASE INITIALIZED");
+
             try {
                 const fbApp = firebase.initializeApp(firebaseConfig);
-                (window as any).fireDB = fbApp.firestore();
                 (window as any).storage = fbApp.storage();
+                (window as any).fireDB = fbApp.firestore();
+                if (document.location.hostname === 'localhost') {
+                    fbApp.functions().useEmulator("localhost", 3032);
+                    fbApp.auth().useEmulator("http://localhost:3033");
+                    (window as any).fireDB.useEmulator("localhost", 3031);
+                }
                 if (document.location.port.length === 0) { // ignore dev environments
                     (window as any).logUse = fbApp.analytics();
                 } else {
                     (window as any).logUse = { logEvent: (e:any, d:any) => console.log('FB LOG ' + e, d), setUserProperties: (o:any) => console.log('FB SET ', o) };
                 }
+                console.log("FIREBASE INITIALIZED");
                 setFirebaseConfigInitialized(true);
             } catch (e) {
                 console.error(e);
