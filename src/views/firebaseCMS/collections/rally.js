@@ -2,7 +2,7 @@ import {buildCollection, buildSchema} from "@camberi/firecms";
 
 import meetingSchema from "./meeting";
 
-const rallySchema = buildSchema({
+export const rallySchema = buildSchema({
     name: "Rally",
     properties: {
         author: {

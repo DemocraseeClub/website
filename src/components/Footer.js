@@ -11,7 +11,7 @@ import {setThemeMode} from "../redux/authActions";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {rallyStyles} from "../Util/ThemeUtils";
-import Toolbar from "@material-ui/core/Toolbar";
+import {withCmsHooks} from "../views/firebaseCMS/FirebaseCMS";
 
 class Footer extends React.Component {
 
@@ -71,8 +71,14 @@ class Footer extends React.Component {
                     </Grid>
                     <Grid item>
                         <ul className={classes.menuList}>
-                            <li><NavLink to={'/register'}>Register</NavLink></li>
-                            <li><NavLink to={'/login'}>Login</NavLink></li>
+                            {this.props.authController && this.props.authController.loggedUser ?
+                                <li><NavLink to={'/user/'+this.props.authController.loggedUser.uid}>My Account</NavLink></li>
+                                :
+                                <React.Fragment>
+                                    <li><NavLink to={'/register'}>Register</NavLink></li>
+                                    <li><NavLink to={'/login'}>Login</NavLink></li>
+                                </React.Fragment>
+                            }
                             <li><NavLink to={'/rallies'}>Rallies</NavLink></li>
                             <li><NavLink to={'/resources'}>Resources</NavLink></li>
                         </ul>
@@ -113,4 +119,4 @@ class Footer extends React.Component {
     }
 }
 
-export default withStyles(rallyStyles, {withTheme: true})(Footer);
+export default withStyles(rallyStyles, {withTheme: true})(withCmsHooks(Footer));

@@ -1,14 +1,19 @@
-import React, {ReactNode, useEffect} from "react";
+import React, {ReactNode, useEffect, Component} from "react";
 
-import {Authenticator, CMSAppProvider, NavigationBuilder, NavigationBuilderProps} from "@camberi/firecms";
+import {
+    Authenticator,
+    CMSAppProvider,
+    NavigationBuilder,
+    NavigationBuilderProps, useAuthContext,
+    useSideEntityController
+} from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
 
-
 import {logInSuccess} from "../../redux/authActions";
-import { useSelector } from 'react-redux'
+import {useSelector} from 'react-redux'
 
 import buildUserCollection from "./collections/user";
 import buildResourceCollection from "./collections/resource";
@@ -48,21 +53,25 @@ async function getUserData(uid: string) {
     return (data.exists) ? data.data() : {};
 }
 
-type Props = {
+/* type Props = {
     children : ReactNode,
     dispatch: Function
 }
+ */
 
-export function FirebaseCMS({children, dispatch}: Props) {
+export function withCmsHooks(PassedComponent: any) {
+    return function WrappedComponent(props: object) {
+        const sideEntityController = useSideEntityController();
+        const authController = useAuthContext();
+        return <PassedComponent {...props} sideEntityController={sideEntityController} authController={authController}/>;
+    }
+}
+
+export function FirebaseCMS(props: any) {
 
     // const [userDB] = useState<firebase.firestore.DocumentData>();
-
-    const {pathname} = useLocation()
-    let history = useHistory();
-
-    const state: any = useSelector(state => state) //global state
-
-  
+    // const {pathname} = useLocation()
+    // let history = useHistory();
 
     const [
         firebaseConfigInitialized,
@@ -71,15 +80,23 @@ export function FirebaseCMS({children, dispatch}: Props) {
 
     useEffect(() => {
         if (firebase.apps.length === 0) {
+            // console.log(" FIREBASE INITIALIZED");
             try {
-                firebase.initializeApp(firebaseConfig);
-                firebase.analytics();
+                const fbApp = firebase.initializeApp(firebaseConfig);
+                (window as any).fireDB = fbApp.firestore();
+                (window as any).storage = fbApp.storage();
+                if (document.location.port.length === 0) { // ignore dev environments
+                    (window as any).logUse = fbApp.analytics();
+                } else {
+                    (window as any).logUse = { logEvent: (e:any, d:any) => console.log('FB LOG ' + e, d), setUserProperties: (o:any) => console.log('FB SET ', o) };
+                }
                 setFirebaseConfigInitialized(true);
             } catch (e) {
                 console.error(e);
             }
         }
     }, []);
+
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
 
@@ -128,18 +145,12 @@ export function FirebaseCMS({children, dispatch}: Props) {
         if (user) {
 
             // console.log(state.auth, "auth")
-            
-            if(pathname === "/login") { //if there's already an user
-                
+
+            /* if(pathname === "/login") { // move to login component
                 window.location.pathname = "/home"
-            }
-           
-            if(state.auth.me === false)
-                dispatch(logInSuccess(user)) //dispatch user to global state
-        
+            }  */
 
             /* TODO: user.providerData
-
             let firestoreUser = ...
 
             let mergedUser = {
@@ -154,24 +165,20 @@ export function FirebaseCMS({children, dispatch}: Props) {
         return true;
     };
 
-
     if (!firebaseConfigInitialized) {
-        return <Box
-            display="flex"
-            width={"100%"} height={"100vh"}>
+        return <Box display="flex" width={"100%"} height={"100vh"}>
             <Box m="auto">
                 <CircularProgress/>
             </Box>
-        </Box>;
+        </Box>
     }
+
+    const {children, ...others} = props;
 
     return (
         <div className="cms-container">
-
             <CMSAppProvider
-
                 authentication={myAuthenticator}
-
                 signInOptions={[
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -179,11 +186,9 @@ export function FirebaseCMS({children, dispatch}: Props) {
                 ]}
                 navigation={navigation}
                 firebaseConfig={firebaseConfig}
-
+                {...others}
             >
-
-                {children}
-
+                {props.children}
             </CMSAppProvider>
         </div>
     );
