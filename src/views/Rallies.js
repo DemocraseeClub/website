@@ -11,17 +11,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import {withSnackbar} from "notistack";
-import {useAuthContext, useSideEntityController} from "@camberi/firecms";
+import {withCmsHooks} from "../views/firebaseCMS/FirebaseCMS";
 import {rallySchema} from "./firebaseCMS/collections/rally";
 import {rallyStyles} from "../Util/ThemeUtils";
 
-function withCmsHooks(Component) {
-    return function WrappedComponent(props) {
-        const sideEntityController = useSideEntityController();
-        const authContext = useAuthContext();
-        return <Component {...props} sideEntityController={sideEntityController} authContext={authContext}/>;
-    }
-}
 
 class Rallies extends React.Component {
 
@@ -38,23 +31,25 @@ class Rallies extends React.Component {
         console.log(this.props.authContext, this.props.sideEntityController.sidePanels);
         this.props.sideEntityController.open({
             // entityId: false,
-            collectionPath: "rallies"
-            // , schema: rallySchema // TODO: customize visible fields by user
+            collectionPath: "rallies", schema: rallySchema // TODO: customize visible fields by user
         })
     }
 
     render() {
         return (
             <Box p={4} className={this.props.classes.section}>
-                <Box style={{textAlign: 'right'}}>
-                    <NavLink style={{textDecoration: 'none', marginRight: 5}} to={'/rally/templates'}>
-                        <Button variant={'contained'} color={'secondary'}>Rally Templates</Button>
-                    </NavLink>
+                <Grid container justify={'space-between'} alignContent={'center'} spacing={1} style={{marginBottom:20}}>
+                    <Typography variant={'h3'} color={'primary'} >Rallying</Typography>
+                    <Box style={{textAlign: 'right'}}>
+                        <NavLink style={{textDecoration: 'none', marginRight: 5}} to={'/rally/templates'}>
+                            <Button variant={'contained'} color={'secondary'}>Rally Templates</Button>
+                        </NavLink>
 
-                    <Button variant={'contained'} className={this.props.classes.redBtn}
-                            onClick={() => this.showRallyForm()}>Start a Rally</Button>
-                </Box>
-                <Typography variant={'h3'}>Rallying</Typography>
+                        <Button variant={'contained'} className={this.props.classes.redBtn}
+                                onClick={() => this.showRallyForm()}>Start a Rally</Button>
+                    </Box>
+                </Grid>
+
                 <Grid container justify={'space-around'} spacing={4}>
                     <Grid item xs={12} sm={6} md={4}>
                         <Card>
