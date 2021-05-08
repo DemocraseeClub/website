@@ -23,6 +23,10 @@
         "function": "injectMeta"
       },
       {
+        "source": "/auth/syncUser",
+        "function": "syncUser"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
