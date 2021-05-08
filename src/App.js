@@ -61,7 +61,9 @@ function App(props) {
 
     let appTheme = createMuiTheme(Object.assign(baseTheme, auth.siteTheme));
     appTheme = responsiveFontSizes(appTheme, {factor: 20});
-    console.log(appTheme)
+    if (process.env.NODE_ENV === 'development') {
+        console.log(appTheme);
+    }
 
     const cmsParams = {
         primaryColor:appTheme.palette.primary.main,
@@ -72,7 +74,7 @@ function App(props) {
 
     return (
         <ThemeProvider theme={appTheme}>
-            <FirebaseCMS dispatch = {props.dispatch} {...cmsParams}>
+            <FirebaseCMS dispatch={props.dispatch} {...cmsParams}>
                 <SnackbarProvider maxSnack={3}
                                   ref={notistackRef}
                                   action={(key) => (<CancelIcon onClick={() => onClickDismiss(key)}/>)}>
@@ -97,18 +99,18 @@ function App(props) {
 
                             <Switch>
                                 <Route path="/cms">
-                                    <CMSMainView {...cmsParams}/>
+                                    <CMSMainView {...cmsParams} />
                                 </Route>
                                 <Route path="/login">
-                                    <CMSMainView  {...cmsParams}/>
+                                    <CMSMainView  {...cmsParams} />
                                 </Route>
                                 <Route path="/c/:entity">
-                                    <CMSMainView {...cmsParams}/>
+                                    <CMSMainView {...cmsParams} />
                                 </Route>
                                 <Route path="/rallies">
                                     <Rallies/>
                                     <div style={{display: "none"}}>
-                                        <CMSMainView {...cmsParams}/>
+                                        <CMSMainView {...cmsParams} />
                                     </div>
                                 </Route>
 
