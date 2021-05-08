@@ -33,28 +33,41 @@ exports.injectMeta = functions.https.onRequest((req, res) => {
     res.status(200).send(template);
 });
 
-// TODO: use FireCMS token to set POSTED provider data on firestore doc
+// use FireCMS token to set POSTED provider data on firestore doc
 exports.syncUser = functions.https.onRequest((req, res) => {
-    //
+    console.log(req.body);
+    // validate accessToken
+    return admin
+        .auth()
+        .verifyIdToken(req.body.idToken)
+        .then((decodedToken) => {
+            const uid = decodedToken.uid;
+            const fbUser = getUser(uid);
+            let merged = Object.assign({}, fbUser, req.body);
+            delete merged.idToken;
+            /* TODO:
+            auth.currentUser.linkWithRedirect(provider).then().catch();
+            explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
+             */
+            console.log("MERGING USER!!", merged);
+            db.doc('users/'+uid).set(merged)
+        })
+        .catch((error) => {
+            return console.error(error);
+        });
 });
-
-/*
-// notes: implement proper mergers: https://firebase.google.com/docs/auth/admin/manage-users
-auth.currentUser.linkWithRedirect(provider).then().catch();
-explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
-*/
 
 async function getUser(uid) {
     // admin.auth.getUserByEmail(),  getUserByPhoneNumber...
     return await admin.auth().getUser(uid)
-    .then((userRecord) => {
-        console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-        return userRecord.toJSON();
-    })
-    .catch((error) => {
-        console.error('Error fetching user data:', error);
-        return false;
-    });
+        .then((userRecord) => {
+            console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+            return userRecord.toJSON();
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+            return false;
+        });
 }
 
 /*
