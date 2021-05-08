@@ -61,21 +61,22 @@ function App(props) {
 
     let appTheme = createMuiTheme(Object.assign(baseTheme, auth.siteTheme));
     appTheme = responsiveFontSizes(appTheme, {factor: 20});
-    // console.log(appTheme)
+    console.log(appTheme)
+
+    const cmsParams = {
+        primaryColor:appTheme.palette.primary.main,
+        secondaryColor:appTheme.palette.secondary.main,
+        name:"Democrasee",
+        allowSkipLogin:false
+    };
 
     return (
         <ThemeProvider theme={appTheme}>
-            <FirebaseCMS 
-                         dispatch = {props.dispatch}
-                         allowSkipLogin={false}
-                         primaryColor={"#095760"}
-                         secondaryColor={"#B9DFF4"}
-                         name={"Democraseeclub"}
-                         allowSkipLogin={false}>
+            <FirebaseCMS dispatch = {props.dispatch} {...cmsParams}>
                 <SnackbarProvider maxSnack={3}
                                   ref={notistackRef}
                                   action={(key) => (<CancelIcon onClick={() => onClickDismiss(key)}/>)}>
-                    <div className="App" id={appTheme.palette.type === 'dark' ? 'darkMode' : 'lightMode'}>
+                    <div className="App" id={appTheme.palette.type === 'dark' ? 'darkMode' : 'lightMode'} style={{backgroundColor:appTheme.palette.background.default}}>
                         <Router>
                             <Dialog open={isOpen}>
                                 <div style={{padding: 30}}>
@@ -96,23 +97,18 @@ function App(props) {
 
                             <Switch>
                                 <Route path="/cms">
-                                    <CMSMainView />
+                                    <CMSMainView {...cmsParams}/>
                                 </Route>
                                 <Route path="/login">
-                                    <CMSMainView  />
+                                    <CMSMainView  {...cmsParams}/>
                                 </Route>
                                 <Route path="/c/:entity">
-                                    <CMSMainView />
+                                    <CMSMainView {...cmsParams}/>
                                 </Route>
                                 <Route path="/rallies">
                                     <Rallies/>
                                     <div style={{display: "none"}}>
-                                        <CMSMainView
-                                            name={"Democraseeclub"}
-                                            allowSkipLogin={false}
-                                            primaryColor={"#095760"}
-                                            secondaryColor={"#B9DFF4"}
-                                        />
+                                        <CMSMainView {...cmsParams}/>
                                     </div>
                                 </Route>
 

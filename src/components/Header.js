@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import {NavLink} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
+import {rallyStyles} from "../Util/ThemeUtils";
 
 class Header extends React.Component {
 
@@ -17,14 +18,13 @@ class Header extends React.Component {
             <AppBar position="static">
                 <Toolbar className={classes.root} id={'mainHeader'}>
                     <NavLink to={'/'}>
-                    <img src='/democrasee_logo_white.png' alt={'logo'} height={50} style={{marginRight: 5}}/>
+                    <img src='/images/democrasee_logo_white.png' alt={'logo'} height={50} style={{marginRight: 10}}/>
                     </NavLink>
                     <div style={{textAlign: 'left'}}>
-                        <div className={classes.title}>Democrasee</div>
+                        <img src="/images/democrasee_text_white.png" alt={'democrasee'} height={20} />
                         <div className={classes.slogan}>Incentivizing Civic Action</div>
                     </div>
 
-                    <div className={classes.redStripe}></div>
                     <Grid container style={{flexGrow: 1}} justify={'space-around'} alignContent={'center'}>
                         <NavLink to={'/rallies'}>Rallies</NavLink>
                         <NavLink to={'/resources'}>Resources</NavLink>
@@ -36,31 +36,4 @@ class Header extends React.Component {
 
 }
 
-
-export const DemoStyles = theme => ({
-    root: {
-        alignContent: 'center',
-        '& a': {
-            color:theme.palette.secondary.constrastText,
-            textDecorationLine: 'none',
-            alignSelf: 'center'
-        }
-    },
-    title: {
-        fontWeight: 900,
-        fontSize: 22,
-        color: theme.palette.background.default
-    },
-    slogan: {
-        fontWeight: 600,
-        fontSize: 11,
-        color: theme.palette.background.default
-    },
-    redStripe : {
-        backgroundColor:theme.palette.error.main,
-        width:20,
-        height:'100%'
-    }
-});
-
-export default withStyles(DemoStyles, {withTheme: true})(Header);
+export default withStyles(rallyStyles, {withTheme: true})(Header);

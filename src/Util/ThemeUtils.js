@@ -43,7 +43,23 @@ export function lightOrDark(color) {
 
 export const rallyStyles = theme => ({
     root: {
-        width: '100%'
+        width: '100%',
+        alignContent: 'center',
+        '& a': {
+            color:theme.palette.secondary.contrastText,
+            textDecorationLine: 'none',
+            alignSelf: 'center'
+        }
+    },
+    paperRoot: {
+        width: '100%',
+        textAlign: 'left',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+        '& a': {
+            color: 'inherit',
+            textDecorationLine: 'none'
+        }
     },
     title : {
         fontSize:46,
@@ -310,9 +326,21 @@ export const rallyStyles = theme => ({
     errorColor: {
         color: theme.palette.error.main,
     },
+    slogan: {
+        fontWeight: 600,
+        fontSize: 11,
+        color: theme.palette.background.default
+    },
     paragraph : {
         lineHeight:'23px',
         paddingLeft:10,
         paddingRight:10
     },
+    menuList: {
+        listStyle: 'none',
+        padding: 0, margin: 0,
+        '& li': {
+            marginBottom: 15
+        }
+    }
 });
