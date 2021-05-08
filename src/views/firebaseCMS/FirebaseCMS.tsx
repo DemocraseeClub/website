@@ -59,19 +59,40 @@ async function getUserData(uid: string) {
 }
  */
 
+async function postData(url = '', data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
+
+
 export function withCmsHooks(PassedComponent: any) {
     return function WrappedComponent(props: object) {
         const sideEntityController = useSideEntityController();
         const authController = useAuthContext();
-        return <PassedComponent {...props} sideEntityController={sideEntityController} authController={authController}/>;
+        return <PassedComponent {...props} sideEntityController={sideEntityController}
+                                authController={authController}/>;
     }
 }
 
 export function FirebaseCMS(props: any) {
 
     // const [userDB] = useState<firebase.firestore.DocumentData>();
-    // const {pathname} = useLocation()
+    const {pathname} = useLocation();
     // let history = useHistory();
+    const state: any = useSelector(state => state) //global state
 
     const [
         firebaseConfigInitialized,
@@ -93,7 +114,10 @@ export function FirebaseCMS(props: any) {
                 if (document.location.port.length === 0) { // ignore dev environments
                     (window as any).logUse = fbApp.analytics();
                 } else {
-                    (window as any).logUse = { logEvent: (e:any, d:any) => console.log('FB LOG ' + e, d), setUserProperties: (o:any) => console.log('FB SET ', o) };
+                    (window as any).logUse = {
+                        logEvent: (e: any, d: any) => console.log('FB LOG ' + e, d),
+                        setUserProperties: (o: any) => console.log('FB SET ', o)
+                    };
                 }
                 console.log("FIREBASE INITIALIZED");
                 setFirebaseConfigInitialized(true);
@@ -105,61 +129,64 @@ export function FirebaseCMS(props: any) {
 
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
-
-        let userDB = user;
-
-        if (user && user !== null) {
-            /* if (user.uid === '6ofNl8umwIzcB8AEJSC2' || user.uid === 'DJOKTiAz17pEx9o9vNIY' || user.uid === 'LkiBXF99GQlWCcDSN8Qk' || user.uid === 'XKNZEbK5h6tigCFoCuDV') {
-                // userDB.admin = true;
-            } */
-            // console.log("USER " + user.uid, user.toJSON())
-            // let userDB = getUserData(user.uid);
-            console.log(userDB?.toJSON());
-
+        if (user && user !== null && user.emailVerified === true) {
             return {
                 collections: [
-                    buildUserCollection(userDB),
-                    buildResourceCollection(userDB),
-                    buildResourceTypeCollection(userDB),
-                    buildTopicCollection(userDB),
-                    buildStateCollection(userDB),
-                    buildStakeholderCollection(userDB),
-                    buildRallyCollection(userDB),
-                    buildPartyCollection(userDB),
-                    buildPageCollection(userDB),
-                    buildOfficialCollection(userDB),
-                    buildMeetingTypeCollection(userDB),
-                    buildInviteCollection(userDB),
-                    buildCityCollection(userDB),
-                    buildActionPlanCollection(userDB),
+                    buildUserCollection(user),
+                    buildResourceCollection(user),
+                    buildResourceTypeCollection(user),
+                    buildTopicCollection(user),
+                    buildStateCollection(user),
+                    buildStakeholderCollection(user),
+                    buildRallyCollection(user),
+                    buildPartyCollection(user),
+                    buildPageCollection(user),
+                    buildOfficialCollection(user),
+                    buildMeetingTypeCollection(user),
+                    buildInviteCollection(user),
+                    buildCityCollection(user),
+                    buildActionPlanCollection(user),
                     wiseDemoCollection
                 ]
             }
         } else {
             return {
                 collections: [
-                    buildResourceCollection(userDB),
-                    buildRallyCollection(userDB),
-                    buildActionPlanCollection(userDB)
+                    buildResourceCollection(user),
+                    buildRallyCollection(user),
+                    buildActionPlanCollection(user)
                 ]
             }
         }
     };
 
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
-        console.log("Allowing access to", user);
+        console.log("Allowing access to", user?.toJSON());
         if (user) {
             // console.log(state.auth, "auth")
-            /* if(pathname === "/login") { // move to login component
-                window.location.pathname = "/home"
-            }  */
-            /* TODO: post user.providerData to http://localhost:3032/democraseeclub/us-central1/syncUser
-            let firestoreUser = ...
-            let mergedUser = {
-                displayName:
-                cover: firebase.user.photoURL
-            }
-            */
+            // if (pathname === "/login") return (window as any).location.pathname = "/rallies"; // TODO go to user profile
+
+            // TODO: post user.providerData to http://localhost:3032/democraseeclub/us-central1/syncUser
+
+            let authUser = user.toJSON();
+            // let token = mergedUser.stsTokenManager.accessToken;  // TODO include accessToken
+            let token = await user.getIdToken().then(idToken => idToken)
+            console.log("REQUEST WITH " + token, authUser);
+
+            let mergedUser = postData('http://localhost:3032/democraseeclub/us-central1/syncUser', authUser)
+                .then(data => {
+                    console.log(data);
+                    return data;
+                });
+
+            // TODO: set to redux store or ideally FireCMS authContext
+
+            /*
+            // listen for role changes from other providers on settings / profile  pages
+            firebase.auth().onAuthStateChanged(function(user) {
+             window.user = user; // user is undefined if no user signed in
+            });
+             */
         }
         return true;
     };
