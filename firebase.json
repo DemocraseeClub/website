@@ -38,9 +38,6 @@
     "firestore": {
       "port": 3031
     },
-    "database": {
-      "port": 3030
-    },
     "ui": {
       "enabled": true
     }
