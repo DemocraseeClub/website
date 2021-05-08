@@ -31,7 +31,7 @@ class RallyCreate extends Component {
         },
       },
       line: {
-        borderColor: theme.palette.info.constrastText,
+        borderColor: theme.palette.info.contrastText,
         borderTopWidth: 10,
         borderRadius: 1,
       },

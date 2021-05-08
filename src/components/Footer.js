@@ -10,6 +10,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {setThemeMode} from "../redux/authActions";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {rallyStyles} from "../Util/ThemeUtils";
+import Toolbar from "@material-ui/core/Toolbar";
 
 
 class Footer extends React.Component {
@@ -32,15 +34,17 @@ class Footer extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <footer className={classes.root}>
+            <footer className={classes.paperRoot}>
                 <Grid container justify={'space-around'} style={{padding: 10}}>
                     <Grid item container xs={12} sm={3} direction={'column'}>
                         <Grid item container alignContent={'center'} style={{marginBottom:20}}>
                             <Grid item>
-                                <img alt={'logo'} src='/democrasee_logo_white.png' height={60} style={{marginRight: 5}}/>
+                                <NavLink to={'/'}>
+                                    <img src='/images/democrasee_logo_white.png' alt={'logo'} height={50} style={{marginRight: 10}}/>
+                                </NavLink>
                             </Grid>
                             <Grid item>
-                                <div className={classes.title}>Democrasee</div>
+                                <img src="/images/democrasee_text_white.png" alt={'democrasee'} height={25} />
                                 <div className={classes.slogan}>Incentivizing Civic Action</div>
                             </Grid>
                         </Grid>
@@ -102,8 +106,7 @@ class Footer extends React.Component {
                 </Grid>
                 <div style={{padding: 5}} className={classes.redBg}></div>
 
-                <div style={{padding: 10, textAlign: 'right', color: '#002866'}}
-                     className={classes.lightBlue}>
+                <div style={{padding: 10, textAlign: 'right', color:this.props.theme.palette.secondary.contrastText, backgroundColor: this.props.theme.palette.secondary.light}}>
                     (ɔ) 2021 - Available <a style={{textDecoration:'underline'}} href={"https://github.com/eliataylor/clock-agendas"} target={"_blank"}>Open Source</a> via <a href={"https://www.gnu.org/licenses/gpl-3.0.html"} target={"_blank"}>GNU</a>
                 </div>
             </footer>
@@ -111,46 +114,4 @@ class Footer extends React.Component {
     }
 }
 
-
-const useStyles = theme => ({
-    root: {
-        width: '100%',
-        textAlign: 'left',
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.background.default,
-        '& a': {
-            color: 'inherit',
-            textDecorationLine: 'none'
-        }
-    },
-    redBg: {
-        backgroundColor: theme.palette.error.main
-    },
-    redBtn : {
-        backgroundColor: theme.palette.error.main,
-        color: theme.palette.error.contrastText,
-        textDecoration:'none!important'
-    },
-    lightBlue: {
-        backgroundColor: theme.palette.secondary.main
-    },
-    menuList: {
-        listStyle: 'none',
-        padding: 0, margin: 0,
-        '& li': {
-            marginBottom: 15
-        }
-    },
-    title: {
-        fontWeight: 900,
-        fontSize: 22,
-        color: theme.palette.background.default
-    },
-    slogan: {
-        fontWeight: 600,
-        fontSize: 11,
-        color: theme.palette.background.default
-    },
-});
-
-export default withStyles(useStyles, {withTheme: true})(Footer);
+export default withStyles(rallyStyles, {withTheme: true})(Footer);
