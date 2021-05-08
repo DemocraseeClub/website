@@ -78,7 +78,8 @@ class Rallies extends React.Component {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions style={{justifyContent: 'space-between'}}>
-                                <NavLink to={'/rally/building-democrasee'}><Button size="small" color="primary">
+                                <NavLink to={'/rally/building-democrasee'}>
+                                    <Button size="small" color="primary">
                                     View
                                 </Button></NavLink>
                                 <Button size="small" color="primary"
