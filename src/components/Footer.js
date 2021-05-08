@@ -74,14 +74,11 @@ class Footer extends React.Component {
                             {this.props.authController && this.props.authController.loggedUser ?
                                 <li><NavLink to={'/user/'+this.props.authController.loggedUser.uid}>My Account</NavLink></li>
                                 :
-                                <React.Fragment>
-                                    <li><NavLink to={'/register'}>Register</NavLink></li>
-                                    <li><NavLink to={'/login'}>Login</NavLink></li>
-                                </React.Fragment>
+                                <li><NavLink to={'/login'}>Sign In / Up</NavLink></li>
                             }
                             <li><NavLink to={'/rallies'}>Rallies</NavLink></li>
                             <li><NavLink to={'/resources'}>Resources</NavLink></li>
-                            {process.env.NODE_ENV === 'development' && <li><NavLink to={'/cms'}>CMS</NavLink></li>}
+
                         </ul>
                     </Grid>
                     <Grid item>
@@ -90,6 +87,7 @@ class Footer extends React.Component {
                             <li><NavLink to={'/sponsors'}>Sponsors</NavLink></li>
                             <li><NavLink to={'/about'}>Team</NavLink></li>
                             <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
+                            <li><NavLink to={'/cms'}>FireCMS</NavLink></li>
                             <li>
                                 <FormControlLabel
                                     fontSize={'small'}
