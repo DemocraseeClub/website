@@ -33,16 +33,19 @@ exports.injectMeta = functions.https.onRequest((req, res) => {
     res.status(200).send(template);
 });
 
+// TODO: use FireCMS token to set POSTED provider data on firestore doc
+exports.syncUser = functions.https.onRequest((req, res) => {
+    //
+});
 
 /*
-// TODO: implement proper mergers: https://firebase.google.com/docs/auth/admin/manage-users
+// notes: implement proper mergers: https://firebase.google.com/docs/auth/admin/manage-users
 auth.currentUser.linkWithRedirect(provider).then().catch();
 explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 */
 
-
 async function getUser(uid) {
-    // getUserByEmail,  getUserByPhoneNumber
+    // admin.auth.getUserByEmail(),  getUserByPhoneNumber...
     return await admin.auth().getUser(uid)
     .then((userRecord) => {
         console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
@@ -54,6 +57,7 @@ async function getUser(uid) {
     });
 }
 
+/*
 exports.createUser = functions.firestore
     .document('users/{userId}')
     .onCreate((snap, context) => {
@@ -61,28 +65,23 @@ exports.createUser = functions.firestore
         const authUser = snap.data();
         const fbUser = getUser(uid);
         let merged = Object.assign({}, fbUser, authUser);
+        // TODO: auto award promo citizencoin?
         console.log("CREATING MERGED USER!!", context, merged);
         db.doc('users/'+uid).set(merged)
     });
 
-/*
 exports.updateUser = functions.firestore
     .document('users/{userId}')
     .onUpdate((change, context) => {
         // TODO: verify no auth fields / scopes / permissions have changed
     });
-*/
 
 exports.deleteUser = functions.firestore
     .document('users/{userId}')
     .onDelete((change, context) => {
-        let uid = context.auth?.uid || context.params.userId;
-        console.log("DELETING USER!!", context);
-        const fbUser = getUser(uid);
-        fbUser.active = false;
-        db.doc('users/'+uid).set(fbUser)
+        // TODO cleanup orphan records
     });
-
+*/
 
 /*
 https://firebase.google.com/docs/auth/extend-with-functions
@@ -92,3 +91,4 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
 exports.sendByeEmail = functions.auth.user().onDelete((user) => {
   // ...
 });
+*/
