@@ -66,8 +66,8 @@ function App(props) {
     }
 
     const cmsParams = {
-        primaryColor:appTheme.palette.primary.main,
-        secondaryColor:appTheme.palette.secondary.main,
+        primaryColor:appTheme.palette.primary[appTheme.palette.type],
+        secondaryColor:appTheme.palette.secondary[appTheme.palette.type],
         name:"Democrasee",
         allowSkipLogin:false
     };

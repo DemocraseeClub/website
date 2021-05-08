@@ -81,6 +81,7 @@ class Footer extends React.Component {
                             }
                             <li><NavLink to={'/rallies'}>Rallies</NavLink></li>
                             <li><NavLink to={'/resources'}>Resources</NavLink></li>
+                            {process.env.NODE_ENV === 'development' && <li><NavLink to={'/cms'}>CMS</NavLink></li>}
                         </ul>
                     </Grid>
                     <Grid item>
@@ -88,7 +89,6 @@ class Footer extends React.Component {
                             <li><NavLink to={'/'}>Home</NavLink></li>
                             <li><NavLink to={'/sponsors'}>Sponsors</NavLink></li>
                             <li><NavLink to={'/about'}>Team</NavLink></li>
-                            {process.env.NODE_ENV === 'development' && <li><NavLink to={'/cms'}>CMS</NavLink></li>}
                             <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
                             <li>
                                 <FormControlLabel
