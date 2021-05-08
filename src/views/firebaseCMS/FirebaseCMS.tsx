@@ -166,20 +166,20 @@ export function FirebaseCMS(props: any) {
             // console.log(state.auth, "auth")
             // if (pathname === "/login") return (window as any).location.pathname = "/rallies"; // TODO go to user profile
 
-            // TODO: post user.providerData to http://localhost:3032/democraseeclub/us-central1/syncUser
+            // TODO: post user.providerData to /auth/syncUser
 
             let authUser = user.toJSON();
-            // let token = mergedUser.stsTokenManager.accessToken;  // TODO include accessToken
-            let token = await user.getIdToken().then(idToken => idToken)
-            console.log("REQUEST WITH " + token, authUser);
+            let idToken = await user.getIdToken().then(idToken => idToken) // == authUser.stsTokenManager.accessToken; ??
 
-            let mergedUser = postData('http://localhost:3032/democraseeclub/us-central1/syncUser', authUser)
+            console.log("sync with " + idToken, authUser);
+
+            let mergedUser = postData('/auth/syncUser', {authUser:authUser, idToken:idToken})
                 .then(data => {
                     console.log(data);
                     return data;
                 });
 
-            // TODO: set to redux store or ideally FireCMS authContext
+            // TODO: set mergedUser redux store or ideally FireCMS authContext
 
             /*
             // listen for role changes from other providers on settings / profile  pages

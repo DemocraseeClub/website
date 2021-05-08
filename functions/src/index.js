@@ -8,6 +8,8 @@ const url = require('url');
 admin.initializeApp();
 const db = admin.firestore();
 
+// TODO!! replace all with Express app: https://firebase.google.com/docs/functions/http-events
+
 exports.injectMeta = functions.https.onRequest((req, res) => {
     let template = fs.readFileSync(`../build/index.html`, 'utf8');
     const URL = url.parse(req.url);
@@ -33,19 +35,24 @@ exports.injectMeta = functions.https.onRequest((req, res) => {
     res.status(200).send(template);
 });
 
-// use FireCMS token to set POSTED provider data on firestore doc
+// use FireCMS token to merge POST'd provider with tfirestore doc (or crate new one
 exports.syncUser = functions.https.onRequest((req, res) => {
+    if (!req.body || !req.body.idToken) return false;
     console.log(req.body);
-    // validate accessToken
+    // validate accessToken...
     return admin
         .auth()
         .verifyIdToken(req.body.idToken)
         .then((decodedToken) => {
             const uid = decodedToken.uid;
-            const fbUser = getUser(uid);
-            let merged = Object.assign({}, fbUser, req.body);
+            let fbUser = getUser(uid);
+            if (!fbUser) {
+                fbUser = {};
+                // TODO: create user
+            }
+            let merged = Object.assign({}, fbUser, req.body.authUser);
             delete merged.idToken;
-            /* TODO:
+            /* Investigate:
             auth.currentUser.linkWithRedirect(provider).then().catch();
             explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
              */
