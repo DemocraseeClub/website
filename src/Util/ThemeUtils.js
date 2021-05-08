@@ -54,7 +54,7 @@ export const rallyStyles = theme => ({
     paperRoot: {
         width: '100%',
         textAlign: 'left',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.dark,
         color: theme.palette.primary.contrastText,
         '& a': {
             color: 'inherit',
@@ -329,6 +329,7 @@ export const rallyStyles = theme => ({
     slogan: {
         fontWeight: 600,
         fontSize: 11,
+        letterSpacing:'0.8px',
         color: theme.palette.background.default
     },
     paragraph : {
@@ -340,7 +341,7 @@ export const rallyStyles = theme => ({
         listStyle: 'none',
         padding: 0, margin: 0,
         '& li': {
-            marginBottom: 15
+            marginBottom: 10
         }
     }
 });

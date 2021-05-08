@@ -13,7 +13,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {rallyStyles} from "../Util/ThemeUtils";
 import Toolbar from "@material-ui/core/Toolbar";
 
-
 class Footer extends React.Component {
 
     constructor(p) {
@@ -35,16 +34,16 @@ class Footer extends React.Component {
         const {classes} = this.props;
         return (
             <footer className={classes.paperRoot}>
-                <Grid container justify={'space-around'} style={{padding: 10}}>
+                <Grid container justify={'space-around'} style={{padding:'20px 5px 10px 5px'}}>
                     <Grid item container xs={12} sm={3} direction={'column'}>
-                        <Grid item container alignContent={'center'} style={{marginBottom:20}}>
+                        <Grid item container alignContent={'center'} justify={'center'} style={{marginBottom:20}} spacing={1}>
                             <Grid item>
                                 <NavLink to={'/'}>
-                                    <img src='/images/democrasee_logo_white.png' alt={'logo'} height={50} style={{marginRight: 10}}/>
+                                    <img src='/images/democrasee_logo_white.png' alt={'logo'} height={40} />
                                 </NavLink>
                             </Grid>
                             <Grid item>
-                                <img src="/images/democrasee_text_white.png" alt={'democrasee'} height={25} />
+                                <img src="/images/democrasee_text_white.png" alt={'democrasee'} height={20} />
                                 <div className={classes.slogan}>Incentivizing Civic Action</div>
                             </Grid>
                         </Grid>
@@ -71,7 +70,6 @@ class Footer extends React.Component {
 
                     </Grid>
                     <Grid item>
-                        <h6>Citizen Up!</h6>
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/register'}>Register</NavLink></li>
                             <li><NavLink to={'/login'}>Login</NavLink></li>
@@ -80,7 +78,6 @@ class Footer extends React.Component {
                         </ul>
                     </Grid>
                     <Grid item>
-                        <h6>Learn</h6>
                         <ul className={classes.menuList}>
                             <li><NavLink to={'/'}>Home</NavLink></li>
                             <li><NavLink to={'/sponsors'}>Sponsors</NavLink></li>
@@ -89,8 +86,10 @@ class Footer extends React.Component {
                             <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
                             <li>
                                 <FormControlLabel
+                                    fontSize={'small'}
                                     control={
                                         <Switch
+                                            size={'small'}
                                             checked={this.props.theme.palette.type === 'dark'}
                                             onChange={this.changeTheme}
                                             color="primary"
