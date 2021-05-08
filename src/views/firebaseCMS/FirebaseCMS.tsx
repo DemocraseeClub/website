@@ -149,24 +149,17 @@ export function FirebaseCMS(props: any) {
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
         console.log("Allowing access to", user);
         if (user) {
-
             // console.log(state.auth, "auth")
-
             /* if(pathname === "/login") { // move to login component
                 window.location.pathname = "/home"
             }  */
-
-            /* TODO: user.providerData
+            /* TODO: post user.providerData to http://localhost:3032/democraseeclub/us-central1/syncUser
             let firestoreUser = ...
-
             let mergedUser = {
                 displayName:
                 cover: firebase.user.photoURL
             }
-
-            firebase.firestore().collection('USERS').doc(user.uid).set(mergedUser)
-             */
-
+            */
         }
         return true;
     };
