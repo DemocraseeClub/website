@@ -30,16 +30,16 @@
   },
   "emulators": {
     "auth": {
-      "port": 9003
+      "port": 3033
     },
     "functions": {
-      "port": 9002
+      "port": 3032
     },
     "firestore": {
-      "port": 9001
+      "port": 3031
     },
     "database": {
-      "port": 9000
+      "port": 3030
     },
     "ui": {
       "enabled": true
