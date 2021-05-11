@@ -34,13 +34,13 @@
   },
   "emulators": {
     "auth": {
-      "port": 3033
+      "port": 9099
     },
     "functions": {
-      "port": 3032
+      "port": 5001
     },
     "firestore": {
-      "port": 3031
+      "port": 8080
     },
     "ui": {
       "enabled": true
