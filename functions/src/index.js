@@ -8,7 +8,7 @@ const url = require('url');
 admin.initializeApp();
 const db = admin.firestore();
 
-// TODO!! replace all with Express app: https://firebase.google.com/docs/functions/http-events
+// TODO: replace all with Express app: https://firebase.google.com/docs/functions/http-events
 
 exports.injectMeta = functions.https.onRequest((req, res) => {
     let template = fs.readFileSync(`../build/index.html`, 'utf8');
@@ -28,7 +28,7 @@ exports.injectMeta = functions.https.onRequest((req, res) => {
             <meta property="og:video:type" content="video/mp4" />
             <meta property="og:video:width" content="360" />
             <meta property="og:video:height" content="640" />`;
-         */
+            */
 
         template = template.replace("<head>", "<head>" + meta);
     }
