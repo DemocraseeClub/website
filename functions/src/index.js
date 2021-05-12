@@ -1,25 +1,31 @@
 // import * as functions from "firebase-functions"
-const firebase = require('firebase');
+const fs = require('fs');
+var path = require('path');
+
+// const firebase = require('firebase');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const fs = require('fs');
-const url = require('url');
-
 admin.initializeApp();
 const db = admin.firestore();
 
+// Retrieve services via the defaultApp variable...
+// var defaultAuth = defaultApp.auth();
+// var defaultDatabase = defaultApp.database();
+
 // TODO: replace all with Express app: https://firebase.google.com/docs/functions/http-events
 
-exports.injectMeta = functions.https.onRequest((req, res) => {
-    let template = fs.readFileSync(`../build/index.html`, 'utf8');
-    const URL = url.parse(req.url);
-    const pathname = URL.pathname;
+const site_root = path.resolve(__dirname+'/..');
+
+// docs: https://firebase.google.com/docs/reference/functions/providers_https_.request
+exports.injectMeta = functions.https.onRequest((req, res, next) => {
+    const pathname = req.path; // Short-hand for url.parse(req.url).pathname
     if (pathname.indexOf('/rally/') === 0) {
+        let template = fs.readFileSync(`${site_root}/build/index.html`, 'utf8');
         console.log("INJECTING ON " + pathname)
         // TODO: query for rally meta data (description, video, image , ...)
         let meta = `<meta property="og:description" content="Incentivizing Civic Action" />
             <meta property="Description" content="Incentivizing Civic Action || Tailgate your townhall" />
-            <meta property="og:url" content="https://api.trackauthoritymusic.com/sharer${pathname}" />`;
+            <meta property="og:url" content="https://democraseeclub.web.app/${pathname}" />`; // strip query params
             /* meta += `<meta property="fb:app_id" content="267212653413336" />
             <meta property="og:type" content="music.radio_station" />
             <meta property="og:title" content="TAM :: Crowdsourced Communal Playlists" />
@@ -31,8 +37,10 @@ exports.injectMeta = functions.https.onRequest((req, res) => {
             */
 
         template = template.replace("<head>", "<head>" + meta);
+        res.status(200).send(template);
+    } else {
+        next();
     }
-    res.status(200).send(template);
 });
 
 // use FireCMS token to merge POST'd provider with tfirestore doc (or crate new one
