@@ -20,7 +20,8 @@ class Resources extends React.Component {
         this.state = {
             rTypes : [], city:'', county:'', state:'',
             error:false,
-            loading:true
+            loading: true,
+            resources: []
         }
 
     }
@@ -47,17 +48,25 @@ class Resources extends React.Component {
 
         window.fireDB.collection("resources")
             .get()
-            .then((users) => {
-                let team = [];
-                users.forEach(async (doc) => {
-                    let user = {key: doc.id, ...doc.data()};
-                    if (user.picture) {
-                        let path = window.storage.ref(user.picture);
-                        user.picture = await path.getDownloadURL();
+            .then((resourcesData) => {
+                let resourcesDataParsed = [];
+                resourcesData.forEach(async (doc) => {
+                    let resource = {key: doc.id, ...doc.data()};
+                    if (resource.picture) {
+                        let path = window.storage.ref(resource.picture);
+                        resource.picture = await path.getDownloadURL();
                     }
-                    team.push(user)
+
+                    if (resource.author) {
+                        let user = await resource.author.get()
+
+                        resource.author = {...user.data()}
+                    }
+
+                    resourcesDataParsed.push(resource)
                 });
-                this.setState({ team: team, loading: false });
+
+                this.setState({resources: resourcesDataParsed, loading: false})
             })
             .catch((err) => console.log(err));
     }
@@ -88,30 +97,6 @@ class Resources extends React.Component {
                 label: '¥',
             },
         ];
-
-        const cards = [
-            {
-                image: "/images/democrasee_logo_black.png",
-                badge: "Technology",
-                title: "1 Hour Online Marketing Consultation",
-                subtitle: "with Polina Tolkacheva",
-                links: [ "Nov 13-6:30pm", "Nov 16-6:30pm"]
-            },
-            {
-                image: "/images/democrasee_logo_black.png",
-                badge: "Law & Justice",
-                title: "Legal Help with writing an action plan",
-                subtitle: "with Inner City Law",
-                links: [ "Schedule Meeting"]
-            },
-            {
-                image: "/images/democrasee_logo_black.png",
-                badge: "Law & Justice",
-                title: "Homelessness, Domestic Violence Hotline",
-                subtitle: "with The People Concern",
-                links: [ "Schedule Meeting"]
-            }
-        ]
 
         const items = [
             {
@@ -214,8 +199,8 @@ class Resources extends React.Component {
                     </Grid>
                     <Grid container spacing={10} justify="center" className={classes.cardsContainer}>
                         {
-                            cards.map(item =>
-                                <Grid item key={item.title}>
+                            this.state.resources.length > 0 && this.state.resources.map(item =>
+                                <Grid item key={item.key}>
                                     <Card className={classes.card}>
                                         <Grid container justify="space-between" alignItems="center" className={classes.cardHeader}>
                                             <Grid item >
@@ -225,12 +210,12 @@ class Resources extends React.Component {
                                                 <Button className={classes.cardButton}>View</Button>
                                             </Grid>
                                         </Grid>
-                                        <Typography variant={'body2'} className={classes.cardBadge}>{item.badge}</Typography>
-                                        <Typography variant={'body1'}><b>{item.title}</b></Typography>
-                                        <Typography variant={'body1'} className={classes.cardSubtitle}>{item.subtitle}</Typography>
-                                        {
+                                        <Typography variant={'body2'} className={classes.cardBadge}>{item.title}</Typography>
+                                        <Typography variant={'body1'}><b>{item.descriptionHTML}</b></Typography>
+                                        <Typography variant={'body1'} className={classes.cardSubtitle}>with { item.author.realName}</Typography>
+                                        {/* {
                                             item.links.map(link => <Typography variant={'body1'} className={classes.cardLink} key={link}>{link}</Typography>)
-                                        }
+                                        } */}
                                     </Card>
                                 </Grid>)
                         }
