@@ -28,16 +28,6 @@ class Resources extends React.Component {
 
     componentDidMount() {
 
-        /*
-        const handler = Promise.all(
-
-        );
-
-        handler.then(e => {
-            this.setState({loading:false});
-        })
-         */
-
         window.fireDB
             .collection("resource_types").get().then((types) => {
                 let rTypes = [];
@@ -45,28 +35,29 @@ class Resources extends React.Component {
                 this.setState({rTypes:rTypes})
             })
             .catch((err) => console.log(err));
-
-        window.fireDB.collection("resources")
+            window.fireDB.collection("resources")
             .get()
             .then((resourcesData) => {
                 let resourcesDataParsed = [];
-                resourcesData.forEach(async (doc) => {
+                resourcesData.forEach((doc) => {
                     let resource = {key: doc.id, ...doc.data()};
-                    if (resource.picture) {
-                        let path = window.storage.ref(resource.picture);
-                        resource.picture = await path.getDownloadURL();
-                    }
-
-                    if (resource.author) {
-                        let user = await resource.author.get()
-
-                        resource.author = {...user.data()}
-                    }
 
                     resourcesDataParsed.push(resource)
                 });
-
-                this.setState({resources: resourcesDataParsed, loading: false})
+                return resourcesDataParsed
+            })
+            .then((res) => {
+                (async function () {
+                    for (let i = 0; i < res.length; i++) {
+                        if (res[i].author) {
+                        let user = await res[i].author.get()
+                        res[i].author = {...user.data()}
+                        }
+                    }
+                    return res;
+                    })().then((t) => {
+                    this.setState({resources: t, loading: false})
+                });
             })
             .catch((err) => console.log(err));
     }
