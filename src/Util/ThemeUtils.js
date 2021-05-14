@@ -273,7 +273,8 @@ export const rallyStyles = theme => ({
         marginTop: '10px'
     },
     card: {
-        padding: '25px'
+        padding: '25px',
+        width: '250px'
     },
     cardImg: {
         width: '80px',
