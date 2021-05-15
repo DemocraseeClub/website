@@ -267,7 +267,7 @@ export const rallyStyles = theme => ({
         height: "200px"
     },
     sectionSelect: {
-        width: '15ch'
+        /*intentas usar % ! --- width: '15ch'*/
     },
     cardsContainer: {
         marginTop: '10px'
@@ -294,7 +294,7 @@ export const rallyStyles = theme => ({
         marginBottom: '15px'
     },
     cardSubtitle: {
-        marginBottom: '15px'
+        marginTop: '15px'
     },
     cardLink: {
         color: theme.palette.info.main,
