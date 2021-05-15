@@ -196,13 +196,13 @@ class Resources extends React.Component {
                                     <Card className={classes.card}>
                                         <Grid container justify="space-between" alignItems="center" className={classes.cardHeader}>
                                             <Grid item>
-                                                <Avatar src={item.image} alt="card-img" className={classes.cardImg}/>
+                                                <Avatar variant={'rounded'} src={item.image} alt="card-img" className={classes.cardImg}/>
                                             </Grid>
                                             <Grid item>
-                                                <Button className={classes.cardButton}>View</Button>
+                                                <Button  className={classes.cardButton}>View</Button>
                                             </Grid>
                                         </Grid>
-                                        <Typography variant={'title'} className={classes.cardBadge}>{item.title}</Typography>
+                                        <Typography variant={'h2'} className={classes.cardBadge}>{item.title}</Typography>
                                         <Typography variant={'body1'}>
                                             <SanitizedHTML
                                                 allowedIframeDomains={['linkedin.com']}

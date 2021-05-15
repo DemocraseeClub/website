@@ -281,7 +281,6 @@ export const rallyStyles = theme => ({
         height: '80px',
     },
     cardButton: {
-        padding: '10px 40px',
         background: theme.palette.info.main,
         color: theme.palette.info.contrastText,
         textTransform: 'none',
