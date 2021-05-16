@@ -59,6 +59,7 @@ async function getUserData(uid: string) {
  */
 
 async function postData(url = '', data = {}) {
+    console.log("postData")
     // Default options are marked with *
     const response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -106,9 +107,9 @@ export function FirebaseCMS(props: any) {
                 (window as any).storage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
                 if (document.location.hostname === 'localhost') {
-                    // fbApp.functions().useEmulator("localhost", 5001);
-                    // fbApp.auth().useEmulator("http://localhost:9099");
-                    // (window as any).fireDB.useEmulator("localhost", 8080);
+                    fbApp.functions().useEmulator("localhost", 5001);
+                    fbApp.auth().useEmulator("http://localhost:9099");
+                    (window as any).fireDB.useEmulator("localhost", 8080);
                 }
                 if (document.location.port.length === 0) { // ignore dev environments
                     (window as any).logUse = fbApp.analytics();
@@ -172,9 +173,9 @@ export function FirebaseCMS(props: any) {
 
             console.log("sync with " + idToken, authUser);
 
-            let mergedUser = postData('/auth/syncUser', {authUser:authUser, idToken:idToken})
+            let mergedUser = postData('http://localhost:5001/democraseeclub/us-central1/syncUser', {authUser:authUser, idToken:idToken})
                 .then(data => {
-                    console.log(data);
+                    console.log(data, "data");
                     return data;
                 });
 

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "democraseeclub",
+  "private_key_id": "a787fada0b535bc10c7de81ec671d6c173fdb0dd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDOY8XZkkhbR54b\nqk52KYBxXlo/OH0h1S9V9/S83hdUPgqWMFJFAo8QXzhKSzXgoqwZ+xk1u2IUy6AG\nODiaHCdqJ80phYl69yS+Ly8gdP1ocBruO66kgG1lW/6ehwu+DzurdJFu5W3Q6u+l\nUe8whbgcthJFcXx16xpOUHL7kSQVrLM9pl9swTs/qNjEG0eEjuvk3Fz6700XwQSG\nelVXjDddqlIAo27OpI7yEGKwjMZ4HpQF0yQ0xM0GX+I8GffenxaLgU01IMlKvZSe\nD6RFxXc+ghUm+1aXDGbwl+jjHUGiWQMS/KhEaejLRIxPkEJKnyiR5VHXQsYFjCr2\nmKKxfwuZAgMBAAECggEAIlUqlnTlIHobbRK5lqJ0wWcmsBmfhz9FbpGe3sQ7MUJY\n1H8ZUG2KivisDn/QaJvm8TN6EBwpxrfQ2PgFQm2oiNoyINQb+J6gOBr1RfrwJK1x\nbWv0M11B1XimNIzWgTlbfbwYbVAxIm3Si7fDiFjWNcB77Z1hTORdLeXoGr0cOZaC\nh6dKpTu75SrIDdVfXE1AN1lqgvTZchHuPgJXF0W7vReGu5lo61JsK2Wxe2I7uMiF\nGjaBSeJJQvT2A+qcfM3+d3UL17LsPbF/HJqkRZE6ewVUMVCOJqE9kYnzPn6N94Kc\ne3tZGh6+N2oJmL9xRpCcj5m5w8oDRfLuuffRzCm2mQKBgQDokJxfkguzMij0lzAs\nrhS55bROZ+UVJirtXNMUNuX5p3jMvkO+iDgINzicBwIytLvCNakbaqxvy+EWyJjD\nv2pARflnGSSbna1DRKlqupDFf/ZtZTJxEaVzBC+smISh8X+kLZpXZrjaGNQXFdyG\nARO0nK8S+Hv76wAf84x5KsmzcwKBgQDjL+54uht2p6qBfW2K2rCROa6clZdJ3L+9\ndpEDwT8Vrdnj3XHyAd9FXELJOFFxdKs9k/c7LCprGcGZ+ka5X0D4hWnDttqZxbnW\noVqOoytM6DT6ff+TNmxZWNunf9uhYUdcN4cfMNJAwb5Y40Oh2LF3nbYkoPowoG+p\nNkWyzU55wwKBgATIlK7SjjMNYRJG2dLRcdOxCdhjAq9ArblcI2tTBb/w1edAMpyE\nqMJigGOVMVJhrUr9V5EczJcwFl0lmx7LnR/dUJfySHJ698lebC2p0Lh/PU5auoLg\n3gpTl7dxG6lJElsKJRaPIlY6FIK1DGglNYaNgnxdaA9ycfo2RDlpy+RJAoGAD9B8\nVycNVlshgVYL1AiZFeLgBsJa/6dAKZ4hRhOjooyxiC0YC3KZ6igb9gnXkYA/k0/D\ne/j9Eut+EIvddHXu/d27mQYXfXDIGOqudRNipj3bwjwXGFZHgIiw8Z3y2e79mqu6\n2i7508woxeM8B/4fjGYMEcyq3cutOigu/d1QwyUCgYBzJ83HALBSnTby5aHeWoma\nRqrGDskp9S89T/eYKmIUsLfxnT2jNpHlVpN2Rvr/zQoMeThqz0IfCp8CnOYLkQ6I\nKFaLZPpdSfX+DjzlevkMCY91AvUtKB0Nn0dn/BVh+UWlFhsvsVGcRir/epqbwvVU\nJYr9Atl5W7rONgbvqC5qiQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-g12wb@democraseeclub.iam.gserviceaccount.com",
+  "client_id": "115577812949541810300",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-g12wb%40democraseeclub.iam.gserviceaccount.com"
+}
