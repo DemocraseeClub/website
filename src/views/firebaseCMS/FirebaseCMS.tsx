@@ -1,18 +1,17 @@
-import React, {ReactNode, useEffect, Component} from "react";
+import React, {useEffect} from "react";
 
 import {
     Authenticator,
     CMSAppProvider,
     NavigationBuilder,
-    NavigationBuilderProps, useAuthContext,
+    NavigationBuilderProps,
+    useAuthContext,
     useSideEntityController
 } from "@camberi/firecms";
 
 import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
-
-import {logInSuccess} from "../../redux/authActions";
 import {useSelector} from 'react-redux'
 
 import buildUserCollection from "./collections/user";
@@ -31,7 +30,7 @@ import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
 
-import {useLocation, useHistory} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 import {Box, CircularProgress} from "@material-ui/core";
 
