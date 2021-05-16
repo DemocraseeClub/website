@@ -26,7 +26,21 @@ const db = admin.firestore();
 
 // TODO: replace all with Express app: https://firebase.google.com/docs/functions/http-events
 
+app.get("/user/:uid", async (req, res) => {
 
+    try {
+
+        const user =  await admin.auth().getUser(req.params.uid)
+
+        return res.status(200).json(user)
+
+    } catch(error) {
+
+        return res.status(500).send(error);
+
+    }
+
+})
 
 
 exports.app = functions.https.onRequest(app);
@@ -91,18 +105,13 @@ exports.app = functions.https.onRequest(app);
 //         });
 // });
 
+
+
+
+
 // async function getUser(uid) {
-//     // admin.auth.getUserByEmail(),  getUserByPhoneNumber...
-//     return await admin.auth().getUser(uid)
-//         .then((userRecord) => {
-//             console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-//             return userRecord.toJSON();
-//         })
-//         .catch((error) => {
-//             console.error('Error fetching user data:', error);
-//             return false;
-//         });
-// }
+    // admin.auth.getUserByEmail(),  getUserByPhoneNumber...
+    
 
 /*
 exports.createUser = functions.firestore
