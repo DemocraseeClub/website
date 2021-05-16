@@ -106,7 +106,7 @@ export function FirebaseCMS(props: any) {
                 const fbApp = firebase.initializeApp(firebaseConfig);
                 (window as any).storage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
-                if (document.location.hostname === 'localhost') {
+                if (document.location.hostname === 'localhost' && document.location.search.indexOf('useEmulator') > -1) {
                     fbApp.functions().useEmulator("localhost", 5001);
                     fbApp.auth().useEmulator("http://localhost:9099");
                     (window as any).fireDB.useEmulator("localhost", 8080);
