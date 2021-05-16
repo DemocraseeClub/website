@@ -8,12 +8,14 @@ import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { rallyStyles } from "../Util/ThemeUtils";
+import Config from "../Config";
+import SanitizedHTML from "react-sanitized-html";
 import Skeleton from "@material-ui/lab/Skeleton";
-
 class Resources extends React.Component {
   constructor(p) {
     super(p);
@@ -23,6 +25,7 @@ class Resources extends React.Component {
       county: "",
       state: "",
       error: false,
+      rType: "",
       loading: true,
       resources: [],
     };
@@ -33,11 +36,11 @@ class Resources extends React.Component {
       .collection("resource_types")
       .get()
       .then((types) => {
-        let rTypes = [];
-        types.forEach((doc) => rTypes.push(doc.data().type));
+        var rTypes = types.docs.map((doc) => doc.data());
         this.setState({ rTypes: rTypes });
       })
       .catch((err) => console.log(err));
+
     window.fireDB
       .collection("resources")
       .get()
@@ -72,17 +75,15 @@ class Resources extends React.Component {
   }
 
   render() {
-    const { loading } = this.state;
-
     const { classes } = this.props;
-
+    const { loading } = this.state;
     const currencies = [
       {
         value: "USD",
         label: "$",
       },
       {
-        e: "EUR",
+        value: "EUR",
         label: "€",
       },
       {
@@ -112,7 +113,6 @@ class Resources extends React.Component {
         text: "Time and Knowledge",
       },
     ];
-
     return (
       <Box>
         <Grid container className={classes.sectionSecondary}>
@@ -121,36 +121,21 @@ class Resources extends React.Component {
               <b>Request and Receive Help From Your Community</b>
             </Typography>
             <Typography variant={"h6"} className={classes.sectionSubtitle}>
-              {" "}
-              All action with plans will receive a percentage of the current
-              city pot of <b>2000 Citize Coins</b>
+              Pay with cash or CitizenCoin earned through contributions to this
+              community platform
             </Typography>
-            <Grid
-              container
-              spacing={3}
-              className={classes.sectionItemsContainer}
-            >
-              {items.map(({ img, alt, text }) => (
-                <Grid item>
-                  <Box display="flex" alignItems="center">
-                    <Avatar
-                      src={img}
-                      className={classes.sectionItemImg}
-                      alt={alt}
-                    />
-                    <Typography
-                      variant={"body2"}
-                      className={classes.sectionItemText}
-                    >
-                      <b>Earn 2 - 2000 Citizen Coins</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-            <Button variant="outlined" className={classes.sectionLeftButton}>
-              Request Help
-            </Button>
+            {/* <Grid container spacing={3} className={classes.sectionItemsContainer}>
+                            {
+                                items.map(({img, alt, text}) => <Grid item key={alt}>
+                                    <Box display="flex" alignItems="center">
+                                        <Avatar src={img} className={classes.sectionItemImg} alt={alt}/>
+                                        <Typography variant={'body2'} className={classes.sectionItemText}><b>Earn 2 -
+                                            2000 Citizen Coins</b></Typography>
+                                    </Box>
+                                </Grid>)
+                            }
+                        </Grid>  <Button variant="outlined" className={classes.sectionLeftButton}>Request Help</Button> */}
+
             <Button className={classes.sectionRightButton}>
               Offer Your Expertise
             </Button>
@@ -161,66 +146,62 @@ class Resources extends React.Component {
                 src="/images/lighbulb.png"
                 alt="blueSection-hero"
                 className={classes.sectionHero}
+                style={{ height: 120 }}
               />
             </Box>
           </Grid>
         </Grid>
         <Box className={classes.section}>
-          <Grid container>
-            <Grid item xs={5}>
-              <Card style={{ background: "none", boxShadow: "none" }}>
-                <Typography variant={"h4"}>Local Resources</Typography>
-              </Card>
-            </Grid>
-            <Grid item xs={7}>
-              <Grid container spacing={1} justify="flex-end">
-                <Grid item>
-                  <TextField
-                    id="standard-multiline-flexible"
-                    label="Search"
-                    size="medium"
-                    variant="outlined"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={classes.sectionSelect}
-                    id="standard-select-currency"
-                    select
-                    label="Filter"
-                    size="medium"
-                    variant="outlined"
-                  >
-                    {currencies.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={classes.sectionSelect}
-                    id="standard-select-currency"
-                    select
-                    label="Sort by"
-                    size="medium"
-                    variant="outlined"
-                  >
-                    {currencies.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
+          <Grid container alignItems={"center"} justify={"space-between"}>
+            <Grid item>
+              {/* <Grid item>
+                                <TextField
+                                    id="standard-multiline-flexible"
+                                    label="Search"
+                                    size="medium"
+                                    variant="outlined"
+                                    InputProps={{
+                                        endAdornment: <InputAdornment position="end">
+                                            <SearchIcon/>
+                                        </InputAdornment>
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    className={classes.sectionSelect}
+                                    id="standard-select-currency"
+                                    select
+                                    label="Currency"
+                                    size="medium"
+                                    variant="outlined"
+                                >
+                                    {currencies.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+                            */}
+              <Grid item>
+                <Select
+                  className={classes.sectionSelect}
+                  id="resource_type_filter"
+                  select
+                  displayEmpty={true}
+                  value={this.state.rType}
+                  onChange={(e) => this.setState({ rType: e.target.value })}
+                  label="Resource Types"
+                  variant="outlined"
+                >
+                  <MenuItem value={""}>All Resource Types</MenuItem>
+                  {this.state.rTypes.map((option) => (
+                    <MenuItem key={option.type} value={option.type}>
+                      {option.type}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Grid>
             </Grid>
           </Grid>
@@ -228,7 +209,6 @@ class Resources extends React.Component {
             container
             spacing={10}
             justify="center"
-            alignItems="stretch"
             className={classes.cardsContainer}
           >
             {(loading ? Array.from(new Array(6)) : this.state.resources).map(
@@ -259,30 +239,44 @@ class Resources extends React.Component {
                     {item ? (
                       <>
                         <Typography
-                          variant={"body2"}
+                          variant={"h2"}
                           className={classes.cardBadge}
                         >
                           {item.title}
                         </Typography>
                         <Typography variant={"body1"}>
-                          <b
-                            dangerouslySetInnerHTML={{
-                              __html: item.descriptionHTML,
+                          <SanitizedHTML
+                            allowedIframeDomains={["linkedin.com"]}
+                            allowedIframeHostnames={["www.linkedin.com"]}
+                            allowIframeRelativeUrls={false}
+                            allowedSchemes={["data", "https"]}
+                            allowedTags={Config.allowedTags}
+                            allowedAttributes={Config.allowedAttributes}
+                            exclusiveFilter={(frame) => {
+                              if (frame.tag === "iframe") {
+                                console.log(frame);
+                                if (
+                                  frame.attribs.src.indexOf(
+                                    "https://linkedin.com"
+                                  ) !== 0
+                                ) {
+                                  return true;
+                                }
+                              }
+                              return false;
                             }}
+                            html={item.descriptionHTML}
                           />
                         </Typography>
                         <Typography
-                          variant={"body1"}
+                          variant={"body2"}
                           className={classes.cardSubtitle}
                         >
-                          with {item.author.realName}
+                          with <em>{item.author.realName}</em>
                         </Typography>
-                        <Typography
-                          variant={"body1"}
-                          className={classes.cardLink}
-                        >
-                          Schedule Meeting
-                        </Typography>
+                        {/* {
+                                            item.links.map(link => <Typography variant={'body1'} className={classes.cardLink} key={link}>{link}</Typography>)
+                                        } */}
                       </>
                     ) : (
                       <>
@@ -292,102 +286,10 @@ class Resources extends React.Component {
                         <Skeleton />
                       </>
                     )}
-
-                    {/* {
-                                            item.links.map(link => <Typography variant={'body1'} className={classes.cardLink} key={link}>{link}</Typography>)
-                                        } */}
                   </Card>
                 </Grid>
               )
             )}
-          </Grid>
-        </Box>
-        <Box className={classes.section}>
-          <Grid container>
-            <Grid item xs={5}>
-              <Card style={{ background: "none", boxShadow: "none" }}>
-                <Typography variant={"h4"}>Request for Help</Typography>
-              </Card>
-            </Grid>
-            <Grid item xs={7}>
-              <Grid container spacing={1} justify="flex-end">
-                <Grid item>
-                  <TextField
-                    id="standard-multiline-flexible"
-                    label="Search"
-                    size="medium"
-                    variant="outlined"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={classes.sectionSelect}
-                    id="standard-select-currency"
-                    select
-                    label="Filter"
-                    size="medium"
-                    variant="outlined"
-                  >
-                    {currencies.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={classes.sectionSelect}
-                    id="standard-select-currency"
-                    select
-                    label="Sort by"
-                    size="medium"
-                    variant="outlined"
-                  >
-                    {currencies.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            justify="space-between"
-            alignItems="center"
-            className={classes.sectionFooter}
-          >
-            <Grid item>
-              <Box display="flex" alignItems="center">
-                <Avatar
-                  src="/images/indy.png"
-                  alt="card-img"
-                  className={classes.cardImg}
-                />
-                <Typography variant={"body1"} className={classes.sectionLink}>
-                  Need Volunters for Upcoming Rally on Nov 16th
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.outlinedButton}
-              >
-                Offer Help
-              </Button>
-            </Grid>
           </Grid>
         </Box>
       </Box>

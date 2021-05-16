@@ -263,10 +263,10 @@ export const rallyStyles = (theme) => ({
     height: "200px",
   },
   sectionSelect: {
-    width: "15ch",
+    // width: "15ch",
   },
   cardsContainer: {
-    marginTop: "10px",
+    marginTop: "15px",
   },
   card: {
     width: "300px",
