@@ -13,13 +13,7 @@ const { bucket } = require('firebase-functions/lib/providers/storage');
 
 const app = express()
 
-const urlOptions = {
-    version: "v4",
-    action: "read",
-    expires: Date.now() + 1000 * 60 * 2, // 2 minutes
-}
-
-
+app.use(cors())
 
 
 admin.initializeApp({
@@ -50,6 +44,32 @@ app.get("/user/:uid", async (req, res) => {
         return res.status(500).send(error);
 
     }
+
+})
+
+app.get("/users/:role", async (req, res) => {
+
+    try {
+
+        const usersSnapshot = await db.collection("users").where("roles", "array-contains", req.params.role).get()
+        const {docs} = usersSnapshot
+
+        const response = docs.map(doc => (
+            {
+                id: doc.id,
+                ...doc.data()
+            }
+        ))
+
+        return res.status(200).json(response)
+
+    } catch (error) {
+        
+        return res.status(500).send(error);
+
+    }
+
+
 
 })
 

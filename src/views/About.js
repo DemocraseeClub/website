@@ -19,30 +19,50 @@ class About extends React.Component {
   }
 
   componentWillMount() {
-    window.fireDB
-      .collection("users")
-      .where("roles", "array-contains", "board")
-      .get()
-      .then((users) => {
-        let auxTeam = [];
-        users.forEach((doc) => auxTeam.push({ key: doc.id, ...doc.data() }));
-        return auxTeam;
-      })
-      .then((auxTeam) => {
-        (async function () {
-          for (let i = 0; i < auxTeam.length; i++) {
-            if (auxTeam[i].picture) {
-              let path = window.storage.ref(auxTeam[i].picture);
-              const url = await path.getDownloadURL();
-              auxTeam[i].picture = url;
-            }
+
+    fetch(process.env.REACT_APP_FUNCTIONS_URL + "/users/board")
+      .then(resp => resp.json())
+      .then(async data => {
+        //get the images urls
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].picture) {
+            let path = window.storage.ref(data[i].picture);
+            const url = await path.getDownloadURL();
+            data[i].picture = url;
           }
-          return auxTeam;
-        })().then((t) => {
-          this.setState({ team: t, loading: false });
-        });
+        }
+
+        return data;
+
       })
-      .catch((err) => console.log(err));
+      .then(team => this.setState({ team , loading: false }))
+      .catch(err => console.log(err));
+
+
+    // window.fireDB
+    //   .collection("users")
+    //   .where("roles", "array-contains", "board")
+    //   .get()
+    //   .then((users) => {
+    //     let auxTeam = [];
+    //     users.forEach((doc) => auxTeam.push({ key: doc.id, ...doc.data() }));
+    //     return auxTeam;
+    //   })
+    //   .then((auxTeam) => {
+    //     (async function () {
+    //       for (let i = 0; i < auxTeam.length; i++) {
+    //         if (auxTeam[i].picture) {
+    //           let path = window.storage.ref(auxTeam[i].picture);
+    //           const url = await path.getDownloadURL();
+    //           auxTeam[i].picture = url;
+    //         }
+    //       }
+    //       return auxTeam;
+    //     })().then((t) => {
+    //       this.setState({ team: t, loading: false });
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   render() {
