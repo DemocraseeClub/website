@@ -40,18 +40,21 @@ class Rallies extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.fireDB
-      .collection("rallies")
-      .get()
-      .then((ralliesData) => {
-        let ralliesDataParsed = [];
-        ralliesData.forEach((doc) => {
-          let resource = { key: doc.id, ...doc.data() };
+  componentWillMount() {
+    fetch(process.env.REACT_APP_FUNCTIONS_URL + "/rallies")
+      .then((response) => response.json())
+      .then(async (data) => {
+        for (let i = 0; i < data.length; i++) {
+          try {
+            if (data[i].picture) {
+              let path = window.storage.ref(data[i].picture);
+              const url = await path.getDownloadURL();
+              data[i].picture = url;
+            }
+          } catch (e) {}
+        }
 
-          ralliesDataParsed.push(resource);
-        });
-        return ralliesDataParsed;
+        return data;
       })
       .then((rallies) => {
         this.setState({ rallies: rallies, loading: false });
@@ -114,11 +117,14 @@ class Rallies extends React.Component {
             (item, key) => (
               <Grid key={key} item xs={12} sm={6} md={4}>
                 <Card style={{ height: "100%" }}>
-                  {console.log(item)}
                   <CardActionArea>
                     {item ? (
                       <NavLink to={"/rally/building-democrasee"}>
                         <CardMedia
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "images/citizencoin.png";
+                          }}
                           component="img"
                           alt="Democrasee Logo"
                           height="200"
