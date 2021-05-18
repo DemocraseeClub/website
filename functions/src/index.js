@@ -168,9 +168,49 @@ app.get("/rallies", async (req, res, next) => {
     }
 })
 
-app.get("/syncUser", (req, res, next) => {
+app.post("/syncUser", async (req, res, next) => {
 
+    if (!req.body || !req.body.idToken) return false;
+    //     console.log(req.body);
+    //     validate accessToken...
+    return admin
+        .auth()
+        .verifyIdToken(req.body.idToken)
+        .then(async (decodedToken) => {
+            const uid = decodedToken.uid;
+            let snapshot = await db.collection("users").doc(uid).get();
+         
+            let fbUser = {...snapshot.data()}
 
+            if (JSON.stringify(fbUser) === "{}") {
+                fbUser = {
+                    userName: "",
+                    realName: "",
+                    website: "",
+                    bio: "",
+                    picture: "",
+                    coverPhoto: "",
+                    topic_def_json: "",
+                    resources: [],
+                    roles: []
+                };
+            }
+
+            let merged = Object.assign({}, fbUser, {providerData: req.body.authUser.providerData });
+            // delete merged.idToken;
+            // /* Investigate:
+            // auth.currentUser.linkWithRedirect(provider).then().catch();
+            // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
+            //     */
+            console.log("MERGING USER!!", merged);
+            db.collection('users').doc(uid).set(merged)
+
+            return res.status(200).json(merged)
+
+        })
+        .catch((error) => {
+            return res.status(500).send(error);
+        });
 
 })
 
@@ -209,40 +249,6 @@ exports.app = functions.https.onRequest(app);
 
 
 
-
-
-// docs: https://firebase.google.com/docs/reference/functions/providers_https_.request
-// exports.injectMeta = functions.https.onRequest((req, res, next) => {
-//     const pathname = req.path; // Short-hand for url.parse(req.url).pathname
-//     if (pathname.indexOf('/rally/') === 0) {
-//         let template = fs.readFileSync(`${site_root}/build/index.html`, 'utf8');
-//         console.log("INJECTING ON " + pathname)
-//         // TODO: query for rally meta data (description, video, image , ...)
-//         let meta = `<meta property="og:description" content="Incentivizing Civic Action" />
-//             <meta property="Description" content="Incentivizing Civic Action || Tailgate your townhall" />
-//             <meta property="og:url" content="https://democraseeclub.web.app/${pathname}" />`; // strip query params
-//             /* meta += `<meta property="fb:app_id" content="267212653413336" />
-//             <meta property="og:type" content="music.radio_station" />
-//             <meta property="og:title" content="TAM :: Crowdsourced Communal Playlists" />
-//             <meta property="og:video" content="https://trackauthoritymusic.com/videos/ftb/mobile/custom/ftb.ts.mp4" />
-//             <meta property="og:video:secure_url" content="https://trackauthoritymusic.com/videos/ftb/mobile/custom/ftb.ts.mp4" />
-//             <meta property="og:video:type" content="video/mp4" />
-//             <meta property="og:video:width" content="360" />
-//             <meta property="og:video:height" content="640" />`;
-//             */
-
-//         template = template.replace("<head>", "<head>" + meta);
-//         res.status(200).send(template);
-//     } else {
-//         next();
-//     }
-// });
-
-
-
-
-
-
 // // use FireCMS token to merge POST'd provider with tfirestore doc (or crate new one
 // exports.syncUser = functions.https.onRequest((req, res) => {
 //     if (!req.body || !req.body.idToken) return false;
@@ -253,7 +259,7 @@ exports.app = functions.https.onRequest(app);
 //         .verifyIdToken(req.body.idToken)
 //         .then((decodedToken) => {
 //             const uid = decodedToken.uid;
-//             let fbUser = getUser(uid);
+//            
 //             if (!fbUser) {
 //                 fbUser = {};
 //                 // TODO: create user
@@ -274,12 +280,6 @@ exports.app = functions.https.onRequest(app);
 
 
 
-
-
-// async function getUser(uid) {
-    // admin.auth.getUserByEmail(),  getUserByPhoneNumber...
-
-
 /*
 exports.createUser = functions.firestore
     .document('users/{userId}')
@@ -288,7 +288,7 @@ exports.createUser = functions.firestore
         const authUser = snap.data();
         const fbUser = getUser(uid);
         let merged = Object.assign({}, fbUser, authUser);
-        // TODO: auto award promo citizencoin?
+        TODO: auto award promo citizencoin?
         console.log("CREATING MERGED USER!!", context, merged);
         db.doc('users/'+uid).set(merged)
     });
