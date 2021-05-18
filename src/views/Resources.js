@@ -39,31 +39,23 @@ class Resources extends React.Component {
       })
       .catch((err) => console.log(err));
 
-    window.fireDB
-      .collection("resources")
-      .get()
-      .then((resourcesData) => {
-        let resourcesDataParsed = [];
-        resourcesData.forEach((doc) => {
-          let resource = { key: doc.id, ...doc.data() };
-          // TODO: replace .image with image uri
-
-          resourcesDataParsed.push(resource);
-        });
-        return resourcesDataParsed;
-      })
-      .then((res) => {
-        (async function () {
-          for (let i = 0; i < res.length; i++) {
-            if (res[i].author) {
-              let user = await res[i].author.get();
-              res[i].author = { ...user.data() };
+    fetch(process.env.REACT_APP_FUNCTIONS_URL + "/resources")
+      .then((response) => response.json())
+      .then(async (data) => {
+        for (let i = 0; i < data.length; i++) {
+          try {
+            if (data[i].image) {
+              let path = window.storage.ref(data[i].image);
+              const url = await path.getDownloadURL();
+              data[i].image = url;
             }
-          }
-          return res;
-        })().then((t) => {
-          this.setState({ resources: t, loading: false });
-        });
+          } catch (e) {}
+        }
+
+        return data;
+      })
+      .then((resources) => {
+        this.setState({ resources: resources, loading: false });
       })
       .catch((err) => console.log(err));
   }
@@ -172,7 +164,7 @@ class Resources extends React.Component {
                                     id="standard-select-currency"
                                     select
                                     label="Currency"
-                                    size="medium"
+                                    size="medium" 
                                     variant="outlined"
                                 >
                                     {currencies.map((option) => (
@@ -223,6 +215,10 @@ class Resources extends React.Component {
                       <Grid item>
                         {item ? (
                           <Avatar
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "images/citizencoin.png";
+                            }}
                             src={item.image}
                             alt="card-img"
                             className={classes.cardImg}
