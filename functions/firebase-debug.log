@@ -1,0 +1,31 @@
+[debug] [2021-05-18T02:52:50.573Z] ----------------------------------------------------------------------
+[debug] [2021-05-18T02:52:50.576Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only functions
+[debug] [2021-05-18T02:52:50.577Z] CLI Version:   9.10.2
+[debug] [2021-05-18T02:52:50.577Z] Platform:      win32
+[debug] [2021-05-18T02:52:50.577Z] Node Version:  v16.0.0
+[debug] [2021-05-18T02:52:50.579Z] Time:          Mon May 17 2021 22:52:50 GMT-0400 (Venezuela Time)
+[debug] [2021-05-18T02:52:50.579Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-05-18T02:52:50.590Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-05-18T02:52:50.590Z] > authorizing via signed-in user (branyervergarac@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2021-05-18T02:52:50.622Z] [hub] writing locator at C:\Users\Branyer\AppData\Local\Temp\hub-democraseeclub.json
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, firestore, database, hosting, pubsub {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, firestore, database, hosting, pubsub\u001b[22m"}}
+[warn] !  Your requested "node" version "12" doesn't match your global version "16" {"metadata":{"emulator":{"name":"functions"},"message":"Your requested \"node\" version \"12\" doesn't match your global version \"16\""}}
+[debug] [2021-05-18T02:52:50.667Z] defaultcredentials: writing to file C:\Users\Branyer\AppData\Roaming\firebase\branyervergarac_gmail_com_application_default_credentials.json
+[debug] [2021-05-18T02:52:50.671Z] Setting GAC to C:\Users\Branyer\AppData\Roaming\firebase\branyervergarac_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\Branyer\\AppData\\Roaming\\firebase\\branyervergarac_gmail_com_application_default_credentials.json"}}
+[debug] [2021-05-18T02:52:50.674Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/democraseeclub/adminSdkConfig [none]
+[debug] [2021-05-18T02:52:51.377Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/democraseeclub/adminSdkConfig 200
+[debug] [2021-05-18T02:52:51.378Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/democraseeclub/adminSdkConfig {"projectId":"democraseeclub","databaseURL":"https://democraseeclub.firebaseio.com","storageBucket":"democraseeclub.appspot.com","locationId":"us-central"}
+[debug] [2021-05-18T02:52:51.410Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2021-05-18T02:52:51.411Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2021-05-18T02:52:51.411Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\Branyer\\.cache\\firebase\\emulators\\ui-v1.4.2\\server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\Branyer\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.4.2\\\\server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2021-05-18T02:52:51.548Z] Web / API server started at http://localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at http://localhost:4000\n"}}
+[info] i  functions: Watching "C:\Users\Branyer\Documents\GitHub\website\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\Branyer\\Documents\\GitHub\\website\\functions\" for Cloud Functions..."}}
+[debug] [2021-05-18T02:52:51.695Z] [worker-pool] addWorker(~diagnostic~) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(~diagnostic~)"}}
+[debug] [2021-05-18T02:52:51.696Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key ~diagnostic~, total=1"}}
+[debug] [2021-05-18T02:52:51.696Z] [worker-pool] submitWork(triggerId=) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=)"}}
+[debug] [2021-05-18T02:52:51.696Z] [worker-~diagnostic~-6e395760-25a9-46d6-8a51-9104af16b430]: Assigning socketPath: \\?\pipe\C:\Users\Branyer\Documents\GitHub\website\functions\7616 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-6e395760-25a9-46d6-8a51-9104af16b430]: Assigning socketPath: \\\\?\\pipe\\C:\\Users\\Branyer\\Documents\\GitHub\\website\\functions\\7616"}}
+[debug] [2021-05-18T02:52:51.697Z] [worker-~diagnostic~-6e395760-25a9-46d6-8a51-9104af16b430]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-6e395760-25a9-46d6-8a51-9104af16b430]: BUSY"}}

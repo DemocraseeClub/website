@@ -59,7 +59,7 @@ async function getUserData(uid: string) {
  */
 
 async function postData(url = '', data = {}) {
-    console.log(postData)
+    console.log("postData")
     // Default options are marked with *
     const response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -173,9 +173,9 @@ export function FirebaseCMS(props: any) {
 
             console.log("sync with " + idToken, authUser);
 
-            let mergedUser = postData('/auth/syncUser', {authUser:authUser, idToken:idToken})
+            let mergedUser = postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
                 .then(data => {
-                    console.log(data);
+                    console.log(data, "data sync user");
                     return data;
                 });
 
