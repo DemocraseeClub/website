@@ -73,7 +73,14 @@ app.get("/resources", async (req, res, next) => {
                 const author = await response[i].author.get();
                 response[i].author = { id: author.id, ...author.data() };
             }
+
+            if (response[i]?.resource_type) {
+                const resource_type = await response[i].resource_type.get();
+                response[i].resource_type = { id: resource_type.id, ...resource_type.data() };
+            }
+
         }
+       
 
         return res.status(200).json(response);
     } catch (error) {
@@ -140,6 +147,39 @@ app.get("/rallies", async (req, res, next) => {
         return res.status(500).send(error);
     }
 });
+
+app.get("/resources/:resource_types", async (req, res, next) => {
+    try {
+        const resourcesSnapshot = await db.collection("resources").get();
+        const { docs } = resourcesSnapshot;
+
+        const response = docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        for (let i = 0; i < response.length; i++) {
+            if (response[i]?.author) {
+                const author = await response[i].author.get();
+                response[i].author = { id: author.id, ...author.data() };
+                // response[i].author = ""
+            }
+
+            if (response[i]?.resource_type) {
+                const resource_type = await response[i].resource_type.get();
+                response[i].resource_type = { id: resource_type.id, ...resource_type.data() };
+            }
+            
+        }
+
+
+        return res.status(200).json(response.filter(res => res?.resource_type?.type === req.params.resource_types ));
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+});
+
+
 
 app.post("/syncUser", async (req, res, next) => {
     if (!req.body || !req.body.idToken) return false;
@@ -248,6 +288,10 @@ app.get("/ralliesWithUpcomingMeetings", async (req, res) => {
         return res.status(500).send(error);
     }
 });
+
+
+
+
 
 const site_root = path.resolve(__dirname + "/..");
 
