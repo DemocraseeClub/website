@@ -65,45 +65,32 @@ class Resources extends React.Component {
     window.logUse.logEvent("resource-redeem", { email: email });
   }
 
+  handleChange(rType) {
+    this.setState({ rType, loading: true });
+    fetch(process.env.REACT_APP_FUNCTIONS_URL + `/resources/${rType}`)
+      .then((response) => response.json())
+      .then(async (data) => {
+        for (let i = 0; i < data.length; i++) {
+          try {
+            if (data[i].image) {
+              let path = window.storage.ref(data[i].image);
+              const url = await path.getDownloadURL();
+              data[i].image = url;
+            }
+          } catch (e) {}
+        }
+
+        return data;
+      })
+      .then((resources) => {
+        this.setState({ resources: resources, loading: false });
+      })
+      .catch((err) => console.log(err));
+  }
+
   render() {
     const { classes } = this.props;
     const { loading } = this.state;
-    const currencies = [
-      {
-        value: "USD",
-        label: "$",
-      },
-      {
-        value: "EUR",
-        label: "€",
-      },
-      {
-        value: "BTC",
-        label: "฿",
-      },
-      {
-        value: "JPY",
-        label: "¥",
-      },
-    ];
-
-    const items = [
-      {
-        img: "/images/coin.png",
-        alt: "citizen-coin",
-        text: "Earn 2 - 2000 Citizen Coins",
-      },
-      {
-        img: "/images/hero.jpg",
-        alt: "hero-badge",
-        text: "Explorer or Hero Badge",
-      },
-      {
-        img: "/images/lighbulb.png",
-        alt: "Time-knowledge",
-        text: "Time and Knowledge",
-      },
-    ];
     return (
       <Box>
         <Grid container className={classes.sectionSecondary}>
@@ -182,7 +169,7 @@ class Resources extends React.Component {
                   select
                   displayEmpty={true}
                   value={this.state.rType}
-                  onChange={(e) => this.setState({ rType: e.target.value })}
+                  onChange={(e) => this.handleChange(e.target.value)}
                   label="Resource Types"
                   variant="outlined"
                 >
@@ -249,7 +236,6 @@ class Resources extends React.Component {
                             allowedAttributes={Config.allowedAttributes}
                             exclusiveFilter={(frame) => {
                               if (frame.tag === "iframe") {
-                                console.log(frame);
                                 if (
                                   frame.attribs.src.indexOf(
                                     "https://linkedin.com"
