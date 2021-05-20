@@ -14,11 +14,15 @@ const app = express();
 
 app.use(cors());
 
-admin.initializeApp({
-    credential: admin.credential.cert("./democraseeclub-firebase-admin.json"),
-    databaseURL: "https://democraseeclub.firebaseio.com",
-    storageBucket: "gs://democraseeclub.appspot.com",
-});
+if (process.env.NODE_ENV === 'production') {
+    admin.initializeApp();
+} else {
+    admin.initializeApp({
+        credential: admin.credential.cert("../democraseeclub-firebase-admin.json"),
+        databaseURL: "https://democraseeclub.firebaseio.com",
+        storageBucket: "gs://democraseeclub.appspot.com",
+    });
+}
 
 const db = admin.firestore();
 // const storage = admin.storage()
@@ -80,7 +84,7 @@ app.get("/resources", async (req, res, next) => {
             }
 
         }
-       
+
 
         return res.status(200).json(response);
     } catch (error) {
@@ -169,7 +173,7 @@ app.get("/resources/:resource_types", async (req, res, next) => {
                 const resource_type = await response[i].resource_type.get();
                 response[i].resource_type = { id: resource_type.id, ...resource_type.data() };
             }
-            
+
         }
 
 
@@ -290,9 +294,6 @@ app.get("/ralliesWithUpcomingMeetings", async (req, res) => {
 });
 
 
-
-
-
 const site_root = path.resolve(__dirname + "/..");
 
 app.post("/injectMeta", (req, res, next) => {
@@ -321,6 +322,7 @@ app.post("/injectMeta", (req, res, next) => {
     }
 });
 
+/*
 exports.app = functions.https.onRequest(app);
 
 exports.createUser = functions.firestore
@@ -354,3 +356,4 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
 exports.sendByeEmail = functions.auth.user().onDelete((user) => {
     // ...
 });
+*/
