@@ -174,9 +174,7 @@ class Rallies extends React.Component {
                             View
                           </Button>
                         </NavLink>
-                        <Button size="small" color="primary"
-                            onClick={() => this.trackSubscribe(`/rally/${item.id}`)}
-                        >
+                        <Button size="small" color="primary" onClick={() => this.trackSubscribe(`/rally/${item.id}`)}>
                           Subscribe
                         </Button>
                       </CardActions>

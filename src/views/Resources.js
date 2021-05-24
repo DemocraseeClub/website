@@ -151,7 +151,7 @@ class Resources extends React.Component {
                                     id="standard-select-currency"
                                     select
                                     label="Currency"
-                                    size="medium"
+                                    size="medium" 
                                     variant="outlined"
                                 >
                                     {currencies.map((option) => (
