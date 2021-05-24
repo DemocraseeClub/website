@@ -53,11 +53,8 @@ class Rallies extends React.Component {
             }
           } catch (e) {}
         }
-
+        this.setState({ rallies: data, loading: false });
         return data;
-      })
-      .then((rallies) => {
-        this.setState({ rallies: rallies, loading: false });
       })
       .catch((err) => console.log(err));
   }
@@ -113,71 +110,80 @@ class Rallies extends React.Component {
           spacing={4}
           alignItems="stretch"
         >
-          {(loading ? Array.from(new Array(6)) : this.state.rallies).map(
+          {loading === true ? new Array(6).map(
             (item, key) => (
               <Grid key={key} item xs={12} sm={6} md={4}>
                 <Card style={{ height: "100%" }}>
                   <CardActionArea>
-                    {item ? (
-                      <NavLink to={"/rally/building-democrasee"}>
-                        <CardMedia
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "images/citizencoin.png";
-                          }}
-                          component="img"
-                          alt="Democrasee Logo"
-                          height="200"
-                          style={{ objectFit: "contain" }}
-                          image={item.picture}
-                          title="Democrasee Logo"
-                        />
-                      </NavLink>
-                    ) : (
-                      <Skeleton variant="rect" width="100%" height={200} />
-                    )}
+                    <Skeleton variant="rect" width="100%" height={200} />
                     <CardContent>
-                      {item ? (
-                        <>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {item.title}
-                          </Typography>
-                          <Typography
-                            dangerouslySetInnerHTML={{
-                              __html: item.description,
-                            }}
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          />
-                        </>
-                      ) : (
-                        <>
                           <Skeleton width="40%" />
                           <Skeleton />
                           <Skeleton />
                           <Skeleton />
-                        </>
-                      )}
                     </CardContent>
                   </CardActionArea>
                   <CardActions style={{ justifyContent: "space-between" }}>
-                    <NavLink to={"/rally/building-democrasee"}>
                       <Button size="small" color="primary">
                         View
                       </Button>
-                    </NavLink>
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => this.trackSubscribe("building-democrasee")}
-                    >
+                    <Button size="small" color="primary">
                       Subscribe
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
             )
+          )
+          : this.state.rallies.map(
+              (item, key) => (
+                  <Grid key={key} item xs={12} sm={6} md={4}>
+                    <Card style={{ height: "100%" }}>
+                      <CardActionArea>
+                        <NavLink to={`/rally/${item.id}`}>
+                          <CardMedia
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "images/citizencoin.png";
+                              }}
+                              component="img"
+                              alt={item.title}
+                              height="200"
+                              style={{ objectFit: "contain" }}
+                              image={item.picture}
+                          />
+                        </NavLink>
+                        <CardContent>
+                              <Typography gutterBottom variant="h5" component="h2">
+                                {item.title}
+                              </Typography>
+                              <Typography
+                                  dangerouslySetInnerHTML={{
+                                    __html: item.description,
+                                  }}
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                              />
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions style={{ justifyContent: "space-between" }}>
+                        <NavLink to={`/rally/${item.id}`}>
+                          <Button size="small" color="primary">
+                            View
+                          </Button>
+                        </NavLink>
+                        <Button
+                            size="small"
+                            color="primary"
+                            onClick={() => this.trackSubscribe(`/rally/${item.id}`)}
+                        >
+                          Subscribe
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+              )
           )}
         </Grid>
       </Box>
