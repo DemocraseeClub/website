@@ -27,7 +27,7 @@ class RallyHome extends Component {
     }
 
     refresh() {
-        // TODO: connect to Firebase DB (https://github.com/eliataylor/clock-agendas/issues/5)
+        // TODO: connect to Firebase DB (https://github.com/DemocraseeClub/website/issues/5)
         let url = '/json/' + this.props.match.params.rid + '/index.json';
         console.log(url);
         return this.props.dispatch(entityData(url));

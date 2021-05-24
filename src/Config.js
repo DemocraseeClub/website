@@ -36,12 +36,12 @@ const Config = {
     peerConfig: {
         iceServers: [
             {urls: ['turn:turn.trackauthoritymusic.com:5349'], 'credential': process.env.REACT_APP_TURNPASS, 'username': process.env.REACT_APP_TURNUSER},
-//            {urls: ['turn:numb.viagenie.ca'], 'credential': 'KD@)*SDL.ms!4ad', 'username': 'eli@taylormadetraffic.com'},
-//            {urls: 'stun:stun.services.mozilla.com'},
+            {urls: ['turn:numb.viagenie.ca'], 'credential': 'KD@)*SDL.ms!4ad', 'username': 'eli@taylormadetraffic.com'},
             {urls: [
-                    'stun:turn.trackauthoritymusic.com:3478'
-//                    'stun:stun1.l.google.com:19302',
-//                    'stun:stun2.l.google.com:19302'
+                    'stun:turn.trackauthoritymusic.com:3478',
+                    'stun:stun1.l.google.com:19302',
+                    'stun:stun2.l.google.com:19302',
+                    'stun:stun.services.mozilla.com'
                 ]
             }
         ],
