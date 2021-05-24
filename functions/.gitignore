@@ -8,5 +8,9 @@
 # TypeScript v1 declaration files
 typings/
 
+build
+lib
+firestoredump
+
 # Node.js dependency directory
 node_modules/
