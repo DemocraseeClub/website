@@ -1,27 +1,28 @@
 // import * as functions from "firebase-functions"
 const fs = require("fs");
-var path = require("path");
+const path = require("path");
 
-// const firebase = require('firebase');
+// const firebase = require("firebase");
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const express = require("express");
-const cors = require("cors");
-const { auth } = require("firebase-admin");
-const { bucket } = require("firebase-functions/lib/providers/storage");
+const cors = require("cors"); // ({origin: true});
+const {auth} = require("firebase-admin");
+const {bucket} = require("firebase-functions/lib/providers/storage");
 
 const app = express();
+const apiPrefix = "";
 
 app.use(cors());
 
-if (process.env.NODE_ENV === 'production') {
-    admin.initializeApp();
-} else {
+if (process.env.NODE_ENV === "development") {
     admin.initializeApp({
         credential: admin.credential.cert("../democraseeclub-firebase-admin.json"),
         databaseURL: "https://democraseeclub.firebaseio.com",
         storageBucket: "gs://democraseeclub.appspot.com",
     });
+} else {
+    admin.initializeApp();
 }
 
 const db = admin.firestore();
@@ -31,9 +32,7 @@ const db = admin.firestore();
 // var defaultAuth = defaultApp.auth();
 // var defaultDatabase = defaultApp.database();
 
-// TODO: replace all with Express app: https://firebase.google.com/docs/functions/http-events
-
-app.get("/user/:uid", async (req, res) => {
+app.get(apiPrefix + "/user/:uid", async (req, res) => {
     try {
         const user = await admin.auth().getUser(req.params.uid);
 
@@ -43,13 +42,13 @@ app.get("/user/:uid", async (req, res) => {
     }
 });
 
-app.get("/users/:role", async (req, res) => {
+app.get(apiPrefix + "/users/:role", async (req, res) => {
     try {
         const usersSnapshot = await db
             .collection("users")
             .where("roles", "array-contains", req.params.role)
             .get();
-        const { docs } = usersSnapshot;
+        const {docs} = usersSnapshot;
 
         const response = docs.map((doc) => ({
             id: doc.id,
@@ -62,10 +61,10 @@ app.get("/users/:role", async (req, res) => {
     }
 });
 
-app.get("/resources", async (req, res, next) => {
+app.get(apiPrefix + "/resources", async (req, res, next) => {
     try {
         const resourcesSnapshot = await db.collection("resources").get();
-        const { docs } = resourcesSnapshot;
+        const {docs} = resourcesSnapshot;
 
         const response = docs.map((doc) => ({
             id: doc.id,
@@ -75,12 +74,12 @@ app.get("/resources", async (req, res, next) => {
         for (let i = 0; i < response.length; i++) {
             if (response[i]?.author) {
                 const author = await response[i].author.get();
-                response[i].author = { id: author.id, ...author.data() };
+                response[i].author = {id: author.id, ...author.data()};
             }
 
             if (response[i]?.resource_type) {
                 const resource_type = await response[i].resource_type.get();
-                response[i].resource_type = { id: resource_type.id, ...resource_type.data() };
+                response[i].resource_type = {id: resource_type.id, ...resource_type.data()};
             }
 
         }
@@ -92,100 +91,129 @@ app.get("/resources", async (req, res, next) => {
     }
 });
 
-app.get("/rallies", async (req, res, next) => {
+app.get(apiPrefix + "/rallies", async (req, res) => {
     try {
-        const ralliesSnapshot = await db.collection("rallies").get();
-        const { docs } = ralliesSnapshot;
+        const collection = db.collection("rallies");
+        let response = [];
+        const snapshot = (req.query.hasMeetings) ?
+            collection.where("meetings", "!=", []).limit(25) // TODO: search by subcollection instead of field
+            :
+            collection.limit(25)
 
-        const response = docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        await snapshot.get().then(async snapshots => {
+            const {docs} = snapshots;
+            response = docs.map(async doc => {
+                let obj = {
+                    id : doc.id,
+                    ...doc.data()
+                };
+                
+                console.log("NORMALIZE", obj)
 
-        for (let i = 0; i < response.length; i++) {
-            if (response[i]?.author) {
-                const author = await response[i].author.get();
-                response[i].author = { id: author.id, ...author.data() };
-            }
-
-            if (response[i]?.meetings) {
-                for (let j = 0; j < response[i].meetings.length; j++) {
-                    const meeting = await response[i].meetings[j].get();
-                    response[i].meetings[j] = {
-                        id: meeting.id,
-                        ...meeting.data(),
-                    };
+                if (obj?.author) {
+                    const author = await obj.author.get();
+                    obj.author = {id: author.id, ...author.data()}; // TODO: WRITE NORMALIZER FOR adding title, image, id
                 }
-            }
 
-            if (response[i]?.topics) {
-                for (let j = 0; j < response[i].topics.length; j++) {
-                    const topic = await response[i].topics[j].get();
-                    response[i].topics[j] = { id: topic.id, ...topic.data() };
+                /* investigate https://stackoverflow.com/questions/42956250/get-download-url-from-file-uploaded-with-cloud-functions-for-firebase
+                console.log("RALLY PHOTO " + obj.id, obj.picture);
+                if (obj.picture) {
+                    let path = storage.ref(obj.picture);
+                    const url = await path.getDownloadURL();
+                    obj.picture = url;
                 }
-            }
+                 */
 
-            if (response[i]?.stakeholders) {
-                for (let j = 0; j < response[i].stakeholders.length; j++) {
-                    const stakeholder = await response[i].stakeholders[j].get();
-                    response[i].stakeholders[j] = {
-                        id: stakeholder.id,
-                        ...stakeholder.data(),
-                    };
+                if (req.query.fields && req.query.fields.indexOf('meetings') > -1) {
+                    let meetingDocs = await collection.doc(doc.id).collection("meetings").get()
+                    if (meetingDocs) {
+                        obj.meetings = [];
+                        meetingDocs.forEach((meeting, j) => {
+                            obj.meetings[j] = {
+                                id: meeting.id,
+                                ...meeting.data(),
+                            };
+                        });
+                    }
                 }
-            }
 
-            if (response[i]?.wise_demo) {
-                for (let j = 0; j < response[i].wise_demo.length; j++) {
-                    const wise_dem = await response[i].wise_demo[j].get();
-                    response[i].wise_demo[j] = {
-                        id: wise_dem.id,
-                        ...wise_dem.data(),
-                    };
+                if (obj?.topics) {
+                    for (let j = 0; j < obj.topics.length; j++) {
+                        const topic = await obj.topics[j].get();
+                        obj.topics[j] = {id: topic.id, ...topic.data()};
+                    }
                 }
-            }
-        }
+
+                if (obj?.stakeholders) {
+                    for (let j = 0; j < obj.stakeholders.length; j++) {
+                        const stakeholder = await obj.stakeholders[j].get();
+                        obj.stakeholders[j] = {
+                            id: stakeholder.id,
+                            ...stakeholder.data(),
+                        };
+                    }
+                }
+
+                if (obj?.wise_demo) {
+                    for (let j = 0; j < obj.wise_demo.length; j++) {
+                        const wise_dem = await obj.wise_demo[j].get();
+                        obj.wise_demo[j] = {
+                            id: wise_dem.id,
+                            ...wise_dem.data(),
+                        };
+                    }
+                }
+
+                return obj;
+            })
+        });
+
+        console.log(response)
 
         return res.status(200).json(response);
+
     } catch (error) {
+        console.log("RALLY ERROR", error);
         return res.status(500).send(error);
     }
 });
 
-app.get("/resources/:resource_types", async (req, res, next) => {
+app.get(apiPrefix + "/resources/:resource_types", async (req, res, next) => {
     try {
         const resourcesSnapshot = await db.collection("resources").get();
-        const { docs } = resourcesSnapshot;
+        // TODO
+        console.log('filter by', req.params)
+        const {docs} = resourcesSnapshot;
 
-        const response = docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        const response = docs.map(async (doc) => {
 
-        for (let i = 0; i < response.length; i++) {
-            if (response[i]?.author) {
-                const author = await response[i].author.get();
-                response[i].author = { id: author.id, ...author.data() };
-                // response[i].author = ""
+            let obj = {
+                id: doc.id,
+                ...doc.data(),
+            }
+            if (obj?.author) {
+                const author = await obj.author.get();
+                obj.author = {id: author.id, ...author.data()};
+                // obj.author = ""
             }
 
-            if (response[i]?.resource_type) {
-                const resource_type = await response[i].resource_type.get();
-                response[i].resource_type = { id: resource_type.id, ...resource_type.data() };
+            if (obj?.resource_type) {
+                const resource_type = await obj.resource_type.get();
+                obj.resource_type = {id: resource_type.id, ...resource_type.data()};
             }
+            return obj;
+    });
 
-        }
 
-
-        return res.status(200).json(response.filter(res => res?.resource_type?.type === req.params.resource_types ));
+        return res.status(200).json(response.filter(res => res?.resource_type?.type === req.params.resource_types));
     } catch (error) {
+        console.log("RESOURCE ERROR", error);
         return res.status(500).send(error);
     }
 });
 
 
-
-app.post("/syncUser", async (req, res, next) => {
+app.post(apiPrefix + "/syncUser", async (req, res, next) => {
     if (!req.body || !req.body.idToken) return false;
     //     console.log(req.body);
     //     validate accessToken...
@@ -196,7 +224,7 @@ app.post("/syncUser", async (req, res, next) => {
             const uid = decodedToken.uid;
             let snapshot = await db.collection("users").doc(uid).get();
 
-            let fbUser = { ...snapshot.data() };
+            let fbUser = {...snapshot.data()};
 
             if (JSON.stringify(fbUser) === "{}") {
                 fbUser = {
@@ -230,77 +258,16 @@ app.post("/syncUser", async (req, res, next) => {
         });
 });
 
-app.get("/ralliesWithUpcomingMeetings", async (req, res) => {
-    try {
-        const ralliesSnapshot = await db
-            .collection("rallies")
-            .where("meetings", "!=", [])
-            .get();
-        const { docs } = ralliesSnapshot;
-
-        const response = docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
-
-        for (let i = 0; i < response.length; i++) {
-            if (response[i]?.author) {
-                const author = await response[i].author.get();
-                response[i].author = { id: author.id, ...author.data() };
-            }
-
-            if (response[i]?.meetings) {
-                for (let j = 0; j < response[i].meetings.length; j++) {
-                    const meeting = await response[i].meetings[j].get();
-                    response[i].meetings[j] = {
-                        id: meeting.id,
-                        ...meeting.data(),
-                    };
-                }
-            }
-
-            if (response[i]?.topics) {
-                for (let j = 0; j < response[i].topics.length; j++) {
-                    const topic = await response[i].topics[j].get();
-                    response[i].topics[j] = { id: topic.id, ...topic.data() };
-                }
-            }
-
-            if (response[i]?.stakeholders) {
-                for (let j = 0; j < response[i].stakeholders.length; j++) {
-                    const stakeholder = await response[i].stakeholders[j].get();
-                    response[i].stakeholders[j] = {
-                        id: stakeholder.id,
-                        ...stakeholder.data(),
-                    };
-                }
-            }
-        }
-
-        if (response[i]?.wise_demo) {
-            for (let j = 0; j < response[i].wise_demo.length; j++) {
-                const wise_dem = await response[i].wise_demo[j].get();
-                response[i].wise_demo[j] = {
-                    id: wise_dem.id,
-                    ...wise_dem.data(),
-                };
-            }
-        }
-
-        return res.status(200).json(response);
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-});
-
 
 const site_root = path.resolve(__dirname + "/..");
 
-app.post("/injectMeta", (req, res, next) => {
+exports.api = functions.https.onRequest(app);
+
+exports.injectMeta = functions.https.onRequest((req, res, next) => {
     const pathname = req.path; // Short-hand for url.parse(req.url).pathname
     if (pathname.indexOf("/rally/") === 0) {
         let template = fs.readFileSync(`${site_root}/build/index.html`, "utf8");
-        console.log("INJECTING ON " + pathname);
+        // console.log("INJECTING ON " + pathname);
         // TODO: query for rally meta data (description, video, image , ...)
         let meta = `<meta property="og:description" content="Incentivizing Civic Action" />
             <meta property="Description" content="Incentivizing Civic Action || Tailgate your townhall" />
@@ -322,8 +289,9 @@ app.post("/injectMeta", (req, res, next) => {
     }
 });
 
+
 /*
-exports.app = functions.https.onRequest(app);
+
 
 exports.createUser = functions.firestore
     .document("users/{userId}")
