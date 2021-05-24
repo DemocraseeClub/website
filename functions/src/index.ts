@@ -94,81 +94,75 @@ app.get(apiPrefix + "/resources", async (req, res, next) => {
 app.get(apiPrefix + "/rallies", async (req, res) => {
     try {
         const collection = db.collection("rallies");
-        let response = [];
-        const snapshot = (req.query.hasMeetings) ?
+        const query = (req.query.hasMeetings) ?
             collection.where("meetings", "!=", []).limit(25) // TODO: search by subcollection instead of field
             :
             collection.limit(25)
 
-        await snapshot.get().then(async snapshots => {
-            const {docs} = snapshots;
-            response = docs.map(async doc => {
-                let obj = {
-                    id : doc.id,
-                    ...doc.data()
-                };
-                
-                console.log("NORMALIZE", obj)
+        let snapshots = await query.get();
+        const response = await Promise.all(snapshots.docs.map(async (doc) => {
+            let obj = {
+                id : doc.id,
+                ...doc.data()
+            };
 
-                if (obj?.author) {
-                    const author = await obj.author.get();
-                    obj.author = {id: author.id, ...author.data()}; // TODO: WRITE NORMALIZER FOR adding title, image, id
-                }
+            if (obj?.author) {
+                const author = await obj.author.get();
+                obj.author = {id: author.id, ...author.data()}; // TODO: WRITE NORMALIZER FOR adding title, image, id
+            }
 
-                /* investigate https://stackoverflow.com/questions/42956250/get-download-url-from-file-uploaded-with-cloud-functions-for-firebase
-                console.log("RALLY PHOTO " + obj.id, obj.picture);
-                if (obj.picture) {
-                    let path = storage.ref(obj.picture);
-                    const url = await path.getDownloadURL();
-                    obj.picture = url;
-                }
-                 */
+            /*
+            investigate https://stackoverflow.com/questions/42956250/get-download-url-from-file-uploaded-with-cloud-functions-for-firebase
+            console.log("RALLY PHOTO " + obj.id, obj.picture);
+            if (obj.picture) {
+                let path = storage.ref(obj.picture);
+                const url = await path.getDownloadURL();
+                obj.picture = url;
+            }
+            */
 
-                if (req.query.fields && req.query.fields.indexOf('meetings') > -1) {
-                    let meetingDocs = await collection.doc(doc.id).collection("meetings").get()
-                    if (meetingDocs) {
-                        obj.meetings = [];
-                        meetingDocs.forEach((meeting, j) => {
-                            obj.meetings[j] = {
-                                id: meeting.id,
-                                ...meeting.data(),
-                            };
-                        });
-                    }
-                }
-
-                if (obj?.topics) {
-                    for (let j = 0; j < obj.topics.length; j++) {
-                        const topic = await obj.topics[j].get();
-                        obj.topics[j] = {id: topic.id, ...topic.data()};
-                    }
-                }
-
-                if (obj?.stakeholders) {
-                    for (let j = 0; j < obj.stakeholders.length; j++) {
-                        const stakeholder = await obj.stakeholders[j].get();
-                        obj.stakeholders[j] = {
-                            id: stakeholder.id,
-                            ...stakeholder.data(),
+            if (req.query.fields && req.query.fields.indexOf('meetings') > -1) {
+                let meetingDocs = await collection.doc(doc.id).collection("meetings").get()
+                if (meetingDocs) {
+                    obj.meetings = [];
+                    meetingDocs.forEach((meeting, j) => {
+                        obj.meetings[j] = {
+                            id: meeting.id,
+                            ...meeting.data(),
                         };
-                    }
+                    });
                 }
+            }
 
-                if (obj?.wise_demo) {
-                    for (let j = 0; j < obj.wise_demo.length; j++) {
-                        const wise_dem = await obj.wise_demo[j].get();
-                        obj.wise_demo[j] = {
-                            id: wise_dem.id,
-                            ...wise_dem.data(),
-                        };
-                    }
+            if (obj?.topics) {
+                for (let j = 0; j < obj.topics.length; j++) {
+                    const topic = await obj.topics[j].get();
+                    obj.topics[j] = {id: topic.id, ...topic.data()};
                 }
+            }
 
-                return obj;
-            })
-        });
+            if (obj?.stakeholders) {
+                for (let j = 0; j < obj.stakeholders.length; j++) {
+                    const stakeholder = await obj.stakeholders[j].get();
+                    obj.stakeholders[j] = {
+                        id: stakeholder.id,
+                        ...stakeholder.data(),
+                    };
+                }
+            }
 
-        console.log(response)
+            if (obj?.wise_demo) {
+                for (let j = 0; j < obj.wise_demo.length; j++) {
+                    const wise_dem = await obj.wise_demo[j].get();
+                    obj.wise_demo[j] = {
+                        id: wise_dem.id,
+                        ...wise_dem.data(),
+                    };
+                }
+            }
+
+            return obj;
+        }))
 
         return res.status(200).json(response);
 
