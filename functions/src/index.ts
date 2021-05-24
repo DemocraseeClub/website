@@ -282,8 +282,9 @@ app.post(apiPrefix + "/syncUser", async (req, res, next) => {
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
             // */
 
-            console.log("MERGING USER!!", firebaseUser);
             await db.collection("users").doc(uid).set(firebaseUser);
+            firebaseUser.uid = uid;
+            console.log("MERGING USER!!", firebaseUser);
 
             return res.status(200).json(firebaseUser);
         })

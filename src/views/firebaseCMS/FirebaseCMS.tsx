@@ -92,6 +92,7 @@ export function FirebaseCMS(props: any) {
     // const [userDB] = useState<firebase.firestore.DocumentData>();
     const {pathname} = useLocation();
     // let history = useHistory();
+    const authController = useAuthContext();
     const state: any = useSelector(state => state) //global state
 
     const [
@@ -179,7 +180,8 @@ export function FirebaseCMS(props: any) {
                     return data;
                 });
 
-            // TODO: set mergedUser redux store or ideally FireCMS authContext
+            // TODO: set mergedUser redux store or ideally FireCMS authContext()
+            authController.setAuthResult(mergedUser);
 
             /*
             // listen for role changes from other providers on settings / profile  pages
