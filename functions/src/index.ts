@@ -208,9 +208,12 @@ app.get(apiPrefix + "/resources/:resource_types", async (req, res, next) => {
 
 
 app.post(apiPrefix + "/syncUser", async (req, res, next) => {
-    if (!req.body || !req.body.idToken) return false;
-    //     console.log(req.body);
-    //     validate accessToken...
+    if (!req.body || !req.body.idToken) {
+        return res.status(500).send('invalid post');
+    }
+
+    // console.log("POST DATA", req.body);
+
     return admin
         .auth()
         .verifyIdToken(req.body.idToken)
@@ -218,34 +221,71 @@ app.post(apiPrefix + "/syncUser", async (req, res, next) => {
             const uid = decodedToken.uid;
             let snapshot = await db.collection("users").doc(uid).get();
 
-            let fbUser = {...snapshot.data()};
+            if (!snapshot.exists && req.body.authUser.providerData.length > 0) {
+                for(let i=0; i < req.body.authUser.providerData.length; i++) {
+                    if (req.body.authUser.providerData[i].phoneNumber) {
+                        snapshot = await db.collection("users").where("phone", "==", req.body.authUser.providerData[i].phoneNumber).get();
+                        if (snapshot.exists) {
+                            console.log("user by phone", snapshot);
+                            break;
+                        } else {
+                            console.log("no user by phone");
+                        }
+                    }
 
-            if (JSON.stringify(fbUser) === "{}") {
-                fbUser = {
-                    userName: "",
+                    if (req.body.authUser.providerData[i].email) {
+                        snapshot = await db.collection("users").where("email", "==", req.body.authUser.providerData[i].email).get();
+                        if (snapshot.exists) {
+                            console.log("user by email", snapshot);
+                            break;
+                        } else {
+                            console.log("no user by email");
+                        }
+                    }
+                }
+            }
+
+            let firebaseUser =  (snapshot.exists) ?
+                snapshot.data()
+                :
+                {
+                    email:"",
+                    phone:"",
+                    userName:"",
                     realName: "",
                     website: "",
                     bio: "",
-                    picture: "",
+                    picture: "", // req.body.authUser.providerData.photoURL, // TODO: hotlink or move to storage???
                     coverPhoto: "",
                     topic_def_json: "",
                     resources: [],
                     roles: [],
-                };
+                    providerData :{}
+                }
+
+            for (let i = 0; i < req.body.authUser.providerData.length; i++) {
+                let data = req.body.authUser.providerData[i];
+                firebaseUser.providerData[data.providerId] = data;
+                let mergers = {email: "email", phone: "phoneNumber", userName: "displayName"}
+                for (let prop in mergers) {
+                    if (!firebaseUser[prop] || firebaseUser[prop] === '') {
+                        let val = data[mergers[prop]];
+                        if (val && val !== '') {
+                            firebaseUser[prop] = val;
+                        }
+                    }
+                }
             }
 
-            let merged = Object.assign({}, fbUser, {
-                providerData: req.body.authUser.providerData,
-            });
-            // delete merged.idToken;
             // /* Investigate:
             // auth.currentUser.linkWithRedirect(provider).then().catch();
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
-            //     */
-            console.log("MERGING USER!!", merged);
-            db.collection("users").doc(uid).set(merged);
+            // */
 
-            return res.status(200).json(merged);
+            console.log("MERGING USER!!", firebaseUser);
+            await db.collection("users").doc(uid).set(firebaseUser);
+
+            return res.status(200).json(firebaseUser);
         })
         .catch((error) => {
             return res.status(500).send(error);

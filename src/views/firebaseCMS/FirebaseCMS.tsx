@@ -129,6 +129,7 @@ export function FirebaseCMS(props: any) {
 
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
+        console.log('got context user: ', user)
         if (user && user !== null && user.emailVerified === true) {
             return {
                 collections: [
@@ -166,8 +167,7 @@ export function FirebaseCMS(props: any) {
             // console.log(state.auth, "auth")
             // if (pathname === "/login") return (window as any).location.pathname = "/rallies"; // TODO go to user profile
 
-            // TODO: post user.providerData to /auth/syncUser
-
+            // post user.providerData to /api/syncUser
             let authUser = user.toJSON();
             let idToken = await user.getIdToken().then(idToken => idToken) // == authUser.stsTokenManager.accessToken; ??
 
