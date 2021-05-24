@@ -15,6 +15,8 @@ import { useAuthContext, useSideEntityController } from "@camberi/firecms";
 import { rallySchema } from "./firebaseCMS/collections/rally";
 import { rallyStyles } from "../Util/ThemeUtils";
 import Skeleton from "@material-ui/lab/Skeleton";
+import Config from "../Config";
+import SanitizedHTML from "react-sanitized-html";
 
 function withCmsHooks(Component) {
   return function WrappedComponent(props) {
@@ -112,7 +114,7 @@ class Rallies extends React.Component {
         >
           {loading === true ? new Array(6).map(
             (item, key) => (
-              <Grid key={key} item xs={12} sm={6} md={4}>
+              <Grid key={'rskeleton'+key} item xs={12} sm={6} md={4}>
                 <Card style={{ height: "100%" }}>
                   <CardActionArea>
                     <Skeleton variant="rect" width="100%" height={200} />
@@ -137,15 +139,16 @@ class Rallies extends React.Component {
           )
           : this.state.rallies.map(
               (item, key) => (
-                  <Grid key={key} item xs={12} sm={6} md={4}>
+                  <Grid key={'rally'+key} item xs={12} sm={6} md={4}>
                     <Card style={{ height: "100%" }}>
                       <CardActionArea>
                         <NavLink to={`/rally/${item.id}`}>
                           <CardMedia
                               onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = "images/citizencoin.png";
-                              }}
+                                  e.target.onerror = null;
+                                  e.target.src = "images/citizencoin.png";
+                                }
+                              }
                               component="img"
                               alt={item.title}
                               height="200"
@@ -154,28 +157,24 @@ class Rallies extends React.Component {
                           />
                         </NavLink>
                         <CardContent>
-                              <Typography gutterBottom variant="h5" component="h2">
+                              <Typography gutterBottom variant="h4" component="h2">
                                 {item.title}
                               </Typography>
-                              <Typography
-                                  dangerouslySetInnerHTML={{
-                                    __html: item.description,
-                                  }}
-                                  variant="body2"
-                                  color="textSecondary"
-                                  component="p"
-                              />
+                              <Typography variant="body2" component="div">
+                              <SanitizedHTML
+                                  allowedTags={Config.allowedTags}
+                                  allowedAttributes={Config.allowedAttributes}
+                                  html={item.description} />
+                              </Typography>
                         </CardContent>
                       </CardActionArea>
-                      <CardActions style={{ justifyContent: "space-between" }}>
+                      <CardActions style={{ justifyContent: "space-between", padding:'0 10px' }}>
                         <NavLink to={`/rally/${item.id}`}>
-                          <Button size="small" color="primary">
+                          <Button size="small" color="primary" style={{minWidth:"auto"}}>
                             View
                           </Button>
                         </NavLink>
-                        <Button
-                            size="small"
-                            color="primary"
+                        <Button size="small" color="primary"
                             onClick={() => this.trackSubscribe(`/rally/${item.id}`)}
                         >
                           Subscribe

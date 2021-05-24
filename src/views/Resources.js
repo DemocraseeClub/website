@@ -151,7 +151,7 @@ class Resources extends React.Component {
                                     id="standard-select-currency"
                                     select
                                     label="Currency"
-                                    size="medium" 
+                                    size="medium"
                                     variant="outlined"
                                 >
                                     {currencies.map((option) => (
@@ -232,8 +232,8 @@ class Resources extends React.Component {
                             allowedIframeHostnames={["www.linkedin.com"]}
                             allowIframeRelativeUrls={false}
                             allowedSchemes={["data", "https"]}
-                            allowedTags={Config.allowedTags}
-                            allowedAttributes={Config.allowedAttributes}
+                            allowedTags={Config.richTags}
+                            allowedAttributes={Config.richAttributes}
                             exclusiveFilter={(frame) => {
                               if (frame.tag === "iframe") {
                                 if (

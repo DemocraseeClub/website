@@ -23,13 +23,12 @@ const Config = {
         base: process.env.REACT_APP_API_URL, // set in .env
         client: process.env.NODE_ENV === 'production' ? 'https://democraseeclub.web.app' : '//localhost:3000'
     },
-    allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt', // https://www.npmjs.com/package/sanitize-html
-        'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div', 'figure', 'img', 'video', 'audio', 'iframe',
+    allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt',
+        'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
         'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'h2', 'h3', 'h4', 'h5', 'h6', 'small',
         'sup', 'sub', 'center', 'button', 'a', 'u'],
     allowedAttributes: {
         'a': ['href', 'target', 'style'],
-        'iframe': ['src', 'allowfullscreen', 'frameborder'],
         '*': ['id', 'style', 'data-toggle', 'data-target', 'aria-label', 'role', 'class'],
         'img': ['src', 'height', 'width', 'style']
     },
@@ -49,6 +48,12 @@ const Config = {
         iceCandidatePoolSize: 10
     }
 };
+
+Config.richTags = Config.allowedTags.concat(['figure', 'img', 'video', 'audio', 'iframe']);
+Config.richAttributes = {...Config.allowedAttributes};
+Config.richAttributes['iframe'] = ['src', 'allowfullscreen', 'frameborder'];
+
+// console.log(Config);
 
 export const fbConfig = {
     apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",

@@ -89,21 +89,8 @@ class RallyHome extends Component {
                         <Box p={1}>
                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
                         {rally.desc ? <SanitizedHTML
-                            allowedIframeDomains={['youtube.com', 'google.com']}
-                            allowedIframeHostnames={['www.youtube.com', 'docs.google.com', 'sheets.google.com']}
-                            allowIframeRelativeUrls={false}
-                            allowedSchemes={[ 'data', 'https' ]}
                             allowedTags={Config.allowedTags}
                             allowedAttributes={Config.allowedAttributes}
-                            exclusiveFilter={frame => {
-                                if (frame.tag === 'iframe') {
-                                    console.log(frame);
-                                    if (frame.attribs.src.indexOf('https://docs.google.com') !== 0 && frame.attribs.src.indexOf('https://sheets.google.com') !== 0) {
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            }}
                             html={rally.desc} /> : ''}
 
                         {!rally.start || rally.start === 'tomorrow' ?
