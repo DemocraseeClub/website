@@ -47,7 +47,7 @@ const citySchema = buildSchema({
       of: {
         dataType: "reference",
         collectionPath: "users",
-        previewProperties: ["userName"],
+        previewProperties: ["displayName"],
       }
     },
     website: {
@@ -96,7 +96,7 @@ const citySchema = buildSchema({
       of: {
         dataType: "reference",
         collectionPath: "users",
-        previewProperties: ["userName"],
+        previewProperties: ["displayName"],
       },
     },
     landArea: {
