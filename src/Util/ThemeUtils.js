@@ -297,10 +297,6 @@ export const rallyStyles = (theme) => ({
     color: theme.palette.info.main,
     textDecoration: "underline",
   },
-  cardBadge: {
-    color: "gray",
-    margin: "-10px 0 10px 0",
-  },
   sectionLink: {
     color: theme.palette.info.main,
     textDecoration: "underline",

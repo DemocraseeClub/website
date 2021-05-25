@@ -4,9 +4,8 @@ import { withSnackbar } from "notistack";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
+import {Card, CardMedia, CardContent, CardActions} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { rallyStyles } from "../Util/ThemeUtils";
@@ -194,7 +193,7 @@ class Resources extends React.Component {
           <Grid
             container
             spacing={10}
-            justify="center"
+            justify="space-around"
             className={classes.cardsContainer}
           >
             {loading === true ?
@@ -210,9 +209,6 @@ class Resources extends React.Component {
                       <Grid item>
                             <Skeleton variant="circle" width={80} height={80} />
                       </Grid>
-                      <Grid item>
-                        <Button className={classes.cardButton}>View</Button>
-                      </Grid>
                     </Grid>
                           <Skeleton width="40%" />
                           <Skeleton />
@@ -225,31 +221,20 @@ class Resources extends React.Component {
               (item, key) => (
                 <Grid item key={key}>
                   <Card className={classes.card}>
-                    <Grid
-                      container
-                      justify="space-between"
-                      alignItems="center"
-                      className={classes.cardHeader}
-                    >
-                      <Grid item>
-                          <Avatar
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "images/citizencoin.png";
-                            }}
-                            src={item.image}
-                            alt="card-img"
-                            className={classes.cardImg}
-                          />
-                      </Grid>
-                      <Grid item>
-                        <Button className={classes.cardButton}>View</Button>
-                      </Grid>
-                    </Grid>
-                        <Typography
-                          variant={"h2"}
-                          className={classes.cardBadge}
-                        >
+                    <CardMedia
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "images/citizencoin.png";
+                        }
+                        }
+                        component="img"
+                        alt={item.title}
+                        height="200"
+                        style={{ objectFit: "contain" }}
+                        image={item.image}
+                    />
+                    <CardContent>
+                        <Typography variant={"h2"} style={{color:this.props.theme.palette.primary.light}} >
                           {item.title}
                         </Typography>
                         <Typography variant={"body1"}>
@@ -277,7 +262,12 @@ class Resources extends React.Component {
                         </Typography>
                         <Typography variant={"body2"} className={classes.cardSubtitle}> with <em>{item.author ? item.author.realName : ''}</em>
                         </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Grid container direction={'column'}>
                         {item.office_hours && <OfficeHours office_hours={item.office_hours} author={item.author} /> }
+                      </Grid>
+                    </CardActions>
                   </Card>
                 </Grid>
               )
@@ -289,4 +279,4 @@ class Resources extends React.Component {
   }
 }
 
-export default withStyles(rallyStyles)(withSnackbar(Resources));
+export default withStyles(rallyStyles, {withTheme:true})(withSnackbar(Resources));

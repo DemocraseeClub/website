@@ -14,11 +14,14 @@ class OfficeHours extends React.Component {
 
     recurringText() {
         let recur = this.props.office_hours.recurring;
-        if (recur === 'none' || !this.props.office_hours.date_start) return '';
+        if (!this.props.office_hours.date_start) return '' // should not be possible;
 
-        // https://momentjs.com/docs/#/displaying/
         let start = moment(this.props.office_hours.date_start.seconds * 1000);
         let next = (start.isAfter()) ? start.format() : false;
+        if (recur === 'none') {
+            return <ListItemText primary={start.format()} secondary={(next === false) ? 'Past office hours' : 'Next office hours'} />;
+        }
+
         if (recur === 'daily') {
             recur = "Daily ";
         } else if (recur === 'weekly') {
