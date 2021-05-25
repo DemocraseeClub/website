@@ -2,6 +2,7 @@ import {buildCollection, buildSchema} from "@camberi/firecms";
 
 // import CustomPasswordField from "../customTextFields/CustomPasswordField";
 import CustomPhoneField from "../customTextFields/CustomPhoneField";
+import {rallySchema} from "./rally";
 
 const userSchema = buildSchema({
   name: "User",
@@ -117,6 +118,9 @@ userSchema.onPreSave = ({ values }) => {
       if (typeof value !== "object")
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
   }
+
+  if (!values.created) values.created = new Date().getTime() / 1000;
+  values.modified = new Date().getTime() / 1000;
 
   return values;
 };

@@ -40,6 +40,15 @@ const inviteSchema = buildSchema({
 });
 
 
+inviteSchema.onPreSave = ({ values }) => {
+
+    if (!values.created) values.created = new Date().getTime() / 1000;
+    values.modified = new Date().getTime() / 1000;
+
+    return values;
+};
+
+
 export default (userDB) => {
   return buildCollection({
     relativePath: "invites",
@@ -47,7 +56,7 @@ export default (userDB) => {
     name: "Invites",
     pagination: true,
      permissions: ({ user, entity }) => {
-   
+
        if(userDB?.admin) {
          return {
            edit: true,

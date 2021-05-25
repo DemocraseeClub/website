@@ -53,6 +53,13 @@ const officialSchema = buildSchema({
   },
 });
 
+officialSchema.onPreSave = ({ values }) => {
+
+  if (!values.created) values.created = new Date().getTime() / 1000;
+  values.modified = new Date().getTime() / 1000;
+
+  return values;
+};
 
 export default (userDB) => {
   return buildCollection({
@@ -61,7 +68,7 @@ export default (userDB) => {
     name: "Officials",
     pagination: true,
      permissions: ({ user, entity }) => {
-   
+
        if(userDB?.admin) {
          return {
            edit: true,

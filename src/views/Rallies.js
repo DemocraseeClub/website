@@ -112,8 +112,8 @@ class Rallies extends React.Component {
           spacing={4}
           alignItems="stretch"
         >
-          {loading === true ? new Array(6).map(
-            (item, key) => (
+          {loading === true ? [1,2,3,4,5,6].map(
+            (num, key) => (
               <Grid key={'rskeleton'+key} item xs={12} sm={6} md={4}>
                 <Card style={{ height: "100%" }}>
                   <CardActionArea>

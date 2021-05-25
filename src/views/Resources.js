@@ -39,25 +39,8 @@ class Resources extends React.Component {
       })
       .catch((err) => console.log(err));
 
-    fetch(process.env.REACT_APP_FUNCTIONS_URL + "/resources")
-      .then((response) => response.json())
-      .then(async (data) => {
-        for (let i = 0; i < data.length; i++) {
-          try {
-            if (data[i].image) {
-              let path = window.storage.ref(data[i].image);
-              const url = await path.getDownloadURL();
-              data[i].image = url;
-            }
-          } catch (e) {}
-        }
+    this.handleChange([])
 
-        return data;
-      })
-      .then((resources) => {
-        this.setState({ resources: resources, loading: false });
-      })
-      .catch((err) => console.log(err));
   }
 
   redeem(email) {
@@ -65,27 +48,46 @@ class Resources extends React.Component {
     window.logUse.logEvent("resource-redeem", { email: email });
   }
 
-  handleChange(rType) {
+  async handleChange(rType) {
     this.setState({ rType, loading: true });
-    fetch(process.env.REACT_APP_FUNCTIONS_URL + `/resources/${rType}`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        for (let i = 0; i < data.length; i++) {
-          try {
-            if (data[i].image) {
-              let path = window.storage.ref(data[i].image);
-              const url = await path.getDownloadURL();
-              data[i].image = url;
-            }
-          } catch (e) {}
+
+    const collection = window.fireDB.collection("resources");
+    const query = (this.state.rTypes.length > 0) ?
+        collection.where("resource_types", "IN", this.state.rTypes).limit(25)
+        :
+        collection.limit(25)
+
+    let snapshots = await query.get();
+    const resources = await Promise.all(snapshots.docs.map(async (doc) => {
+        let obj = {
+          id: doc.id,
+          ...doc.data(),
+        }
+        if (obj?.author) {
+          const author = await obj.author.get();
+          obj.author = {id: author.id, ...author.data()};
         }
 
-        return data;
-      })
-      .then((resources) => {
-        this.setState({ resources: resources, loading: false });
-      })
-      .catch((err) => console.log(err));
+        if (obj?.resource_type) {
+          const resource_type = await obj.resource_type.get();
+          obj.resource_type = {id: resource_type.id, ...resource_type.data()};
+        }
+
+        if (obj.image) {
+          try {
+            let path = window.storage.ref(obj.image);
+            const url = await path.getDownloadURL();
+            obj.image = url;
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        return obj;
+    }));
+    console.log(resources);
+    this.setState({ resources: resources, loading:false });
+
   }
 
   render() {
@@ -151,7 +153,7 @@ class Resources extends React.Component {
                                     id="standard-select-currency"
                                     select
                                     label="Currency"
-                                    size="medium" 
+                                    size="medium"
                                     variant="outlined"
                                 >
                                     {currencies.map((option) => (
@@ -189,7 +191,31 @@ class Resources extends React.Component {
             justify="center"
             className={classes.cardsContainer}
           >
-            {(loading ? Array.from(new Array(6)) : this.state.resources).map(
+            {loading === true ?
+              [1,2,3,4,5,6].map((item, key) => (
+                <Grid item key={key}>
+                  <Card className={classes.card}>
+                    <Grid
+                        container
+                        justify="space-between"
+                        alignItems="center"
+                        className={classes.cardHeader}
+                    >
+                      <Grid item>
+                            <Skeleton variant="circle" width={80} height={80} />
+                      </Grid>
+                      <Grid item>
+                        <Button className={classes.cardButton}>View</Button>
+                      </Grid>
+                    </Grid>
+                          <Skeleton width="40%" />
+                          <Skeleton />
+                          <Skeleton />
+                          <Skeleton />
+                  </Card>
+                </Grid>
+            )) :
+              this.state.resources.map(
               (item, key) => (
                 <Grid item key={key}>
                   <Card className={classes.card}>
@@ -200,7 +226,6 @@ class Resources extends React.Component {
                       className={classes.cardHeader}
                     >
                       <Grid item>
-                        {item ? (
                           <Avatar
                             onError={(e) => {
                               e.target.onerror = null;
@@ -210,16 +235,11 @@ class Resources extends React.Component {
                             alt="card-img"
                             className={classes.cardImg}
                           />
-                        ) : (
-                          <Skeleton variant="circle" width={80} height={80} />
-                        )}
                       </Grid>
                       <Grid item>
                         <Button className={classes.cardButton}>View</Button>
                       </Grid>
                     </Grid>
-                    {item ? (
-                      <>
                         <Typography
                           variant={"h2"}
                           className={classes.cardBadge}
@@ -249,24 +269,8 @@ class Resources extends React.Component {
                             html={item.descriptionHTML}
                           />
                         </Typography>
-                        <Typography
-                          variant={"body2"}
-                          className={classes.cardSubtitle}
-                        >
-                          with <em>{item.author.realName}</em>
+                        <Typography variant={"body2"} className={classes.cardSubtitle}> with <em>{item.author ? item.author.realName : ''}</em>
                         </Typography>
-                        {/* {
-                                            item.links.map(link => <Typography variant={'body1'} className={classes.cardLink} key={link}>{link}</Typography>)
-                                        } */}
-                      </>
-                    ) : (
-                      <>
-                        <Skeleton width="40%" />
-                        <Skeleton />
-                        <Skeleton />
-                        <Skeleton />
-                      </>
-                    )}
                   </Card>
                 </Grid>
               )

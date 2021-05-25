@@ -22,6 +22,10 @@ class Footer extends React.Component {
         this.changeTheme = this.changeTheme.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(this.props.authController);
+    }
+
     changeTheme(event) {
         this.props.dispatch(setThemeMode(event.target.checked === true ? 'dark' : 'light'));
     };
