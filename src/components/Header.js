@@ -8,10 +8,6 @@ import {rallyStyles} from "../Util/ThemeUtils";
 
 class Header extends React.Component {
 
-    onCity(e) {
-
-    }
-
     render() {
         const {classes} = this.props;
         return (

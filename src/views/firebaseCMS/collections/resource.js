@@ -44,12 +44,30 @@ const resourceSchema = buildSchema({
       title: "Postal Address",
       dataType: "string",
     },
-    price_ccoin: {
-      title: "Price (citizencoin)",
-      dataType: "number",
-      validation: {
-        required: false,
-        positive: true,
+    price: {
+      title: "Price",
+      dataType: "map",
+      validation: {required: false},
+      properties: {
+        price: {
+          title: "Price",
+          dataType: "string",
+        },
+        rate: {
+          title: "Rate",
+          dataType: "string" // per what
+        },
+        currency: {
+          title: "Currency",
+          dataType: "string",
+          config: {
+            enumValues: {
+              citizencoin: "CitizenCoin",
+              usd: "US Dollar",
+              vef: "Venezuelan Bolívar"
+            }
+          }
+        }
       },
     },
     resource_type: {
