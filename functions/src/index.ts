@@ -143,14 +143,14 @@ app.get("/rallies", async (req, res) => {
         return res.status(200).json(response);
 
     } catch (error) {
-        console.log("RALLY ERROR", error);
+        console.error("RALLY ERROR: " + error.message);
         return res.status(500).send(error);
     }
 });
 
 app.post("/syncUser", async (req, res, next) => {
     if (!req.body || !req.body.idToken) {
-        return res.status(500).send('invalid post');
+        return res.status(400).send('invalid post');
     }
 
     // console.log("POST DATA", req.body);
@@ -161,7 +161,8 @@ app.post("/syncUser", async (req, res, next) => {
         .then(async (decodedToken) => {
             const uid = decodedToken.uid;
             if (!uid) {
-                console.error("UID IS NUL!?!?" + JSON.stringify(decodedToken));
+                console.error("UID IS NULL: " + JSON.stringify(decodedToken));
+                return res.status(204).send('invalid uid');
             }
             let snapshot = await db.collection("users").doc(uid).get();
 
@@ -170,7 +171,7 @@ app.post("/syncUser", async (req, res, next) => {
                     if (req.body.authUser.providerData[i].phoneNumber) {
                         snapshot = await db.collection("users").where("phoneNumber", "==", req.body.authUser.providerData[i].phoneNumber).get();
                         if (snapshot.exists) {
-                            console.log("user by phone", snapshot.data().toJSON());
+                            console.log("user by phone", ...snapshot.data());
                             break;
                         } else {
                             console.log("no user by phone " + req.body.authUser.providerData[i].phoneNumber);
@@ -180,7 +181,7 @@ app.post("/syncUser", async (req, res, next) => {
                     if (req.body.authUser.providerData[i].email) {
                         snapshot = await db.collection("users").where("email", "==", req.body.authUser.providerData[i].email).get();
                         if (snapshot.exists) {
-                            console.log("user by email", snapshot.data().toJSON());
+                            console.log("user by email", ...snapshot.data());
                             break;
                         } else {
                             console.log("no user by email " + req.body.authUser.providerData[i].email);
@@ -190,7 +191,7 @@ app.post("/syncUser", async (req, res, next) => {
             }
 
             let firebaseUser =  (snapshot.exists) ?
-                snapshot.data()
+                {...snapshot.data()}
                 :
                 {
                     email:"",
@@ -224,7 +225,7 @@ app.post("/syncUser", async (req, res, next) => {
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
             await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
-            console.info("synced user: ", JSON.stringify(firebaseUser));
+            console.info("synced user: " + JSON.stringify(firebaseUser));
 
             return res.status(200).json(firebaseUser);
         })
