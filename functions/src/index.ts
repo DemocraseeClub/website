@@ -43,8 +43,12 @@ app.get("/user/:uid", async (req, res) => {
     }
 });
 
-// TODO: secure update of Badge roles like "contributor", ...
-app.post("/users/:role", async (req, res) => {
+/* TODO: secure update of Badge roles like "contributor", ...
+app.post("/user/:uid", async (req, res) => {
+
+}) */
+
+app.get("/users/:role", async (req, res) => {
     try {
         const usersSnapshot = await db
             .collection("users")
