@@ -174,8 +174,12 @@ app.get(apiPrefix + "/rallies", async (req, res) => {
 
 app.get(apiPrefix + "/resources/:resource_types", async (req, res, next) => {
     try {
-        const resourcesSnapshot = await db.collection("resources").get();
-        // TODO
+        const resourcesSnapshot = await
+            db.collection("resources")
+                .where('resource_type', '==', req.params.resource_types)
+                .get();
+
+
         console.log('filter by', req.params)
         const {docs} = resourcesSnapshot;
 

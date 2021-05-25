@@ -118,6 +118,9 @@ meetingSchema.onPreSave = ({values}) => {
             throw new Error("This value (Agenda JSON) must be a valid JSON");
     }
 
+    if (!values.created) values.created = new Date().getTime() / 1000;
+    values.modified = new Date().getTime() / 1000;
+
     return values;
 };
 

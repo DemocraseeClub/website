@@ -44,7 +44,7 @@ class RallyHome extends Component {
                 {!rally.meetings ? '' :
                 (rally.meetings.length === 0)
                     ?
-                    <span>No meetings yet. <u onClick={() =>  window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
+                    <span>No meetings yet. <u onClick={() => window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
                     :
                         <React.Fragment>
                             <Typography variant='subtitle1'>Meetings</Typography>
@@ -61,8 +61,6 @@ class RallyHome extends Component {
             </React.Fragment>
         );
     }
-
-
 }
 
 const mapStateToProps = (state) => {

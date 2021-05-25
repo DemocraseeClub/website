@@ -134,6 +134,14 @@ const citySchema = buildSchema({
   },
 });
 
+citySchema.onPreSave = ({ values }) => {
+
+  if (!values.created) values.created = new Date().getTime() / 1000;
+  values.modified = new Date().getTime() / 1000;
+
+  return values;
+};
+
 
 export default (userDB) => {
   return buildCollection({

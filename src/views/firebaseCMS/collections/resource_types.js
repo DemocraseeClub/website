@@ -14,6 +14,13 @@ const resourceTypeSchema = buildSchema({
   }
 });
 
+resourceTypeSchema.onPreSave = ({ values }) => {
+
+  if (!values.created) values.created = new Date().getTime() / 1000;
+  values.modified = new Date().getTime() / 1000;
+
+  return values;
+};
 
 export default (userDB) => {
   return buildCollection({

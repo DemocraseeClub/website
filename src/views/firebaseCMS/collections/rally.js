@@ -106,6 +106,8 @@ rallySchema.onPreSave = ({values}) => {
         if (typeof value !== "object")
             throw new Error("This value (Research JSON) must be a valid JSON");
     }
+    if (!values.created) values.created = new Date().getTime() / 1000;
+    values.modified = new Date().getTime() / 1000;
 
     return values;
 };
