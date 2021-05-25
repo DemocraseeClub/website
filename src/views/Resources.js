@@ -23,7 +23,7 @@ class Resources extends React.Component {
             selected: [],
             hasOfficeHours : false,
             loading: true,
-            resources: [],
+            resources: []
         };
     }
 
@@ -38,7 +38,6 @@ class Resources extends React.Component {
             .catch((err) => console.log(err));
 
         this.handleChange([])
-
     }
 
     redeem(email) {
@@ -105,7 +104,7 @@ class Resources extends React.Component {
         const {classes} = this.props;
 
         return (
-            <Box>
+            <React.Fragment>
                 <Grid container className={classes.sectionSecondary}>
                     <Grid item xs={10}>
                         <Typography variant={"h5"} className={classes.sectionTitle}>
@@ -132,21 +131,20 @@ class Resources extends React.Component {
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid container alignContent={'center'} justify={"space-around"} style={{margin:'20px 0'}} >
-                    <Grid item>
+                <Grid container alignContent={'center'} justify={"space-around"} style={{margin:'10px 5px'}}  >
+                    <Grid item style={{flexGrow:1, paddingRight:10}}>
                         <Select
                             id="resource_type_filter"
                             displayEmpty={true}
                             multiple={true}
+                            fullWidth={true}
                             value={this.state.selected}
                             onChange={(e) => this.handleChange(e.target.value)}
                             label="Resource Types"
-                            variant="outlined"
-                            fontSize={'small'}
                             renderValue={(selected) => {
                                 if (selected.length === 0) {
-                                    return <small style={{color: this.props.theme.palette.text.disabled}}>All Resource
-                                        Types</small>;
+                                    return <Typography variant={'body1'} style={{color: this.props.theme.palette.text.disabled}}>All Resource
+                                        Types</Typography>;
                                 }
                                 return selected.map(o => o.type).join(', ');
                             }}
@@ -162,6 +160,7 @@ class Resources extends React.Component {
                     <Grid item>
                         <FormControlLabel
                             value={false}
+                            style={{color: this.props.theme.palette.text.secondary}}
                             control={<Checkbox onChange={e => {
                                 this.setState({hasOfficeHours:e.target.checked}, () => this.handleChange(this.state.selected));
                             }}
@@ -203,14 +202,13 @@ class Resources extends React.Component {
                 </Grid>
                 <Grid
                     container
-                    spacing={10}
                     justify="space-around"
                     className={classes.cardsContainer}
                 >
                     {this.state.loading === true ?
                         [1, 2, 3, 4, 5, 6].map((item, key) => (
-                            <Grid item key={key}>
-                                <Card className={classes.card}>
+                            <Grid key={'rskeleton' + key} item xs={12} sm={6} md={4}>
+                                <Card className={this.props.classes.cardSkeleton}>
                                     <Grid
                                         container
                                         justify="space-between"
@@ -230,14 +228,15 @@ class Resources extends React.Component {
                         )) :
                         this.state.resources.map(
                             (item, key) => (
-                                <Grid item key={key}>
-                                    <Card className={classes.card}>
+                                <Grid key={'resource' + key} item xs={12} sm={6} md={4}>
+                                    <Card className={this.props.classes.card}>
                                         <CardMedia
                                             onError={(e) => {
                                                 e.target.onerror = null;
                                                 e.target.src = "images/citizencoin.png";
                                             }
                                             }
+                                            className={this.props.classes.cardMedia}
                                             component="img"
                                             alt={item.title}
                                             height="200"
@@ -287,7 +286,7 @@ class Resources extends React.Component {
                             )
                         )}
                 </Grid>
-            </Box>
+            </React.Fragment>
         );
     }
 }

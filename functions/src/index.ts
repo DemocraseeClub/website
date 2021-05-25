@@ -7,11 +7,10 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const express = require("express");
 const cors = require("cors"); // ({origin: true});
-const {auth} = require("firebase-admin");
-const {bucket} = require("firebase-functions/lib/providers/storage");
+// const {auth} = require("firebase-admin");
+// const {bucket} = require("firebase-functions/lib/providers/storage");
 
 const app = express();
-const apiPrefix = "";
 
 app.use(cors());
 
@@ -32,8 +31,10 @@ const db = admin.firestore();
 // var defaultAuth = defaultApp.auth();
 // var defaultDatabase = defaultApp.database();
 
-app.get(apiPrefix + "/user/:uid", async (req, res) => {
+// TODO: SECURE retrieval of read fields
+app.get("/user/:uid", async (req, res) => {
     try {
+
         const user = await admin.auth().getUser(req.params.uid);
 
         return res.status(200).json(user);
@@ -42,7 +43,8 @@ app.get(apiPrefix + "/user/:uid", async (req, res) => {
     }
 });
 
-app.get(apiPrefix + "/users/:role", async (req, res) => {
+// TODO: secure update of Badge roles like "contributor", ...
+app.post("/users/:role", async (req, res) => {
     try {
         const usersSnapshot = await db
             .collection("users")
@@ -61,37 +63,7 @@ app.get(apiPrefix + "/users/:role", async (req, res) => {
     }
 });
 
-app.get(apiPrefix + "/resources", async (req, res, next) => {
-    try {
-        const resourcesSnapshot = await db.collection("resources").get();
-        const {docs} = resourcesSnapshot;
-
-        const response = docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
-
-        for (let i = 0; i < response.length; i++) {
-            if (response[i]?.author) {
-                const author = await response[i].author.get();
-                response[i].author = {id: author.id, ...author.data()};
-            }
-
-            if (response[i]?.resource_type) {
-                const resource_type = await response[i].resource_type.get();
-                response[i].resource_type = {id: resource_type.id, ...resource_type.data()};
-            }
-
-        }
-
-
-        return res.status(200).json(response);
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-});
-
-app.get(apiPrefix + "/rallies", async (req, res) => {
+app.get("/rallies", async (req, res) => {
     try {
         const collection = db.collection("rallies");
         const query = (req.query.hasMeetings) ?
@@ -172,46 +144,7 @@ app.get(apiPrefix + "/rallies", async (req, res) => {
     }
 });
 
-app.get(apiPrefix + "/resources/:resource_types", async (req, res, next) => {
-    try {
-        const resourcesSnapshot = await
-            db.collection("resources")
-                .where('resource_type', '==', req.params.resource_types)
-                .get();
-
-
-        console.log('filter by', req.params)
-        const {docs} = resourcesSnapshot;
-
-        const response = docs.map(async (doc) => {
-
-            let obj = {
-                id: doc.id,
-                ...doc.data(),
-            }
-            if (obj?.author) {
-                const author = await obj.author.get();
-                obj.author = {id: author.id, ...author.data()};
-                // obj.author = ""
-            }
-
-            if (obj?.resource_type) {
-                const resource_type = await obj.resource_type.get();
-                obj.resource_type = {id: resource_type.id, ...resource_type.data()};
-            }
-            return obj;
-    });
-
-
-        return res.status(200).json(response.filter(res => res?.resource_type?.type === req.params.resource_types));
-    } catch (error) {
-        console.log("RESOURCE ERROR", error);
-        return res.status(500).send(error);
-    }
-});
-
-
-app.post(apiPrefix + "/syncUser", async (req, res, next) => {
+app.post("/syncUser", async (req, res, next) => {
     if (!req.body || !req.body.idToken) {
         return res.status(500).send('invalid post');
     }
@@ -326,39 +259,32 @@ exports.injectMeta = functions.https.onRequest((req, res, next) => {
     }
 });
 
-
 /*
-
-
-exports.createUser = functions.firestore
-    .document("users/{userId}")
-    .onCreate((snap, context) => {
-        let uid = context.auth?.uid || context.params.userId;
-        const authUser = snap.data();
-        const fbUser = getUser(uid);
-        let merged = Object.assign({}, fbUser, authUser);
-        //TODO: auto award promo citizencoin?
-        console.log("CREATING MERGED USER!!", context, merged);
-        db.doc("users/" + uid).set(merged);
-    });
-
-exports.updateUser = functions.firestore
-    .document("users/{userId}")
+TODO: programmatically add `created` and `modified` fields to EVERY document.
+ex. https://firebase.google.com/docs/functions/firestore-events
+// Listen for updates to any document.
+exports.onWriteDocs = functions.firestore
+    .document('users/{userId}')
     .onUpdate((change, context) => {
-        // TODO: verify no auth fields / scopes / permissions have changed
-    });
+      // Retrieve the current and previous value
+      const data = change.after.data();
+      const previousData = change.before.data();
 
-exports.deleteUser = functions.firestore
-    .document("users/{userId}")
-    .onDelete((change, context) => {
-        // TODO cleanup orphan records
-    });
+      // We'll only update if the name has changed.
+      // This is crucial to prevent infinite loops.
+      if (data.name == previousData.name) {
+        return null;
+      }
 
-//https://firebase.google.com/docs/auth/extend-with-functions
-exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
-    // ...
-});
-exports.sendByeEmail = functions.auth.user().onDelete((user) => {
-    // ...
-});
+      // Retrieve the current count of name changes
+      let count = data.name_change_count;
+      if (!count) {
+        count = 0;
+      }
+
+      // Then return a promise of a set operation to update the count
+      return change.after.ref.set({
+        name_change_count: count + 1
+      }, {merge: true});
+    });
 */

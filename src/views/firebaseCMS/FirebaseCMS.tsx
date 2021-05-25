@@ -22,10 +22,8 @@ import buildStateCollection from "./collections/state";
 import buildStakeholderCollection from "./collections/stakeholder";
 import buildRallyCollection from "./collections/rally";
 import buildPartyCollection from "./collections/party";
-import buildPageCollection from "./collections/page";
 import buildOfficialCollection from "./collections/official";
 import buildMeetingTypeCollection from "./collections/meeting_types";
-import buildInviteCollection from "./collections/invite";
 import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
@@ -131,21 +129,20 @@ export function FirebaseCMS(props: any) {
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
         console.log('got context user: ', user)
+        // TODO: get Firebase user.roles to render different collections for `admin` vs. `board` vs...
         if (user && user !== null && user.emailVerified === true) {
             return {
                 collections: [
                     buildUserCollection(user),
                     buildResourceCollection(user),
+                    buildRallyCollection(user),
+                    buildMeetingTypeCollection(user),
                     buildResourceTypeCollection(user),
                     buildTopicCollection(user),
                     buildStateCollection(user),
                     buildStakeholderCollection(user),
-                    buildRallyCollection(user),
                     buildPartyCollection(user),
-                    buildPageCollection(user),
                     buildOfficialCollection(user),
-                    buildMeetingTypeCollection(user),
-                    buildInviteCollection(user),
                     buildCityCollection(user),
                     buildActionPlanCollection(user),
                     wiseDemoCollection
@@ -166,7 +163,7 @@ export function FirebaseCMS(props: any) {
         console.log("Allowing access to", user?.toJSON());
         if (user) {
             // console.log(state.auth, "auth")
-            // if (pathname === "/login") return (window as any).location.pathname = "/rallies"; // TODO go to user profile
+            // if (pathname === "/login") return (window as any).location.pathname = "/rallies";
 
             // post user.providerData to /api/syncUser
             let authUser = user.toJSON();
@@ -180,7 +177,7 @@ export function FirebaseCMS(props: any) {
                     return data;
                 });
 
-            // TODO: set mergedUser redux store or ideally FireCMS authContext()
+            // TODO: set mergedUser redux store or ideally FireCMS authContext() - awaiting answer from https://github.com/Camberi/firecms/issues/72
             authController.setAuthResult(mergedUser);
 
             /*

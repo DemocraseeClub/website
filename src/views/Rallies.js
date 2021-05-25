@@ -100,7 +100,7 @@ class Rallies extends React.Component {
                     {loading === true ? [1, 2, 3, 4, 5, 6].map(
                         (num, key) => (
                             <Grid key={'rskeleton' + key} item xs={12} sm={6} md={4}>
-                                <Card style={{height: "100%"}}>
+                                <Card className={this.props.classes.cardSkeleton}>
                                     <CardActionArea>
                                         <Skeleton variant="rect" width="100%" height={200}/>
                                         <CardContent>
@@ -125,7 +125,7 @@ class Rallies extends React.Component {
                         : this.state.rallies.map(
                             (item, key) => (
                                 <Grid key={'rally' + key} item xs={12} sm={6} md={4}>
-                                    <Card style={{height: "100%"}}>
+                                    <Card className={this.props.classes.card}>
                                         <CardActionArea>
                                             <NavLink to={`/rally/${item.id}`}>
                                                 <CardMedia
@@ -134,6 +134,7 @@ class Rallies extends React.Component {
                                                         e.target.src = "images/citizencoin.png";
                                                     }
                                                     }
+                                                    className={this.props.classes.cardMedia}
                                                     component="img"
                                                     alt={item.title}
                                                     height="200"
