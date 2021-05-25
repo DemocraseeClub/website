@@ -272,7 +272,7 @@ class Resources extends React.Component {
                                                 />
                                             </Typography>
                                             <Typography variant={"body2"}
-                                                        className={classes.cardSubtitle}> with <em>{item.author ? item.author.realName : ''}</em>
+                                                        className={classes.cardSubtitle}> with <em>{item.author ? item.author.userName : ''}</em>
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
