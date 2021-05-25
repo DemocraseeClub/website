@@ -190,6 +190,8 @@ app.post("/syncUser", async (req, res, next) => {
                 }
             }
 
+            const now = admin.firestore.FieldValue.serverTimestamp();
+
             let firebaseUser =  (snapshot.exists) ?
                 {...snapshot.data()}
                 :
@@ -203,9 +205,11 @@ app.post("/syncUser", async (req, res, next) => {
                     coverPhoto: "",
                     roles: [],
                     providerData :{},
-                    created: admin.firestore.FieldValue.serverTimestamp(),
-                    modified: admin.firestore.FieldValue.serverTimestamp()
+                    created: now,
+                    modified: now
                 }
+
+            firebaseUser.lastSync = now;
 
             for (let i = 0; i < req.body.authUser.providerData.length; i++) {
                 let data = req.body.authUser.providerData[i]; // TODO: Fix so we can validate / trust this post data before merging
@@ -225,9 +229,16 @@ app.post("/syncUser", async (req, res, next) => {
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
             await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
-            console.info("synced user: " + JSON.stringify(firebaseUser));
+            const doc = await db.collection('users').doc(uid).get();
+            if (!doc.exists) {
+                console.log('Failed to sync doc ' + JSON.stringify(firebaseUser));
+                return res.status(500).json('Failed to sync your account profiles');
+            }
 
-            return res.status(200).json(firebaseUser);
+            console.info("synced user: " + JSON.stringify(doc.data()));
+            return res.status(200).json(doc.data());
+
+
         })
         .catch((error) => {
             return res.status(500).send(error);

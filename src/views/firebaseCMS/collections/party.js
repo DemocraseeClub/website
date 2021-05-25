@@ -33,15 +33,15 @@ const partySchema = buildSchema({
 });
 
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "parties",
     schema: partySchema,
     name: "Parties",
     pagination: true,
      permissions: ({ user, entity }) => {
-   
-       if(userDB?.admin) {
+
+       if(fbUser?.roles.includes('admin')) {
          return {
            edit: true,
            create: true,

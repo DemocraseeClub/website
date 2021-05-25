@@ -34,22 +34,22 @@ const stateSchema = buildSchema({
 });
 
 
-export default (userDB) => {
-  
+export default (userDB, fbUser) => {
+
   return buildCollection({
     relativePath: "states",
     schema: stateSchema,
     name: "States",
     pagination: true,
     permissions: ({ user, entity }) => {
-      if (userDB?.admin) {
+      if(fbUser && fbUser.roles && fbUser.roles.includes('editor')) {
         return {
           edit: true,
           create: true,
           delete: true,
         };
       } else {
-     
+
         return {
           edit: false,
           create: false,

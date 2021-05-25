@@ -14,16 +14,8 @@ const meetingTypeSchema = buildSchema({
   },
 });
 
-meetingTypeSchema.onPreSave = ({ values }) => {
 
-  if (!values.created) values.created = new Date().getTime() / 1000;
-  values.modified = new Date().getTime() / 1000;
-
-  return values;
-};
-
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "meeting_types",
     schema: meetingTypeSchema,
@@ -31,7 +23,7 @@ export default (userDB) => {
     pagination: true,
      permissions: ({ user, entity }) => {
 
-       if(userDB?.admin) {
+       if(fbUser?.roles.includes('admin')) {
          return {
            edit: true,
            create: true,

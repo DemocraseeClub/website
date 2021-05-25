@@ -134,23 +134,14 @@ const citySchema = buildSchema({
   },
 });
 
-citySchema.onPreSave = ({ values }) => {
-
-  if (!values.created) values.created = new Date().getTime() / 1000;
-  values.modified = new Date().getTime() / 1000;
-
-  return values;
-};
-
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "cities",
     schema: citySchema,
     name: "Cities",
     pagination: true,
     permissions: ({ user, entity }) => {
-       if(userDB?.admin) {
+       if(fbUser?.roles.indexOf('admin') > -1) {
          return {
            edit: true, create: true, delete: true
          };

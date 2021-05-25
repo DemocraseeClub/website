@@ -39,25 +39,17 @@ const subscriptionSchema = buildSchema({
   },
 });
 
-
-subscriptionSchema.onPreSave = ({ values }) => {
-
-    if (!values.created) values.created = new Date().getTime() / 1000;
-    values.modified = new Date().getTime() / 1000;
-
-    return values;
-};
-
-
 export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "subscriptions",
     schema: subscriptionSchema,
-    name: "subscriptions",
+    name: "Subscriptions",
     pagination: true,
      permissions: ({ user, entity }) => {
-       console.log("SUBSCRIPTION", fbUser)
-       if(fbUser && fbUser.roles && fbUser.roles.indexOf('admin') > -1) {
+       if (entity) {
+            // TODO is subscriber or rally / meeting author!!!
+       }
+       if(fbUser && fbUser.roles && fbUser.roles.includes('editor')) {
          return {
            edit: true,
            create: true,

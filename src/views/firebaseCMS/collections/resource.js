@@ -117,25 +117,16 @@ const resourceSchema = buildSchema({
   },
 });
 
-
-resourceSchema.onPreSave = ({ values }) => {
-
-  if (!values.created) values.created = new Date().getTime() / 1000;
-  values.modified = new Date().getTime() / 1000;
-
-  return values;
-};
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
 
   return buildCollection({
      relativePath: "resources",
      schema: resourceSchema,
      name: "Resources",
      pagination: true,
-     permissions: async ({ user, entity }) => {
+     permissions: ({ user, entity }) => {
 
-       if(userDB?.admin) {
+       if(fbUser?.roles.includes('admin')) {
          return {edit: true, create: true, delete: true};
        } else {
          return {edit: false, create: false, delete: false};

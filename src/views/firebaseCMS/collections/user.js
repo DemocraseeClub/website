@@ -87,6 +87,7 @@ const userSchema = buildSchema({
   }
 });
 
+/*
 userSchema.onPreSave = ({ values }) => {
   if (values.topic_def_json?.trim()) {
     const value = JSON.parse(values.topic_def_json.trim());
@@ -98,19 +99,17 @@ userSchema.onPreSave = ({ values }) => {
         throw new Error("This value (Topic Definitions JSON) must be a valid JSON");
   }
 
-  if (!values.created) values.created = new Date().getTime() / 1000;
-  values.modified = new Date().getTime() / 1000;
-
   return values;
 };
+ */
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "users",
     schema: userSchema,
     name: "Users",
     permissions: ({ user, entity }) => {
-      if (userDB?.admin) {
+      if(fbUser?.roles.includes('admin')) {
         return {
           edit: true,
           create: true,
