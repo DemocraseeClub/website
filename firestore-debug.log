@@ -5,1604 +5,1004 @@ If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment
 
 Dev App Server is now running.
 
-May 24, 2021 8:51:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:18 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:13 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:21:19 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:21:19 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:21:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:21:47 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 8:51:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:51:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:52:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:52:18 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 8:52:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:53:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:54:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:57 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:21:57 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:19 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:32 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:55:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:56:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:56:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:56:45 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 8:57:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:58:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 8:59:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:00:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:14 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:38 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:51 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:01:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:01:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:02:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:02:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:02:52 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 9:03:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:04:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:23 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:05:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:05:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected HTTP/2 connection.
-May 24, 2021 9:06:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:50 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:52 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:22:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:06:50 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:22:53 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:03 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:03 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:07:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:07:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected HTTP/2 connection.
-May 24, 2021 9:07:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:07:52 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-Authorization:Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiZWxpQHRheWxvcm1hZGV0cmFmZmljLmNvbSIsInBpY3R1cmUiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWwiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF1dGhfdGltZSI6MTYyMTkxNTY2OCwidXNlcl9pZCI6Ikw5WW1JSXpQbkE3VXIyTnZDeHhxdnJlTGdNaTQiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImVsaUB0YXlsb3JtYWRldHJhZmZpYy5jb20iXSwiZ29vZ2xlLmNvbSI6WyI5NTY3NzQ1MTAxODYwNDEyMzk2NDQ5NzYyMDk2NzMzMTYxODg4MzgzIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9LCJpYXQiOjE2MjE5MTU2NjgsImV4cCI6MTYyMTkxOTI2OCwiYXVkIjoiZGVtb2NyYXNlZWNsdWIiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGVtb2NyYXNlZWNsdWIiLCJzdWIiOiJMOVltSUl6UG5BN1VyMk52Q3h4cXZyZUxnTWk0In0.
-
-May 24, 2021 9:07:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:07:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:07:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:07:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:19 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-Authorization:Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiZWxpQHRheWxvcm1hZGV0cmFmZmljLmNvbSIsInBpY3R1cmUiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWwiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF1dGhfdGltZSI6MTYyMTkxNTY2OCwidXNlcl9pZCI6Ikw5WW1JSXpQbkE3VXIyTnZDeHhxdnJlTGdNaTQiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImVsaUB0YXlsb3JtYWRldHJhZmZpYy5jb20iXSwiZ29vZ2xlLmNvbSI6WyI5NTY3NzQ1MTAxODYwNDEyMzk2NDQ5NzYyMDk2NzMzMTYxODg4MzgzIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9LCJpYXQiOjE2MjE5MTU2NjgsImV4cCI6MTYyMTkxOTI2OCwiYXVkIjoiZGVtb2NyYXNlZWNsdWIiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGVtb2NyYXNlZWNsdWIiLCJzdWIiOiJMOVltSUl6UG5BN1VyMk52Q3h4cXZyZUxnTWk0In0.
-
-May 24, 2021 9:08:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:08:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:09:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:09:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:09:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:09:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:09:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:09:58 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected HTTP/2 connection.
-May 24, 2021 9:10:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:00 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-Authorization:Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiZWxpQHRheWxvcm1hZGV0cmFmZmljLmNvbSIsInBpY3R1cmUiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWwiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF1dGhfdGltZSI6MTYyMTkxNTc5OCwidXNlcl9pZCI6Ikw5WW1JSXpQbkE3VXIyTnZDeHhxdnJlTGdNaTQiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImVsaUB0YXlsb3JtYWRldHJhZmZpYy5jb20iXSwiZ29vZ2xlLmNvbSI6WyI5NTY3NzQ1MTAxODYwNDEyMzk2NDQ5NzYyMDk2NzMzMTYxODg4MzgzIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9LCJpYXQiOjE2MjE5MTU3OTgsImV4cCI6MTYyMTkxOTM5OCwiYXVkIjoiZGVtb2NyYXNlZWNsdWIiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGVtb2NyYXNlZWNsdWIiLCJzdWIiOiJMOVltSUl6UG5BN1VyMk52Q3h4cXZyZUxnTWk0In0.
-
-May 24, 2021 9:10:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:00 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:01 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:01 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:17 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-Authorization:Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiZWxpQHRheWxvcm1hZGV0cmFmZmljLmNvbSIsInBpY3R1cmUiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWwiOiJlbGlAdGF5bG9ybWFkZXRyYWZmaWMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF1dGhfdGltZSI6MTYyMTkxNTc5OCwidXNlcl9pZCI6Ikw5WW1JSXpQbkE3VXIyTnZDeHhxdnJlTGdNaTQiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImVsaUB0YXlsb3JtYWRldHJhZmZpYy5jb20iXSwiZ29vZ2xlLmNvbSI6WyI5NTY3NzQ1MTAxODYwNDEyMzk2NDQ5NzYyMDk2NzMzMTYxODg4MzgzIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9LCJpYXQiOjE2MjE5MTU3OTgsImV4cCI6MTYyMTkxOTM5OCwiYXVkIjoiZGVtb2NyYXNlZWNsdWIiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGVtb2NyYXNlZWNsdWIiLCJzdWIiOiJMOVltSUl6UG5BN1VyMk52Q3h4cXZyZUxnTWk0In0.
-
-May 24, 2021 9:10:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:23:23 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:10:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:11:07 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:11:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:28 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:11:58 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:23:28 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:11:58 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:23:31 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:31 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:32 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:32 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:32 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:32 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:32 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:33 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:33 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:33 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:33 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:56 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:23:56 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:58 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:58 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:24:58 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:24:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:10 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:12 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:12 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:17 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:17 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:25:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:03 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:03 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:26:03 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:08 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:08 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:12 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:12 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:26:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:27:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:27:14 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:12:07 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:27:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:28:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:29:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:30:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:31:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:31:04 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:13:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:31:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:01 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:33 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:32:01 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:01 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:01 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:01 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:14:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:06 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:06 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:32:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:32:39 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:39 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:32:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:33:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:33:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:15:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:16:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:16:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:16:43 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:33:40 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:17:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:18:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:18:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:19:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:20:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:21:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:22:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:34:55 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:55 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:58 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:34:58 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:05 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:23:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:07 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:24:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:08 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:24:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:35:08 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:24:50 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:10 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:10 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:15 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:16 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:16 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:35:46 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:36:16 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:36:16 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:25:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:36:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:26:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:08 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:27:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:37:09 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:12 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:37:12 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:37:13 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:37:13 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:37:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:37:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:37:45 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:28:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:45 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:29:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:29:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:37:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:29:37 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:38:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:38:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:38:47 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:30:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:39:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:31:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:40:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:32:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:33:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:33:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:34:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:35:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:36:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:41:20 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:37:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:41:47 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:41:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:38 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:41:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:51 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:41:51 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:21 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:34 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:37 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:37 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:56 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:56 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:42:56 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
+Content-Type:text/plain
+X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
+
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:26 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:29 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:43:29 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:44:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:44:29 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:44:29 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:45:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:46:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:46:36 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:36 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:38:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:40 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:46:59 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:46:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:39:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:47:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:40:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:47:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:40:17 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:47:59 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:40:57 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:48:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:41:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:49:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:27 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:50:41 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:42:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:50:41 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:37 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:50:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:51:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:51:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:51:48 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:51:48 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:42:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:18 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:52:00 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:43:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:43:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:04 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:52:20 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:20 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:52:29 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:52:29 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:53:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+May 25, 2021 12:53:11 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:11 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:44:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:14 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:53:23 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:23 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:53:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:45:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:24 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:03 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+May 25, 2021 12:54:24 AM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
 INFO: channel closed
-May 24, 2021 9:46:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:11 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:54:30 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:46:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:30 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:31 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:46:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:12 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:12 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
+May 25, 2021 12:54:44 AM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
+WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.6.2
 Content-Type:text/plain
 X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
 
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:54:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:47:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:00 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:48:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:10 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:10 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:02 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:03 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:03 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:06 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:06 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:49:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:50:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:50:27 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 9:50:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:51:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:52:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:52:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:52:43 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 9:53:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:54:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:55:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:56:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:57:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:58:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 9:59:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:00:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:01:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:02:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:03:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:04:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:05:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:06:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:07:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:08:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:09:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:11:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:12:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:13:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:14:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:15:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:16:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:17:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:18:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:19:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:20:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:21:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:22:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:23:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:24:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:25:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:26:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:27:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:28:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:29:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:49 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:30:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:50 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:30:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:47 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:31:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:31:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:32:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:32:54 PM io.netty.channel.DefaultChannelPipeline onUnhandledInboundException
-WARNING: An exceptionCaught() event was fired, and it reached at the tail of the pipeline. It usually means the last handler in the pipeline did not handle the exception.
-java.nio.channels.ClosedChannelException
-	at io.netty.channel.AbstractChannel$AbstractUnsafe.newClosedChannelException(AbstractChannel.java:957)
-	at io.netty.channel.AbstractChannel$AbstractUnsafe.write(AbstractChannel.java:865)
-	at io.netty.channel.DefaultChannelPipeline$HeadContext.write(DefaultChannelPipeline.java:1367)
-	at io.netty.channel.AbstractChannelHandlerContext.invokeWrite0(AbstractChannelHandlerContext.java:717)
-	at io.netty.channel.AbstractChannelHandlerContext.invokeWrite(AbstractChannelHandlerContext.java:709)
-	at io.netty.channel.AbstractChannelHandlerContext$WriteTask.run(AbstractChannelHandlerContext.java:1069)
-	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
-	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472)
-	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:497)
-	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
-	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:832)
-
-May 24, 2021 10:32:54 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:32:54 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:33:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:05 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:06 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:14 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:34:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:34:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:30 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:35:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:24 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:36:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:36:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:14 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:37:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:38:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:38:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:38:43 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 10:39:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:39:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:39:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:39:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected HTTP/2 connection.
-May 24, 2021 10:39:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:40:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:22 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:41:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:41:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:27 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
-INFO: channel closed
-May 24, 2021 10:42:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM com.google.net.webchannel.server.common.CorsFilter populateCustomHeaders
-WARNING: Invalid $httpHeaders: X-Goog-Api-Client:gl-js/ fire/8.4.2
-Content-Type:text/plain
-X-Firebase-GMPID:1:1051506392090:web:721f69ed2b5afde2a4a5a3
-
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
-INFO: Detected non-HTTP/2 connection.
-May 24, 2021 10:42:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+May 25, 2021 12:55:09 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.

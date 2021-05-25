@@ -120,6 +120,7 @@ function App(props) {
                                 <Route exact path="/rally/:rid/meeting/:mid" component={MeetingHome}/>
                                 <Route exact path="/rally/templates" component={RallyTemplates}/>
                                 <Route exact path="/rally/:rid" component={RallyHome}/>
+                                <Route exact path="/office-hours/:uid" component={Home}/>
                                 <Route path="/about"><About/></Route>
                                 <Route path="/ethics"><Ethics/></Route>
                                 <Route path="/users"><Ethics/></Route>
