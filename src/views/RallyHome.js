@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {entityData} from '../redux/entityDataReducer';
+import {fbRally} from '../redux/entityDataReducer';
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
@@ -27,10 +27,7 @@ class RallyHome extends Component {
     }
 
     refresh() {
-        // TODO: connect to Firebase DB (https://github.com/DemocraseeClub/website/issues/5)
-        let url = '/json/' + this.props.match.params.rid + '/index.json';
-        console.log(url);
-        return this.props.dispatch(entityData(url));
+        this.props.dispatch(fbRally(this.props.match.params.rid))
     }
 
     render() {
@@ -53,7 +50,7 @@ class RallyHome extends Component {
                             <Typography variant='subtitle1'>Meetings</Typography>
                             {rally.meetings.map((r, i) => {
                                 return <Grid item key={r.title + '-' + i}>
-                                    <NavLink to={r.link}>
+                                    <NavLink to={`/rally/${rally.id}/meeting/${r.id}`}>
                                         <Typography variant={'h4'}>{r.title}</Typography>
                                     </NavLink>
                                 </Grid>

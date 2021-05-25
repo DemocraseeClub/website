@@ -1,4 +1,5 @@
 import API from '../Util/API';
+import firebase from "firebase";
 
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
 const ITEM_DATA_FAILURE = 'entity:ITEM_DATA_FAILURE';
@@ -15,12 +16,12 @@ export const entityDataSuccess = apiData => ({
   payload: {...apiData}
 });
 
-const entityDataStarted = (url) => ({
+export const entityDataStarted = (url) => ({
   type: ITEM_DATA_STARTED,
   url: url
 });
 
-const entityDataFailure = error => ({
+export const entityDataFailure = error => ({
   type: ITEM_DATA_FAILURE,
   error: error
 });
@@ -52,6 +53,33 @@ export const countDown = (index) => ({
   type: COUNTDOWN_TIMER,
   index:index
 });
+
+export const fbRally = (id) => {
+  return async (dispatch, getState) => {
+
+    const state = getState();
+    if (state.entity.loading === true) return false;
+    dispatch(entityDataStarted(id));
+
+    const roomRef = firebase.firestore().collection("rallies").doc(id)
+    let data = await roomRef.get();
+    if (data.exists) {
+      let rally = data.data();
+      rally.id = data.id;
+      const snapshots = await firebase.firestore().collection(`rallies/${id}/meetings`).get()
+      rally.meetings = await Promise.all(snapshots.docs.map(async (doc) => {
+          return {id:doc.id, ...doc.data()};
+      }))
+      // if (data.type === 'meeting') {
+        // dispatch(initCounter());
+      // }
+      console.log(rally);
+      dispatch(entityDataSuccess(rally));
+    } else {
+      dispatch(entityDataFailure('invalid rally id'));
+    }
+  };
+};
 
 export const entityData = (url) => {
   return (dispatch, getState) => {
