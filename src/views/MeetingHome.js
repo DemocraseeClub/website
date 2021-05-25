@@ -29,7 +29,7 @@ class MeetingHome extends Component {
         if (this.props.location.pathname !== prevProps.location.pathname || this.props.location.search !== prevProps.location.search) {
             this.refresh();
         } else if (!prevProps.entity.apiData && this.props.entity.apiData) {
-            if (this.props.entity.apiData.hosts.length === 0) {
+            if (this.props.entity.apiData.moderators.length === 0) {
                 this.setState({editMode:true})
             }
         }

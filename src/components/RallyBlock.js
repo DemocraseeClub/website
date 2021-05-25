@@ -42,6 +42,7 @@ class RallyHome extends Component {
 
     render() {
         const {classes, rally} = this.props;
+        const meeting = rally.meetings.length > 0 ? rally.meetings[0] : false;
 
         let tags = ['wisedemo', 'targets', 'topics', 'stackholders'].reduce((acc, val) => {
             if (rally[val]) {
@@ -52,12 +53,15 @@ class RallyHome extends Component {
         if (tags.length > 0) {
             tags = [<div key={'tags'}>{tags.join(' ● ')}</div>]
         }
-        if (rally.type === 'meeting') {
+        if (document.location.pathname.indexOf('/meetings/') > -1) {
             let href = document.location.pathname.split('/').slice(0, 3).join('/');
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = (rally.speakers) ? rally.hosts.concat(rally.speakers) : rally.hosts;
+        let profiles = [];
+        if (meeting !== false) {
+            profiles = (meeting.speakers) ? meeting.moderators.concat(meeting.speakers) : meeting.moderators;
+        }
         while(profiles.length < 7) {
             profiles.push({name:'Apply to Speak', icon:'+'})
         }
@@ -93,17 +97,17 @@ class RallyHome extends Component {
                             allowedAttributes={Config.allowedAttributes}
                             html={rally.desc} /> : ''}
 
-                        {!rally.start || rally.start === 'tomorrow' ?
+                        {!meeting || !meeting.start || meeting.start === 'tomorrow' ?
                             <Box mt={4}>
                                 <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
                                 <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe to Schedule</Button>
                             </Box>
                             :
-                            <Typography variant='h6' >{rally.start}</Typography>
+                            <Typography variant='h6' >{meeting.start}</Typography>
                         }
                         </Box>
 
-                        {rally.start && new Date(rally.start) > new Date().getTime() ?
+                        {meeting.start && new Date(meeting.start) > new Date().getTime() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
@@ -111,7 +115,7 @@ class RallyHome extends Component {
                                         {r.img ? <Avatar alt={r.name} src={r.img} />
                                         :
                                         <Avatar>{r.icon || r.name}</Avatar>}
-ƒ                                    </ListItemIcon>
+                                    </ListItemIcon>
                                     <ListItemText primary={r.name} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
