@@ -63,6 +63,16 @@ const resourceSchema = buildSchema({
       dataType: "map",
       validation: {required: false},
       properties: {
+        link: {
+          title: "Link",
+          dataType: "string",
+          validation: {
+            url: true,
+          },
+          config: {
+            url: true,
+          },
+        },
         date_start: {
           title: "Date Start",
           dataType: "timestamp",
@@ -76,6 +86,7 @@ const resourceSchema = buildSchema({
           dataType: "string",
           config: {
             enumValues: {
+              none: "Does not repeat",
               daily: "Daily",
               weekly: "Weekly on %dayofweek%",
               monthly: "Monthly on %weekofmonth%",

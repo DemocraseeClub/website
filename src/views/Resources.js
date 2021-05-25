@@ -13,6 +13,7 @@ import { rallyStyles } from "../Util/ThemeUtils";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
 import Skeleton from "@material-ui/lab/Skeleton";
+import OfficeHours from "../components/OfficeHours";
 
 class Resources extends React.Component {
   constructor(p) {
@@ -72,6 +73,11 @@ class Resources extends React.Component {
           const resource_type = await obj.resource_type.get();
           obj.resource_type = {id: resource_type.id, ...resource_type.data()};
         }
+
+        /* if (obj?.office_hours) {
+          if (obj.office_hours.start_date) obj.office_hours.start_date = doc.office_hours.start_date.toDate();
+          if (obj.office_hours.end_date) obj.office_hours.end_date = doc.office_hours.end_date.toDate();
+        } */
 
         if (obj.image) {
           try {
@@ -271,6 +277,7 @@ class Resources extends React.Component {
                         </Typography>
                         <Typography variant={"body2"} className={classes.cardSubtitle}> with <em>{item.author ? item.author.realName : ''}</em>
                         </Typography>
+                        {item.office_hours && <OfficeHours office_hours={item.office_hours} author={item.author} /> }
                   </Card>
                 </Grid>
               )
