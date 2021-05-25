@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class About extends React.Component {
   scrollTo(t) {
     document
-      .getElementById("teamstory-" + t.userName)
+      .getElementById("teamstory-" + t.displayName)
       .scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
@@ -86,11 +86,11 @@ class About extends React.Component {
                 onClick={(e) => this.scrollTo(t)}
               >
                 <Avatar
-                  alt={t.userName}
+                  alt={t.displayName}
                   src={t.picture}
                   className={this.props.classes.large}
                 />
-                <p>{t.userName}</p>
+                <p>{t.displayName}</p>
               </Grid>
             ))}
           </Grid>
@@ -98,12 +98,12 @@ class About extends React.Component {
           {team.map((t) => (
             <Paper
               key={t.key}
-              id={"teamstory-" + t.userName}
+              id={"teamstory-" + t.displayName}
               style={{ padding: 10, margin: "20px 10px" }}
             >
               <Grid container>
                 <Grid item xs={1}>
-                  <Avatar alt={t.userName} src={t.picture} />
+                  <Avatar alt={t.displayName} src={t.picture} />
                 </Grid>
                 <Grid
                   item

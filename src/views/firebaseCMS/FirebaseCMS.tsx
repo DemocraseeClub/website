@@ -54,14 +54,6 @@ interface FbUser {
     roles: Array<string>
 }
 
-/*
-async function getUserData(uid: string) {
-    const roomRef = firebase.firestore().collection("users").doc(uid)
-    const data = await roomRef.get();
-    return (data.exists) ? data.data() : {};
-}
- */
-
 async function postData(url = '', data = {}) {
     const response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -78,7 +70,6 @@ async function postData(url = '', data = {}) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
-
 
 export function withCmsHooks(PassedComponent: any) {
     return function WrappedComponent(props: object) {
@@ -157,7 +148,7 @@ export function FirebaseCMS(props: any) {
                 navItems.push(buildUserCollection(user, fbUser))
             }
         }
-
+        // console.log(navItems);
         return {collections: navItems};
     };
 
@@ -169,7 +160,7 @@ export function FirebaseCMS(props: any) {
             let idToken = await user.getIdToken(true).then(idToken => idToken);
             console.log("sync with " + idToken, authUser);
 
-            let mergedUser = await postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
+            await postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
                 .then(data => {
                     if (!data) {
                         console.error("invalid sync request")
@@ -179,21 +170,13 @@ export function FirebaseCMS(props: any) {
                         console.log('setting fbUser', data);
                         setFbUser(data);
                     }
+                    // TODO: set mergedUser redux store or ideally FireCMS authContext() - awaiting answer from https://github.com/Camberi/firecms/issues/72
+                    // authController.setAuthResult(mergedUser);
                     return data
                 })
                 .catch(e => console.error(e))
 
             return true;
-
-            // TODO: set mergedUser redux store or ideally FireCMS authContext() - awaiting answer from https://github.com/Camberi/firecms/issues/72
-            // authController.setAuthResult(mergedUser);
-
-            /*
-            // listen for role changes from other providers on settings / profile  pages
-            firebase.auth().onAuthStateChanged(function(user, fbUser) {
-             window.user = user; // user is undefined if no user signed in
-            });
-             */
         }
         return false;
     };
@@ -215,10 +198,9 @@ export function FirebaseCMS(props: any) {
                 signInOptions={[
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                    firebase.auth.PhoneAuthProvider.PROVIDER_ID
                 ]}
                 allowSkipLogin={false}
-                fbUser={fbUser}
                 navigation={navigation}
                 firebaseConfig={firebaseConfig}
                 {...others}

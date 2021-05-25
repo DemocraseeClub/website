@@ -8,7 +8,7 @@ const subscriptionSchema = buildSchema({
           dataType: "reference",
           validation: {required: true},
           collectionPath: "users",
-          previewProperties: ["userName"],
+          previewProperties: ["displayName"],
       },
       rally: {
           title: "Rally",

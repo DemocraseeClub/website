@@ -8,7 +8,7 @@ const actionPlanSchema = buildSchema({
             dataType: "reference",
             validation: {required: true},
             collectionPath: "users",
-            previewProperties: ["userName"]
+            previewProperties: ["displayName"]
         },
         title: {
             title: "Tilte",
@@ -48,7 +48,7 @@ const actionPlanSchema = buildSchema({
             of: {
                 dataType: "reference",
                 collectionPath: "users",
-                previewProperties: ["userName"]
+                previewProperties: ["displayName"]
             }
         },
         proArgument: {

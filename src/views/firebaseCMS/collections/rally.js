@@ -10,7 +10,7 @@ export const rallySchema = buildSchema({
             dataType: "reference",
             validation: {required: true},
             collectionPath: "users",
-            previewProperties: ["userName"]
+            previewProperties: ["displayName"]
         },
         title: {
             title: "Title",

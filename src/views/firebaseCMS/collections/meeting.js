@@ -8,7 +8,7 @@ const meetingSchema = buildSchema({
             dataType: "reference",
             validation: {required: true},
             collectionPath: "users",
-            previewProperties: ["userName"]
+            previewProperties: ["displayName"]
         },
         title: {
             title: "Title",
@@ -38,7 +38,7 @@ const meetingSchema = buildSchema({
             of: {
                 dataType: "reference",
                 collectionPath: "users",
-                previewProperties: ["userName"],
+                previewProperties: ["displayName"],
             },
         },
         moderators: {
@@ -51,7 +51,7 @@ const meetingSchema = buildSchema({
             of: {
                 dataType: "reference",
                 collectionPath: "users",
-                previewProperties: ["userName"],
+                previewProperties: ["displayName"],
             },
         },
         postal_address: {
