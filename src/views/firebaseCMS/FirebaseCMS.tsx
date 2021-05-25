@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import {
     Authenticator,
@@ -12,8 +12,9 @@ import {
 import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
-import {useSelector} from 'react-redux'
+// import {useSelector} from 'react-redux'
 
+import buildSubscriptionCollection from "./collections/subscriptions";
 import buildUserCollection from "./collections/user";
 import buildResourceCollection from "./collections/resource";
 import buildResourceTypeCollection from "./collections/resource_types";
@@ -28,7 +29,7 @@ import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
 
-import {useLocation} from "react-router-dom";
+// import {useLocation} from "react-router-dom";
 
 import {Box, CircularProgress} from "@material-ui/core";
 
@@ -87,11 +88,12 @@ export function withCmsHooks(PassedComponent: any) {
 
 export function FirebaseCMS(props: any) {
 
-    // const [userDB] = useState<firebase.firestore.DocumentData>();
-    const {pathname} = useLocation();
+    // const [fbUser, setFbUser] = useState<firebase.firestore.DocumentData>();
+    const [fbUser, setFbUser] = useState<Object>();
+    // const {pathname} = useLocation();
     // let history = useHistory();
-    const authController = useAuthContext();
-    const state: any = useSelector(state => state) //global state
+    // const authController = useAuthContext();
+    // const state: any = useSelector(state => state) //global state
 
     const [
         firebaseConfigInitialized,
@@ -105,7 +107,7 @@ export function FirebaseCMS(props: any) {
                 const fbApp = firebase.initializeApp(firebaseConfig);
                 (window as any).storage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
-                if (document.location.hostname === 'localhost' && document.location.search.indexOf('useEmulator') > -1) {
+                if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
                     fbApp.functions().useEmulator("localhost", 5001);
                     fbApp.auth().useEmulator("http://localhost:9099");
                     (window as any).fireDB.useEmulator("localhost", 8080);
@@ -128,7 +130,7 @@ export function FirebaseCMS(props: any) {
 
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
-        console.log('got context user: ', user)
+        console.log('navigation fb user: ', user, fbUser)
         // TODO: get Firebase user.roles to render different collections for `admin` vs. `board` vs...
         if (user && user !== null && user.emailVerified === true) {
             return {
@@ -138,6 +140,7 @@ export function FirebaseCMS(props: any) {
                     buildRallyCollection(user),
                     buildMeetingTypeCollection(user),
                     buildResourceTypeCollection(user),
+                    buildSubscriptionCollection(user, fbUser),
                     buildTopicCollection(user),
                     buildStateCollection(user),
                     buildStakeholderCollection(user),
@@ -145,7 +148,7 @@ export function FirebaseCMS(props: any) {
                     buildOfficialCollection(user),
                     buildCityCollection(user),
                     buildActionPlanCollection(user),
-                    wiseDemoCollection
+                    wiseDemoCollection(user)
                 ]
             }
         } else {
@@ -153,7 +156,7 @@ export function FirebaseCMS(props: any) {
                 collections: [
                     buildResourceCollection(user),
                     buildRallyCollection(user),
-                    buildActionPlanCollection(user)
+                    buildActionPlanCollection(user),
                 ]
             }
         }
@@ -167,18 +170,28 @@ export function FirebaseCMS(props: any) {
 
             // post user.providerData to /api/syncUser
             let authUser = user.toJSON();
-            let idToken = await user.getIdToken().then(idToken => idToken) // == authUser.stsTokenManager.accessToken; ??
+            let idToken = await user.getIdToken(true).then(idToken => idToken) // == authUser.stsTokenManager.accessToken; ??
 
             console.log("sync with " + idToken, authUser);
 
-            let mergedUser = postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
-                .then(data => {
-                    console.log(data, "data sync user");
-                    return data;
-                });
+            let mergedUser = await postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
+            .then(data => {
+                if (!data) {
+                    console.error("invalid sync request")
+                } else if (data.message) {
+                    console.error(data.message);
+                } else {
+                    console.log('setting fbUser', data);
+                    setFbUser(data);
+                }
+                return data
+            })
+            .catch(e => console.error(e))
+
+            
 
             // TODO: set mergedUser redux store or ideally FireCMS authContext() - awaiting answer from https://github.com/Camberi/firecms/issues/72
-            authController.setAuthResult(mergedUser);
+            // authController.setAuthResult(mergedUser);
 
             /*
             // listen for role changes from other providers on settings / profile  pages
@@ -209,6 +222,7 @@ export function FirebaseCMS(props: any) {
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,
                     firebase.auth.PhoneAuthProvider.PROVIDER_ID,
                 ]}
+                fbUser={fbUser}
                 navigation={navigation}
                 firebaseConfig={firebaseConfig}
                 {...others}

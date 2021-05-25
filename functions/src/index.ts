@@ -167,7 +167,7 @@ app.post("/syncUser", async (req, res, next) => {
                     if (req.body.authUser.providerData[i].phoneNumber) {
                         snapshot = await db.collection("users").where("phone", "==", req.body.authUser.providerData[i].phoneNumber).get();
                         if (snapshot.exists) {
-                            console.log("user by phone", snapshot);
+                            console.log("user by phone", snapshot.data().toJSON());
                             break;
                         } else {
                             console.log("no user by phone");
@@ -177,7 +177,7 @@ app.post("/syncUser", async (req, res, next) => {
                     if (req.body.authUser.providerData[i].email) {
                         snapshot = await db.collection("users").where("email", "==", req.body.authUser.providerData[i].email).get();
                         if (snapshot.exists) {
-                            console.log("user by email", snapshot);
+                            console.log("user by email", snapshot.data().toJSON());
                             break;
                         } else {
                             console.log("no user by email");
@@ -223,7 +223,7 @@ app.post("/syncUser", async (req, res, next) => {
 
             await db.collection("users").doc(uid).set(firebaseUser);
             firebaseUser.uid = uid;
-            console.log("MERGING USER!!", firebaseUser);
+            console.info("synced user: ", JSON.stringify(firebaseUser));
 
             return res.status(200).json(firebaseUser);
         })
