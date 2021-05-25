@@ -30,14 +30,14 @@ const wisedemoSchema = buildSchema({
     },
 });
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
     return buildCollection({
         relativePath: "wise_democracy",
         schema: wisedemoSchema,
         name: "Wise Democracy",
         pagination: true,
         permissions: ({user, entity}) => {
-            if (userDB?.admin) {
+            if(fbUser?.roles.includes('editor')) {
                 return {
                     edit: true,
                     create: true,

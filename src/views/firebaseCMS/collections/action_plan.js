@@ -90,23 +90,14 @@ const actionPlanSchema = buildSchema({
     },
 });
 
-actionPlanSchema.onPreSave = ({ values }) => {
-
-    if (!values.created) values.created = new Date().getTime() / 1000;
-    values.modified = new Date().getTime() / 1000;
-
-    return values;
-};
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
     return buildCollection({
         relativePath: "action_plans",
         schema: actionPlanSchema,
         name: "Action Plans",
         pagination: true,
         permissions: ({user, entity}) => {
-
-            if (userDB?.admin) {
+            if(fbUser?.roles.includes('editor')) {
                 return {
                     edit: true,
                     create: true,
