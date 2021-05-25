@@ -188,7 +188,7 @@ export function FirebaseCMS(props: any) {
             })
             .catch(e => console.error(e))
 
-            
+
 
             // TODO: set mergedUser redux store or ideally FireCMS authContext() - awaiting answer from https://github.com/Camberi/firecms/issues/72
             // authController.setAuthResult(mergedUser);

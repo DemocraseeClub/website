@@ -160,17 +160,20 @@ app.post("/syncUser", async (req, res, next) => {
         .verifyIdToken(req.body.idToken)
         .then(async (decodedToken) => {
             const uid = decodedToken.uid;
+            if (!uid) {
+                console.error("UID IS NUL!?!?" + JSON.stringify(decodedToken));
+            }
             let snapshot = await db.collection("users").doc(uid).get();
 
             if (!snapshot.exists && req.body.authUser.providerData.length > 0) {
                 for(let i=0; i < req.body.authUser.providerData.length; i++) {
                     if (req.body.authUser.providerData[i].phoneNumber) {
-                        snapshot = await db.collection("users").where("phone", "==", req.body.authUser.providerData[i].phoneNumber).get();
+                        snapshot = await db.collection("users").where("phoneNumber", "==", req.body.authUser.providerData[i].phoneNumber).get();
                         if (snapshot.exists) {
                             console.log("user by phone", snapshot.data().toJSON());
                             break;
                         } else {
-                            console.log("no user by phone");
+                            console.log("no user by phone " + req.body.authUser.providerData[i].phoneNumber);
                         }
                     }
 
@@ -180,7 +183,7 @@ app.post("/syncUser", async (req, res, next) => {
                             console.log("user by email", snapshot.data().toJSON());
                             break;
                         } else {
-                            console.log("no user by email");
+                            console.log("no user by email " + req.body.authUser.providerData[i].email);
                         }
                     }
                 }
@@ -191,23 +194,22 @@ app.post("/syncUser", async (req, res, next) => {
                 :
                 {
                     email:"",
-                    phone:"",
-                    userName:"",
-                    realName: "",
+                    phoneNumber:"",
+                    displayName:"",
                     website: "",
                     bio: "",
                     picture: "", // req.body.authUser.providerData.photoURL, // TODO: hotlink or move to storage???
                     coverPhoto: "",
-                    topic_def_json: "",
-                    resources: [],
                     roles: [],
-                    providerData :{}
+                    providerData :{},
+                    created: admin.firestore.FieldValue.serverTimestamp(),
+                    modified: admin.firestore.FieldValue.serverTimestamp()
                 }
 
             for (let i = 0; i < req.body.authUser.providerData.length; i++) {
-                let data = req.body.authUser.providerData[i];
+                let data = req.body.authUser.providerData[i]; // TODO: Fix so we can validate / trust this post data before merging
                 firebaseUser.providerData[data.providerId] = data;
-                let mergers = {email: "email", phone: "phoneNumber", userName: "displayName"}
+                let mergers = {email: "email", phoneNumber: "phoneNumber", displayName: "displayName"}
                 for (let prop in mergers) {
                     if (!firebaseUser[prop] || firebaseUser[prop] === '') {
                         let val = data[mergers[prop]];
@@ -221,8 +223,7 @@ app.post("/syncUser", async (req, res, next) => {
             // auth.currentUser.linkWithRedirect(provider).then().catch();
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
-            await db.collection("users").doc(uid).set(firebaseUser);
-            firebaseUser.uid = uid;
+            await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
             console.info("synced user: ", JSON.stringify(firebaseUser));
 
             return res.status(200).json(firebaseUser);

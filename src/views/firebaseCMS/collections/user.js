@@ -2,12 +2,11 @@ import {buildCollection, buildSchema} from "@camberi/firecms";
 
 // import CustomPasswordField from "../customTextFields/CustomPasswordField";
 import CustomPhoneField from "../customTextFields/CustomPhoneField";
-import {rallySchema} from "./rally";
 
 const userSchema = buildSchema({
   name: "User",
   properties: {
-    email: {
+    email: { /* prepopulated with provider data */
       title: "Email",
       dataType: "string",
       validation: {
@@ -15,24 +14,19 @@ const userSchema = buildSchema({
         email: true,
       },
     },
-    phone: {
+    phoneNumber: { /* prepopulated with provider data */
       title: "phone",
       dataType: "string",
       config: {
         field: CustomPhoneField,
       },
     },
-    userName: {
-      title: "Username",
+    displayName: { /* prepopulated with provider data */
+      title: "Display name",
       dataType: "string",
       validation: {
         required: true,
       },
-    },
-    realName: {
-      title: "Real Name",
-      dataType: "string",
-      validation: {},
     },
     website: {
       title: "Website",
@@ -71,21 +65,6 @@ const userSchema = buildSchema({
           storagePath: "cover_photos",
           acceptedFiles: ["image/*"],
         },
-      },
-    },
-    topic_def_json: {
-      title: "Topic Definitions JSON",
-      dataType: "string",
-      config: {multiline: true},
-      validation: {}
-    },
-    resources: {
-      title: "Resources",
-      dataType: "array",
-      of: {
-        dataType: "reference",
-        collectionPath: "resources",
-        previewProperties: ["title", "image"],
       },
     },
     roles: {
