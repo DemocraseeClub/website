@@ -11,9 +11,10 @@ const MOVE_RALLY_HEAD = 'rally:MOVE_RALLY_HEAD';
 const ITEM_INIT_COUNTER = 'rally:ITEM_INIT_COUNTER';
 const COUNTDOWN_TIMER = 'rally:COUNTDOWN_TIMER';
 
-export const entityDataSuccess = apiData => ({
+export const entityDataSuccess = (rally, meeting) => ({
     type: ITEM_DATA_SUCCESS,
-    payload: {...apiData}
+    rally: rally,
+    meeting: meeting
 });
 
 export const entityDataStarted = (url) => ({
@@ -54,11 +55,33 @@ export const countDown = (index) => ({
     index: index
 });
 
-export const normalizeRally = async (doc, meetingDepth = 1) => {
-    let obj = {
+export const normalizeDoc = async (docs) => {
+    let results = [];
+    for (let j = 0; j < docs.length; j++) {
+        const tax = await docs[j].get();
+        results.push({id: tax.id, ...tax.data()})
+    }
+    return results;
+}
+
+export const normalizeMeeting = async (doc, depth) => {
+    let meet = {
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
     };
+    if (depth > 1) {
+        meet.agenda = JSON.parse(meet.agenda);
+    }
+    //  start_end_times
+    let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
+    for(let i=0; i < taxonomies.length; i++) {
+        meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]]);
+    }
+    return meet;
+}
+
+export const normalizeRally = async (doc, depth) => {
+    let obj = {id: doc.id, ...doc.data()};
 
     if (obj?.author) {
         const author = await obj.author.get();
@@ -71,47 +94,23 @@ export const normalizeRally = async (doc, meetingDepth = 1) => {
         obj.picture = url;
     }
 
-    if (meetingDepth > 0) {
-        let meetingDocs = await doc.ref.collection("meetings").get()
-        if (meetingDocs?.docs.length > 0) {
-            obj.meetings = meetingDocs.docs.map(o => {
-                let meet = {
-                    id: o.id,
-                    ...o.data(),
-                };
-                if (meetingDepth > 1) {
-                    // TOOD: noramlizeMeeting
-                }
-                return meet;
-            });
+    if (depth > 0) {
+        let meetingDocs = await doc.ref.collection("meetings").get();
+        if (meetingDocs?.docs && meetingDocs?.docs.length > 0) {
+            obj.meetings = [];
+            for(let i=0; i < meetingDocs.docs.length; i++) {
+                obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], depth));
+            }
         }
     }
 
-    if (obj?.topics) {
-        for (let j = 0; j < obj.topics.length; j++) {
-            const topic = await obj.topics[j].get();
-            obj.topics[j] = {id: topic.id, ...topic.data()};
-        }
+    if (obj.research) {
+        obj.research = JSON.parse(obj.research);
     }
 
-    if (obj?.stakeholders) {
-        for (let j = 0; j < obj.stakeholders.length; j++) {
-            const stakeholder = await obj.stakeholders[j].get();
-            obj.stakeholders[j] = {
-                id: stakeholder.id,
-                ...stakeholder.data(),
-            };
-        }
-    }
-
-    if (obj?.wise_demo) {
-        for (let j = 0; j < obj.wise_demo.length; j++) {
-            const wise_dem = await obj.wise_demo[j].get();
-            obj.wise_demo[j] = {
-                id: wise_dem.id,
-                ...wise_dem.data(),
-            };
-        }
+    let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
+    for(let i=0; i < taxonomies.length; i++) {
+        obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]]);
     }
 
     console.log("NORMALIZED RALLY", obj)
@@ -163,7 +162,7 @@ export const entityData = (url) => {
 
 const initialState = {
     loading: false,
-    apiData: false,
+    rally: false, meeting:false,
     url: '',
     error: null
 };
@@ -177,7 +176,8 @@ export default function entityDataReducer(draft = initialState, action) {
         case ITEM_DATA_SUCCESS:
             draft.loading = false;
             draft.error = null;
-            draft.apiData = {...action.payload};
+            draft.meeting = action.meeting;
+            draft.rally = action.rally;
             return draft;
         case ITEM_DATA_FAILURE:
             draft.loading = false;
@@ -186,7 +186,7 @@ export default function entityDataReducer(draft = initialState, action) {
         case ITEM_INIT_COUNTER:
             let total = 0;
             let headers = {};
-            draft.apiData.lineItems.forEach((o, i) => {
+            draft.meeting.agenda.forEach((o, i) => {
                 total += o.seconds
                 o.countdown = o.seconds;
                 if (typeof headers[o.nest] === 'undefined') headers[o.nest] = {
@@ -196,39 +196,39 @@ export default function entityDataReducer(draft = initialState, action) {
                 };
                 headers[o.nest].count++;
             });
-            draft.apiData.countRemains = total;
-            draft.apiData.countScheduled = total;
-            draft.apiData.headers = Object.values(headers);
+            draft.meeting.countRemains = total;
+            draft.meeting.countScheduled = total;
+            draft.meeting.headers = Object.values(headers);
             return draft;
         case UPDATE_RALLY_ITEM:
             if (action.key === 'delete') {
-                draft.apiData.lineItems.splice(action.index, 1);
+                draft.meeting.agenda.splice(action.index, 1);
             } else if (action.key === 'clone') {
-                draft.apiData.lineItems.splice(action.index, 0, {...draft.apiData.lineItems[action.index]});
-                draft.apiData.lineItems[action.index + 1].title += ' - copy';
+                draft.meeting.agenda.splice(action.index, 0, {...draft.meeting.agenda[action.index]});
+                draft.meeting.agenda[action.index + 1].title += ' - copy';
             } else {
-                draft.apiData.lineItems[action.index][action.key] = action.val;
+                draft.meeting.agenda[action.index][action.key] = action.val;
             }
             return draft;
         case MOVE_RALLY_ITEM:
-            if (!draft.apiData.lineItems[action.to]) return draft;
-            let element = draft.apiData.lineItems[action.from];
+            if (!draft.meeting.agenda[action.to]) return draft;
+            let element = draft.meeting.agenda[action.from];
             if (!element) return draft;
-            draft.apiData.lineItems.splice(action.from, 1);
-            element.nest = draft.apiData.lineItems[action.to].nest;
-            draft.apiData.lineItems.splice(action.to, 0, element);
+            draft.meeting.agenda.splice(action.from, 1);
+            element.nest = draft.meeting.agenda[action.to].nest;
+            draft.meeting.agenda.splice(action.to, 0, element);
             return draft;
         case MOVE_RALLY_HEAD:
             console.log("TODO: move head", action);
             return draft;
         case COUNTDOWN_TIMER:
-            let curStep = draft.apiData.lineItems[action.index];
+            let curStep = draft.meeting.agenda[action.index];
             if (typeof curStep.countdown !== 'number') {
                 curStep.countdown = curStep.seconds;
             } else {
                 curStep.countdown = curStep.countdown - 1;
             }
-            --draft.apiData.countRemains;
+            --draft.meeting.countRemains;
             return draft;
         default:
             return draft;

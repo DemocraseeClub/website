@@ -31,7 +31,7 @@ class PlanList extends React.Component {
             headers: [],
             topPad:0,
             showDrawer:false,
-            rallyData: p.rallyData || false
+            meeting: p.meeting || false
         }
 
         this.runTimers = this.runTimers.bind(this);
@@ -61,12 +61,12 @@ class PlanList extends React.Component {
         } else if (this.state.running === false) {
             this.setState({running: true}, this.runTimers)
         } else {
-            if (this.props.rallyData.countRemains === 0) {
+            if (this.props.meeting.countRemains === 0) {
                 this.stopTimers();
                 return 'rally complete';
             }
-            if (this.state.activeStep < this.props.rallyData.lineItems.length - 1) {
-                if (this.props.rallyData.lineItems[this.state.activeStep].countdown === 0) {
+            if (this.state.activeStep < this.props.meeting.agenda.length - 1) {
+                if (this.props.meeting.agenda[this.state.activeStep].countdown === 0) {
                     this.handleNext();
                 }
             }
@@ -94,7 +94,7 @@ class PlanList extends React.Component {
     }
 
     render() {
-        if (!this.props.rallyData || !this.props.rallyData.headers) return 'loading agenda...'
+        if (!this.props.meeting || !this.props.meeting.headers) return 'loading agenda...'
 
         const {classes} = this.props;
         const {activeStep} = this.state;
@@ -121,10 +121,10 @@ class PlanList extends React.Component {
 
                             <Typography variant='h6' >
                                 <Typography variant='inherit'
-                                            color={'error'}> {formatSeconds(this.props.rallyData.countRemains)} </Typography>
+                                            color={'error'}> {formatSeconds(this.props.meeting.countRemains)} </Typography>
                                 /
                                 <Typography
-                                    variant='inherit'> {formatSeconds(this.props.rallyData.countScheduled)}</Typography>
+                                    variant='inherit'> {formatSeconds(this.props.meeting.countScheduled)}</Typography>
                             </Typography>
 
                             {this.state.showAll === true ?
@@ -154,12 +154,12 @@ class PlanList extends React.Component {
                 <div className={classes.agendaContent} id={'meetingAgenda'}>
 
                     <Stepper activeStep={activeStep} orientation="vertical" className={classes.vertStepper} >
-                        {this.props.rallyData.lineItems.map((curItem, index) => {
+                        {this.props.meeting.agenda.map((curItem, index) => {
                             let header = null;
                             if (curItem.nest.length > 0) {
                                 if (typeof nesting[curItem.nest] === 'undefined') {
                                     nesting[curItem.nest] = true;
-                                    header = this.props.rallyData.headers.find(h => h.label === curItem.nest);
+                                    header = this.props.meeting.headers.find(h => h.label === curItem.nest);
                                     if (header) {
                                         header = <div className={classes.stepSection}><Typography variant='h3'
                                                                                                   className={classes.topLevelLabel}>{curItem.nest}</Typography>
@@ -180,7 +180,7 @@ class PlanList extends React.Component {
                         })}
                     </Stepper>
 
-                    {activeStep === this.props.rallyData.lineItems.length && (
+                    {activeStep === this.props.meeting.agenda.length && (
                         <Paper square elevation={0} className={classes.resetContainer}>
                             <Button onClick={this.handleReset} className={classes.button}>
                                 Reset Clock
