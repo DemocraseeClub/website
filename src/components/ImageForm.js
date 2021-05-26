@@ -19,7 +19,7 @@ export default class ImageAdd extends Component {
         if (this.props.type === 'image') {
             this.props.onChange(this.props.modifier(this.props.editorState, this.state.url));
         } else {
-            // TODO: restrict domains?
+            // WARN: unrestricted domains
             this.props.onChange(this.props.modifier(this.props.editorState, { src : this.state.url}));
         }
     };

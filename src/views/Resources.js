@@ -1,138 +1,177 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { withSnackbar } from "notistack";
+import {withStyles} from "@material-ui/core/styles";
+import {withSnackbar} from "notistack";
+import {NavLink} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
+import {Card, CardActions, CardContent, CardMedia, Checkbox, FormControlLabel} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { rallyStyles } from "../Util/ThemeUtils";
+import {rallyStyles} from "../Util/ThemeUtils";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
 import Skeleton from "@material-ui/lab/Skeleton";
+import OfficeHours from "../components/OfficeHours";
 
 class Resources extends React.Component {
-  constructor(p) {
-    super(p);
-    this.state = {
-      rTypes: [],
-      city: "",
-      county: "",
-      state: "",
-      error: false,
-      rType: "",
-      loading: true,
-      resources: [],
-    };
-  }
+    constructor(p) {
+        super(p);
+        this.state = {
+            rTypes: [],
+            selected: [],
+            hasOfficeHours: false,
+            loading: true,
+            resources: []
+        };
+    }
 
-  componentDidMount() {
-    window.fireDB
-      .collection("resource_types")
-      .get()
-      .then((types) => {
-        var rTypes = types.docs.map((doc) => doc.data());
-        this.setState({ rTypes: rTypes });
-      })
-      .catch((err) => console.log(err));
+    componentDidMount() {
+        window.fireDB
+            .collection("resource_types")
+            .get()
+            .then((types) => {
+                var rTypes = types.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+                this.setState({rTypes: rTypes});
+            })
+            .catch((err) => console.log(err));
 
-    fetch(process.env.REACT_APP_FUNCTIONS_URL + "/resources")
-      .then((response) => response.json())
-      .then(async (data) => {
-        for (let i = 0; i < data.length; i++) {
-          try {
-            if (data[i].image) {
-              let path = window.storage.ref(data[i].image);
-              const url = await path.getDownloadURL();
-              data[i].image = url;
-            }
-          } catch (e) {}
+        this.handleChange([])
+    }
+
+    redeem(email) {
+        this.props.enqueueSnackbar("Email: " + email);
+        window.logUse.logEvent("resource-redeem", {email: email});
+    }
+
+    async handleChange(rTypes) {
+        this.setState({selected: rTypes, loading: true});
+
+        let collection = window.fireDB.collection("resources");
+        if (rTypes.length > 0) {
+            // TODO: fix filter per: https://stackoverflow.com/a/53141199/624160. || https://youtu.be/Elg2zDVIcLo?t=276
+            let filters = await Promise.all(rTypes.map(o => {
+                return window.fireDB.collection('resource_type').doc(o.id);
+            }))
+            console.log("FILTERING RESOURCE TYPES: ", filters)
+            collection = collection.where("resource_type", "in", filters)
         }
 
-        return data;
-      })
-      .then((resources) => {
-        this.setState({ resources: resources, loading: false });
-      })
-      .catch((err) => console.log(err));
-  }
-
-  redeem(email) {
-    this.props.enqueueSnackbar("Email: " + email);
-    window.logUse.logEvent("resource-redeem", { email: email });
-  }
-
-  handleChange(rType) {
-    this.setState({ rType, loading: true });
-    fetch(process.env.REACT_APP_FUNCTIONS_URL + `/resources/${rType}`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        for (let i = 0; i < data.length; i++) {
-          try {
-            if (data[i].image) {
-              let path = window.storage.ref(data[i].image);
-              const url = await path.getDownloadURL();
-              data[i].image = url;
-            }
-          } catch (e) {}
+        if (this.state.hasOfficeHours === true) {
+            collection = collection.where("office_hours", "!=", false)
         }
 
-        return data;
-      })
-      .then((resources) => {
-        this.setState({ resources: resources, loading: false });
-      })
-      .catch((err) => console.log(err));
-  }
+        let snapshots = await collection.limit(25).get();
+        const resources = await Promise.all(snapshots.docs.map(async (doc) => {
+            let obj = {
+                id: doc.id,
+                ...doc.data(),
+            }
+            if (obj?.author) {
+                const author = await obj.author.get();
+                obj.author = {id: author.id, ...author.data()};
+            }
 
-  render() {
-    const { classes } = this.props;
-    const { loading } = this.state;
-    return (
-      <Box>
-        <Grid container className={classes.sectionSecondary}>
-          <Grid item xs={8}>
-            <Typography variant={"h5"} className={classes.sectionTitle}>
-              <b>Request and Receive Help From Your Community</b>
-            </Typography>
-            <Typography variant={"h6"} className={classes.sectionSubtitle}>
-              Pay with cash or CitizenCoin earned through contributions to this
-              community platform
-            </Typography>
-            {/* <Grid container spacing={3} className={classes.sectionItemsContainer}>
-                            {
-                                items.map(({img, alt, text}) => <Grid item key={alt}>
-                                    <Box display="flex" alignItems="center">
-                                        <Avatar src={img} className={classes.sectionItemImg} alt={alt}/>
-                                        <Typography variant={'body2'} className={classes.sectionItemText}><b>Earn 2 -
-                                            2000 Citizen Coins</b></Typography>
-                                    </Box>
-                                </Grid>)
-                            }
-                        </Grid>  <Button variant="outlined" className={classes.sectionLeftButton}>Request Help</Button> */}
+            if (obj?.resource_type) {
+                const resource_type = await obj.resource_type.get();
+                obj.resource_type = {id: resource_type.id, ...resource_type.data()};
+            }
 
-            <Button className={classes.sectionRightButton}>
-              Offer Your Expertise
-            </Button>
-          </Grid>
-          <Grid item xs={4}>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <img
-                src="/images/lighbulb.png"
-                alt="blueSection-hero"
-                className={classes.sectionHero}
-                style={{ height: 120 }}
-              />
-            </Box>
-          </Grid>
-        </Grid>
-        <Box className={classes.section}>
-          <Grid container alignItems={"center"} justify={"space-between"}>
-            <Grid item>
-              {/* <Grid item>
+            /* if (obj?.office_hours) {
+              if (obj.office_hours.start_date) obj.office_hours.start_date = doc.office_hours.start_date.toDate();
+              if (obj.office_hours.end_date) obj.office_hours.end_date = doc.office_hours.end_date.toDate();
+            } */
+
+            if (obj.image) {
+                try {
+                    let path = window.fbStorage.ref(obj.image);
+                    const url = await path.getDownloadURL();
+                    obj.image = url;
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            return obj;
+        }));
+        console.log(resources);
+        this.setState({resources: resources, loading: false});
+
+    }
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <React.Fragment>
+                <Grid container item className={classes.sectionSecondary}>
+                    <Grid item xs={10}>
+                        <Typography variant={"h5"} className={classes.sectionTitle}>
+                            <b>Request and Receive Help From Your Community</b>
+                        </Typography>
+                        <Typography variant={"h6"} className={classes.sectionSubtitle}>
+                            Pay with cash or CitizenCoin earned through contributions to this
+                            community platform
+                        </Typography>
+                        <NavLink to={"/c/resources#new"} style={{textDecoration: 'none'}}>
+                            <Button className={classes.sectionRightButton}>
+                                Offer Your Expertise
+                            </Button>
+                        </NavLink>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Box display="flex" alignItems="center" justifyContent="center">
+                            <img
+                                src="/images/lighbulb.png"
+                                alt="blueSection-hero"
+                                className={classes.sectionHero}
+                                style={{height: 120}}
+                            />
+                        </Box>
+                    </Grid>
+                </Grid>
+                <Grid  className={classes.section} alignContent={'center'} justify={"space-around"} wrap={"nowrap"} >
+                    <Grid item style={{flexGrow: 1}}>
+                        <Select
+                            id="resource_type_filter"
+                            displayEmpty={true}
+                            multiple={true}
+                            fullWidth={true}
+                            value={this.state.selected}
+                            onChange={(e) => this.handleChange(e.target.value)}
+                            label="Resource Types"
+                            renderValue={(selected) => {
+                                if (selected.length === 0) {
+                                    return <Typography variant={'body1'}
+                                                       style={{color: this.props.theme.palette.text.disabled}}>All
+                                        Resource
+                                        Types</Typography>;
+                                }
+                                return selected.map(o => o.type).join(', ');
+                            }}
+                        >
+                            <MenuItem disabled value={''}>All Resource Types</MenuItem>
+                            {this.state.rTypes.map((option) => (
+                                <MenuItem key={option.type} value={option}>
+                                    {option.type}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </Grid>
+                    <Grid item>
+                        <FormControlLabel
+                            value={this.state.hasOfficeHours}
+                            style={{marginLeft:0, color: this.props.theme.palette.text[this.state.hasOfficeHours ? 'primary' : 'hint']}}
+                            control={<Checkbox onChange={e => {
+                                this.setState({hasOfficeHours: e.target.checked}, () => this.handleChange(this.state.selected));
+                            }}
+                                               checked={this.state.hasOfficeHours} color="primary"/>}
+                            label="Office Hours"
+                            labelPlacement="start"
+                        />
+                    </Grid>
+                    {/*  <Grid item>
                                 <TextField
                                     id="standard-multiline-flexible"
                                     label="Search"
@@ -151,7 +190,7 @@ class Resources extends React.Component {
                                     id="standard-select-currency"
                                     select
                                     label="Currency"
-                                    size="medium" 
+                                    size="medium"
                                     variant="outlined"
                                 >
                                     {currencies.map((option) => (
@@ -162,120 +201,100 @@ class Resources extends React.Component {
                                 </TextField>
                             </Grid>
                             */}
-              <Grid item>
-                <Select
-                  className={classes.sectionSelect}
-                  id="resource_type_filter"
-                  select
-                  displayEmpty={true}
-                  value={this.state.rType}
-                  onChange={(e) => this.handleChange(e.target.value)}
-                  label="Resource Types"
-                  variant="outlined"
-                >
-                  <MenuItem value={""}>All Resource Types</MenuItem>
-                  {this.state.rTypes.map((option) => (
-                    <MenuItem key={option.type} value={option.type}>
-                      {option.type}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            spacing={10}
-            justify="center"
-            className={classes.cardsContainer}
-          >
-            {(loading ? Array.from(new Array(6)) : this.state.resources).map(
-              (item, key) => (
-                <Grid item key={key}>
-                  <Card className={classes.card}>
-                    <Grid
-                      container
-                      justify="space-between"
-                      alignItems="center"
-                      className={classes.cardHeader}
-                    >
-                      <Grid item>
-                        {item ? (
-                          <Avatar
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "images/citizencoin.png";
-                            }}
-                            src={item.image}
-                            alt="card-img"
-                            className={classes.cardImg}
-                          />
-                        ) : (
-                          <Skeleton variant="circle" width={80} height={80} />
-                        )}
-                      </Grid>
-                      <Grid item>
-                        <Button className={classes.cardButton}>View</Button>
-                      </Grid>
-                    </Grid>
-                    {item ? (
-                      <>
-                        <Typography
-                          variant={"h2"}
-                          className={classes.cardBadge}
-                        >
-                          {item.title}
-                        </Typography>
-                        <Typography variant={"body1"}>
-                          <SanitizedHTML
-                            allowedIframeDomains={["linkedin.com"]}
-                            allowedIframeHostnames={["www.linkedin.com"]}
-                            allowIframeRelativeUrls={false}
-                            allowedSchemes={["data", "https"]}
-                            allowedTags={Config.allowedTags}
-                            allowedAttributes={Config.allowedAttributes}
-                            exclusiveFilter={(frame) => {
-                              if (frame.tag === "iframe") {
-                                if (
-                                  frame.attribs.src.indexOf(
-                                    "https://linkedin.com"
-                                  ) !== 0
-                                ) {
-                                  return true;
-                                }
-                              }
-                              return false;
-                            }}
-                            html={item.descriptionHTML}
-                          />
-                        </Typography>
-                        <Typography
-                          variant={"body2"}
-                          className={classes.cardSubtitle}
-                        >
-                          with <em>{item.author.realName}</em>
-                        </Typography>
-                        {/* {
-                                            item.links.map(link => <Typography variant={'body1'} className={classes.cardLink} key={link}>{link}</Typography>)
-                                        } */}
-                      </>
-                    ) : (
-                      <>
-                        <Skeleton width="40%" />
-                        <Skeleton />
-                        <Skeleton />
-                        <Skeleton />
-                      </>
-                    )}
-                  </Card>
                 </Grid>
-              )
-            )}
-          </Grid>
-        </Box>
-      </Box>
-    );
-  }
+                <Grid
+                    className={this.props.classes.section}
+                    container
+                    justify={"space-around"}
+                    spacing={4}
+                    alignItems="stretch"
+                >
+                    {this.state.loading === true ?
+                        [1, 2, 3, 4, 5, 6].map((item, key) => (
+                            <Grid key={'rskeleton' + key} item xs={12} sm={6} md={4}>
+                                <Card className={this.props.classes.cardSkeleton}>
+                                    <Grid
+                                        container
+                                        justify="space-between"
+                                        alignItems="center"
+                                        className={classes.cardHeader}
+                                    >
+                                        <Grid item>
+                                            <Skeleton variant="circle" width={80} height={80}/>
+                                        </Grid>
+                                    </Grid>
+                                    <Skeleton width="40%"/>
+                                    <Skeleton/>
+                                    <Skeleton/>
+                                    <Skeleton/>
+                                </Card>
+                            </Grid>
+                        ))
+                        :
+                        this.state.resources.map(
+                            (item, key) => (
+                                <Grid key={'resource' + key} item xs={12} sm={6} md={4}>
+                                    <Card className={this.props.classes.card}>
+                                        <CardMedia
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "images/citizencoin.png";
+                                            }
+                                            }
+                                            className={this.props.classes.cardMedia}
+                                            component="img"
+                                            alt={item.title}
+                                            height="200"
+                                            style={{objectFit: "contain"}}
+                                            image={item.image}
+                                        />
+                                        <CardContent>
+                                            <Typography variant={"h2"}
+                                                        style={{color: this.props.theme.palette.primary.light}}>
+                                                {item.title}
+                                            </Typography>
+                                            <Typography variant={"body1"}>
+                                                <SanitizedHTML
+                                                    allowedIframeDomains={["linkedin.com"]}
+                                                    allowedIframeHostnames={["www.linkedin.com"]}
+                                                    allowIframeRelativeUrls={false}
+                                                    allowedSchemes={["data", "https"]}
+                                                    allowedTags={Config.richTags}
+                                                    allowedAttributes={Config.richAttributes}
+                                                    exclusiveFilter={(frame) => {
+                                                        if (frame.tag === "iframe") {
+                                                            if (
+                                                                frame.attribs.src.indexOf(
+                                                                    "https://linkedin.com"
+                                                                ) !== 0
+                                                            ) {
+                                                                return true;
+                                                            }
+                                                        }
+                                                        return false;
+                                                    }}
+                                                    html={item.descriptionHTML}
+                                                />
+                                            </Typography>
+                                            <Typography variant={"body2"}
+                                                        className={classes.cardSubtitle}> with <em>{item.author ? item.author.displayName : ''}</em>
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions>
+                                            <Grid container direction={'column'}>
+                                                {item.office_hours &&
+                                                <OfficeHours office_hours={item.office_hours}
+                                                             author={item.author}/>}
+                                            </Grid>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            )
+                        )}
+                </Grid>
+            </React.Fragment>
+        );
+    }
 }
 
-export default withStyles(rallyStyles)(withSnackbar(Resources));
+export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(Resources));

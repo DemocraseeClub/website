@@ -54,15 +54,15 @@ const officialSchema = buildSchema({
 });
 
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "officials",
     schema: officialSchema,
     name: "Officials",
     pagination: true,
      permissions: ({ user, entity }) => {
-   
-       if(userDB?.admin) {
+
+       if(fbUser?.roles.includes('admin')) {
          return {
            edit: true,
            create: true,

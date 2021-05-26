@@ -218,11 +218,11 @@ export const rallyStyles = (theme) => ({
   },
   section: {
     background: theme.palette.background.default,
-    padding: "60px 70px",
+    padding: "5%",
   },
   sectionSecondary: {
     background: theme.palette.secondary.main,
-    padding: "50px 70px",
+    padding: "5%",
   },
   sectionTitle: {
     marginBottom: "10px",
@@ -268,17 +268,19 @@ export const rallyStyles = (theme) => ({
   cardsContainer: {
     marginTop: "15px",
   },
-  card: {
-    width: "300px",
-    padding: "25px",
+  cardMedia : {
+    width:"100%",
+    height:"100%"
+  },
+  cardSkeleton : {
+    width: "100%",
     height: "100%",
   },
-  cardImg: {
-    width: "80px",
-    height: "80px",
+  card: {
+    margin:0, width:'100%'
   },
   cardButton: {
-    padding: "10px 40px",
+    padding: "5%",
     background: theme.palette.info.main,
     color: theme.palette.info.contrastText,
     textTransform: "none",
@@ -296,10 +298,6 @@ export const rallyStyles = (theme) => ({
   cardLink: {
     color: theme.palette.info.main,
     textDecoration: "underline",
-  },
-  cardBadge: {
-    color: "gray",
-    margin: "-10px 0 10px 0",
   },
   sectionLink: {
     color: theme.palette.info.main,

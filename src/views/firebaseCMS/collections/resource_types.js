@@ -14,8 +14,7 @@ const resourceTypeSchema = buildSchema({
   }
 });
 
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "resource_types",
     schema: resourceTypeSchema,
@@ -23,7 +22,7 @@ export default (userDB) => {
     pagination: true,
      permissions: ({ user, entity }) => {
 
-       if(userDB?.admin) {
+       if(fbUser?.roles.includes('editor')) {
          return {
            edit: true,
            create: true,

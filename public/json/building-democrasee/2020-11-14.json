@@ -52,7 +52,7 @@
     },{
       "title":"Interactivity",
       "nest": "ReactJS Web App",
-      "html": "Redux, React-Router and other <a target='_blank' href='https://github.com/eliataylor/clock-agendas/blob/d192124a424b7b56d8923cae4052b3f52812733c/package.json#L5'>dependencies</a>",
+      "html": "Redux, React-Router and other <a target='_blank' href='https://github.com/DemocraseeClub/website/blob/d192124a424b7b56d8923cae4052b3f52812733c/package.json#L5'>dependencies</a>",
       "seconds": 120
     },
     {

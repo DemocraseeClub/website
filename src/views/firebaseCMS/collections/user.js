@@ -1,20 +1,32 @@
 import {buildCollection, buildSchema} from "@camberi/firecms";
+
 // import CustomPasswordField from "../customTextFields/CustomPasswordField";
+import CustomPhoneField from "../customTextFields/CustomPhoneField";
 
 const userSchema = buildSchema({
   name: "User",
   properties: {
-    userName: {
-      title: "Username",
+    email: { /* prepopulated with provider data */
+      title: "Email",
+      dataType: "string",
+      validation: {
+        required: true,
+        email: true,
+      },
+    },
+    phoneNumber: { /* prepopulated with provider data */
+      title: "phone",
+      dataType: "string",
+      config: {
+        field: CustomPhoneField,
+      },
+    },
+    displayName: { /* prepopulated with provider data */
+      title: "Display name",
       dataType: "string",
       validation: {
         required: true,
       },
-    },
-    realName: {
-      title: "Real Name",
-      dataType: "string",
-      validation: {},
     },
     website: {
       title: "Website",
@@ -55,21 +67,6 @@ const userSchema = buildSchema({
         },
       },
     },
-    topic_def_json: {
-      title: "Topic Definitions JSON",
-      dataType: "string",
-      config: {multiline: true},
-      validation: {}
-    },
-    resources: {
-      title: "Resources",
-      dataType: "array",
-      of: {
-        dataType: "reference",
-        collectionPath: "resources",
-        previewProperties: ["title", "image"],
-      },
-    },
     roles: {
       title: "Roles",
       validation: { required: false },
@@ -90,6 +87,7 @@ const userSchema = buildSchema({
   }
 });
 
+/*
 userSchema.onPreSave = ({ values }) => {
   if (values.topic_def_json?.trim()) {
     const value = JSON.parse(values.topic_def_json.trim());
@@ -103,14 +101,15 @@ userSchema.onPreSave = ({ values }) => {
 
   return values;
 };
+ */
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "users",
     schema: userSchema,
     name: "Users",
     permissions: ({ user, entity }) => {
-      if (userDB?.admin) {
+      if(fbUser?.roles.includes('admin')) {
         return {
           edit: true,
           create: true,

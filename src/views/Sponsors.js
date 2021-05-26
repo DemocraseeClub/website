@@ -87,7 +87,7 @@ class Sponsors extends React.Component {
                 <br />
 
                 <Typography variant={'body2'}>
-                    This site and all its tools are available on <a href={"https://github.com/eliataylor/clock-agendas"} target={"_blank"}>Github</a>.
+                    This site and all its tools are available on <a href={"https://github.com/DemocraseeClub/website"} target={"_blank"}>Github</a>.
                     and available via the <a href={"https://www.gnu.org/licenses/gpl-3.0.html"} target={"_blank"}>GNU License</a>.
                     Feel free to fork the code and publish this platform for another Country than the USA.
                 </Typography>
@@ -97,7 +97,7 @@ class Sponsors extends React.Component {
                 <Typography variant={'body2'}>
                     Choices for spending this fund are made by our <NavLink to={'/about'}>Board</NavLink>.
                     If you would like to earn from your code contributions, please comment on any of our
-                    existing <a href={"https://github.com/eliataylor/clock-agendas/issues?q=is%3Aopen+is%3Aissue"} target={"_blank"}>Issues</a> and
+                    existing <a href={"https://github.com/DemocraseeClub/website/issues?q=is%3Aopen+is%3Aissue"} target={"_blank"}>Issues</a> and
                     we'll discuss a fair rate.
                 </Typography>
             </div>)

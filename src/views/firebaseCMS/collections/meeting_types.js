@@ -15,15 +15,15 @@ const meetingTypeSchema = buildSchema({
 });
 
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "meeting_types",
     schema: meetingTypeSchema,
     name: "Meeting Types",
     pagination: true,
      permissions: ({ user, entity }) => {
-   
-       if(userDB?.admin) {
+
+       if(fbUser?.roles.includes('admin')) {
          return {
            edit: true,
            create: true,
