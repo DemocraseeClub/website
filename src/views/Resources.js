@@ -50,7 +50,7 @@ class Resources extends React.Component {
 
         let collection = window.fireDB.collection("resources");
         if (rTypes.length > 0) {
-            // TODO: filter per: https://stackoverflow.com/a/53141199/624160. || https://youtu.be/Elg2zDVIcLo?t=276
+            // TODO: fix filter per: https://stackoverflow.com/a/53141199/624160. || https://youtu.be/Elg2zDVIcLo?t=276
             let filters = await Promise.all(rTypes.map(o => {
                 return window.fireDB.collection('resource_type').doc(o.id);
             }))

@@ -181,9 +181,11 @@ export function FirebaseCMS(props: any) {
                     } else {
                         console.log('setting fbUser', data);
                         setFbUser(data);
+
+                        // TODO: upgrade firecms & implement setExtra :: https://github.com/Camberi/firecms/issues/72#issuecomment-848643187
+                        // authController.setExtra(data);
                     }
-                    // TODO: set mergedUser redux store or ideally FireCMS authContext() - awaiting answer from https://github.com/Camberi/firecms/issues/72
-                    // authController.setAuthResult(mergedUser);
+
                     return data
                 })
                 .catch(e => console.error(e))

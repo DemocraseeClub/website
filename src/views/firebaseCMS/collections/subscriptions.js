@@ -47,7 +47,7 @@ export default (userDB, fbUser) => {
     pagination: true,
      permissions: ({ user, entity }) => {
        if (entity) {
-            // TODO is subscriber or rally / meeting author!!!
+            // // TODO: match rules in fbUser database.rules.txt (and on all other PermissionBuilders
        }
        if(fbUser && fbUser.roles && fbUser.roles.includes('editor')) {
          return {
