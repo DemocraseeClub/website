@@ -124,7 +124,7 @@ export function FirebaseCMS(props: any) {
         console.log('navigation fb user: ', user, fbUser)
         const navItems = [];
 
-        if (user?.emailVerified === true) {
+        if (user?.isAnonymous === false) {
             navItems.push(
                 buildResourceCollection(user, fbUser),
                 buildRallyCollection(user, fbUser),
@@ -198,7 +198,7 @@ export function FirebaseCMS(props: any) {
                 signInOptions={[
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                    firebase.auth.PhoneAuthProvider.PROVIDER_ID
+                    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
                 ]}
                 allowSkipLogin={false}
                 navigation={navigation}
