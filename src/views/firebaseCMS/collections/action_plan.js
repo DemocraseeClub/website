@@ -8,7 +8,7 @@ const actionPlanSchema = buildSchema({
             dataType: "reference",
             validation: {required: true},
             collectionPath: "users",
-            previewProperties: ["userName"]
+            previewProperties: ["displayName"]
         },
         title: {
             title: "Tilte",
@@ -48,7 +48,7 @@ const actionPlanSchema = buildSchema({
             of: {
                 dataType: "reference",
                 collectionPath: "users",
-                previewProperties: ["userName"]
+                previewProperties: ["displayName"]
             }
         },
         proArgument: {
@@ -90,16 +90,14 @@ const actionPlanSchema = buildSchema({
     },
 });
 
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
     return buildCollection({
         relativePath: "action_plans",
         schema: actionPlanSchema,
         name: "Action Plans",
         pagination: true,
         permissions: ({user, entity}) => {
-
-            if (userDB?.admin) {
+            if(fbUser?.roles.includes('editor')) {
                 return {
                     edit: true,
                     create: true,

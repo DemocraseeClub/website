@@ -10,7 +10,7 @@ export const rallySchema = buildSchema({
             dataType: "reference",
             validation: {required: true},
             collectionPath: "users",
-            previewProperties: ["userName"]
+            previewProperties: ["displayName"]
         },
         title: {
             title: "Title",
@@ -111,17 +111,17 @@ rallySchema.onPreSave = ({values}) => {
 };
 
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
     return buildCollection({
         relativePath: "rallies",
         schema: rallySchema,
         name: "Rallies",
         pagination: true,
-        permissions: ({user, rally}) => {
-            // let data = getUserData(user.uid);
-
-            // console.error("RALLY PERMISSIONS: " + user.uid, user.toJSON(), data);
-            if (userDB?.admin) {
+        permissions: ({user, entity}) => {
+            if (entity) {
+                // TODO: match rules in fbUser database.rules.txt
+            }
+            if(fbUser?.roles.includes('editor')) {
                 return {
                     edit: true,
                     create: true,
@@ -142,8 +142,7 @@ export default (userDB) => {
                 name: "Meetings",
                 pagination: true,
                 permissions: ({user, entity}) => {
-                    // console.log("MEETING PERMISSIONS", user.toJSON());
-                    if (userDB?.admin) {
+                    if(fbUser?.roles.includes('editor')) {
                         return {
                             edit: true,
                             create: true,

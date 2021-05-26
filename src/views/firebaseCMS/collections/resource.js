@@ -8,7 +8,7 @@ const resourceSchema = buildSchema({
       dataType: "reference",
       validation: {required: true},
       collectionPath: "users",
-      previewProperties: ["userName"]
+      previewProperties: ["displayName"]
     },
     title: {
       title: "Title",
@@ -44,12 +44,30 @@ const resourceSchema = buildSchema({
       title: "Postal Address",
       dataType: "string",
     },
-    price_ccoin: {
-      title: "Price (citizencoin)",
-      dataType: "number",
-      validation: {
-        required: false,
-        positive: true,
+    price: {
+      title: "Price",
+      dataType: "map",
+      validation: {required: false},
+      properties: {
+        price: {
+          title: "Price",
+          dataType: "string",
+        },
+        rate: {
+          title: "Rate",
+          dataType: "string" // per what
+        },
+        currency: {
+          title: "Currency",
+          dataType: "string",
+          config: {
+            enumValues: {
+              citizencoin: "CitizenCoin",
+              usd: "US Dollar",
+              vef: "Venezuelan Bolívar"
+            }
+          }
+        }
       },
     },
     resource_type: {
@@ -63,6 +81,16 @@ const resourceSchema = buildSchema({
       dataType: "map",
       validation: {required: false},
       properties: {
+        link: {
+          title: "Link",
+          dataType: "string",
+          validation: {
+            url: true,
+          },
+          config: {
+            url: true,
+          },
+        },
         date_start: {
           title: "Date Start",
           dataType: "timestamp",
@@ -76,6 +104,7 @@ const resourceSchema = buildSchema({
           dataType: "string",
           config: {
             enumValues: {
+              none: "Does not repeat",
               daily: "Daily",
               weekly: "Weekly on %dayofweek%",
               monthly: "Monthly on %weekofmonth%",
@@ -88,16 +117,16 @@ const resourceSchema = buildSchema({
   },
 });
 
-export default (userDB) => {
+export default (userDB, fbUser) => {
 
   return buildCollection({
      relativePath: "resources",
      schema: resourceSchema,
      name: "Resources",
      pagination: true,
-     permissions: async ({ user, entity }) => {
+     permissions: ({ user, entity }) => {
 
-       if(userDB?.admin) {
+       if(fbUser?.roles.includes('admin')) {
          return {edit: true, create: true, delete: true};
        } else {
          return {edit: false, create: false, delete: false};

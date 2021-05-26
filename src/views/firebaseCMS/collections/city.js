@@ -47,7 +47,7 @@ const citySchema = buildSchema({
       of: {
         dataType: "reference",
         collectionPath: "users",
-        previewProperties: ["userName"],
+        previewProperties: ["displayName"],
       }
     },
     website: {
@@ -96,7 +96,7 @@ const citySchema = buildSchema({
       of: {
         dataType: "reference",
         collectionPath: "users",
-        previewProperties: ["userName"],
+        previewProperties: ["displayName"],
       },
     },
     landArea: {
@@ -134,15 +134,14 @@ const citySchema = buildSchema({
   },
 });
 
-
-export default (userDB) => {
+export default (userDB, fbUser) => {
   return buildCollection({
     relativePath: "cities",
     schema: citySchema,
     name: "Cities",
     pagination: true,
     permissions: ({ user, entity }) => {
-       if(userDB?.admin) {
+       if(fbUser?.roles.indexOf('admin') > -1) {
          return {
            edit: true, create: true, delete: true
          };

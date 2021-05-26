@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import {
     Authenticator,
@@ -9,11 +9,9 @@ import {
     useSideEntityController
 } from "@camberi/firecms";
 
-import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
-import {useSelector} from 'react-redux'
-
+import buildSubscriptionCollection from "./collections/subscriptions";
 import buildUserCollection from "./collections/user";
 import buildResourceCollection from "./collections/resource";
 import buildResourceTypeCollection from "./collections/resource_types";
@@ -22,18 +20,17 @@ import buildStateCollection from "./collections/state";
 import buildStakeholderCollection from "./collections/stakeholder";
 import buildRallyCollection from "./collections/rally";
 import buildPartyCollection from "./collections/party";
-import buildPageCollection from "./collections/page";
 import buildOfficialCollection from "./collections/official";
 import buildMeetingTypeCollection from "./collections/meeting_types";
-import buildInviteCollection from "./collections/invite";
 import buildCityCollection from "./collections/city";
 import buildActionPlanCollection from "./collections/action_plan";
 import wiseDemoCollection from "./collections/wise_demo";
-
-import {useLocation} from "react-router-dom";
-
 import {Box, CircularProgress} from "@material-ui/core";
+// import {useSelector} from 'react-redux'
 
+// import {useLocation} from "react-router-dom";
+import firebase from "firebase/app";
+// import LogLevel = firebase.LogLevel;
 
 const firebaseConfig = {
     apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
@@ -46,21 +43,18 @@ const firebaseConfig = {
     measurementId: "G-XYVYDC8L1N",
 };
 
-async function getUserData(uid: string) {
-    const roomRef = firebase.firestore().collection("users").doc(uid)
-    const data = await roomRef.get();
-    return (data.exists) ? data.data() : {};
+interface FbUser {
+    email: string,
+    phoneNumber: string,
+    displayName: string,
+    website: string,
+    bio: string,
+    picture: string,
+    coverPhoto: string,
+    roles: Array<string>
 }
-
-/* type Props = {
-    children : ReactNode,
-    dispatch: Function
-}
- */
 
 async function postData(url = '', data = {}) {
-    console.log("postData")
-    // Default options are marked with *
     const response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
@@ -77,7 +71,6 @@ async function postData(url = '', data = {}) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-
 export function withCmsHooks(PassedComponent: any) {
     return function WrappedComponent(props: object) {
         const sideEntityController = useSideEntityController();
@@ -89,10 +82,9 @@ export function withCmsHooks(PassedComponent: any) {
 
 export function FirebaseCMS(props: any) {
 
-    // const [userDB] = useState<firebase.firestore.DocumentData>();
-    const {pathname} = useLocation();
-    // let history = useHistory();
-    const state: any = useSelector(state => state) //global state
+    const [fbUser, setFbUser] = useState<FbUser>();
+    // const {pathname} = useLocation();
+    // const state: any = useSelector(state => state) //global state
 
     const [
         firebaseConfigInitialized,
@@ -103,10 +95,22 @@ export function FirebaseCMS(props: any) {
         if (firebase.apps.length === 0) {
 
             try {
+                /* TODO: TRACE WebSockets messages to console
+                if (process.env.NODE_ENV === 'development') {
+                    // @ts-ignore
+                    firebase.setLogLevel("debug");
+                    // @ts-ignore
+                    firebase.onLog((level: LogLevel, msg: string, args: any[], type: string) => {
+                        console.log(level, msg, args, type)
+                    });
+                }
+                 */
+
                 const fbApp = firebase.initializeApp(firebaseConfig);
-                (window as any).storage = fbApp.storage();
+
+                (window as any).fbStorage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
-                if (document.location.hostname === 'localhost' && document.location.search.indexOf('useEmulator') > -1) {
+                if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
                     fbApp.functions().useEmulator("localhost", 5001);
                     fbApp.auth().useEmulator("http://localhost:9099");
                     (window as any).fireDB.useEmulator("localhost", 8080);
@@ -129,66 +133,66 @@ export function FirebaseCMS(props: any) {
 
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
-        if (user && user !== null && user.emailVerified === true) {
-            return {
-                collections: [
-                    buildUserCollection(user),
-                    buildResourceCollection(user),
-                    buildResourceTypeCollection(user),
-                    buildTopicCollection(user),
-                    buildStateCollection(user),
-                    buildStakeholderCollection(user),
-                    buildRallyCollection(user),
-                    buildPartyCollection(user),
-                    buildPageCollection(user),
-                    buildOfficialCollection(user),
-                    buildMeetingTypeCollection(user),
-                    buildInviteCollection(user),
-                    buildCityCollection(user),
-                    buildActionPlanCollection(user),
-                    wiseDemoCollection
-                ]
+        console.log('navigation fb user: ', user, fbUser)
+        const navItems = [];
+
+        if (user?.isAnonymous === false) {
+            navItems.push(
+                buildResourceCollection(user, fbUser),
+                buildRallyCollection(user, fbUser),
+                buildActionPlanCollection(user, fbUser)
+            )
+            if (fbUser?.roles.includes('editor')) {
+                navItems.push(
+                    buildMeetingTypeCollection(user, fbUser),
+                    buildSubscriptionCollection(user, fbUser),
+                    buildTopicCollection(user, fbUser),
+                    buildResourceTypeCollection(user, fbUser),
+                    buildStateCollection(user, fbUser),
+                    buildStakeholderCollection(user, fbUser),
+                    buildPartyCollection(user, fbUser),
+                    buildOfficialCollection(user, fbUser),
+                    buildCityCollection(user, fbUser),
+                    wiseDemoCollection(user, fbUser)
+                )
             }
-        } else {
-            return {
-                collections: [
-                    buildResourceCollection(user),
-                    buildRallyCollection(user),
-                    buildActionPlanCollection(user)
-                ]
+            if (fbUser?.roles.includes('admin')) {
+                navItems.push(buildUserCollection(user, fbUser))
             }
         }
+        // console.log(navItems);
+        return {collections: navItems};
     };
 
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
-        console.log("Allowing access to", user?.toJSON());
+
+        console.info("Allowing access to", user?.toJSON());
+
         if (user) {
-            // console.log(state.auth, "auth")
-            // if (pathname === "/login") return (window as any).location.pathname = "/rallies"; // TODO go to user profile
+            let idToken = await user.getIdToken(true).then(idToken => idToken);
+            console.info("Sync with " + idToken, user.toJSON());
 
-            // TODO: post user.providerData to /auth/syncUser
-
-            let authUser = user.toJSON();
-            let idToken = await user.getIdToken().then(idToken => idToken) // == authUser.stsTokenManager.accessToken; ??
-
-            console.log("sync with " + idToken, authUser);
-
-            let mergedUser = postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
+            await postData(process.env.REACT_APP_FUNCTIONS_URL + "/syncUser", {idToken})
                 .then(data => {
-                    console.log(data, "data sync user");
-                    return data;
-                });
+                    if (!data) {
+                        console.error("invalid sync request")
+                    } else if (data.message) {
+                        console.error(data.message);
+                    } else {
+                        console.log('setting fbUser', data);
+                        setFbUser(data);
 
-            // TODO: set mergedUser redux store or ideally FireCMS authContext
+                        // TODO: upgrade firecms & implement setExtra :: https://github.com/Camberi/firecms/issues/72#issuecomment-848643187
+                        // authController.setExtra(data);
+                    }
 
-            /*
-            // listen for role changes from other providers on settings / profile  pages
-            firebase.auth().onAuthStateChanged(function(user) {
-             window.user = user; // user is undefined if no user signed in
-            });
-             */
+                    return data
+                })
+                .catch(e => console.error(e))
+
+            return true;
         }
-        return true;
+        return false;
     };
 
     if (!firebaseConfigInitialized) {
@@ -210,6 +214,7 @@ export function FirebaseCMS(props: any) {
                     firebase.auth.EmailAuthProvider.PROVIDER_ID,
                     firebase.auth.PhoneAuthProvider.PROVIDER_ID,
                 ]}
+                allowSkipLogin={false}
                 navigation={navigation}
                 firebaseConfig={firebaseConfig}
                 {...others}

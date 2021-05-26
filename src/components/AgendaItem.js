@@ -122,8 +122,8 @@ class AgendaItem extends React.Component {
                                     allowedIframeHostnames={['www.youtube.com', 'docs.google.com', 'sheets.google.com']}
                                     allowIframeRelativeUrls={false}
                                     allowedSchemes={[ 'data', 'https' ]}
-                                    allowedTags={Config.allowedTags}
-                                    allowedAttributes={Config.allowedAttributes}
+                                    allowedTags={Config.richTags}
+                                    allowedAttributes={Config.richAttributes}
                                     exclusiveFilter={frame => {
                                         if (frame.tag === 'iframe') {
                                             console.log(frame);

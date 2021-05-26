@@ -8,6 +8,11 @@
 # TypeScript v1 declaration files
 typings/
 
+functions/democraseeclub-firebase-admin.json
+build
+lib
+firestoredump
+
 # Node.js dependency directory
 node_modules/
 

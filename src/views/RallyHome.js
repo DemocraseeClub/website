@@ -1,5 +1,4 @@
-import {connect} from 'react-redux';
-import {entityData} from '../redux/entityDataReducer';
+import { normalizeRally} from '../redux/entityDataReducer';
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
@@ -13,7 +12,9 @@ class RallyHome extends Component {
 
     constructor(p) {
         super(p);
-        this.state = {editMode: false};
+        this.state = {editMode: false, loading: true,
+            rally: false,
+            error: null};
     }
 
     componentDidMount() {
@@ -26,18 +27,21 @@ class RallyHome extends Component {
         }
     }
 
-    refresh() {
-        // TODO: connect to Firebase DB (https://github.com/eliataylor/clock-agendas/issues/5)
-        let url = '/json/' + this.props.match.params.rid + '/index.json';
-        console.log(url);
-        return this.props.dispatch(entityData(url));
+    async refresh() {
+        const roomRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
+        let doc = await roomRef.get();
+        if (doc.exists) {
+            let rally = await normalizeRally(doc, 1);
+            this.setState({rally:rally, loading:false, error:false})
+        } else {
+            this.setState({rally:false, loading:false, error:'invalid id'})
+        }
     }
 
     render() {
-        if (this.props.entity.loading === true) return <ProgressLoading/>;
-        if (this.props.entity.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography variant='h2'>{this.props.entity.error}</Typography></div>;
-        if (!this.props.entity.apiData) return 'no results';
-        const rally = this.props.entity.apiData;
+        if (this.state.loading === true) return <ProgressLoading/>;
+        if (this.state.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography variant='h2'>{this.state.error}</Typography></div>;
+        const {rally} = this.state;
 
         return (
             <React.Fragment>
@@ -45,15 +49,15 @@ class RallyHome extends Component {
 
                 <Box p={3}>
                 {!rally.meetings ? '' :
-                (rally.meetings.length === 0)
+                (rally?.meetings.length === 0)
                     ?
-                    <span>No meetings yet. <u onClick={() =>  window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
+                    <span>No meetings yet. <u onClick={() => window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
                     :
                         <React.Fragment>
                             <Typography variant='subtitle1'>Meetings</Typography>
                             {rally.meetings.map((r, i) => {
                                 return <Grid item key={r.title + '-' + i}>
-                                    <NavLink to={r.link}>
+                                    <NavLink to={`/rally/${rally.id}/meeting/${r.id}`}>
                                         <Typography variant={'h4'}>{r.title}</Typography>
                                     </NavLink>
                                 </Grid>
@@ -64,15 +68,6 @@ class RallyHome extends Component {
             </React.Fragment>
         );
     }
-
-
 }
 
-const mapStateToProps = (state) => {
-    const newState = {me: state.auth.me};
-    newState.entity = state.entity;
-    newState.location = state.router.location;
-    return newState;
-};
-
-export default connect(mapStateToProps, null)(withRouter(RallyHome));
+export default withRouter(RallyHome);

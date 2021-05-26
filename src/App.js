@@ -18,7 +18,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {SnackbarProvider} from "notistack";
 import CancelIcon from '@material-ui/icons/Cancel';
-import RallyCreate from "./views/RallyCreate";
 import {useSelector} from "react-redux";
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
 
@@ -107,6 +106,7 @@ function App(props) {
                                 <Route path="/c/:entity">
                                     <CMSMainView {...cmsParams} />
                                 </Route>
+
                                 <Route path="/rallies">
                                     <Rallies/>
                                     <div style={{display: "none"}}>
@@ -117,13 +117,15 @@ function App(props) {
                                 <Route path="/values"><Topics/></Route>
                                 <Route path="/resources"><Resources/></Route>
                                 <Route path="/sponsors"><Sponsors/></Route>
-                                <Route exact path="/rally/:rid/meeting/:mid" component={MeetingHome}/>
+
+                                <Route exact path="/rally/:rid/meeting/:mid" component={MeetingHome} />
                                 <Route exact path="/rally/templates" component={RallyTemplates}/>
                                 <Route exact path="/rally/:rid" component={RallyHome}/>
+                                <Route exact path="/office-hours/:uid" component={Home}/>
+                                <Route exact path="/citizen/:uid" component={Home}/> {/* TODO: create User profile */}
+                                <Route exact path="/my-profile" component={Home}/> {/* TODO: same as User profile with Account Edit buttons*/}
                                 <Route path="/about"><About/></Route>
                                 <Route path="/ethics"><Ethics/></Route>
-                                <Route path="/users"><Ethics/></Route>
-                                <Route path="/rallyCreate" component={RallyCreate}/>
                                 <Route path="/"><Home/></Route>
                             </Switch>
 

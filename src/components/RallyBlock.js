@@ -17,6 +17,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import moment from "moment";
 
 const ROUNDTABLEMAP = [
     {top:39, left:181},
@@ -31,6 +32,7 @@ const ROUNDTABLEMAP = [
 class RallyHome extends Component {
 
     constructor(p) {
+        console.log("RENDER RALLY", p.rally);
         super(p);
         this.state = {editMode: p.editMode || false};
     }
@@ -41,26 +43,31 @@ class RallyHome extends Component {
     }
 
     render() {
-        const {classes, rally} = this.props;
+        const {classes, rally, meeting} = this.props;
 
-        let tags = ['wisedemo', 'targets', 'topics', 'stackholders'].reduce((acc, val) => {
+        let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
-                acc = acc.concat(rally[val]);
+                acc = acc.concat(rally[val].map(o => o.name));
             }
             return acc;
         }, [])
         if (tags.length > 0) {
             tags = [<div key={'tags'}>{tags.join(' ● ')}</div>]
         }
-        if (rally.type === 'meeting') {
+        if (document.location.pathname.indexOf('/meetings/') > -1) {
             let href = document.location.pathname.split('/').slice(0, 3).join('/');
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = (rally.speakers) ? rally.hosts.concat(rally.speakers) : rally.hosts;
+        let profiles = [];
+        if (meeting) {
+            profiles = (meeting.speakers) ? meeting.moderators.concat(meeting.speakers) : meeting.moderators;
+        }
         while(profiles.length < 7) {
             profiles.push({name:'Apply to Speak', icon:'+'})
         }
+
+        let start = !meeting || !meeting.start_end_times  ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
         return (
             <React.Fragment>
@@ -76,8 +83,8 @@ class RallyHome extends Component {
                                 <source src={rally.videofile} type="video/mp4" />
                             </video></Grid> : ''}
                     <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
-                        {(rally.profile) ?
-                            <img alt={rally.title} src={rally.profile} style={{maxWidth: '100%', textAlign:'center'}} />
+                        {(rally.picture) ?
+                            <img alt={rally.title} src={rally.picture} style={{maxWidth: '100%', textAlign:'center'}} />
                             :
                             <Box p={2} ml={4}>
                                 <Button variant={'contained'} disableElevation={true} color={'secondary'}
@@ -89,34 +96,21 @@ class RallyHome extends Component {
                         <Box p={1}>
                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
                         {rally.desc ? <SanitizedHTML
-                            allowedIframeDomains={['youtube.com', 'google.com']}
-                            allowedIframeHostnames={['www.youtube.com', 'docs.google.com', 'sheets.google.com']}
-                            allowIframeRelativeUrls={false}
-                            allowedSchemes={[ 'data', 'https' ]}
                             allowedTags={Config.allowedTags}
                             allowedAttributes={Config.allowedAttributes}
-                            exclusiveFilter={frame => {
-                                if (frame.tag === 'iframe') {
-                                    console.log(frame);
-                                    if (frame.attribs.src.indexOf('https://docs.google.com') !== 0 && frame.attribs.src.indexOf('https://sheets.google.com') !== 0) {
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            }}
                             html={rally.desc} /> : ''}
 
-                        {!rally.start || rally.start === 'tomorrow' ?
+                        {!start ?
                             <Box mt={4}>
                                 <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
                                 <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe to Schedule</Button>
                             </Box>
                             :
-                            <Typography variant='h6' >{rally.start}</Typography>
+                            <Typography variant='h6' >{start.format()}</Typography>
                         }
                         </Box>
 
-                        {rally.start && new Date(rally.start) > new Date().getTime() ?
+                        {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
@@ -124,7 +118,7 @@ class RallyHome extends Component {
                                         {r.img ? <Avatar alt={r.name} src={r.img} />
                                         :
                                         <Avatar>{r.icon || r.name}</Avatar>}
-ƒ                                    </ListItemIcon>
+                                    </ListItemIcon>
                                     <ListItemText primary={r.name} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
@@ -144,12 +138,12 @@ class RallyHome extends Component {
                     </Grid>
 
 
-                    {(rally.research_json && rally.research_json.length > 0)
+                    {(rally?.research && rally.research.length > 0)
                         ?
                         <Box mt={4} p={3} style={{width:'100%'}}>
                             <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
                             <List component="nav" aria-label="research links">
-                                {rally.research_json.map(r => {
+                                {rally.research.map(r => {
                                     return <ListItem button key={r.link}>
                                         {r.img && <ListItemIcon>
                                             <img src={r.img} height={20} alt={'source logo'} />
