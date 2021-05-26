@@ -1,6 +1,5 @@
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {NavLink} from "react-router-dom";
@@ -17,35 +16,26 @@ import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
 import {withRouter} from "react-router";
 import {withCmsHooks} from "./firebaseCMS/FirebaseCMS";
+import {normalizeRally} from "../redux/entityDataReducer";
 
 class Rallies extends React.Component {
     constructor(p) {
         super(p);
-        this.state = {
-            error: false,
-            loading: true,
-            rallies: [],
-        };
+        this.state = {error: false, loading: true, rallies: []};
     }
 
-    componentWillMount() {
-        fetch(process.env.REACT_APP_FUNCTIONS_URL + "/rallies")
-            .then((response) => response.json())
-            .then(async (data) => {
-                for (let i = 0; i < data.length; i++) {
-                    try {
-                        if (data[i].picture) {
-                            let path = window.storage.ref(data[i].picture);
-                            const url = await path.getDownloadURL();
-                            data[i].picture = url;
-                        }
-                    } catch (e) {
-                    }
-                }
-                this.setState({rallies: data, loading: false});
-                return data;
-            })
-            .catch((err) => console.log(err));
+    componentDidMount() {
+        this.handleChange()
+    }
+
+    async handleChange() {
+        try {
+            let snapshots = await window.fireDB.collection("rallies").limit(25).get();
+            const rallies = await Promise.all(snapshots.docs.map(normalizeRally, 0))
+            this.setState({loading: false, rallies: rallies, error: false});
+        } catch (error) {
+            this.setState({loading: false, error: error.message});
+        }
     }
 
     trackSubscribe(id) {
@@ -67,15 +57,16 @@ class Rallies extends React.Component {
 
     render() {
         const {loading} = this.state;
+        const {classes} = this.props;
 
         return (
-            <Box p={4} className={this.props.classes.section}>
-                <Grid container justify={'space-between'} align={'center'} style={{marginBottom:10}} >
+            <React.Fragment>
+                <Grid container item className={classes.sectionSecondary} align={'center'} justify={'space-between'}>
                     <Grid item>
                         <Typography variant={"h3"}>Rallying</Typography>
                     </Grid>
                     <Grid item>
-                        <NavLink to={"/rally/templates"} style={{textDecoration: "none", marginRight: 5}} >
+                        <NavLink to={"/rally/templates"} style={{textDecoration: "none", marginRight: 5}}>
                             <Button variant={"contained"} color={"secondary"}>
                                 Rally Templates
                             </Button>
@@ -83,7 +74,7 @@ class Rallies extends React.Component {
 
                         <Button
                             variant={"contained"}
-                            className={this.props.classes.redBtn}
+                            className={classes.redBtn}
                             onClick={() => this.showRallyForm()}
                         >
                             Start a Rally
@@ -92,40 +83,46 @@ class Rallies extends React.Component {
                 </Grid>
 
                 <Grid
+                    item
                     container
                     justify={"space-around"}
                     spacing={4}
                     alignItems="stretch"
+                    className={classes.section}
                 >
-                    {loading === true ? [1, 2, 3, 4, 5, 6].map(
-                        (num, key) => (
-                            <Grid key={'rskeleton' + key} item xs={12} sm={6} md={4}>
-                                <Card className={this.props.classes.cardSkeleton}>
-                                    <CardActionArea>
-                                        <Skeleton variant="rect" width="100%" height={200}/>
-                                        <CardContent>
-                                            <Skeleton width="40%"/>
-                                            <Skeleton/>
-                                            <Skeleton/>
-                                            <Skeleton/>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions style={{justifyContent: "space-between"}}>
-                                        <Button size="small" color="primary">
-                                            View
-                                        </Button>
-                                        <Button size="small" color="primary">
-                                            Subscribe
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        )
-                        )
-                        : this.state.rallies.map(
+                    {this.state.error !== false ?
+                        <Typography variant={'h4'}>{this.state.error}</Typography>
+                        :
+                        (loading === true)
+                            ? [1, 2, 3, 4, 5, 6].map(
+                            (num, key) => (
+                                <Grid key={'rskeleton' + key} item xs={12} sm={6} md={4}>
+                                    <Card className={classes.cardSkeleton}>
+                                        <CardActionArea>
+                                            <Skeleton variant="rect" width="100%" height={200}/>
+                                            <CardContent>
+                                                <Skeleton width="40%"/>
+                                                <Skeleton/>
+                                                <Skeleton/>
+                                                <Skeleton/>
+                                            </CardContent>
+                                        </CardActionArea>
+                                        <CardActions style={{justifyContent: "space-between"}}>
+                                            <Button size="small" color="primary">
+                                                View
+                                            </Button>
+                                            <Button size="small" color="primary">
+                                                Subscribe
+                                            </Button>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            )
+                            )
+                            : this.state.rallies.map(
                             (item, key) => (
                                 <Grid key={'rally' + key} item xs={12} sm={6} md={4}>
-                                    <Card className={this.props.classes.card}>
+                                    <Card className={classes.card}>
                                         <CardActionArea>
                                             <NavLink to={`/rally/${item.id}`}>
                                                 <CardMedia
@@ -134,7 +131,7 @@ class Rallies extends React.Component {
                                                         e.target.src = "images/citizencoin.png";
                                                     }
                                                     }
-                                                    className={this.props.classes.cardMedia}
+                                                    className={classes.cardMedia}
                                                     component="img"
                                                     alt={item.title}
                                                     height="200"
@@ -154,7 +151,7 @@ class Rallies extends React.Component {
                                                 </Typography>
                                             </CardContent>
                                         </CardActionArea>
-                                        <CardActions style={{justifyContent: "space-between", padding: '0 10px'}}>
+                                        <CardActions style={{justifyContent: "space-between"}}>
                                             <NavLink to={`/rally/${item.id}`}>
                                                 <Button size="small" color="primary" style={{minWidth: "auto"}}>
                                                     View
@@ -168,11 +165,11 @@ class Rallies extends React.Component {
                                     </Card>
                                 </Grid>
                             )
-                        )}
+                            )}
                 </Grid>
-            </Box>
+            </React.Fragment>
         );
     }
 }
 
-export default withStyles(rallyStyles)(withSnackbar(withCmsHooks(withRouter(Rallies))));
+export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(withCmsHooks(withRouter(Rallies))));

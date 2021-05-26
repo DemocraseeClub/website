@@ -26,7 +26,7 @@ class About extends React.Component {
         //get the images urls
         for (let i = 0; i < data.length; i++) {
           if (data[i].picture) {
-            let path = window.storage.ref(data[i].picture);
+            let path = window.fbStorage.ref(data[i].picture);
             const url = await path.getDownloadURL();
             data[i].picture = url;
           }
@@ -52,7 +52,7 @@ class About extends React.Component {
     //     (async function () {
     //       for (let i = 0; i < auxTeam.length; i++) {
     //         if (auxTeam[i].picture) {
-    //           let path = window.storage.ref(auxTeam[i].picture);
+    //           let path = window.fbStorage.ref(auxTeam[i].picture);
     //           const url = await path.getDownloadURL();
     //           auxTeam[i].picture = url;
     //         }

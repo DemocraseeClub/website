@@ -31,6 +31,7 @@ const ROUNDTABLEMAP = [
 class RallyHome extends Component {
 
     constructor(p) {
+        console.log("RENDER RALLY", p.rally);
         super(p);
         this.state = {editMode: p.editMode || false};
     }
@@ -42,11 +43,11 @@ class RallyHome extends Component {
 
     render() {
         const {classes, rally} = this.props;
-        const meeting = rally.meetings.length > 0 ? rally.meetings[0] : false;
+        const meeting = rally?.meetings && rally.meetings.length > 0 ? rally.meetings[0] : false;
 
-        let tags = ['wisedemo', 'targets', 'topics', 'stackholders'].reduce((acc, val) => {
+        let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
-                acc = acc.concat(rally[val]);
+                acc = acc.concat(rally[val].map(o => o.name));
             }
             return acc;
         }, [])
@@ -80,8 +81,8 @@ class RallyHome extends Component {
                                 <source src={rally.videofile} type="video/mp4" />
                             </video></Grid> : ''}
                     <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
-                        {(rally.profile) ?
-                            <img alt={rally.title} src={rally.profile} style={{maxWidth: '100%', textAlign:'center'}} />
+                        {(rally.picture) ?
+                            <img alt={rally.title} src={rally.picture} style={{maxWidth: '100%', textAlign:'center'}} />
                             :
                             <Box p={2} ml={4}>
                                 <Button variant={'contained'} disableElevation={true} color={'secondary'}
