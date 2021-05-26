@@ -153,14 +153,14 @@ export function FirebaseCMS(props: any) {
     };
 
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
-        console.log("Allowing access to", user?.toJSON());
+
+        console.info("Allowing access to", user?.toJSON());
+
         if (user) {
-
-            let authUser = user.toJSON();
             let idToken = await user.getIdToken(true).then(idToken => idToken);
-            console.log("sync with " + idToken, authUser);
+            console.info("Sync with " + idToken, user.toJSON());
 
-            await postData(process.env.REACT_APP_FUNCTIONS_URL + '/syncUser', {authUser, idToken})
+            await postData(process.env.REACT_APP_FUNCTIONS_URL + "/syncUser", {idToken})
                 .then(data => {
                     if (!data) {
                         console.error("invalid sync request")

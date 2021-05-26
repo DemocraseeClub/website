@@ -148,20 +148,16 @@ app.get("/rallies", async (req, res) => {
     }
 });
 
-app.post("/syncUser", async (req, res, next) => {
+app.post("/syncUser", async (req, res) => {
     if (!req.body || !req.body.idToken) {
         return res.status(400).send('invalid post');
     }
-
-    // functions.logger.log("POST DATA", req.body);
 
     return admin
         .auth()
         .verifyIdToken(req.body.idToken)
         .then(async (decodedToken) => {
-            const {uid, email, phone_number} = decodedToken;
-            let identities = decodedToken.firebase.identities;
-            console.log(identities)
+            let uid = decodedToken.uid;
 
             if (!uid) {
                 functions.logger.error("UID IS NULL: ", decodedToken);
@@ -169,23 +165,25 @@ app.post("/syncUser", async (req, res, next) => {
             }
             let snapshot = await db.collection("users").doc(uid).get();
 
-            if (!snapshot.exists && phone_number) {
-                let query = await db.collection("users").where("phoneNumber", "==", phone_number).limit(1).get();
+            if (!snapshot.exists && decodedToken.phone_number) {
+                let query = await db.collection("users").where("phoneNumber", "==", decodedToken.phone_number).limit(1).get();
                 if (query.size > 0) {
                     snapshot = query.docs[0];
-                    functions.logger.log("user by phone", snapshot.data());
+                    uid = query.docs[0].id;
+                    functions.logger.warn("found user by phone "  + uid, snapshot.data());
                 } else {
-                    functions.logger.log("no user by phone " + phone_number);
+                    functions.logger.info("no user by phone " + decodedToken.phone_number);
                 }
             }
 
-            if (!snapshot.exists && email) {
-                let query = await db.collection("users").where("email", "==", email).limit(1).get();
+            if (!snapshot.exists && decodedToken.email) {
+                let query = await db.collection("users").where("email", "==", decodedToken.email).limit(1).get();
                 if (query.size > 0) {
                     snapshot = query.docs[0];
-                    functions.logger.log("user by email", snapshot.data());
+                    uid = query.docs[0].id;
+                    functions.logger.warn("found user by email"  + uid, snapshot.data());
                 } else {
-                    functions.logger.log("no user by email " + email);
+                    functions.logger.info("no user by email " + decodedToken.email);
                 }
             }
 
@@ -194,32 +192,25 @@ app.post("/syncUser", async (req, res, next) => {
             let firebaseUser =  (snapshot.exists) ?
                 snapshot.data()
                 :
-                {
-                    email:email,
-                    phoneNumber:phone_number,
-                    displayName:"",
-                    website: "",
-                    bio: "",
-                    picture: "", // postedUser.providerData.photoURL, // TODO: hotlink or move to storage???
-                    coverPhoto: "",
-                    roles: [],
-                    providerData :{},
-                    created: now,
-                    modified: now
-                }
+                {created: now, modified: now}
 
             firebaseUser.lastSync = now;
 
-            if (!firebaseUser.email || firebaseUser.email === '') {
+            if (decodedToken.roles && firebaseUser?.roles.includes("email_verified") === false) {
+                firebaseUser.roles?.push("email_verified");
+            }
+            if (decodedToken.email && (!firebaseUser.email || firebaseUser.email === '')) {
                 firebaseUser.email = decodedToken.email;
             }
-            if (!firebaseUser.phoneNumber || firebaseUser.phoneNumber === '') {
+            if (decodedToken.phone_number && (!firebaseUser.phoneNumber || firebaseUser.phoneNumber === '')) {
                 firebaseUser.phoneNumber = decodedToken.phone_number;
             }
-            if (!firebaseUser.picture || firebaseUser.picture === '') {
+            if (decodedToken.picture && (!firebaseUser.picture || firebaseUser.picture === '')) {
                 firebaseUser.picture = decodedToken.picture;
             }
 
+            let identities = decodedToken.firebase.identities;
+            functions.logger.info(identities)
             let mergers = getIdentityMap(decodedToken.firebase.sign_in_provider)
             for (let prop in mergers) {
                 if (!firebaseUser[prop] || firebaseUser[prop] === '') {
@@ -233,8 +224,10 @@ app.post("/syncUser", async (req, res, next) => {
             if (!firebaseUser.displayName) {
                 firebaseUser.displayName = 'Citizen'; // random string
             }
+            if (!firebaseUser.roles) {
+                firebaseUser.roles = [];
+            }
 
-            // auth.currentUser.linkWithRedirect(provider).then().catch();
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
             await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
@@ -255,7 +248,8 @@ app.post("/syncUser", async (req, res, next) => {
 });
 
 function getIdentityMap(provider) {
-    // { phone: [ '+18088555665' ] }
+    // phone { phone: [ '+18088555665' ] }
+    // password { email: [ 'eliabrahamtaylor@gmail.com' ] }
     // sign_in_provider === "anonymous", "password", "facebook.com", "github.com", "google.com", "twitter.com", "apple.com", "microsoft.com", "yahoo.com", "phone", "playgames.google.com", "gc.apple.com", or "custom"`.
     if (provider === 'google.com') {
         return {email: "email", phoneNumber: "phoneNumber", displayName: "displayName"}
