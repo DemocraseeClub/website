@@ -89,7 +89,7 @@ app.get("/rallies", async (req, res) => {
 
             /*
             investigate https://stackoverflow.com/questions/42956250/get-download-url-from-file-uploaded-with-cloud-functions-for-firebase
-            console.log("RALLY PHOTO " + obj.id, obj.picture);
+            functions.logger.log("RALLY PHOTO " + obj.id, obj.picture);
             if (obj.picture) {
                 let path = storage.ref(obj.picture);
                 const url = await path.getDownloadURL();
@@ -143,7 +143,7 @@ app.get("/rallies", async (req, res) => {
         return res.status(200).json(response);
 
     } catch (error) {
-        console.error("RALLY ERROR: " + error.message);
+        functions.logger.error("RALLY ERROR: " + error.message);
         return res.status(500).send(error);
     }
 });
@@ -153,55 +153,54 @@ app.post("/syncUser", async (req, res, next) => {
         return res.status(400).send('invalid post');
     }
 
-    // console.log("POST DATA", req.body);
+    // functions.logger.log("POST DATA", req.body);
 
     return admin
         .auth()
         .verifyIdToken(req.body.idToken)
         .then(async (decodedToken) => {
-            const uid = decodedToken.uid;
+            const {uid, email, phone_number} = decodedToken;
+            let identities = decodedToken.firebase.identities;
+            console.log(identities)
+
             if (!uid) {
-                console.error("UID IS NULL: " + JSON.stringify(decodedToken));
-                return res.status(204).send('invalid uid');
+                functions.logger.error("UID IS NULL: ", decodedToken);
+                return res.status(204).send({message:'invalid uid'});
             }
             let snapshot = await db.collection("users").doc(uid).get();
 
-            if (!snapshot.exists && req.body.authUser.providerData.length > 0) {
-                for(let i=0; i < req.body.authUser.providerData.length; i++) {
-                    if (req.body.authUser.providerData[i].phoneNumber) {
-                        snapshot = await db.collection("users").where("phoneNumber", "==", req.body.authUser.providerData[i].phoneNumber).get();
-                        if (snapshot.exists) {
-                            console.log("user by phone", ...snapshot.data());
-                            break;
-                        } else {
-                            console.log("no user by phone " + req.body.authUser.providerData[i].phoneNumber);
-                        }
-                    }
+            if (!snapshot.exists && phone_number) {
+                let query = await db.collection("users").where("phoneNumber", "==", phone_number).limit(1).get();
+                if (query.size > 0) {
+                    snapshot = query.docs[0];
+                    functions.logger.log("user by phone", snapshot.data());
+                } else {
+                    functions.logger.log("no user by phone " + phone_number);
+                }
+            }
 
-                    if (req.body.authUser.providerData[i].email) {
-                        snapshot = await db.collection("users").where("email", "==", req.body.authUser.providerData[i].email).get();
-                        if (snapshot.exists) {
-                            console.log("user by email", ...snapshot.data());
-                            break;
-                        } else {
-                            console.log("no user by email " + req.body.authUser.providerData[i].email);
-                        }
-                    }
+            if (!snapshot.exists && email) {
+                let query = await db.collection("users").where("email", "==", email).limit(1).get();
+                if (query.size > 0) {
+                    snapshot = query.docs[0];
+                    functions.logger.log("user by email", snapshot.data());
+                } else {
+                    functions.logger.log("no user by email " + email);
                 }
             }
 
             const now = admin.firestore.FieldValue.serverTimestamp();
 
             let firebaseUser =  (snapshot.exists) ?
-                {...snapshot.data()}
+                snapshot.data()
                 :
                 {
-                    email:"",
-                    phoneNumber:"",
+                    email:email,
+                    phoneNumber:phone_number,
                     displayName:"",
                     website: "",
                     bio: "",
-                    picture: "", // req.body.authUser.providerData.photoURL, // TODO: hotlink or move to storage???
+                    picture: "", // postedUser.providerData.photoURL, // TODO: hotlink or move to storage???
                     coverPhoto: "",
                     roles: [],
                     providerData :{},
@@ -211,18 +210,28 @@ app.post("/syncUser", async (req, res, next) => {
 
             firebaseUser.lastSync = now;
 
-            for (let i = 0; i < req.body.authUser.providerData.length; i++) {
-                let data = req.body.authUser.providerData[i]; // TODO: Fix so we can validate / trust this post data before merging
-                firebaseUser.providerData[data.providerId] = data;
-                let mergers = {email: "email", phoneNumber: "phoneNumber", displayName: "displayName"}
-                for (let prop in mergers) {
-                    if (!firebaseUser[prop] || firebaseUser[prop] === '') {
-                        let val = data[mergers[prop]];
-                        if (val && val !== '') {
-                            firebaseUser[prop] = val;
-                        }
+            if (!firebaseUser.email || firebaseUser.email === '') {
+                firebaseUser.email = decodedToken.email;
+            }
+            if (!firebaseUser.phoneNumber || firebaseUser.phoneNumber === '') {
+                firebaseUser.phoneNumber = decodedToken.phone_number;
+            }
+            if (!firebaseUser.picture || firebaseUser.picture === '') {
+                firebaseUser.picture = decodedToken.picture;
+            }
+
+            let mergers = getIdentityMap(decodedToken.firebase.sign_in_provider)
+            for (let prop in mergers) {
+                if (!firebaseUser[prop] || firebaseUser[prop] === '') {
+                    let val = identities[decodedToken.firebase.sign_in_provider][mergers[prop]];
+                    if (val && val !== '') {
+                        firebaseUser[prop] = val;
                     }
                 }
+            }
+
+            if (!firebaseUser.displayName) {
+                firebaseUser.displayName = 'Citizen'; // random string
             }
 
             // auth.currentUser.linkWithRedirect(provider).then().catch();
@@ -231,11 +240,11 @@ app.post("/syncUser", async (req, res, next) => {
             await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
             const doc = await db.collection('users').doc(uid).get();
             if (!doc.exists) {
-                console.log('Failed to sync doc ' + JSON.stringify(firebaseUser));
-                return res.status(500).json('Failed to sync your account profiles');
+                functions.logger.log('Failed to sync doc ',  firebaseUser);
+                return res.status(500).json({message:'Failed to sync your account profiles'});
             }
 
-            console.info("synced user: " + JSON.stringify(doc.data()));
+            functions.logger.info("synced user: " + uid, doc.data());
             return res.status(200).json(doc.data());
 
 
@@ -245,6 +254,16 @@ app.post("/syncUser", async (req, res, next) => {
         });
 });
 
+function getIdentityMap(provider) {
+    // { phone: [ '+18088555665' ] }
+    // sign_in_provider === "anonymous", "password", "facebook.com", "github.com", "google.com", "twitter.com", "apple.com", "microsoft.com", "yahoo.com", "phone", "playgames.google.com", "gc.apple.com", or "custom"`.
+    if (provider === 'google.com') {
+        return {email: "email", phoneNumber: "phoneNumber", displayName: "displayName"}
+    } else {
+
+    }
+    return {};
+}
 
 const site_root = path.resolve(__dirname + "/..");
 
@@ -254,7 +273,7 @@ exports.injectMeta = functions.https.onRequest((req, res, next) => {
     const pathname = req.path; // Short-hand for url.parse(req.url).pathname
     if (pathname.indexOf("/rally/") === 0) {
         let template = fs.readFileSync(`${site_root}/build/index.html`, "utf8");
-        // console.log("INJECTING ON " + pathname);
+        // functions.logger.log("INJECTING ON " + pathname);
         // TODO: query for rally meta data (description, video, image , ...)
         let meta = `<meta property="og:description" content="Incentivizing Civic Action" />
             <meta property="Description" content="Incentivizing Civic Action || Tailgate your townhall" />

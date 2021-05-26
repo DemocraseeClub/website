@@ -110,7 +110,7 @@ class Resources extends React.Component {
                         <Typography variant={"h5"} className={classes.sectionTitle}>
                             <b>Request and Receive Help From Your Community</b>
                         </Typography>
-                        <Typography variant={"h6"} className={classes.sectionSubtitle} m>
+                        <Typography variant={"h6"} className={classes.sectionSubtitle} >
                             Pay with cash or CitizenCoin earned through contributions to this
                             community platform
                         </Typography>
@@ -166,7 +166,7 @@ class Resources extends React.Component {
                             }}
                                                checked={this.state.hasOfficeHours} color="primary"/>}
                             label="Office Hours"
-                            labelPlacement="left"
+                            labelPlacement="start"
                         />
                     </Grid>
                     {/*  <Grid item>
