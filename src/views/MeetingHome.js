@@ -1,5 +1,3 @@
-import {connect} from 'react-redux';
-import {entityData} from '../redux/entityDataReducer';
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
@@ -13,12 +11,20 @@ import {withSnackbar} from "notistack";
 import RallyBlock from "../components/RallyBlock";
 import Create from "@material-ui/icons/Create";
 import Grid from "@material-ui/core/Grid";
+import {connect} from 'react-redux';
+import {
+    entityDataFailure,
+    entityDataStarted,
+    entityDataSuccess,
+    initCounter, normalizeMeeting,
+    normalizeRally
+} from "../redux/entityDataReducer";
 
 class MeetingHome extends Component {
 
     constructor(p) {
         super(p);
-        this.state = {editMode:false};
+        this.state = {editMode: false};
     }
 
     componentDidMount() {
@@ -28,17 +34,28 @@ class MeetingHome extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.location.pathname !== prevProps.location.pathname || this.props.location.search !== prevProps.location.search) {
             this.refresh();
-        } else if (!prevProps.entity.apiData && this.props.entity.apiData) {
-            if (this.props.entity.apiData.moderators.length === 0) {
-                this.setState({editMode:true})
-            }
         }
     }
 
-    refresh () {
-        // var url = this.props.location.pathname;
-        let url = '/json/' + this.props.match.params.rid + '/' + this.props.match.params.mid + '.json';
-        return this.props.refreshEntity(url);
+    async refresh() {
+        this.props.dispatch(entityDataStarted(this.props.location.pathname));
+        const rallyRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
+        let doc = await rallyRef.get();
+        if (doc.exists) {
+            let rally = await normalizeRally(doc, 0); // NOTE: deeper query
+
+            let meeting = false;
+            const meetRef = rallyRef.collection('meetings').doc(this.props.match.params.mid)
+            doc = await meetRef.get();
+            if (doc.exists) {
+                meeting = await normalizeMeeting(doc, 3);
+            };
+
+            this.props.dispatch(entityDataSuccess(rally, meeting));
+            this.props.dispatch(initCounter());
+        } else {
+            this.props.dispatch(entityDataFailure('invalid rally id'));
+        }
     }
 
     render() {
@@ -46,24 +63,24 @@ class MeetingHome extends Component {
 
         if (this.props.entity.loading === true) return <ProgressLoading />;
         if (this.props.entity.error) return <div style={{width:'100%', textAlign:'center', margin:'20px auto'}}><Typography variant='h2'>{this.props.entity.error}</Typography></div>;
-        if (!this.props.entity.apiData) return 'no results';
+        if (!this.props.entity.rally) return 'no rally';
 
         return (
             <div className={classes.root}>
-                    <RallyBlock rally={this.props.entity.apiData} />
+                    <RallyBlock rally={this.props.entity.rally} />
 
                     <PlanList classes={this.props.classes}
                               dispatch={this.props.dispatch}
                               editMode={this.state.editMode}
-                              rallyData={this.props.entity.apiData} />
-
+                              rally={this.props.entity.rally}
+                              meeting={this.props.entity.meeting} />
 
                 <Grid container justify={'space-between'} style={{padding:20}}>
                     <Button startIcon={<Create/>} variant={'contained'}
                             color={this.state.editMode ? 'primary' : 'secondary'}
                             onClick={e => this.setState({editMode: !this.state.editMode})}>Edit Meeting</Button>
                     <Button onClick={e => {
-                        console.log(this.props.entity.apiData)
+                        console.log(this.props.entity.meeting)
                         this.props.enqueueSnackbar('For now, e-mail eli the JSON printed to your console in Developer Tools');
                     }} startIcon={<ExportIcon />} variant={'contained'} disableElevation={true} >Export Meeting</Button>
                 </Grid>
@@ -71,10 +88,6 @@ class MeetingHome extends Component {
             </div>
         );
     }
-
-
-
-
 }
 
 const mapStateToProps = (state) => {
@@ -84,16 +97,7 @@ const mapStateToProps = (state) => {
     return newState;
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        refreshEntity: url => {
-            dispatch(entityData(url));
-        },
-        dispatch
-    };
-};
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
 )(withRouter(withStyles(rallyStyles, {withTheme:true})(withSnackbar(MeetingHome))));

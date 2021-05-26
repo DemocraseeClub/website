@@ -31,7 +31,7 @@ const db = admin.firestore();
 // var defaultAuth = defaultApp.auth();
 // var defaultDatabase = defaultApp.database();
 
-// TODO: SECURE retrieval of read fields
+// TODO: SECURE read of private fields
 app.get("/user/:uid", async (req, res) => {
     try {
 
