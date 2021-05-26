@@ -21,7 +21,7 @@ class Resources extends React.Component {
         this.state = {
             rTypes: [],
             selected: [],
-            hasOfficeHours : false,
+            hasOfficeHours: false,
             loading: true,
             resources: []
         };
@@ -58,7 +58,7 @@ class Resources extends React.Component {
             collection = collection.where("resource_type", "in", filters)
         }
 
-        if (this.state.hasOfficeHours === true)  {
+        if (this.state.hasOfficeHours === true) {
             collection = collection.where("office_hours", "!=", false)
         }
 
@@ -85,7 +85,7 @@ class Resources extends React.Component {
 
             if (obj.image) {
                 try {
-                    let path = window.storage.ref(obj.image);
+                    let path = window.fbStorage.ref(obj.image);
                     const url = await path.getDownloadURL();
                     obj.image = url;
                 } catch (e) {
@@ -105,12 +105,12 @@ class Resources extends React.Component {
 
         return (
             <React.Fragment>
-                <Grid container className={classes.sectionSecondary}>
+                <Grid container item className={classes.sectionSecondary}>
                     <Grid item xs={10}>
                         <Typography variant={"h5"} className={classes.sectionTitle}>
                             <b>Request and Receive Help From Your Community</b>
                         </Typography>
-                        <Typography variant={"h6"} className={classes.sectionSubtitle} >
+                        <Typography variant={"h6"} className={classes.sectionSubtitle}>
                             Pay with cash or CitizenCoin earned through contributions to this
                             community platform
                         </Typography>
@@ -131,8 +131,8 @@ class Resources extends React.Component {
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid container alignContent={'center'} justify={"space-around"} style={{margin:'10px 5px'}}  >
-                    <Grid item style={{flexGrow:1, paddingRight:10}}>
+                <Grid  className={classes.section} alignContent={'center'} justify={"space-around"} wrap={"nowrap"} >
+                    <Grid item style={{flexGrow: 1}}>
                         <Select
                             id="resource_type_filter"
                             displayEmpty={true}
@@ -143,7 +143,9 @@ class Resources extends React.Component {
                             label="Resource Types"
                             renderValue={(selected) => {
                                 if (selected.length === 0) {
-                                    return <Typography variant={'body1'} style={{color: this.props.theme.palette.text.disabled}}>All Resource
+                                    return <Typography variant={'body1'}
+                                                       style={{color: this.props.theme.palette.text.disabled}}>All
+                                        Resource
                                         Types</Typography>;
                                 }
                                 return selected.map(o => o.type).join(', ');
@@ -159,10 +161,10 @@ class Resources extends React.Component {
                     </Grid>
                     <Grid item>
                         <FormControlLabel
-                            value={false}
-                            style={{color: this.props.theme.palette.text.secondary}}
+                            value={this.state.hasOfficeHours}
+                            style={{marginLeft:0, color: this.props.theme.palette.text[this.state.hasOfficeHours ? 'primary' : 'hint']}}
                             control={<Checkbox onChange={e => {
-                                this.setState({hasOfficeHours:e.target.checked}, () => this.handleChange(this.state.selected));
+                                this.setState({hasOfficeHours: e.target.checked}, () => this.handleChange(this.state.selected));
                             }}
                                                checked={this.state.hasOfficeHours} color="primary"/>}
                             label="Office Hours"
@@ -201,9 +203,11 @@ class Resources extends React.Component {
                             */}
                 </Grid>
                 <Grid
+                    className={this.props.classes.section}
                     container
-                    justify="space-around"
-                    className={classes.cardsContainer}
+                    justify={"space-around"}
+                    spacing={4}
+                    alignItems="stretch"
                 >
                     {this.state.loading === true ?
                         [1, 2, 3, 4, 5, 6].map((item, key) => (
@@ -225,7 +229,8 @@ class Resources extends React.Component {
                                     <Skeleton/>
                                 </Card>
                             </Grid>
-                        )) :
+                        ))
+                        :
                         this.state.resources.map(
                             (item, key) => (
                                 <Grid key={'resource' + key} item xs={12} sm={6} md={4}>
@@ -278,7 +283,8 @@ class Resources extends React.Component {
                                         <CardActions>
                                             <Grid container direction={'column'}>
                                                 {item.office_hours &&
-                                                <OfficeHours office_hours={item.office_hours} author={item.author}/>}
+                                                <OfficeHours office_hours={item.office_hours}
+                                                             author={item.author}/>}
                                             </Grid>
                                         </CardActions>
                                     </Card>

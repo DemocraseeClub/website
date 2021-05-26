@@ -9,7 +9,6 @@ import {
     useSideEntityController
 } from "@camberi/firecms";
 
-import firebase from "firebase/app";
 import "typeface-rubik";
 import "../../theme/FirebaseCMS.css";
 import buildSubscriptionCollection from "./collections/subscriptions";
@@ -30,7 +29,8 @@ import {Box, CircularProgress} from "@material-ui/core";
 // import {useSelector} from 'react-redux'
 
 // import {useLocation} from "react-router-dom";
-
+import firebase from "firebase/app";
+// import LogLevel = firebase.LogLevel;
 
 const firebaseConfig = {
     apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
@@ -95,8 +95,20 @@ export function FirebaseCMS(props: any) {
         if (firebase.apps.length === 0) {
 
             try {
+                /* TODO: TRACE WebSockets messages to console
+                if (process.env.NODE_ENV === 'development') {
+                    // @ts-ignore
+                    firebase.setLogLevel("debug");
+                    // @ts-ignore
+                    firebase.onLog((level: LogLevel, msg: string, args: any[], type: string) => {
+                        console.log(level, msg, args, type)
+                    });
+                }
+                 */
+
                 const fbApp = firebase.initializeApp(firebaseConfig);
-                (window as any).storage = fbApp.storage();
+
+                (window as any).fbStorage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
                 if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
                     fbApp.functions().useEmulator("localhost", 5001);

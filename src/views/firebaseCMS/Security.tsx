@@ -19,5 +19,5 @@ function isAdmin() {
 }
 
 function hasFieldReference() {
-    // is 'moderators', 'speakers',  'subscriber', coauthors, sponsors, officials
+    // is 'moderators', 'speakers', 'subscriber', coauthors, sponsors, officials
 }

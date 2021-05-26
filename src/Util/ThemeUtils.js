@@ -218,7 +218,7 @@ export const rallyStyles = (theme) => ({
   },
   section: {
     background: theme.palette.background.default,
-    padding: "60px 70px",
+    padding: "5%",
   },
   sectionSecondary: {
     background: theme.palette.secondary.main,
@@ -273,12 +273,11 @@ export const rallyStyles = (theme) => ({
     height:"100%"
   },
   cardSkeleton : {
-    margin:"0 5px 5px 5px",
     width: "100%",
     height: "100%",
   },
   card: {
-    margin:"0 5px 5px 5px",
+    margin:0, width:'100%'
   },
   cardButton: {
     padding: "5%",
