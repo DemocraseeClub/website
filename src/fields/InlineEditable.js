@@ -12,7 +12,7 @@ class InlineEditable extends React.Component {
     }
 
     render() {
-        // TODO: render the correct field type with validation based on `src/firebaseCMS/collections/${collection}/${this.props.field.field_name}.json`
+        // we can render the correct field type with validation based on `src/firebaseCMS/collections/${collection}/${this.props.field.field_name}.json`
 
         return (
             <React.Fragment>

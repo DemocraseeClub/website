@@ -86,7 +86,7 @@ export const normalizeRally = async (doc, depth) => {
 
     if (obj?.author) {
         const author = await obj.author.get();
-        obj.author = {id: author.id, ...author.data()}; // TODO: WRITE NORMALIZER FOR adding title, image, id
+        obj.author = {id: author.id, ...author.data()};
     }
 
     if (obj.picture) {
