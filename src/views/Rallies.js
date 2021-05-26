@@ -17,6 +17,7 @@ import SanitizedHTML from "react-sanitized-html";
 import {withRouter} from "react-router";
 import {withCmsHooks} from "./firebaseCMS/FirebaseCMS";
 import {normalizeRally} from "../redux/entityDataReducer";
+import Masonry from 'react-masonry-css'
 
 class Rallies extends React.Component {
     constructor(p) {
@@ -59,6 +60,11 @@ class Rallies extends React.Component {
         const {loading} = this.state;
         const {classes} = this.props;
 
+        const breakpoints = {
+            default: 3,
+            1100: 2,
+            700: 1
+        }
         return (
             <React.Fragment>
                 <Grid container item className={classes.sectionSecondary} align={'center'} justify={'space-between'}>
@@ -82,13 +88,10 @@ class Rallies extends React.Component {
                     </Grid>
                 </Grid>
 
-                <Grid
-                    item
-                    container
-                    justify={"space-around"}
-                    spacing={4}
-                    alignItems="stretch"
-                    className={classes.section}
+                <Masonry
+                    breakpointCols={breakpoints}
+                    className="my-masonry-grid"
+                    columnClassName="my-masonry-grid_column"
                 >
                     {this.state.error !== false ?
                         <Typography variant={'h4'}>{this.state.error}</Typography>
@@ -96,7 +99,7 @@ class Rallies extends React.Component {
                         (loading === true)
                             ? [1, 2, 3, 4, 5, 6].map(
                             (num, key) => (
-                                <Grid key={'rskeleton' + key} item xs={12} sm={6} md={4}>
+                                <div key={'rskeleton' + key}>
                                     <Card className={classes.cardSkeleton}>
                                         <CardActionArea>
                                             <Skeleton variant="rect" width="100%" height={200}/>
@@ -116,12 +119,12 @@ class Rallies extends React.Component {
                                             </Button>
                                         </CardActions>
                                     </Card>
-                                </Grid>
+                                </div>
                             )
                             )
                             : this.state.rallies.map(
                             (item, key) => (
-                                <Grid key={'rally' + key} item xs={12} sm={6} md={4}>
+                                <div key={'rally' + key} >
                                     <Card className={classes.card}>
                                         <CardActionArea>
                                             <NavLink to={`/rally/${item.id}`}>
@@ -163,10 +166,10 @@ class Rallies extends React.Component {
                                             </Button>
                                         </CardActions>
                                     </Card>
-                                </Grid>
+                                </div>
                             )
                             )}
-                </Grid>
+                </Masonry>
             </React.Fragment>
         );
     }

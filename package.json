@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@camberi/firecms": "0.39.0",
+    "@camberi/firecms": "^0.39.0",
     "@date-io/moment": "^2.10.11",
     "@draft-js-plugins/alignment": "^4.0.0",
     "@draft-js-plugins/anchor": "^4.0.0",
@@ -43,6 +43,7 @@
     "react-beforeunload": "^2.4.0",
     "react-dom": "^16.14.0",
     "react-draggable": "^4.4.3",
+    "react-masonry-css": "^1.0.16",
     "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
