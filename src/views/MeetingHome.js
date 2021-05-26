@@ -67,7 +67,7 @@ class MeetingHome extends Component {
 
         return (
             <div className={classes.root}>
-                    <RallyBlock rally={this.props.entity.rally} />
+                    <RallyBlock rally={this.props.entity.rally} meeting={this.props.entity.meeting} />
 
                     <PlanList classes={this.props.classes}
                               dispatch={this.props.dispatch}

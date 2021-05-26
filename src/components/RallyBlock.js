@@ -17,6 +17,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import moment from "moment";
 
 const ROUNDTABLEMAP = [
     {top:39, left:181},
@@ -42,8 +43,7 @@ class RallyHome extends Component {
     }
 
     render() {
-        const {classes, rally} = this.props;
-        const meeting = rally?.meetings && rally.meetings.length > 0 ? rally.meetings[0] : false;
+        const {classes, rally, meeting} = this.props;
 
         let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
@@ -60,12 +60,14 @@ class RallyHome extends Component {
         }
 
         let profiles = [];
-        if (meeting !== false) {
+        if (meeting) {
             profiles = (meeting.speakers) ? meeting.moderators.concat(meeting.speakers) : meeting.moderators;
         }
         while(profiles.length < 7) {
             profiles.push({name:'Apply to Speak', icon:'+'})
         }
+
+        let start = !meeting || !meeting.start_end_times  ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
         return (
             <React.Fragment>
@@ -98,17 +100,17 @@ class RallyHome extends Component {
                             allowedAttributes={Config.allowedAttributes}
                             html={rally.desc} /> : ''}
 
-                        {!meeting || !meeting.start || meeting.start === 'tomorrow' ?
+                        {!start ?
                             <Box mt={4}>
                                 <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
                                 <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe to Schedule</Button>
                             </Box>
                             :
-                            <Typography variant='h6' >{meeting.start}</Typography>
+                            <Typography variant='h6' >{start.format()}</Typography>
                         }
                         </Box>
 
-                        {meeting.start && new Date(meeting.start) > new Date().getTime() ?
+                        {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
@@ -136,12 +138,12 @@ class RallyHome extends Component {
                     </Grid>
 
 
-                    {(rally.research_json && rally.research_json.length > 0)
+                    {(rally?.research && rally.research.length > 0)
                         ?
                         <Box mt={4} p={3} style={{width:'100%'}}>
                             <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
                             <List component="nav" aria-label="research links">
-                                {rally.research_json.map(r => {
+                                {rally.research.map(r => {
                                     return <ListItem button key={r.link}>
                                         {r.img && <ListItemIcon>
                                             <img src={r.img} height={20} alt={'source logo'} />
