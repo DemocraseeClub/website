@@ -56,6 +56,7 @@ export const countDown = (index) => ({
 });
 
 export const normalizeDoc = async (docs) => {
+    if (!docs || docs.length === 0) return [];
     let results = [];
     for (let j = 0; j < docs.length; j++) {
         const tax = await docs[j].get();
@@ -74,7 +75,7 @@ export const normalizeMeeting = async (doc, depth) => {
     }
     //  start_end_times
     let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
-    for(let i=0; i < taxonomies.length; i++) {
+    for (let i = 0; i < taxonomies.length; i++) {
         meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]]);
     }
     return meet;
@@ -98,7 +99,7 @@ export const normalizeRally = async (doc, depth) => {
         let meetingDocs = await doc.ref.collection("meetings").get();
         if (meetingDocs?.docs && meetingDocs?.docs.length > 0) {
             obj.meetings = [];
-            for(let i=0; i < meetingDocs.docs.length; i++) {
+            for (let i = 0; i < meetingDocs.docs.length; i++) {
                 obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], depth));
             }
         }
@@ -109,13 +110,13 @@ export const normalizeRally = async (doc, depth) => {
     }
 
     let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
-    for(let i=0; i < taxonomies.length; i++) {
+    for (let i = 0; i < taxonomies.length; i++) {
         obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]]);
     }
 
     console.log("NORMALIZED RALLY", obj)
-
     return obj;
+
 };
 
 export const fbRally = (id) => {
@@ -162,7 +163,7 @@ export const entityData = (url) => {
 
 const initialState = {
     loading: false,
-    rally: false, meeting:false,
+    rally: false, meeting: false,
     url: '',
     error: null
 };
