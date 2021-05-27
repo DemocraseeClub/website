@@ -208,6 +208,25 @@ exports.injectMeta = functions.https.onRequest((req, res, next) => {
     }
 });
 
+exports.onUpdateUser = functions.firestore
+    .document('users/{userId}')
+    .onUpdate( (change, context) => {
+
+     const data = change.after.data();
+     const previousData = change.before.data();
+     
+     if(JSON.stringify(data?.modified) !== JSON.stringify(previousData?.modified)) {
+         return null
+     }
+     
+    const modified = admin.firestore.FieldValue.serverTimestamp();
+
+      return change.after.ref.set({
+        modified,
+      }, {merge: true});
+      
+});
+
 /*
 TODO: programmatically add `created` and `modified` fields to EVERY document.
 ex. https://firebase.google.com/docs/functions/firestore-events
@@ -237,3 +256,5 @@ exports.onWriteDocs = functions.firestore
       }, {merge: true});
     });
 */
+
+
