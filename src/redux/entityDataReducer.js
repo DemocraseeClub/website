@@ -55,12 +55,17 @@ export const countDown = (index) => ({
     index: index
 });
 
-export const normalizeDoc = async (docs) => {
+export const normalizeDoc = async (docs, type) => {
     if (!docs || docs.length === 0) return [];
     let results = [];
     for (let j = 0; j < docs.length; j++) {
         const tax = await docs[j].get();
-        results.push({id: tax.id, ...tax.data()})
+        if (['author', 'speakers', 'moderators'].includes(type)) {
+            let obj = await normalizeUser(tax, 1);
+            results.push(obj);
+        } else {
+            results.push({id: tax.id, ...tax.data()})
+        }
     }
     return results;
 }
@@ -76,9 +81,25 @@ export const normalizeMeeting = async (doc, depth) => {
     //  start_end_times
     let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
     for (let i = 0; i < taxonomies.length; i++) {
-        meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]]);
+        meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]], taxonomies[i]);
     }
+
     return meet;
+}
+
+export const normalizeUser = async (doc, depth) => {
+    let obj = {id: doc.id, ...doc.data()}; // TODO: just get picture, roles, displayName (maybe bio)
+    if (obj.picture) {
+        let path = window.fbStorage.ref(obj.picture);
+        const url = await path.getDownloadURL();
+        obj.picture = url;
+    }
+    if (obj.coverPhoto) { // TODO: only rquest if on user's profile page
+        let path = window.fbStorage.ref(obj.coverPhoto);
+        const url = await path.getDownloadURL();
+        obj.coverPhoto = url;
+    }
+    return obj;
 }
 
 export const normalizeRally = async (doc, depth) => {
@@ -86,13 +107,18 @@ export const normalizeRally = async (doc, depth) => {
 
     if (obj?.author) {
         const author = await obj.author.get();
-        obj.author = {id: author.id, ...author.data()};
+        obj.author = await normalizeUser(author, 1)
     }
 
     if (obj.picture) {
         let path = window.fbStorage.ref(obj.picture);
         const url = await path.getDownloadURL();
         obj.picture = url;
+    }
+    if (obj.promo_video) {
+        let path = window.fbStorage.ref(obj.promo_video);
+        const url = await path.getDownloadURL();
+        obj.promo_video = url;
     }
 
     if (depth > 0) {
@@ -111,10 +137,10 @@ export const normalizeRally = async (doc, depth) => {
 
     let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
     for (let i = 0; i < taxonomies.length; i++) {
-        obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]]);
+        obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]], taxonomies[i]);
     }
 
-    console.log("NORMALIZED RALLY", obj)
+    // console.log("NORMALIZED RALLY", obj)
     return obj;
 
 };
@@ -130,7 +156,6 @@ export const fbRally = (id) => {
         let doc = await roomRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, 3);
-            console.log(rally);
             dispatch(entityDataSuccess(rally));
         } else {
             dispatch(entityDataFailure('invalid rally id'));
