@@ -60,10 +60,7 @@ const baseTheme = {
 };
 
 function App(props) {
-  const [isOpen, closeWarning] = React.useState(
-    process.env.NODE_ENV === "production" &&
-      document.location.pathname.indexOf("/rally/") !== 0
-  );
+  const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === "production");
   const auth = useSelector((state) => state.auth);
 
   const notistackRef = React.useRef();

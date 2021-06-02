@@ -32,7 +32,6 @@ const ROUNDTABLEMAP = [
 class RallyHome extends Component {
 
     constructor(p) {
-        console.log("RENDER RALLY", p.rally);
         super(p);
         this.state = {editMode: p.editMode || false};
     }
@@ -64,7 +63,7 @@ class RallyHome extends Component {
             profiles = (meeting.speakers) ? meeting.moderators.concat(meeting.speakers) : meeting.moderators;
         }
         while(profiles.length < 7) {
-            profiles.push({name:'Apply to Speak', icon:'+'})
+            profiles.push({displayName:'Apply to Speak', icon:'+'})
         }
 
         let start = !meeting || !meeting.start_end_times  ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
@@ -112,24 +111,29 @@ class RallyHome extends Component {
 
                         {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
+                            {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
                             {profiles.map((r,i) =>
-                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
+                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={'/citizen/'+r.uid}>
                                     <ListItemIcon>
-                                        {r.img ? <Avatar alt={r.name} src={r.img} />
+                                        {r.picture ? <Avatar alt={r.displayName} src={r.picture} />
                                         :
-                                        <Avatar>{r.icon || r.name}</Avatar>}
+                                        <Avatar>{r.icon || r.displayName}</Avatar>}
                                     </ListItemIcon>
-                                    <ListItemText primary={r.name} secondary={r.tagline}/>
+                                    <ListItemText primary={r.displayName} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
                         </Box>
                         :
                         <Box mt={4} p={1} >
                             <AvatarGroup>
-                                {profiles.map((r, i) => r.img ?
-                                    <Avatar key={'speakerGroup-'+ i} alt={r.name} src={r.img} />
+                                {profiles.map((r, i) => r.picture ?
+                                    <NavLink to={'/citizen/'+r.id}>
+                                    <Avatar key={'speakerGroup-'+ i} alt={r.displayName} src={r.picture} />
+                                    </NavLink>
                                     :
-                                    <Avatar key={'speakerGroup-'+ i} >{r.icon || r.name}</Avatar>)}
+                                    <NavLink to={'/c/subscriptions#new/'}>
+                                        <Avatar key={'speakerGroup-'+ i} >{r.icon || r.displayName}</Avatar>
+                                    </NavLink>)}
                             </AvatarGroup>
                         </Box>
                         }
