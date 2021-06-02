@@ -66,7 +66,7 @@ class RallyHome extends Component {
             profiles.push({displayName:'Apply to Speak', icon:'+'})
         }
 
-        let start = !meeting || !meeting.start_end_times  ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
+        let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
         return (
             <React.Fragment>

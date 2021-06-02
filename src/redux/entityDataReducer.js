@@ -88,13 +88,14 @@ export const normalizeMeeting = async (doc, depth) => {
         meet.agenda = JSON.parse(meet.agenda);
     }
 
-    if (depth > 1) {
+    if (depth > 0) {
         // TODO: normalize start_end_times
         let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
         for (let i = 0; i < taxonomies.length; i++) {
             meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]], taxonomies[i]);
         }
     }
+    console.log("NORMALIZED MEETING: " + depth, meet);
 
     return meet;
 }
