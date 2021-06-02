@@ -268,16 +268,17 @@ export const rallyStyles = (theme) => ({
   cardsContainer: {
     marginTop: "15px",
   },
-  cardMedia : {
-    width:"100%",
-    height:"100%"
+  cardMedia: {
+    width: "100%",
+    height: "100%",
   },
-  cardSkeleton : {
+  cardSkeleton: {
     width: "100%",
     height: "100%",
   },
   card: {
-    margin:0, width:'100%'
+    margin: 0,
+    width: "100%",
   },
   cardButton: {
     padding: "5%",
@@ -340,5 +341,34 @@ export const rallyStyles = (theme) => ({
     "& li": {
       marginBottom: 10,
     },
+  },
+  profilePicture: {
+    width: "140px",
+    height: "140px",
+    position: "absolute",
+    left: "10%",
+    border: "6px solid white",
+    bottom: "-70px",
+    boxShadow: "0px 0px 25px 0px rgba(0,0,0,0.56)",
+  },
+  profileName: {
+    margin: "25px 0 15px",
+    fontSize: "2.5em",
+  },
+  profileProfession: {
+    display: "block",
+    marginBottom: "10px",
+  },
+  profileMainInfoContainer: {
+    marginLeft: "25%",
+  },
+  profileChip: {
+    margin: "5px 15px 5px 0",
+  },
+  profileBioContainer: {
+    margin: "2% 10%",
+  },
+  profileBio: {
+    textAlign: "justify",
   },
 });
