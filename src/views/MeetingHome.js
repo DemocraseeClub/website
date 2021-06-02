@@ -42,7 +42,7 @@ class MeetingHome extends Component {
         const rallyRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
         let doc = await rallyRef.get();
         if (doc.exists) {
-            let rally = await normalizeRally(doc, 0); // NOTE: deeper query
+            let rally = await normalizeRally(doc, 0);
 
             let meeting = false;
             const meetRef = rallyRef.collection('meetings').doc(this.props.match.params.mid)
@@ -64,6 +64,7 @@ class MeetingHome extends Component {
         if (this.props.entity.loading === true) return <ProgressLoading />;
         if (this.props.entity.error) return <div style={{width:'100%', textAlign:'center', margin:'20px auto'}}><Typography variant='h2'>{this.props.entity.error}</Typography></div>;
         if (!this.props.entity.rally) return 'no rally';
+        if (!this.props.entity.meeting) return 'no meeting';
 
         return (
             <div className={classes.root}>
