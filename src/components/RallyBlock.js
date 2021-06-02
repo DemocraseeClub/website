@@ -113,7 +113,7 @@ class RallyHome extends Component {
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
                             {profiles.map((r,i) =>
-                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={'/citizen/'+r.uid}>
+                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={r.uid ? '/citizen/'+r.uid : '/c/subscriptions#new/'}>
                                     <ListItemIcon>
                                         {r.picture ? <Avatar alt={r.displayName} src={r.picture} />
                                         :
@@ -127,12 +127,12 @@ class RallyHome extends Component {
                         <Box mt={4} p={1} >
                             <AvatarGroup>
                                 {profiles.map((r, i) => r.picture ?
-                                    <NavLink to={'/citizen/'+r.id}>
-                                    <Avatar key={'speakerGroup-'+ i} alt={r.displayName} src={r.picture} />
+                                    <NavLink to={'/citizen/'+r.id} key={'speakerGroup-'+ i} >
+                                    <Avatar alt={r.displayName} src={r.picture} />
                                     </NavLink>
                                     :
-                                    <NavLink to={'/c/subscriptions#new/'}>
-                                        <Avatar key={'speakerGroup-'+ i} >{r.icon || r.displayName}</Avatar>
+                                    <NavLink to={'/c/subscriptions#new/'} key={'speakerGroup-'+ i} >
+                                        <Avatar >{r.icon || r.displayName}</Avatar>
                                     </NavLink>)}
                             </AvatarGroup>
                         </Box>

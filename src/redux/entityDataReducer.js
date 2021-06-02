@@ -56,6 +56,7 @@ export const countDown = (index) => ({
 });
 
 /**
+ * TODO: replace "depth" with field list
  * depth = 0 || undefined  > don't get anything else
  * depth = 1 > get author name, picture
  * depth = 2 > + get meeting list
@@ -82,13 +83,17 @@ export const normalizeMeeting = async (doc, depth) => {
         id: doc.id,
         ...doc.data(),
     };
-    if (depth > 1) {
+
+    if (meet.agenda) {
         meet.agenda = JSON.parse(meet.agenda);
     }
-    //  start_end_times
-    let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
-    for (let i = 0; i < taxonomies.length; i++) {
-        meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]], taxonomies[i]);
+
+    if (depth > 1) {
+        // TODO: normalize start_end_times
+        let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
+        for (let i = 0; i < taxonomies.length; i++) {
+            meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]], taxonomies[i]);
+        }
     }
 
     return meet;
@@ -101,7 +106,7 @@ export const normalizeUser = async (doc, depth) => {
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
-    if (obj.coverPhoto) { // TODO: only rquest if on user's profile page
+    if (obj.coverPhoto) { // TODO: only request if on user's profile page
         let path = window.fbStorage.ref(obj.coverPhoto);
         const url = await path.getDownloadURL();
         obj.coverPhoto = url;
