@@ -14,7 +14,7 @@ code {
 
 #lightMode, #darkMode {
   min-height: 100vh;
-  justify-content: space-between;
+  justify-content:stretch;
   display: flex;
   flex-direction: column;
 }
