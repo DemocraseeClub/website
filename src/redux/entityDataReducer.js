@@ -55,6 +55,13 @@ export const countDown = (index) => ({
     index: index
 });
 
+/**
+ * depth = 0 || undefined  > don't get anything else
+ * depth = 1 > get author name, picture
+ * depth = 2 > + get meeting list
+ * dpeth = 3 > + get meeting authors, pictures, promo videos, etc...
+ */
+
 export const normalizeDoc = async (docs, type) => {
     if (!docs || docs.length === 0) return [];
     let results = [];
@@ -105,9 +112,9 @@ export const normalizeUser = async (doc, depth) => {
 export const normalizeRally = async (doc, depth) => {
     let obj = {id: doc.id, ...doc.data()};
 
-    if (obj?.author) {
+    if (obj?.author && depth > 0) {
         const author = await obj.author.get();
-        obj.author = await normalizeUser(author, 1)
+        obj.author = await normalizeUser(author, depth)
     }
 
     if (obj.picture) {
@@ -115,7 +122,8 @@ export const normalizeRally = async (doc, depth) => {
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
-    if (obj.promo_video) {
+
+    if (obj.promo_video && depth > 0) {
         let path = window.fbStorage.ref(obj.promo_video);
         const url = await path.getDownloadURL();
         obj.promo_video = url;
@@ -140,7 +148,7 @@ export const normalizeRally = async (doc, depth) => {
         obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]], taxonomies[i]);
     }
 
-    // console.log("NORMALIZED RALLY", obj)
+    console.log("NORMALIZED RALLY BY " + depth, obj)
     return obj;
 
 };
