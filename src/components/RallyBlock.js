@@ -128,17 +128,15 @@ class RallyHome extends Component {
                             <AvatarGroup>
                                 {profiles.map((r, i) => r.picture ?
                                     <NavLink to={'/citizen/'+r.id} key={'speakerGroup-'+ i} >
-                                    <Avatar alt={r.displayName} src={r.picture} />
+                                        <Avatar alt={r.displayName} src={r.picture}/>
                                     </NavLink>
                                     :
-                                    <NavLink to={'/c/subscriptions#new/'} key={'speakerGroup-'+ i} >
-                                        <Avatar >{r.icon || r.displayName}</Avatar>
+                                    <NavLink to={'/c/subscriptions#new/'} key={'applytospeak-' + i}>
+                                        <Avatar>{r.icon || r.displayName}</Avatar>
                                     </NavLink>)}
                             </AvatarGroup>
                         </Box>
                         }
-
-
                     </Grid>
 
 
