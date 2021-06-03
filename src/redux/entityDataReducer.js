@@ -1,4 +1,3 @@
-import API from '../Util/API';
 import firebase from "firebase";
 
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
@@ -170,35 +169,34 @@ export const fbRally = (id) => {
         let doc = await roomRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, 3);
-            dispatch(entityDataSuccess(rally));
+            dispatch(entityDataSuccess(rally, null));
         } else {
             dispatch(entityDataFailure('invalid rally id'));
         }
     };
 };
 
-export const entityData = (url) => {
-    return (dispatch, getState) => {
-
-        const state = getState();
-        if (state.entity.loading === true) return false;
-        dispatch(entityDataStarted(url));
-        API.Get(url).then((res) => {
-            const msg = API.checkError(res.data);
-            if (msg.length > 0) {
-                dispatch(entityDataFailure(msg));
-            } else {
-                dispatch(entityDataSuccess(res.data));
-                if (res.data.type === 'meeting') {
-                    dispatch(initCounter());
-                }
-            }
-        }).catch((err) => {
-            var msg = API.getErrorMsg(err);
-            dispatch(entityDataFailure(msg));
-        });
-    };
-};
+const _initCounter = (draft) => {
+    let total = 0;
+    let headers = {};
+    if (typeof draft.meeting.agenda === 'string') {
+        draft.meeting.agenda = JSON.parse(draft.meeting.agenda);
+    }
+    draft.meeting.agenda.forEach((o, i) => {
+        total += o.seconds
+        o.countdown = o.seconds;
+        if (typeof headers[o.nest] === 'undefined') headers[o.nest] = {
+            label: o.nest,
+            order: Object.values(headers).length,
+            count: 0
+        };
+        headers[o.nest].count++;
+    });
+    draft.meeting.countRemains = total;
+    draft.meeting.countScheduled = total;
+    draft.meeting.headers = Object.values(headers);
+    return draft;
+}
 
 const initialState = {
     loading: false,
@@ -218,28 +216,16 @@ export default function entityDataReducer(draft = initialState, action) {
             draft.error = null;
             draft.meeting = action.meeting;
             draft.rally = action.rally;
+            if (draft.meeting) {
+                return _initCounter(draft);
+            }
             return draft;
         case ITEM_DATA_FAILURE:
             draft.loading = false;
             draft.error = action.error
             return draft;
         case ITEM_INIT_COUNTER:
-            let total = 0;
-            let headers = {};
-            draft.meeting.agenda.forEach((o, i) => {
-                total += o.seconds
-                o.countdown = o.seconds;
-                if (typeof headers[o.nest] === 'undefined') headers[o.nest] = {
-                    label: o.nest,
-                    order: Object.values(headers).length,
-                    count: 0
-                };
-                headers[o.nest].count++;
-            });
-            draft.meeting.countRemains = total;
-            draft.meeting.countScheduled = total;
-            draft.meeting.headers = Object.values(headers);
-            return draft;
+            return _initCounter(draft);
         case UPDATE_RALLY_ITEM:
             if (action.key === 'delete') {
                 draft.meeting.agenda.splice(action.index, 1);
