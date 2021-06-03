@@ -58,13 +58,26 @@ class RallyHome extends Component {
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = [];
+        let profiles = [], dups = {};
         if (meeting) {
-            profiles = (meeting.speakers) ? meeting.moderators.concat(meeting.speakers) : meeting.moderators;
+            meeting.moderators.forEach(user => {
+                if (!dups[user.id] && user.displayName) {
+                    dups[user.id] = true;
+                    profiles.push(user);
+                }
+            })
+            meeting.speakers.forEach(user => {
+                if (!dups[user.id] && user.displayName) {
+                    dups[user.id] = true;
+                    profiles.push(user);
+                }
+            })
         }
         while(profiles.length < 7) {
             profiles.push({displayName:'Apply to Speak', icon:'+'})
         }
+
+        console.log("PROFILES", profiles);
 
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
@@ -125,15 +138,14 @@ class RallyHome extends Component {
                         </Box>
                         :
                         <Box mt={4} p={1} >
-                            <AvatarGroup>
+                            <AvatarGroup max={7} spacing={8}>
                                 {profiles.map((r, i) => r.picture ?
-                                    <NavLink to={'/citizen/'+r.id} key={'speakerGroup-'+ i} >
-                                        <Avatar alt={r.displayName} src={r.picture}/>
-                                    </NavLink>
+                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName} alt={r.displayName} src={r.picture}/>
+                                    : r.id ?
+                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName}>{r.displayName[0].toUpperCase()}</Avatar>
                                     :
-                                    <NavLink to={'/c/subscriptions#new/'} key={'applytospeak-' + i}>
-                                        <Avatar>{r.icon || r.displayName}</Avatar>
-                                    </NavLink>)}
+                                    <Avatar component={NavLink} to={'/c/subscriptions#new/'} key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
+                                )}
                             </AvatarGroup>
                         </Box>
                         }

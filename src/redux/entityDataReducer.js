@@ -106,7 +106,7 @@ export const normalizeUser = async (doc, depth) => {
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
-    if (obj.coverPhoto) { // TODO: only request if on user's profile page
+    if (obj.coverPhoto && depth > 0) { // TODO: only request if on user's profile page
         let path = window.fbStorage.ref(obj.coverPhoto);
         const url = await path.getDownloadURL();
         obj.coverPhoto = url;
@@ -117,7 +117,7 @@ export const normalizeUser = async (doc, depth) => {
 export const normalizeRally = async (doc, depth) => {
     let obj = {id: doc.id, ...doc.data()};
 
-    if (obj?.author && depth > 0) {
+    if (obj?.author) {
         const author = await obj.author.get();
         obj.author = await normalizeUser(author, depth)
     }

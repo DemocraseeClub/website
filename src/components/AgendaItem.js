@@ -102,7 +102,7 @@ class AgendaItem extends React.Component {
         const {classes, curItem, index, activeStep} = this.props;
 
         return (
-            <Step key={'step-' + index} active={this.state.forceShow === true || activeStep === index ? true : undefined} style={{marginBottom:10}} >
+            <Step key={'step-' + index} active={(this.state.forceShow === true || activeStep === index) ? true : undefined} style={{marginBottom:10}} >
                 {this.props.header}
                 <StepLabel className={classes.stepTimeBlock}
                            StepIconComponent={QontoStepIcon}
