@@ -111,6 +111,10 @@ export const rallyStyles = (theme) => ({
     fontWeight: 900,
     borderRadius: "0px 5px 5px 0px",
   },
+  icon: {
+    fontSize: 35,
+    color: theme.palette.info.main,
+  },
   field: {
     marginBottom: theme.spacing(2),
   },

@@ -32,7 +32,7 @@ class MeetingHome extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.location.pathname !== prevProps.location.pathname || this.props.location.search !== prevProps.location.search) {
+        if (this.props.match.params.rid !== prevProps.match.params.rid) {
             this.refresh();
         }
     }
@@ -43,16 +43,13 @@ class MeetingHome extends Component {
         let doc = await rallyRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, 0);
-
             let meeting = false;
             const meetRef = rallyRef.collection('meetings').doc(this.props.match.params.mid)
             doc = await meetRef.get();
             if (doc.exists) {
                 meeting = await normalizeMeeting(doc, 3);
             };
-
             this.props.dispatch(entityDataSuccess(rally, meeting));
-            this.props.dispatch(initCounter());
         } else {
             this.props.dispatch(entityDataFailure('invalid rally id'));
         }
@@ -101,4 +98,4 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     null
-)(withRouter(withStyles(rallyStyles, {withTheme:true})(withSnackbar(MeetingHome))));
+)(withStyles(rallyStyles, {withTheme:true})(withSnackbar(withRouter(MeetingHome))));
