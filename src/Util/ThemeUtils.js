@@ -294,9 +294,6 @@ export const rallyStyles = (theme) => ({
       color: theme.palette.info.contrastText,
     },
   },
-  cardHeader: {
-    marginBottom: "15px",
-  },
   cardSubtitle: {
     marginBottom: "15px",
   },

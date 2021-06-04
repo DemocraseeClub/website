@@ -18,6 +18,8 @@ import Config from "../Config";
 import OfficeHours from "../components/OfficeHours";
 import Masonry from "react-masonry-css";
 import SettingsSharpIcon from "@material-ui/icons/SettingsSharp";
+import CardActionArea from "@material-ui/core/CardActionArea";
+
 class Citizen extends React.Component {
   constructor(p) {
     super(p);
@@ -31,16 +33,19 @@ class Citizen extends React.Component {
   }
 
   componentDidMount() {
-    window.fireDB
-      .collection("resource_types")
-      .get()
-      .then((types) => {
-        var rTypes = types.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        this.setState({ rTypes: rTypes });
-      })
-      .catch((err) => console.log(err));
+    this.fetchResources();
+  }
 
-    this.handleChange([]);
+  async fetchResources() {
+    let resourcesRef = await window.fireDB
+      .collection("users")
+      .doc(this.props.match.params.uid);
+
+    let doc = await resourcesRef.get();
+
+    if (doc.exists) {
+      console.log(doc, "AAAAAAAA wao");
+    }
   }
 
   async handleChange(rTypes) {
@@ -104,9 +109,8 @@ class Citizen extends React.Component {
     const { classes } = this.props;
     const preventDefault = (event) => event.preventDefault();
     const breakpoints = {
-      default: 3,
-      1100: 2,
-      700: 1,
+      default: 2,
+      1100: 1,
     };
     return (
       <Paper className={classes.root}>
@@ -180,28 +184,23 @@ class Citizen extends React.Component {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
-                {this.state.loading === true
+                {this.state.loading
                   ? [1, 2, 3, 4, 5, 6].map((item, key) => (
                       <div key={"rskeleton" + key}>
                         <Card className={this.props.classes.cardSkeleton}>
-                          <Grid
-                            container
-                            justify="space-between"
-                            alignItems="center"
-                            className={classes.cardHeader}
-                          >
-                            <Grid item>
-                              <Skeleton
-                                variant="circle"
-                                width={80}
-                                height={80}
-                              />
-                            </Grid>
-                          </Grid>
-                          <Skeleton width="40%" />
-                          <Skeleton />
-                          <Skeleton />
-                          <Skeleton />
+                          <CardActionArea>
+                            <Skeleton
+                              variant="rect"
+                              width="100%"
+                              height={200}
+                            />
+                            <CardContent>
+                              <Skeleton width="40%" />
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton />
+                            </CardContent>
+                          </CardActionArea>
                         </Card>
                       </div>
                     ))
