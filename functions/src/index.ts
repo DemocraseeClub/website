@@ -35,13 +35,52 @@ const db = admin.firestore();
 app.get("/user/:uid", async (req, res) => {
     try {
 
-        const user = await admin.auth().getUser(req.params.uid);
+         const user = await admin.auth().getUser(req.params.uid);
 
         return res.status(200).json(user);
     } catch (error) {
         return res.status(500).send(error);
     }
 });
+
+app.get("/citizen/:uid", async (req, res) => {
+    try {
+
+        const userRef = db.collection("users").doc(req.params.uid)
+
+        const userSnapshot = await userRef.get()
+
+        const citizen = {...userSnapshot.data()}
+        
+        const resourcesSnapshot = await db
+            .collection("resources")
+            .where("author", "==", userRef)
+            .get();
+            
+        const {docs} = resourcesSnapshot;
+
+        const resources = docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        
+        for(let i = 0; i< resources.length; i++) {
+
+            if(resources[i]?.resource_type) {
+
+                const resource_type = await resources[i].resource_type.get()
+
+                resources[i].resource_type = {...resource_type.data()}
+            }
+
+        }
+
+        return res.status(200).json({resources, citizen});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+});
+
 
 /* TODO: secure update of Badge roles like "contributor", ...
 app.post("/user/:uid", async (req, res) => {
