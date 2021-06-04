@@ -356,23 +356,17 @@ export const rallyStyles = (theme) => ({
     boxShadow: "0px 0px 25px 0px rgba(0,0,0,0.56)",
   },
   profileName: {
-    margin: "25px 0 15px",
     fontSize: "2.5em",
+    margin: "30px 0 10px 0",
   },
   profileProfession: {
     display: "block",
-    marginBottom: "10px",
-  },
-  profileMainInfoContainer: {
-    marginLeft: "25%",
   },
   profileChip: {
-    margin: "5px 15px 5px 0",
-  },
-  profileBioContainer: {
-    margin: "2% 10%",
+    margin: "10px 0 20px 0",
   },
   profileBio: {
     textAlign: "justify",
+    width: "80%",
   },
 });
