@@ -110,7 +110,7 @@ class Citizen extends React.Component {
     const preventDefault = (event) => event.preventDefault();
     const breakpoints = {
       default: 2,
-      1100: 1,
+      600: 1,
     };
     return (
       <Paper className={classes.root}>
@@ -135,7 +135,7 @@ class Citizen extends React.Component {
             />
           </div>
           <Grid container className={this.props.classes.section}>
-            <Grid item xs={4}>
+            <Grid item md={4} sm={12}>
               <Typography variant="h1" className={classes.profileName}>
                 Elpo Larni
               </Typography>
@@ -173,7 +173,7 @@ class Citizen extends React.Component {
                 Rackham.
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item md={8} sm={12} xs={12}>
               <Chip
                 icon={<SettingsSharpIcon />}
                 label="Resources"

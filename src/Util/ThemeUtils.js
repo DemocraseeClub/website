@@ -366,4 +366,9 @@ export const rallyStyles = (theme) => ({
     textAlign: "justify",
     width: "80%",
   },
+  [theme.breakpoints.down("md")]: {
+    profileName: {
+      margin: "60px 0 10px 0",
+    },
+  },
 });
