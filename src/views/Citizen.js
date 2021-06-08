@@ -37,6 +37,13 @@ class Citizen extends React.Component {
   }
 
   async fetchResources() {
+    
+    //ejemplo de uso del endpoint
+    let citizenData = await fetch(process.env.REACT_APP_FUNCTIONS_URL + "/citizen/" + this.props.match.params.uid)
+    let {citizen, resources} = await citizenData.json()
+    console.log(citizen)
+
+
     let resourcesRef = await window.fireDB
       .collection("users")
       .doc(this.props.match.params.uid);
