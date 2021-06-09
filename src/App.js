@@ -4,6 +4,7 @@ import Home from "./views/Home";
 import About from "./views/About";
 import Ethics from "./views/Ethics";
 import Sponsors from "./views/Sponsors";
+import CitizenEdit from "./views/CitizenEdit";
 import Citizen from "./views/Citizen";
 import Rallies from "./views/Rallies";
 import {
@@ -60,7 +61,9 @@ const baseTheme = {
 };
 
 function App(props) {
-  const [isOpen, closeWarning] = React.useState(process.env.NODE_ENV === "production");
+  const [isOpen, closeWarning] = React.useState(
+    process.env.NODE_ENV === "production"
+  );
   const auth = useSelector((state) => state.auth);
 
   const notistackRef = React.useRef();
@@ -170,7 +173,11 @@ function App(props) {
                 <Route exact path="/office-hours/:uid" component={Home} />
                 <Route exact path="/citizen/:uid" component={Citizen} />{" "}
                 {/* TODO: create User profile */}
-                <Route exact path="/my-profile" component={Home} />{" "}
+                <Route
+                  exact
+                  path="/citizen/edit/:uid"
+                  component={CitizenEdit}
+                />{" "}
                 {/* TODO: same as User profile with Account Edit buttons*/}
                 <Route path="/about">
                   <About />
