@@ -271,7 +271,7 @@ class Resources extends React.Component {
                     <CardMedia
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = "images/citizencoin.png";
+                        e.target.src = "https://kaikucaffelatte.com/blog/wp-content/uploads/2020/03/shutterstock_510679489-scaled.jpg";
                       }}
                       className={this.props.classes.cardMedia}
                       component="img"
