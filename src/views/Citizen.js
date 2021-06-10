@@ -11,11 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import WebIcon from "@material-ui/icons/Web";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
-import { Card, CardActions, CardContent, CardMedia } from "@material-ui/core";
+import { Card, CardContent, CardMedia } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 import SanitizedHTML from "react-sanitized-html";
 import Config from "../Config";
-import OfficeHours from "../components/OfficeHours";
 import Masonry from "react-masonry-css";
 import SettingsSharpIcon from "@material-ui/icons/SettingsSharp";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -29,90 +28,67 @@ class Citizen extends React.Component {
       hasOfficeHours: false,
       loading: true,
       resources: [],
+      citizen: {},
     };
   }
 
   componentDidMount() {
-    this.fetchResources();
+    this.fetchCitizenInfo();
   }
 
-  async fetchResources() {
-    
-    //ejemplo de uso del endpoint
-    let citizenData = await fetch(process.env.REACT_APP_FUNCTIONS_URL + "/citizen/" + this.props.match.params.uid)
-    let {citizen, resources} = await citizenData.json()
-    console.log(citizen)
-
-
-    let resourcesRef = await window.fireDB
-      .collection("users")
-      .doc(this.props.match.params.uid);
-
-    let doc = await resourcesRef.get();
-
-    if (doc.exists) {
-      console.log(doc, "AAAAAAAA wao");
-    }
-  }
-
-  async handleChange(rTypes) {
-    this.setState({ selected: rTypes, loading: true });
-
-    let collection = window.fireDB.collection("resources");
-    if (rTypes.length > 0) {
-      // TODO: fix filter per: https://stackoverflow.com/a/53141199/624160. || https://youtu.be/Elg2zDVIcLo?t=276
-      let filters = await Promise.all(
-        rTypes.map((o) => {
-          return window.fireDB.collection("resource_type").doc(o.id);
-        })
-      );
-      console.log("FILTERING RESOURCE TYPES: ", filters);
-      collection = collection.where("resource_type", "in", filters);
-    }
-
-    if (this.state.hasOfficeHours === true) {
-      collection = collection.where("office_hours", "!=", false);
-    }
-
-    let snapshots = await collection.limit(25).get();
-    const resources = await Promise.all(
-      snapshots.docs.map(async (doc) => {
-        let obj = {
-          id: doc.id,
-          ...doc.data(),
-        };
-        if (obj?.author) {
-          const author = await obj.author.get();
-          obj.author = { id: author.id, ...author.data() };
+  async fetchCitizenInfo() {
+    let citizenData = await fetch(
+      process.env.REACT_APP_FUNCTIONS_URL +
+        "/citizen/" +
+        this.props.match.params.uid
+    ).then(async (data) => {
+      let parsedData = await data.json();
+      if (parsedData.citizen.picture) {
+        try {
+          let path = window.fbStorage.ref(parsedData.citizen.picture);
+          const url = await path.getDownloadURL();
+          parsedData.citizen.picture = url;
+        } catch (e) {
+          console.log(e);
         }
+      }
 
-        if (obj?.resource_type) {
-          const resource_type = await obj.resource_type.get();
-          obj.resource_type = { id: resource_type.id, ...resource_type.data() };
+      if (parsedData.citizen.coverPhoto) {
+        try {
+          let path = window.fbStorage.ref(parsedData.citizen.coverPhoto);
+          const url = await path.getDownloadURL();
+          parsedData.citizen.coverPhoto = url;
+        } catch (e) {
+          console.log(e);
         }
+      }
 
-        /* if (obj?.office_hours) {
-              if (obj.office_hours.start_date) obj.office_hours.start_date = doc.office_hours.start_date.toDate();
-              if (obj.office_hours.end_date) obj.office_hours.end_date = doc.office_hours.end_date.toDate();
-            } */
-
-        if (obj.image) {
-          try {
-            let path = window.fbStorage.ref(obj.image);
-            const url = await path.getDownloadURL();
-            obj.image = url;
-          } catch (e) {
-            console.log(e);
+      if (parsedData.resources) {
+        parsedData.resources.map(async (item) => {
+          if (item.image) {
+            try {
+              let path = window.fbStorage.ref(item.image);
+              const url = await path.getDownloadURL();
+              item.image = url;
+            } catch (e) {
+              console.log(e);
+            }
           }
-        }
+        });
+      }
+      return parsedData;
+    });
+    let { citizen, resources } = citizenData;
 
-        return obj;
-      })
-    );
-    console.log(resources);
-    this.setState({ resources: resources, loading: false });
+    this.setState({ citizen, resources, loading: false });
   }
+
   render() {
+    const {
+      citizen: { realName, website, bio, coverPhoto, picture },
+      resources,
+      loading,
+    } = this.state;
     const { classes } = this.props;
     const preventDefault = (event) => event.preventDefault();
     const breakpoints = {
@@ -122,63 +98,82 @@ class Citizen extends React.Component {
     return (
       <Paper className={classes.root}>
         <Box>
-          <div
-            style={{
-              width: "100%",
-              height: "30vh",
-              backgroundImage: `url(/images/Indy-Rishi-Singh-playing-flute.jpg)`,
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundAttachment: "fixed",
-              backgroundColor: "white",
-              position: "relative",
-            }}
-          >
-            <Avatar
-              alt="Citizen pic"
-              src="/images/indy.png"
-              className={classes.profilePicture}
-            />
-          </div>
+          {loading ? (
+            <Skeleton width="100%" style={{ height: "30vh" }} />
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "30vh",
+                backgroundImage: `url(${coverPhoto})`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundAttachment: "fixed",
+                backgroundColor: "white",
+                position: "relative",
+              }}
+            >
+              <Avatar
+                alt="Citizen pic"
+                src={picture}
+                className={classes.profilePicture}
+              />
+            </div>
+          )}
+
           <Grid container className={this.props.classes.section}>
             <Grid item md={4} sm={12}>
-              <Typography variant="h1" className={classes.profileName}>
-                Elpo Larni
-              </Typography>
-              <Typography
-                variant="overline"
-                className={classes.profileProfession}
-              >
-                Technical Wet Meat
-              </Typography>
+              {loading ? (
+                <>
+                  <Skeleton />
+                  <Skeleton />
+                  <Chip
+                    className={classes.profileChip}
+                    icon={<WebIcon />}
+                    label="https://something.com"
+                  />
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                </>
+              ) : (
+                <>
+                  <Typography variant="h1" className={classes.profileName}>
+                    {realName}
+                  </Typography>
 
-              <Chip
-                className={classes.profileChip}
-                icon={<WebIcon />}
-                label="https://elpito.com"
-                onClick={preventDefault}
-              />
-              <Typography variant="body1" className={classes.profileBio}>
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampden-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-                in section 1.10.32. The standard chunk of Lorem Ipsum used since
-                the 1500s is reproduced below for those interested. Sections
-                1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by
-                Cicero are also reproduced in their exact original form,
-                accompanied by English versions from the 1914 translation by H.
-                Rackham.
-              </Typography>
+                  <Chip
+                    className={classes.profileChip}
+                    icon={<WebIcon />}
+                    label={website}
+                    onClick={preventDefault}
+                  />
+                  <Typography variant="body1" className={classes.profileBio}>
+                    <SanitizedHTML
+                      allowedIframeDomains={["linkedin.com"]}
+                      allowedIframeHostnames={["www.linkedin.com"]}
+                      allowIframeRelativeUrls={false}
+                      allowedSchemes={["data", "https"]}
+                      allowedTags={Config.richTags}
+                      allowedAttributes={Config.richAttributes}
+                      exclusiveFilter={(frame) => {
+                        if (frame.tag === "iframe") {
+                          if (
+                            frame.attribs.src.indexOf(
+                              "https://linkedin.com"
+                            ) !== 0
+                          ) {
+                            return true;
+                          }
+                        }
+                        return false;
+                      }}
+                      html={bio}
+                    />
+                  </Typography>
+                </>
+              )}
             </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <Chip
@@ -191,7 +186,7 @@ class Citizen extends React.Component {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
-                {this.state.loading
+                {false
                   ? [1, 2, 3, 4, 5, 6].map((item, key) => (
                       <div key={"rskeleton" + key}>
                         <Card className={this.props.classes.cardSkeleton}>
@@ -211,13 +206,14 @@ class Citizen extends React.Component {
                         </Card>
                       </div>
                     ))
-                  : this.state.resources.map((item, key) => (
+                  : resources.map((item, key) => (
                       <div key={"resource" + key}>
                         <Card className={this.props.classes.card}>
                           <CardMedia
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = "images/citizencoin.png";
+                              e.target.src =
+                                "https://kaikucaffelatte.com/blog/wp-content/uploads/2020/03/shutterstock_510679489-scaled.jpg";
                             }}
                             className={this.props.classes.cardMedia}
                             component="img"
@@ -258,27 +254,7 @@ class Citizen extends React.Component {
                                 html={item.descriptionHTML}
                               />
                             </Typography>
-                            <Typography
-                              variant={"body2"}
-                              className={classes.cardSubtitle}
-                            >
-                              {" "}
-                              with{" "}
-                              <em>
-                                {item.author ? item.author.displayName : ""}
-                              </em>
-                            </Typography>
                           </CardContent>
-                          <CardActions>
-                            <Grid container direction={"column"}>
-                              {item.office_hours && (
-                                <OfficeHours
-                                  office_hours={item.office_hours}
-                                  author={item.author}
-                                />
-                              )}
-                            </Grid>
-                          </CardActions>
                         </Card>
                       </div>
                     ))}
