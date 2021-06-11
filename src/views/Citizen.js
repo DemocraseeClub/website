@@ -43,7 +43,7 @@ class Citizen extends React.Component {
         this.props.match.params.uid
     ).then(async (data) => {
       let parsedData = await data.json();
-      if (parsedData.citizen.picture) {
+      if (parsedData?.citizen?.picture) {
         try {
           let path = window.fbStorage.ref(parsedData.citizen.picture);
           const url = await path.getDownloadURL();
@@ -53,7 +53,7 @@ class Citizen extends React.Component {
         }
       }
 
-      if (parsedData.citizen.coverPhoto) {
+      if (parsedData?.citizen?.coverPhoto) {
         try {
           let path = window.fbStorage.ref(parsedData.citizen.coverPhoto);
           const url = await path.getDownloadURL();
@@ -63,18 +63,23 @@ class Citizen extends React.Component {
         }
       }
 
-      if (parsedData.resources) {
-        parsedData.resources.map(async (item) => {
-          if (item.image) {
-            try {
-              let path = window.fbStorage.ref(item.image);
-              const url = await path.getDownloadURL();
-              item.image = url;
-            } catch (e) {
-              console.log(e);
+      if (parsedData?.resources) {
+       
+        for(let i=0; i< parsedData.resources.length; i++) {
+
+            let item = parsedData.resources[i]
+
+            if (item?.image) {
+                  try {
+                    let path = window.fbStorage.ref(item.image);
+                    const url = await path.getDownloadURL();
+                    item.image = url;
+                  } catch (e) {
+                    console.log(e);
+                  }
             }
-          }
-        });
+        }
+
       }
       return parsedData;
     });
@@ -208,6 +213,7 @@ class Citizen extends React.Component {
                     ))
                   : resources.map((item, key) => (
                       <div key={"resource" + key}>
+                        {console.log(resources)}
                         <Card className={this.props.classes.card}>
                           <CardMedia
                             onError={(e) => {
@@ -220,7 +226,7 @@ class Citizen extends React.Component {
                             alt={item.title}
                             height="200"
                             style={{ objectFit: "contain" }}
-                            image={item.image}
+                            src={item.image}
                           />
                           <CardContent>
                             <Typography
