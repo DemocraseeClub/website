@@ -3,8 +3,8 @@ private.txt
 functions/firestoredump
 public/wisedemo
 
-*.lo
-
+*.log
+functions/*.log
 .firebase
 .idea
 

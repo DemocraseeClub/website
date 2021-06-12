@@ -185,7 +185,7 @@ app.post("/syncUser", async (req, res) => {
             if (!firebaseUser.roles) {
                 firebaseUser.roles = [];
             }
-
+           
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
             await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
@@ -208,7 +208,7 @@ app.post("/syncUser", async (req, res) => {
 function getIdentityMap(provider) {
     // phone { phone: [ '+18088555665' ] }
     // password { email: [ 'eliabrahamtaylor@gmail.com' ] }
-    // sign_in_provider === "anonymous", "password", "facebook.com", "github.com", "google.com", "twitter.com", "apple.com", "microsoft.com", "yahoo.com", "phone", "playgames.google.com", "gc.apple.com", or "custom"`.
+    // sign_in_providconst now = admin.firestore.FieldValue.serverTimestamp();er === "anonymous", "password", "facebook.com", "github.com", "google.com", "twitter.com", "apple.com", "microsoft.com", "yahoo.com", "phone", "playgames.google.com", "gc.apple.com", or "custom"`.
     if (provider === 'google.com') {
         return {email: "email", phoneNumber: "phoneNumber", displayName: "displayName"}
     } else {
@@ -247,6 +247,104 @@ exports.injectMeta = functions.https.onRequest((req, res, next) => {
     }
 });
 
+//listen for updates and changing modified timestamp in every collection
+
+
+function onUpdateEntity(change, context){
+
+    const data = change.after.data();
+    const previousData = change.before.data();
+     
+    if(JSON.stringify(data?.modified) !== JSON.stringify(previousData?.modified)) {
+         return null
+    }
+     
+    const modified = admin.firestore.FieldValue.serverTimestamp();
+
+    return change.after.ref.set({
+        modified,
+    }, {merge: true});
+}
+
+exports.onUpdateUser = functions.firestore.document('users/{userId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateCity = functions.firestore.document('cities/{cityId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateMeetingType = functions.firestore.document('meeting_types/{meeting_typeId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateOfficial = functions.firestore.document('officials/{officialId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateParty = functions.firestore.document('parties/{partyId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateRally = functions.firestore.document('rallies/{rallyId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateResourceType = functions.firestore.document('resource_types/{resource_typeId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateResource = functions.firestore.document('resources/{resourceId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateStakeholder = functions.firestore.document('stakeholders/{stakeholderId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateStates = functions.firestore.document('states/{stateId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateTopics = functions.firestore.document('topics/{topicId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateWiseDemocracy = functions.firestore.document('wise_democracy/{wise_democracyId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateActionPlan = functions.firestore.document('action_plans/{action_planId}').onUpdate( onUpdateEntity );
+
+exports.onUpdateSubscription = functions.firestore.document('subscriptions/{subscriptionId}').onUpdate( onUpdateEntity );
+
+exports.onUpdatePage = functions.firestore.document('pages/{pageId}').onUpdate( onUpdateEntity );
+
+
+
+//listen for new entities creation
+
+function onCreateEntity(snap, context) {
+
+    const now = admin.firestore.FieldValue.serverTimestamp();
+
+    return snap.ref.set({
+        created: now,
+        modified: now
+    }, {merge: true})
+
+}
+
+exports.onCreateUser = functions.firestore.document('users/{usersId}').onCreate( onCreateEntity );
+
+exports.onCreateCity = functions.firestore.document('cities/{cityId}').onCreate( onCreateEntity );
+
+exports.onCreateMeetingType = functions.firestore.document('meeting_types/{meeting_typeId}').onCreate( onCreateEntity );
+
+exports.onCreateOfficial = functions.firestore.document('officials/{officialId}').onCreate( onCreateEntity );
+
+exports.onCreateParty = functions.firestore.document('parties/{partyId}').onCreate( onCreateEntity );
+
+exports.onCreateRally = functions.firestore.document('rallies/{rallyId}').onCreate( onCreateEntity );
+
+exports.onCreateResourceType = functions.firestore.document('resource_types/{resource_typeId}').onCreate( onCreateEntity );
+
+exports.onCreateResource = functions.firestore.document('resources/{resourceId}').onCreate( onCreateEntity );
+
+exports.onCreateStakeholder = functions.firestore.document('stakeholders/{stakeholderId}').onUpdate( onCreateEntity );
+
+exports.onCreateStates = functions.firestore.document('states/{stateId}').onCreate( onCreateEntity );
+
+exports.onCreateTopics = functions.firestore.document('topics/{topicId}').onCreate( onCreateEntity );
+
+exports.onCreateWiseDemocracy = functions.firestore.document('wise_democracy/{wise_democracyId}').onCreate( onCreateEntity );
+
+exports.onCreateActionPlan = functions.firestore.document('action_plans/{action_planId}').onCreate( onCreateEntity );
+
+exports.onCreateSubscription = functions.firestore.document('subscriptions/{subscriptionId}').onCreate( onCreateEntity );
+
+exports.onCreatePage = functions.firestore.document('pages/{pageId}').onCreate( onCreateEntity );
+
+
+
+
+
 /*
 TODO: programmatically add `created` and `modified` fields to EVERY document.
 ex. https://firebase.google.com/docs/functions/firestore-events
@@ -276,3 +374,5 @@ exports.onWriteDocs = functions.firestore
       }, {merge: true});
     });
 */
+
+
