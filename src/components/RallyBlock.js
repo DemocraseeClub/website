@@ -32,7 +32,6 @@ const ROUNDTABLEMAP = [
 class RallyHome extends Component {
 
     constructor(p) {
-        console.log("RENDER RALLY", p.rally);
         super(p);
         this.state = {editMode: p.editMode || false};
     }
@@ -44,6 +43,8 @@ class RallyHome extends Component {
 
     render() {
         const {classes, rally, meeting} = this.props;
+
+        console.log(meeting)
 
         let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
@@ -59,15 +60,28 @@ class RallyHome extends Component {
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = [];
+        let profiles = [], dups = {};
         if (meeting) {
-            profiles = (meeting.speakers) ? meeting.moderators.concat(meeting.speakers) : meeting.moderators;
+            meeting.moderators.forEach(user => {
+                if (!dups[user.id] && user.displayName) {
+                    dups[user.id] = true;
+                    profiles.push(user);
+                }
+            })
+            meeting.speakers.forEach(user => {
+                if (!dups[user.id] && user.displayName) {
+                    dups[user.id] = true;
+                    profiles.push(user);
+                }
+            })
         }
         while(profiles.length < 7) {
-            profiles.push({name:'Apply to Speak', icon:'+'})
+            profiles.push({displayName:'Apply to Speak', icon:'+'})
         }
 
-        let start = !meeting || !meeting.start_end_times  ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
+        console.log("PROFILES", profiles);
+
+        let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
         return (
             <React.Fragment>
@@ -112,29 +126,31 @@ class RallyHome extends Component {
 
                         {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
+                            {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
                             {profiles.map((r,i) =>
-                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} >
+                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={r.uid ? '/citizen/'+r.uid : '/c/subscriptions#new/'}>
                                     <ListItemIcon>
-                                        {r.img ? <Avatar alt={r.name} src={r.img} />
+                                        {r.picture ? <Avatar alt={r.displayName} src={r.picture} />
                                         :
-                                        <Avatar>{r.icon || r.name}</Avatar>}
+                                        <Avatar>{r.icon || r.displayName}</Avatar>}
                                     </ListItemIcon>
-                                    <ListItemText primary={r.name} secondary={r.tagline}/>
+                                    <ListItemText primary={r.displayName} secondary={r.tagline}/>
                                 </ListItem>
                                 )}
                         </Box>
                         :
                         <Box mt={4} p={1} >
-                            <AvatarGroup>
-                                {profiles.map((r, i) => r.img ?
-                                    <Avatar key={'speakerGroup-'+ i} alt={r.name} src={r.img} />
+                            <AvatarGroup max={7} spacing={8}>
+                                {profiles.map((r, i) => r.picture ?
+                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName} alt={r.displayName} src={r.picture}/>
+                                    : r.id ?
+                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName}>{r.displayName[0].toUpperCase()}</Avatar>
                                     :
-                                    <Avatar key={'speakerGroup-'+ i} >{r.icon || r.name}</Avatar>)}
+                                    <Avatar component={NavLink} to={'/c/subscriptions#new/'} key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
+                                )}
                             </AvatarGroup>
                         </Box>
                         }
-
-
                     </Grid>
 
 

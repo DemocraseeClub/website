@@ -1,4 +1,3 @@
-import API from '../Util/API';
 import firebase from "firebase";
 
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
@@ -55,12 +54,25 @@ export const countDown = (index) => ({
     index: index
 });
 
-export const normalizeDoc = async (docs) => {
+/**
+ * TODO: replace "depth" with field list
+ * depth = 0 || undefined  > don't get anything else
+ * depth = 1 > get author name, picture
+ * depth = 2 > + get meeting list
+ * dpeth = 3 > + get meeting authors, pictures, promo videos, etc...
+ */
+
+export const normalizeDoc = async (docs, type) => {
     if (!docs || docs.length === 0) return [];
     let results = [];
     for (let j = 0; j < docs.length; j++) {
         const tax = await docs[j].get();
-        results.push({id: tax.id, ...tax.data()})
+        if (['author', 'speakers', 'moderators'].includes(type)) {
+            let obj = await normalizeUser(tax, 1);
+            results.push(obj);
+        } else {
+            results.push({id: tax.id, ...tax.data()})
+        }
     }
     return results;
 }
@@ -70,15 +82,36 @@ export const normalizeMeeting = async (doc, depth) => {
         id: doc.id,
         ...doc.data(),
     };
-    if (depth > 1) {
+
+    if (meet.agenda) {
         meet.agenda = JSON.parse(meet.agenda);
     }
-    //  start_end_times
-    let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
-    for (let i = 0; i < taxonomies.length; i++) {
-        meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]]);
+
+    if (depth > 0) {
+        // TODO: normalize start_end_times
+        let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
+        for (let i = 0; i < taxonomies.length; i++) {
+            meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]], taxonomies[i]);
+        }
     }
+    console.log("NORMALIZED MEETING: " + depth, meet);
+
     return meet;
+}
+
+export const normalizeUser = async (doc, depth) => {
+    let obj = {id: doc.id, ...doc.data()}; // TODO: just get picture, roles, displayName (maybe bio)
+    if (obj.picture) {
+        let path = window.fbStorage.ref(obj.picture);
+        const url = await path.getDownloadURL();
+        obj.picture = url;
+    }
+    if (obj.coverPhoto && depth > 0) { // TODO: only request if on user's profile page
+        let path = window.fbStorage.ref(obj.coverPhoto);
+        const url = await path.getDownloadURL();
+        obj.coverPhoto = url;
+    }
+    return obj;
 }
 
 export const normalizeRally = async (doc, depth) => {
@@ -86,13 +119,19 @@ export const normalizeRally = async (doc, depth) => {
 
     if (obj?.author) {
         const author = await obj.author.get();
-        obj.author = {id: author.id, ...author.data()};
+        obj.author = await normalizeUser(author, depth)
     }
 
     if (obj.picture) {
         let path = window.fbStorage.ref(obj.picture);
         const url = await path.getDownloadURL();
         obj.picture = url;
+    }
+
+    if (obj.promo_video && depth > 0) {
+        let path = window.fbStorage.ref(obj.promo_video);
+        const url = await path.getDownloadURL();
+        obj.promo_video = url;
     }
 
     if (depth > 0) {
@@ -111,10 +150,10 @@ export const normalizeRally = async (doc, depth) => {
 
     let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
     for (let i = 0; i < taxonomies.length; i++) {
-        obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]]);
+        obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]], taxonomies[i]);
     }
 
-    console.log("NORMALIZED RALLY", obj)
+    console.log("NORMALIZED RALLY BY " + depth, obj)
     return obj;
 
 };
@@ -130,36 +169,34 @@ export const fbRally = (id) => {
         let doc = await roomRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, 3);
-            console.log(rally);
-            dispatch(entityDataSuccess(rally));
+            dispatch(entityDataSuccess(rally, null));
         } else {
             dispatch(entityDataFailure('invalid rally id'));
         }
     };
 };
 
-export const entityData = (url) => {
-    return (dispatch, getState) => {
-
-        const state = getState();
-        if (state.entity.loading === true) return false;
-        dispatch(entityDataStarted(url));
-        API.Get(url).then((res) => {
-            const msg = API.checkError(res.data);
-            if (msg.length > 0) {
-                dispatch(entityDataFailure(msg));
-            } else {
-                dispatch(entityDataSuccess(res.data));
-                if (res.data.type === 'meeting') {
-                    dispatch(initCounter());
-                }
-            }
-        }).catch((err) => {
-            var msg = API.getErrorMsg(err);
-            dispatch(entityDataFailure(msg));
-        });
-    };
-};
+const _initCounter = (draft) => {
+    let total = 0;
+    let headers = {};
+    if (typeof draft.meeting.agenda === 'string') {
+        draft.meeting.agenda = JSON.parse(draft.meeting.agenda);
+    }
+    draft.meeting.agenda.forEach((o, i) => {
+        total += o.seconds
+        o.countdown = o.seconds;
+        if (typeof headers[o.nest] === 'undefined') headers[o.nest] = {
+            label: o.nest,
+            order: Object.values(headers).length,
+            count: 0
+        };
+        headers[o.nest].count++;
+    });
+    draft.meeting.countRemains = total;
+    draft.meeting.countScheduled = total;
+    draft.meeting.headers = Object.values(headers);
+    return draft;
+}
 
 const initialState = {
     loading: false,
@@ -179,28 +216,16 @@ export default function entityDataReducer(draft = initialState, action) {
             draft.error = null;
             draft.meeting = action.meeting;
             draft.rally = action.rally;
+            if (draft.meeting) {
+                return _initCounter(draft);
+            }
             return draft;
         case ITEM_DATA_FAILURE:
             draft.loading = false;
             draft.error = action.error
             return draft;
         case ITEM_INIT_COUNTER:
-            let total = 0;
-            let headers = {};
-            draft.meeting.agenda.forEach((o, i) => {
-                total += o.seconds
-                o.countdown = o.seconds;
-                if (typeof headers[o.nest] === 'undefined') headers[o.nest] = {
-                    label: o.nest,
-                    order: Object.values(headers).length,
-                    count: 0
-                };
-                headers[o.nest].count++;
-            });
-            draft.meeting.countRemains = total;
-            draft.meeting.countScheduled = total;
-            draft.meeting.headers = Object.values(headers);
-            return draft;
+            return _initCounter(draft);
         case UPDATE_RALLY_ITEM:
             if (action.key === 'delete') {
                 draft.meeting.agenda.splice(action.index, 1);

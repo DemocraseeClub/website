@@ -48,7 +48,7 @@ let darkMode = {
     },
     secondary: {
       main: "#B9DFF4",
-      contrastText: "#002866",
+      contrastText: "#04709a",
     },
     info: {
       main: "#005ea2",
@@ -59,7 +59,8 @@ let darkMode = {
     },
     background: {
       default: "#002e36",
-      paper: "#00434F",
+      paper: "#035353",
+      contrastText: "#d0dce0",
     },
   },
 };

@@ -2,6 +2,9 @@
 **/*.js
 **/*.js.map
 
+*.log
+*.logs
+
 # Except the ESLint config file
 !.eslintrc.js
 
@@ -15,3 +18,6 @@ firestoredump
 
 # Node.js dependency directory
 node_modules/
+
+firebase-debug.log
+ui-debug.log
