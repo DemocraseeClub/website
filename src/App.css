@@ -14,7 +14,7 @@ code {
 
 #lightMode, #darkMode {
   min-height: 100vh;
-  justify-content: space-between;
+  justify-content:stretch;
   display: flex;
   flex-direction: column;
 }
@@ -28,7 +28,12 @@ code {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a5760', endColorstr='#b9dff4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-#lightMode .MuiTypography-root a, #darkMode .MuiTypography-root a { color:inherit; }
+#lightMode .MuiTypography-root a,
+#darkMode .MuiTypography-root a,
+#lightMode a .MuiTypography-root,
+#darkMode a .MuiTypography-root,
+#lightMode a.MuiTypography-root,
+#darkMode a.MuiTypography-root { color:inherit; }
 body button a, body .MuiCardActions-root a {text-decoration: none}
 
 #darkMode #mainHeader {
@@ -40,3 +45,20 @@ body button a, body .MuiCardActions-root a {text-decoration: none}
 }
 
 iframe { min-height:450px; width: 100%}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+  margin: 30px 15px;
+}

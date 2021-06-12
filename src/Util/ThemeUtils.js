@@ -111,6 +111,10 @@ export const rallyStyles = (theme) => ({
     fontWeight: 900,
     borderRadius: "0px 5px 5px 0px",
   },
+  icon: {
+    fontSize: 35,
+    color: theme.palette.info.main,
+  },
   field: {
     marginBottom: theme.spacing(2),
   },
@@ -268,16 +272,17 @@ export const rallyStyles = (theme) => ({
   cardsContainer: {
     marginTop: "15px",
   },
-  cardMedia : {
-    width:"100%",
-    height:"100%"
+  cardMedia: {
+    width: "100%",
+    height: "100%",
   },
-  cardSkeleton : {
+  cardSkeleton: {
     width: "100%",
     height: "100%",
   },
   card: {
-    margin:0, width:'100%'
+    margin: 0,
+    width: "100%",
   },
   cardButton: {
     padding: "5%",
@@ -288,9 +293,6 @@ export const rallyStyles = (theme) => ({
       background: theme.palette.info.main,
       color: theme.palette.info.contrastText,
     },
-  },
-  cardHeader: {
-    marginBottom: "15px",
   },
   cardSubtitle: {
     marginBottom: "15px",
@@ -340,5 +342,46 @@ export const rallyStyles = (theme) => ({
     "& li": {
       marginBottom: 10,
     },
+  },
+  profilePicture: {
+    width: "140px",
+    height: "140px",
+    position: "absolute",
+    left: "10%",
+    border: "6px solid white",
+    bottom: "-70px",
+    boxShadow: "0px 0px 25px 0px rgba(0,0,0,0.56)",
+  },
+  profileName: {
+    fontSize: "2.5em",
+    margin: "30px 0 10px 0",
+  },
+  profileProfession: {
+    display: "block",
+  },
+  profileChip: {
+    margin: "10px 0 20px 0",
+  },
+  profileBio: {
+    textAlign: "justify",
+    width: "80%",
+  },
+  [theme.breakpoints.down("md")]: {
+    profileName: {
+      margin: "60px 0 10px 0",
+    },
+  },
+  profileEditPicture: {
+    width: "140px",
+    height: "140px",
+    boxShadow: "0px 0px 25px 0px rgba(0,0,0,0.56)",
+  },
+  profileEditFormContainer: {
+    width: "70%",
+    padding: "2%",
+  },
+
+  profileEditInput: {
+    width: "100%",
   },
 });

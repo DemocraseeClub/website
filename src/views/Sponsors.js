@@ -246,7 +246,7 @@ class Sponsors extends React.Component {
                                     {o.sponsors.map((user, ui) => {
                                         return (<ListItem key={ui + '-sponsor-' + o.name}>
                                             <ListItemIcon>
-                                                <Avatar variant={'circular'} aria-label="tool" src={user.img}
+                                                <Avatar variant={'circular'} aria-label="tool" src={user.picture}
                                                         alt={user.name}/>
                                             </ListItemIcon>
                                             <ListItemText primary={user.name} secondary={'Civic Sponsor'}/>

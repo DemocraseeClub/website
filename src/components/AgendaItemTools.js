@@ -24,7 +24,7 @@ class AgendaItemTools extends React.Component {
         return (
             <Box id={'notesDrawer'} style={{backgroundColor: '#ffffff'}}>
 
-                <ButtonGroup container justify={'space-evenly'} color={'secondary'} variant={'contained'} fullWidth={true} size={'small'} style={{marginBottom:8}}>
+                <ButtonGroup fullWidth={true} size={'small'} style={{marginBottom:8}}>
                     <Button endIcon={<Sms className="chat"/>}
                             onClick={() => this.setState({showChat: !this.state.showChat})}>Chat</Button>
                     <Button endIcon={<SpeakerNotes className="private"/>}

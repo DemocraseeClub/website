@@ -32,7 +32,7 @@ class MeetingHome extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.location.pathname !== prevProps.location.pathname || this.props.location.search !== prevProps.location.search) {
+        if (this.props.match.params.rid !== prevProps.match.params.rid) {
             this.refresh();
         }
     }
@@ -42,17 +42,14 @@ class MeetingHome extends Component {
         const rallyRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
         let doc = await rallyRef.get();
         if (doc.exists) {
-            let rally = await normalizeRally(doc, 0); // NOTE: deeper query
-
+            let rally = await normalizeRally(doc, 0);
             let meeting = false;
             const meetRef = rallyRef.collection('meetings').doc(this.props.match.params.mid)
             doc = await meetRef.get();
             if (doc.exists) {
                 meeting = await normalizeMeeting(doc, 3);
             };
-
             this.props.dispatch(entityDataSuccess(rally, meeting));
-            this.props.dispatch(initCounter());
         } else {
             this.props.dispatch(entityDataFailure('invalid rally id'));
         }
@@ -64,6 +61,7 @@ class MeetingHome extends Component {
         if (this.props.entity.loading === true) return <ProgressLoading />;
         if (this.props.entity.error) return <div style={{width:'100%', textAlign:'center', margin:'20px auto'}}><Typography variant='h2'>{this.props.entity.error}</Typography></div>;
         if (!this.props.entity.rally) return 'no rally';
+        if (!this.props.entity.meeting) return 'no meeting';
 
         return (
             <div className={classes.root}>
@@ -100,4 +98,4 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     null
-)(withRouter(withStyles(rallyStyles, {withTheme:true})(withSnackbar(MeetingHome))));
+)(withStyles(rallyStyles, {withTheme:true})(withSnackbar(withRouter(MeetingHome))));
