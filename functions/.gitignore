@@ -2,6 +2,9 @@
 **/*.js
 **/*.js.map
 
+*.log
+*.logs
+
 # Except the ESLint config file
 !.eslintrc.js
 
