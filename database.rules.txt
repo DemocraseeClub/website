@@ -1,0 +1,129 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function getRoles() {
+      let data = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return (data.roles) ? data.roles : [];
+    }
+
+    function hasRole(role) {
+        return role in getRoles();
+    }
+
+    match /rooms {
+    	allow read, write: if true;
+    }
+
+    match /rooms/{document=**} {
+    	allow read, write: if true;
+    }
+
+    match /users {
+      // allow read, write: if true;
+   		allow read: if true;
+      allow create: if !request.resource.data.keys().hasAny(['roles', 'citizencoin'])
+      allow update: if (request.auth.uid == request.resource.id && (!request.resource.data.keys().hasAny(['roles', 'citizencoin']))) || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.id || hasRole('admin');
+    }
+
+    match /users/{userId} {
+   		allow read: if true;
+      allow create: if !request.resource.data.keys().hasAny(['roles', 'citizencoin'])
+      allow update: if (request.auth.uid == request.resource.id && (!request.resource.data.keys().hasAny(['roles', 'citizencoin']))) || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.id || hasRole('admin');
+    }
+
+    match /meeting_types/{meeting_typeId} {
+      allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /officials/{officialId} {
+      allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /parties/{partyId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /rallies/{rallyId} {
+    	allow read: if true
+      allow write: if request.auth != null;
+      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+    }
+
+    match /rallies/{rallyId}/meetings {
+      allow read: if true // TODO: check meeting privacy setting
+      allow write: if request.auth != null;
+      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+    }
+
+    match /rallies/{rallyId}/meetings/{meetingId} {
+      allow read: if true // TODO: check meeting privacy setting
+      allow write: if request.auth != null;
+      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+    }
+
+    match /resource_types/{resource_typeId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /resources {
+		  allow read: if true;
+      allow write: if request.auth != null;
+      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+    }
+
+    match /resources/{resourceId} {
+    	allow read: if true;
+      allow write: if request.auth != null;
+      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+    }
+
+    match /cities/{cityId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /states/{statesId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /topics/{topicsId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /action_plans/{action_planId} {
+    	allow read: if true;
+      allow write: if request.auth != null;
+      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
+      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+    }
+
+    match /wise_democracy/{wise_demoId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /stakeholders/{stakeholderId} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+     match /subscriptions/{subscriptions} {
+    	allow read: if true;
+      allow write: if hasRole('admin')
+    }
+  }
+}
