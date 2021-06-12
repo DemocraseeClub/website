@@ -44,6 +44,8 @@ class RallyHome extends Component {
     render() {
         const {classes, rally, meeting} = this.props;
 
+        console.log(meeting)
+
         let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
                 acc = acc.concat(rally[val].map(o => o.name));

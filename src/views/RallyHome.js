@@ -32,7 +32,12 @@ class RallyHome extends Component {
         let doc = await roomRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, 1);
-            this.setState({rally:rally, loading:false, error:false})
+            let meeting = false;
+            if (rally?.meetings.length > 0){
+                // sort by start desc
+                meeting = rally.meetings[0];
+            }
+            this.setState({rally:rally, meeting:meeting, loading:false, error:false})
         } else {
             this.setState({rally:false, loading:false, error:'invalid id'})
         }
@@ -45,11 +50,11 @@ class RallyHome extends Component {
 
         return (
             <React.Fragment>
-                <RallyBlock rally={rally} />
+                <RallyBlock rally={rally} meeting={this.state.meeting} />
 
                 <Box p={3}>
                 {!rally.meetings ? '' :
-                (rally?.meetings.length === 0)
+                (rally.meetings.length === 0)
                     ?
                     <span>No meetings yet. <u onClick={() => window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
                     :
@@ -57,9 +62,7 @@ class RallyHome extends Component {
                             <Typography variant='subtitle1'>Meetings</Typography>
                             {rally.meetings.map((r, i) => {
                                 return <Grid item key={r.title + '-' + i}>
-                                    <NavLink to={`/rally/${rally.id}/meeting/${r.id}`}>
-                                        <Typography variant={'h4'}>{r.title}</Typography>
-                                    </NavLink>
+                                    <Typography component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} variant={'h4'}>{r.title}</Typography>
                                 </Grid>
                             })}
                         </React.Fragment>
