@@ -28,7 +28,12 @@ code {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a5760', endColorstr='#b9dff4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-#lightMode .MuiTypography-root a, #darkMode .MuiTypography-root a { color:inherit; }
+#lightMode .MuiTypography-root a,
+#darkMode .MuiTypography-root a,
+#lightMode a .MuiTypography-root,
+#darkMode a .MuiTypography-root,
+#lightMode a.MuiTypography-root,
+#darkMode a.MuiTypography-root { color:inherit; }
 body button a, body .MuiCardActions-root a {text-decoration: none}
 
 #darkMode #mainHeader {

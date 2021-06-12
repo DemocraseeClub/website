@@ -64,7 +64,7 @@ class Citizen extends React.Component {
       }
 
       if (parsedData?.resources) {
-       
+
         for(let i=0; i< parsedData.resources.length; i++) {
 
             let item = parsedData.resources[i]
@@ -97,8 +97,11 @@ class Citizen extends React.Component {
     const { classes } = this.props;
     const preventDefault = (event) => event.preventDefault();
     const breakpoints = {
-      default: 2,
-      600: 1,
+      default: 4,
+      1100: 4,
+      900: 3,
+      600: 2,
+      500: 1,
     };
     return (
       <Paper className={classes.root}>
@@ -126,11 +129,9 @@ class Citizen extends React.Component {
               />
             </div>
           )}
-
-          <Grid container className={this.props.classes.section}>
-            <Grid item md={4} sm={12}>
+          <Box className={this.props.classes.section}>
               {loading ? (
-                <>
+                <React.Fragment>
                   <Skeleton />
                   <Skeleton />
                   <Chip
@@ -141,9 +142,9 @@ class Citizen extends React.Component {
                   <Skeleton />
                   <Skeleton />
                   <Skeleton />
-                </>
+                </React.Fragment>
               ) : (
-                <>
+                <React.Fragment>
                   <Typography variant="h1" className={classes.profileName}>
                     {realName}
                   </Typography>
@@ -177,10 +178,10 @@ class Citizen extends React.Component {
                       html={bio}
                     />
                   </Typography>
-                </>
+                </React.Fragment>
               )}
-            </Grid>
-            <Grid item md={8} sm={12} xs={12}>
+            </Box>
+            <Box>
               <Chip
                 icon={<SettingsSharpIcon />}
                 label="Resources"
@@ -265,8 +266,7 @@ class Citizen extends React.Component {
                       </div>
                     ))}
               </Masonry>
-            </Grid>
-          </Grid>
+            </Box>
         </Box>
       </Paper>
     );

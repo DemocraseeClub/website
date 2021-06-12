@@ -316,9 +316,8 @@ class Resources extends React.Component {
                         variant={"body2"}
                         className={classes.cardSubtitle}
                       >
-                        {" "}
-                        with{" "}
-                        <em>{item.author ? item.author.displayName : ""}</em>
+                        <em> with </em>
+                        <NavLink to={'/citizen/'+item.author.id}>{item.author.displayName}</NavLink>
                       </Typography>
                     </CardContent>
                     <CardActions>
