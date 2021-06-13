@@ -171,14 +171,8 @@ function App(props) {
                 />
                 <Route exact path="/rally/:rid" component={RallyHome} />
                 <Route exact path="/office-hours/:uid" component={Home} />
-                <Route exact path="/citizen/:uid" component={Citizen} />{" "}
-                {/* TODO: create User profile */}
-                <Route
-                  exact
-                  path="/citizen/edit/:uid"
-                  component={CitizenEdit}
-                />{" "}
-                {/* TODO: same as User profile with Account Edit buttons*/}
+                <Route exact path="/citizen/:uid" component={Citizen} />
+                <Route exact path="/citizen/:uid/edit" component={CitizenEdit}/>
                 <Route path="/about">
                   <About />
                 </Route>

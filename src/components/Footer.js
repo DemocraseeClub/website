@@ -72,7 +72,7 @@ class Footer extends React.Component {
                     <Grid item>
                         <ul className={classes.menuList}>
                             {this.props.authController && this.props.authController.loggedUser ?
-                                <li><NavLink to={'/user/'+this.props.authController.loggedUser.uid}>My Account</NavLink></li>
+                                <li><NavLink to={'/citizen/'+this.props.authController.loggedUser.uid + '/edit'}>My Account</NavLink></li>
                                 :
                                 <li><NavLink to={'/login'}>Sign In / Up</NavLink></li>
                             }
