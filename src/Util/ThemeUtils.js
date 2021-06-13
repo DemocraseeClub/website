@@ -367,6 +367,9 @@ export const rallyStyles = (theme) => ({
     width: "80%",
   },
   [theme.breakpoints.down("md")]: {
+    profileBio: {
+      width: "100%",
+    },
     profileName: {
       margin: "60px 0 10px 0",
     },

@@ -5,13 +5,16 @@ import { rallyStyles } from "../Util/ThemeUtils";
 import { withRouter } from "react-router";
 import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { withSnackbar } from "notistack";
+import {Link} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import WebIcon from "@material-ui/icons/Web";
 import Chip from "@material-ui/core/Chip";
-import Grid from "@material-ui/core/Grid";
-import { Card, CardContent, CardMedia } from "@material-ui/core";
+import Card from "@material-ui/core/Chip";
+import Button from "@material-ui/core/Button";
+import CardContent from "@material-ui/core/Chip";
+import CardMedia from "@material-ui/core/Chip";
 import Skeleton from "@material-ui/lab/Skeleton";
 import SanitizedHTML from "react-sanitized-html";
 import Config from "../Config";
@@ -137,7 +140,7 @@ class Citizen extends React.Component {
                   <Chip
                     className={classes.profileChip}
                     icon={<WebIcon />}
-                    label="https://something.com"
+                    label="User name"
                   />
                   <Skeleton />
                   <Skeleton />
@@ -147,6 +150,9 @@ class Citizen extends React.Component {
                 <React.Fragment>
                   <Typography variant="h1" className={classes.profileName}>
                     {realName}
+
+                    {this.props.authController?.loggedUser.uid === this.props.match.params.uid &&
+                    <Button style={{float:'right'}} component={Link} to={`/c/users/${this.props.match.params.uid}`} color={'primary'} variant={'contained'}>Edit Profile</Button>}
                   </Typography>
 
                   <Chip
@@ -181,7 +187,7 @@ class Citizen extends React.Component {
                 </React.Fragment>
               )}
             </Box>
-            <Box>
+          <Box className={this.props.classes.section}>
               <Chip
                 icon={<SettingsSharpIcon />}
                 label="Resources"
@@ -214,13 +220,12 @@ class Citizen extends React.Component {
                     ))
                   : resources.map((item, key) => (
                       <div key={"resource" + key}>
-                        {console.log(resources)}
                         <Card className={this.props.classes.card}>
                           <CardMedia
                             onError={(e) => {
                               e.target.onerror = null;
                               e.target.src =
-                                "https://kaikucaffelatte.com/blog/wp-content/uploads/2020/03/shutterstock_510679489-scaled.jpg";
+                                "/images/greenicons.png";
                             }}
                             className={this.props.classes.cardMedia}
                             component="img"
@@ -229,6 +234,7 @@ class Citizen extends React.Component {
                             style={{ objectFit: "contain" }}
                             src={item.image}
                           />
+                          {/* http://localhost:3000/c/users/19WuksSnY9RFwboJsepf */}
                           <CardContent>
                             <Typography
                               variant={"h2"}

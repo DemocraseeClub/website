@@ -123,7 +123,6 @@ export function FirebaseCMS(props: any) {
                         setUserProperties: (o: any) => console.log('FB SET ', o)
                     };
                 }
-                console.log("FIREBASE INITIALIZED");
                 setFirebaseConfigInitialized(true);
             } catch (e) {
                 console.error(e);
@@ -133,7 +132,7 @@ export function FirebaseCMS(props: any) {
 
 
     const navigation: NavigationBuilder = ({user}: NavigationBuilderProps) => {
-        console.log('navigation fb user: ', user, fbUser)
+        //console.log('navigation fb user: ', user, fbUser)
         const navItems = [];
 
         if (user?.isAnonymous === false) {
@@ -166,11 +165,11 @@ export function FirebaseCMS(props: any) {
 
     const myAuthenticator: Authenticator = async (user?: firebase.User) => {
 
-        console.info("Allowing access to", user?.toJSON());
+        // console.info("Allowing access to", user?.toJSON());
 
         if (user) {
             let idToken = await user.getIdToken(true).then(idToken => idToken);
-            console.info("Sync with " + idToken, user.toJSON());
+             // console.info("Sync with " + idToken, user.toJSON());
 
             await postData(process.env.REACT_APP_FUNCTIONS_URL + "/syncUser", {idToken})
                 .then(data => {
@@ -179,11 +178,9 @@ export function FirebaseCMS(props: any) {
                     } else if (data.message) {
                         console.error(data.message);
                     } else {
-                        console.log('setting fbUser', data);
+                        console.log('setting firebase user: ', data);
                         setFbUser(data);
-
-                        // TODO: upgrade firecms & implement setExtra :: https://github.com/Camberi/firecms/issues/72#issuecomment-848643187
-                        // authController.setExtra(data);
+                        props.authController.setExtra(data);
                     }
 
                     return data

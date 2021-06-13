@@ -31,18 +31,7 @@ const db = admin.firestore();
 // var defaultAuth = defaultApp.auth();
 // var defaultDatabase = defaultApp.database();
 
-// TODO: SECURE read of private fields
-app.get("/user/:uid", async (req, res) => {
-    try {
-
-         const user = await admin.auth().getUser(req.params.uid);
-
-        return res.status(200).json(user);
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-});
-
+// TODO: SECURE read of private fields (field_email | field_phone |
 app.get("/citizen/:uid", async (req, res) => {
     try {
 
@@ -51,19 +40,19 @@ app.get("/citizen/:uid", async (req, res) => {
         const userSnapshot = await userRef.get()
 
         const citizen = {...userSnapshot.data()}
-        
+
         const resourcesSnapshot = await db
             .collection("resources")
             .where("author", "==", userRef)
             .get();
-            
+
         const {docs} = resourcesSnapshot;
 
         const resources = docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
         }));
-        
+
         for(let i = 0; i< resources.length; i++) {
 
             if(resources[i]?.resource_type) {
@@ -185,7 +174,7 @@ app.post("/syncUser", async (req, res) => {
             if (!firebaseUser.roles) {
                 firebaseUser.roles = [];
             }
-           
+
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
             await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
@@ -195,8 +184,10 @@ app.post("/syncUser", async (req, res) => {
                 return res.status(500).json({message:'Failed to sync your account profiles'});
             }
 
-            functions.logger.info("synced user: " + uid, doc.data());
-            return res.status(200).json(doc.data());
+            let obj = doc.data();
+            obj.uid = uid;
+            functions.logger.info("synced user: " + uid, obj);
+            return res.status(200).json(obj);
 
 
         })
@@ -254,11 +245,11 @@ function onUpdateEntity(change, context){
 
     const data = change.after.data();
     const previousData = change.before.data();
-     
+
     if(JSON.stringify(data?.modified) !== JSON.stringify(previousData?.modified)) {
          return null
     }
-     
+
     const modified = admin.firestore.FieldValue.serverTimestamp();
 
     return change.after.ref.set({
