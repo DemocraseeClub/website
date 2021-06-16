@@ -68,7 +68,7 @@ export const normalizeDoc = async (docs, type) => {
     for (let j = 0; j < docs.length; j++) {
         const tax = await docs[j].get();
         if (['author', 'speakers', 'moderators'].includes(type)) {
-            let obj = await normalizeUser(tax, 1);
+            let obj = await normalizeUser(tax, ["picture", "coverPhoto"]);
             results.push(obj);
         } else {
             results.push({id: tax.id, ...tax.data()})
@@ -77,24 +77,62 @@ export const normalizeDoc = async (docs, type) => {
     return results;
 }
 
-export const normalizeMeeting = async (doc, depth) => {
+export const normalizeMeeting = async (doc, fields) => {
     let meet = {
         id: doc.id,
         ...doc.data(),
     };
 
-    if (meet.agenda) {
+    if (meet?.agenda && fields.includes("agenda")) {
         meet.agenda = JSON.parse(meet.agenda);
     }
 
-    if (depth > 0) {
-        // TODO: normalize start_end_times
-        let taxonomies = ['meeting_type', 'city', 'author', 'speakers', 'moderators'];
-        for (let i = 0; i < taxonomies.length; i++) {
-            meet[taxonomies[i]] = await normalizeDoc(meet[taxonomies[i]], taxonomies[i]);
-        }
+    if(meet?.meeting_type && fields.includes("meeting_type")) {
+
+        const meeting_type = await meet.meeting_type.get();
+        meet.meeting_type = {id: meeting_type.id, ...meeting_type.data()}
+
     }
-    console.log("NORMALIZED MEETING: " + depth, meet);
+
+    if(meet?.city && fields.includes("city")) { //TODO normalize city
+
+        const city = await meet.city.get();
+        meet.city = {id: city.id, ...city.data()}
+
+    }
+
+    if(meet?.author && fields.includes("author")) { 
+
+        const author = await meet.author.get();
+        meet.author = normalizeUser(author, ["picture", "coverPhoto"])
+
+    }
+
+    if(meet?.speakers && fields.includes("speakers")) { 
+
+        meet.speakers = [];
+            for (let i = 0; i < meet.speakers.length; i++) {
+
+                let speaker  = await meet.speakers[i].get()
+
+                meet.speakers.push(await normalizeUser(speaker, ["picture", "coverPhoto"]));
+            }
+
+    }
+
+    if(meet?.moderators && fields.includes("moderators")) { 
+
+        meet.moderators = [];
+            for (let i = 0; i < meet.moderators.length; i++) {
+
+                let moderator  = await meet.moderators[i].get()
+
+                meet.moderators.push(await normalizeUser(moderator, ["picture", "coverPhoto"]));
+            }
+
+    }
+
+    console.log("NORMALIZED MEETING: " + fields, meet);
 
     return meet;
 }
@@ -142,46 +180,51 @@ export const normalizeResource = async (doc, fields) => {
     return obj;
 }
 
-export const normalizeRally = async (doc, depth) => {
+export const normalizeRally = async (doc, fields) => {
     let obj = {id: doc.id, ...doc.data()};
 
-    if (obj?.author) {
+    if (obj?.author && fields.includes("author")) {
         const author = await obj.author.get();
-        obj.author = await normalizeUser(author, depth)
+        obj.author = await normalizeUser(author, ["picture"])
     }
 
-    if (obj.picture) {
+    if (obj?.picture && fields.includes("picture")) {
         let path = window.fbStorage.ref(obj.picture);
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
 
-    if (obj.promo_video && depth > 0) {
+    if (obj?.promo_video && fields.includes("promo_video")) {
         let path = window.fbStorage.ref(obj.promo_video);
         const url = await path.getDownloadURL();
         obj.promo_video = url;
     }
 
-    if (depth > 0) {
+    if (fields.includes("meetings")) {
         let meetingDocs = await doc.ref.collection("meetings").get();
         if (meetingDocs?.docs && meetingDocs?.docs.length > 0) {
             obj.meetings = [];
             for (let i = 0; i < meetingDocs.docs.length; i++) {
-                obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], depth));
+                obj.meetings.push(await 
+                    normalizeMeeting(
+                        meetingDocs.docs[i], 
+                        ["agenda", "meeting_type", "city", "author", "speakers", "moderators"]
+                        )
+                    );
             }
         }
     }
 
-    if (obj.research) {
+    if (obj?.research && fields.includes("research")) {
         obj.research = JSON.parse(obj.research);
     }
 
-    let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
-    for (let i = 0; i < taxonomies.length; i++) {
-        obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]], taxonomies[i]);
-    }
+    // let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
+    // for (let i = 0; i < taxonomies.length; i++) {
+    //     obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]], taxonomies[i]);
+    // }
 
-    console.log("NORMALIZED RALLY BY " + depth, obj)
+    console.log("NORMALIZED RALLY BY " + fields, obj)
     return obj;
 
 };
