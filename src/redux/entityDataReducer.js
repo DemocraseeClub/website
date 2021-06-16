@@ -99,18 +99,46 @@ export const normalizeMeeting = async (doc, depth) => {
     return meet;
 }
 
-export const normalizeUser = async (doc, depth) => {
+export const normalizeUser = async (doc, fields) => {
     let obj = {id: doc.id, ...doc.data()}; // TODO: just get picture, roles, displayName (maybe bio)
-    if (obj.picture) {
+    if (obj?.picture && fields.includes("picture")) {
         let path = window.fbStorage.ref(obj.picture);
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
-    if (obj.coverPhoto && depth > 0) { // TODO: only request if on user's profile page
+    if (obj?.coverPhoto && fields.includes("coverPhoto")) { // TODO: only request if on user's profile page
         let path = window.fbStorage.ref(obj.coverPhoto);
         const url = await path.getDownloadURL();
         obj.coverPhoto = url;
     }
+    return obj;
+}
+
+export const normalizeResource = async (doc, fields) => {
+    let obj = {id: doc.id, ...doc.data()}; 
+    
+    if(obj?.author && fields.includes("author")) {
+
+        const author = await obj.author.get();
+        obj.author = await normalizeUser(author, ["picture", "coverPhoto"])
+    }
+
+
+    if (obj?.image && fields.includes("image")) { 
+        let path = window.fbStorage.ref(obj.image);
+        const url = await path.getDownloadURL();
+        obj.image = url;
+    }
+
+    if(obj?.resource_type && fields.includes("resource_type")) {
+
+        const resource_type = await obj.resource_type.get();
+        obj.resource_type = {id:resource_type.id, ...resource_type.data()}
+
+    }
+
+
+
     return obj;
 }
 
