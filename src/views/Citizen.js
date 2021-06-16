@@ -21,6 +21,8 @@ import Config from "../Config";
 import Masonry from "react-masonry-css";
 import SettingsSharpIcon from "@material-ui/icons/SettingsSharp";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import {normalizeUser, normalizeResource} from "../redux/entityDataReducer"
+
 
 class Citizen extends React.Component {
   constructor(p) {
@@ -40,55 +42,27 @@ class Citizen extends React.Component {
   }
 
   async fetchCitizenInfo() {
-    let citizenData = await fetch(
-      process.env.REACT_APP_FUNCTIONS_URL +
-        "/citizen/" +
-        this.props.match.params.uid
-    ).then(async (data) => {
-      let parsedData = await data.json();
-      if (parsedData?.citizen?.picture) {
-        try {
-          let path = window.fbStorage.ref(parsedData.citizen.picture);
-          const url = await path.getDownloadURL();
-          parsedData.citizen.picture = url;
-        } catch (e) {
-          console.log(e);
-        }
-      }
 
-      if (parsedData?.citizen?.coverPhoto) {
-        try {
-          let path = window.fbStorage.ref(parsedData.citizen.coverPhoto);
-          const url = await path.getDownloadURL();
-          parsedData.citizen.coverPhoto = url;
-        } catch (e) {
-          console.log(e);
-        }
-      }
+    let userRef = window.fireDB.collection("users").doc(this.props.match.params.uid)
+    
 
-      if (parsedData?.resources) {
+    //get citizen
+    let auxCitizen = await window.fireDB.collection("users").doc(this.props.match.params.uid).get()
+    
+    let citizen = await normalizeUser(auxCitizen, ["picture", "coverPhoto"])
+  
+    //get citizen's resources
+    let auxResources =  await window.fireDB.collection("resources").where("author", "==", userRef).get();
 
-        for(let i=0; i< parsedData.resources.length; i++) {
+    let promiseResources = [];
+    auxResources.forEach((doc) => promiseResources.push(normalizeResource(doc, ["image", "resource_type", ])))
 
-            let item = parsedData.resources[i]
+    let resources = await Promise.all(promiseResources)
 
-            if (item?.image) {
-                  try {
-                    let path = window.fbStorage.ref(item.image);
-                    const url = await path.getDownloadURL();
-                    item.image = url;
-                  } catch (e) {
-                    console.log(e);
-                  }
-            }
-        }
 
-      }
-      return parsedData;
-    });
-    let { citizen, resources } = citizenData;
+    this.setState({citizen, resources, loading: false})
 
-    this.setState({ citizen, resources, loading: false });
+
   }
 
   render() {
@@ -97,6 +71,8 @@ class Citizen extends React.Component {
       resources,
       loading,
     } = this.state;
+
+    console.log(this.state)
     const { classes } = this.props;
     const preventDefault = (event) => event.preventDefault();
     const breakpoints = {
@@ -151,7 +127,7 @@ class Citizen extends React.Component {
                   <Typography variant="h1" className={classes.profileName}>
                     {realName}
 
-                    {this.props.authController?.loggedUser.uid === this.props.match.params.uid &&
+                    {this.props.authController?.loggedUser?.uid === this.props.match.params.uid &&
                     <Button style={{float:'right'}} component={Link} to={`/c/users/${this.props.match.params.uid}`} color={'primary'} variant={'contained'}>Edit Profile</Button>}
                   </Typography>
 
@@ -198,7 +174,7 @@ class Citizen extends React.Component {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
-                {false
+                {loading
                   ? [1, 2, 3, 4, 5, 6].map((item, key) => (
                       <div key={"rskeleton" + key}>
                         <Card className={this.props.classes.cardSkeleton}>
@@ -218,8 +194,11 @@ class Citizen extends React.Component {
                         </Card>
                       </div>
                     ))
-                  : resources.map((item, key) => (
+                  : resources.map((item, key) => ( //TODO error loading resources with materialui card
                       <div key={"resource" + key}>
+                        <img src={item.image} alt="test"/>
+                        <p>{item.title}</p>
+                        {console.log(item)}
                         <Card className={this.props.classes.card}>
                           <CardMedia
                             onError={(e) => {
