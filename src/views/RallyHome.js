@@ -31,7 +31,7 @@ class RallyHome extends Component {
         const roomRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
         let doc = await roomRef.get();
         if (doc.exists) {
-            let rally = await normalizeRally(doc, 1);
+            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "research"]);
             let meeting = false;
             if (rally?.meetings.length > 0){
                 // sort by start desc
