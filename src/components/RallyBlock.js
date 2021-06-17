@@ -19,6 +19,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import moment from "moment";
 
+import userContext from '../contexts/userContext';
+
 const ROUNDTABLEMAP = [
     {top:39, left:181},
     {top:97, left:300},
@@ -31,10 +33,18 @@ const ROUNDTABLEMAP = [
 
 class RallyHome extends Component {
 
+    static contextType = userContext
+
     constructor(p) {
         super(p);
         this.state = {editMode: p.editMode || false};
     }
+
+    componentDidMount() {
+        const user = this.context
+    
+        console.log(user, "user") // { name: 'Tania', loggedIn: true }
+      }
 
     trackSubscribe(event, id) {
         this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');

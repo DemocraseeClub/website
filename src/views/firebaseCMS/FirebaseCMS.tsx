@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 
 import {
     Authenticator,
@@ -31,6 +31,8 @@ import {Box, CircularProgress} from "@material-ui/core";
 // import {useLocation} from "react-router-dom";
 import firebase from "firebase/app";
 // import LogLevel = firebase.LogLevel;
+
+import userContext from "../../contexts/userContext";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
@@ -83,6 +85,7 @@ export function withCmsHooks(PassedComponent: any) {
 export function FirebaseCMS(props: any) {
 
     const [fbUser, setFbUser] = useState<FbUser>();
+    const {user:globalUser, setUser} = useContext(userContext)
     // const {pathname} = useLocation();
     // const state: any = useSelector(state => state) //global state
 
@@ -110,10 +113,10 @@ export function FirebaseCMS(props: any) {
 
                 (window as any).fbStorage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
-                // // if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
-                //     fbApp.functions().useEmulator("localhost", 5001);
-                //     fbApp.auth().useEmulator("http://localhost:9099");
-                //     (window as any).fireDB.useEmulator("localhost", 8080);
+                // if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
+                    fbApp.functions().useEmulator("localhost", 5001);
+                    fbApp.auth().useEmulator("http://localhost:9099");
+                    (window as any).fireDB.useEmulator("localhost", 8080);
                 // // }
                 if (document.location.port.length === 0) { // ignore dev environments
                     (window as any).logUse = fbApp.analytics();
@@ -171,6 +174,13 @@ export function FirebaseCMS(props: any) {
             let idToken = await user.getIdToken(true).then(idToken => idToken);
              // console.info("Sync with " + idToken, user.toJSON());
 
+            if(!globalUser) {
+
+                setUser(user)
+
+            }
+
+            console.log(user, "user firebaseCMS")
             await postData(process.env.REACT_APP_FUNCTIONS_URL + "/syncUser", {idToken})
                 .then(data => {
                     if (!data) {
