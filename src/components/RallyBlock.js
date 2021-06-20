@@ -46,8 +46,36 @@ class RallyHome extends Component {
         console.log(user, "user")
       }
 
-    trackSubscribe(event, id) {
-        this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
+     trackSubscribe(event, id) {
+
+        let {rally, meeting} = this.props
+
+        if(rally && meeting && this.context.user) {
+
+           let subRef =  window.fireDB.collection("subscriptions").doc()
+
+
+
+           subRef.set(
+               {
+                    subscriber: window.fireDB.collection("users").doc(this.context.user.uid),
+                    rally: window.fireDB.collection("rallies").doc(rally.id),
+                    meeting: window.fireDB.collection("rallies").doc(rally.id).collection("meetings").doc(meeting.id),
+                    status: "pending"
+               }
+           )
+           .then(()=>{
+
+             this.props.enqueueSnackbar('You have applied!');
+
+           })
+
+
+        }
+
+
+        // this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
+
         window.logUse.logEvent('rally-'+event, {'id':id});
     }
 
@@ -92,7 +120,7 @@ class RallyHome extends Component {
         console.log("PROFILES", profiles);
 
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
-
+      
         return (
             <React.Fragment>
                 <Box p={1} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} >
@@ -119,10 +147,10 @@ class RallyHome extends Component {
                     <Grid item >
                         <Box p={1}>
                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
-                        {rally.desc ? <SanitizedHTML
+                        {rally.description ? <SanitizedHTML
                             allowedTags={Config.allowedTags}
                             allowedAttributes={Config.allowedAttributes}
-                            html={rally.desc} /> : ''}
+                            html={rally.description} /> : ''}
 
                         {!start ?
                             <Box mt={4}>

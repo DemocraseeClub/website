@@ -104,7 +104,7 @@ export const normalizeMeeting = async (doc, fields) => {
     if(meet?.author && fields.includes("author")) { 
 
         const author = await meet.author.get();
-        meet.author = normalizeUser(author, ["picture", "coverPhoto"])
+        meet.author = normalizeUser(author, ["picture"])
 
     }
 
@@ -115,7 +115,7 @@ export const normalizeMeeting = async (doc, fields) => {
 
                 let speaker  = await meet.speakers[i].get()
 
-                meet.speakers.push(await normalizeUser(speaker, ["picture", "coverPhoto"]));
+                meet.speakers.push(await normalizeUser(speaker, ["picture"]));
             }
 
     }
@@ -127,7 +127,7 @@ export const normalizeMeeting = async (doc, fields) => {
 
                 let moderator  = await meet.moderators[i].get()
 
-                meet.moderators.push(await normalizeUser(moderator, ["picture", "coverPhoto"]));
+                meet.moderators.push(await normalizeUser(moderator, ["picture"]));
             }
 
     }
@@ -208,7 +208,7 @@ export const normalizeRally = async (doc, fields) => {
                 obj.meetings.push(await 
                     normalizeMeeting(
                         meetingDocs.docs[i], 
-                        ["agenda", "meeting_type", "city", "author", "speakers", "moderators"]
+                        []
                         )
                     );
             }
@@ -219,10 +219,41 @@ export const normalizeRally = async (doc, fields) => {
         obj.research = JSON.parse(obj.research);
     }
 
-    // let taxonomies = ['topics', 'stakeholders', 'wise_demo'];
-    // for (let i = 0; i < taxonomies.length; i++) {
-    //     obj[taxonomies[i]] = await normalizeDoc(obj[taxonomies[i]], taxonomies[i]);
-    // }
+    if (obj?.topics && fields.includes("topics")) {
+       let topics = [];
+            for (let i = 0; i <obj.topics.length; i++) {
+
+                let topic = await obj.topics[i].get()
+
+                topics.push({id:topic.id, ...topic.data()});
+        }
+
+        obj.topics = topics
+    }
+
+    if (obj?.stakeholders && fields.includes("stakeholders")) {
+        let stakeholders = [];
+            for (let i = 0; i <obj.stakeholders.length; i++) {
+
+                let stakeholder = await obj.stakeholders[i].get()
+
+                stakeholders.push({id:stakeholder.id, ...stakeholder.data()});
+        }
+
+        obj.stakeholders = stakeholders
+    }
+
+    if (obj?.wise_demo && fields.includes("wise_demo")) {
+        let wise_demo = [];
+            for (let i = 0; i <obj.wise_demo.length; i++) {
+
+                let wise = await obj.wise_demo[i].get()
+
+                wise_demo.push({id:wise.id, ...wise.data()});
+        }
+
+        obj.wise_demo = wise_demo
+    }
 
     console.log("NORMALIZED RALLY BY " + fields, obj)
     return obj;

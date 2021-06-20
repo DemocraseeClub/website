@@ -31,13 +31,13 @@ class RallyHome extends Component {
         const roomRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
         let doc = await roomRef.get();
         if (doc.exists) {
-            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "research"]);
+            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);
             let meeting = false;
             if (rally?.meetings.length > 0){
                 // sort by start desc
                 meeting = rally.meetings[0];
             }
-            this.setState({rally:rally, meeting:meeting, loading:false, error:false})
+            this.setState({rally, meeting, loading:false, error:false})
         } else {
             this.setState({rally:false, loading:false, error:'invalid id'})
         }
