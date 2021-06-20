@@ -43,7 +43,7 @@ class RallyHome extends Component {
     componentDidMount() {
         const user = this.context
     
-        console.log(user, "user") // { name: 'Tania', loggedIn: true }
+        console.log(user, "user")
       }
 
     trackSubscribe(event, id) {

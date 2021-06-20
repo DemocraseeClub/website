@@ -67,7 +67,7 @@ class Citizen extends React.Component {
 
   render() {
     const {
-      citizen: { realName, website, bio, coverPhoto, picture },
+      citizen: { realName, displayName, website, bio, coverPhoto, picture },
       resources,
       loading,
     } = this.state;
@@ -125,41 +125,46 @@ class Citizen extends React.Component {
               ) : (
                 <React.Fragment>
                   <Typography variant="h1" className={classes.profileName}>
-                    {realName}
+                    {realName ? realName : displayName}
 
                     {this.props.authController?.loggedUser?.uid === this.props.match.params.uid &&
-                    <Button style={{float:'right'}} component={Link} to={`/c/users/${this.props.match.params.uid}`} color={'primary'} variant={'contained'}>Edit Profile</Button>}
+                    <Button style={{float:'right'}} component={Link} to={`/citizen/${this.props.match.params.uid}/edit`} color={'primary'} variant={'contained'}>Edit Profile</Button>}
                   </Typography>
-
-                  <Chip
-                    className={classes.profileChip}
-                    icon={<WebIcon />}
-                    label={website}
-                    onClick={preventDefault}
-                  />
-                  <Typography variant="body1" className={classes.profileBio}>
-                    <SanitizedHTML
-                      allowedIframeDomains={["linkedin.com"]}
-                      allowedIframeHostnames={["www.linkedin.com"]}
-                      allowIframeRelativeUrls={false}
-                      allowedSchemes={["data", "https"]}
-                      allowedTags={Config.richTags}
-                      allowedAttributes={Config.richAttributes}
-                      exclusiveFilter={(frame) => {
-                        if (frame.tag === "iframe") {
-                          if (
-                            frame.attribs.src.indexOf(
-                              "https://linkedin.com"
-                            ) !== 0
-                          ) {
-                            return true;
-                          }
-                        }
-                        return false;
-                      }}
-                      html={bio}
+                  {
+                    website && 
+                    <Chip
+                      className={classes.profileChip}
+                      icon={<WebIcon />}
+                      label={website}
+                      onClick={preventDefault}
                     />
-                  </Typography>
+                  }
+                  {
+                    bio && 
+                    <Typography variant="body1" className={classes.profileBio}>
+                      <SanitizedHTML
+                        allowedIframeDomains={["linkedin.com"]}
+                        allowedIframeHostnames={["www.linkedin.com"]}
+                        allowIframeRelativeUrls={false}
+                        allowedSchemes={["data", "https"]}
+                        allowedTags={Config.richTags}
+                        allowedAttributes={Config.richAttributes}
+                        exclusiveFilter={(frame) => {
+                          if (frame.tag === "iframe") {
+                            if (
+                              frame.attribs.src.indexOf(
+                                "https://linkedin.com"
+                              ) !== 0
+                            ) {
+                              return true;
+                            }
+                          }
+                          return false;
+                        }}
+                        html={bio}
+                      />
+                    </Typography>
+                  }
                 </React.Fragment>
               )}
             </Box>
@@ -194,7 +199,7 @@ class Citizen extends React.Component {
                         </Card>
                       </div>
                     ))
-                  : resources.map((item, key) => ( //TODO error loading resources with materialui card
+                  : resources.length > 0 && resources.map((item, key) => ( //TODO error loading resources with materialui card
                       <div key={"resource" + key}>
                         <img src={item.image} alt="test"/>
                         <p>{item.title}</p>
