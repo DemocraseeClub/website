@@ -36,7 +36,6 @@ class Rallies extends React.Component {
         snapshots.docs.map((doc, i) => normalizeRally(doc, ["picture", "research"]))
       );
       this.setState({ loading: false, rallies: rallies, error: false });
-      console.log(rallies, "OLA BBE");
     } catch (error) {
       this.setState({ loading: false, error: error.message });
     }
