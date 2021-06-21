@@ -7,50 +7,50 @@ service cloud.firestore {
       return (data.roles) ? data.roles : [];
     }
 
+    function canCreate(adds) {
+        if (hasRole('admin')) {
+            return true;
+        }
+        // TODO: check that author is current user
+
+        let restricted = ['modified', 'created'];
+        if (adds) restricted = restricted.concat(adds)
+        return !request.resource.data.keys().hasAny(restricted)
+    }
+
+    function canWrite(adds, uid) {
+        if (hasRole('admin')) {
+            return true;
+        }
+        if (request.auth.uid != uid) return false;
+        // TODO: check that author is current user
+
+        let restricted = ['modified', 'created'];
+        if (adds) restricted = restricted.concat(adds)
+        return !request.resource.data.keys().hasAny(restricted)
+    }
+
     function hasRole(role) {
-        return role in getRoles();
+      return role in getRoles();
     }
 
     match /rooms {
-    	allow read, write: if true;
+      allow read, write: if true;
     }
 
     match /rooms/{document=**} {
-    	allow read, write: if true;
-    }
-
-    match /users {
-      // allow read, write: if true;
-   		allow read: if true;
-      allow create: if !request.resource.data.keys().hasAny(['roles', 'citizencoin'])
-      allow update: if (request.auth.uid == request.resource.id && (!request.resource.data.keys().hasAny(['roles', 'citizencoin']))) || hasRole('admin');
-      allow delete: if request.auth.uid == request.resource.id || hasRole('admin');
+      allow read, write: if true;
     }
 
     match /users/{userId} {
-   		allow read: if true;
-      allow create: if !request.resource.data.keys().hasAny(['roles', 'citizencoin'])
-      allow update: if (request.auth.uid == request.resource.id && (!request.resource.data.keys().hasAny(['roles', 'citizencoin']))) || hasRole('admin');
-      allow delete: if request.auth.uid == request.resource.id || hasRole('admin');
-    }
-
-    match /meeting_types/{meeting_typeId} {
-      allow read: if true;
-      allow write: if hasRole('admin')
-    }
-
-    match /officials/{officialId} {
-      allow read: if true;
-      allow write: if hasRole('admin')
-    }
-
-    match /parties/{partyId} {
-    	allow read: if true;
-      allow write: if hasRole('admin')
+   	  allow read: if false; // controlled by Functions
+      allow create: if canCreate(['roles', 'citizencoin'], request.resource.id);
+      allow update: if canWrite(['roles', 'citizencoin'], request.resource.id);
+      allow delete: if canWrite(['roles', 'citizencoin'], request.resource.id);
     }
 
     match /rallies/{rallyId} {
-    	allow read: if true
+      allow read: if true
       allow write: if request.auth != null;
       allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
       allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
@@ -70,59 +70,72 @@ service cloud.firestore {
       allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
     }
 
-    match /resource_types/{resource_typeId} {
-    	allow read: if true;
-      allow write: if hasRole('admin')
-    }
-
     match /resources {
-		  allow read: if true;
+	  allow read: if true;
       allow write: if request.auth != null;
       allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
       allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
     }
 
     match /resources/{resourceId} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if request.auth != null;
       allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
       allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
     }
 
+    match /resource_types/{resource_typeId} {
+      allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /meeting_types/{meeting_typeId} {
+      allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /officials/{officialId} {
+      allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
+    match /parties/{partyId} {
+      allow read: if true;
+      allow write: if hasRole('admin')
+    }
+
     match /cities/{cityId} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if hasRole('admin')
     }
 
     match /states/{statesId} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if hasRole('admin')
     }
 
     match /topics/{topicsId} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if hasRole('admin')
     }
 
     match /action_plans/{action_planId} {
-    	allow read: if true;
-      allow write: if request.auth != null;
-      allow update: if request.auth.uid == request.resource.author.id || hasRole('admin');
-      allow delete: if request.auth.uid == request.resource.author.id || hasRole('admin');
+       allow read: if true;
+       allow write: if hasRole('admin')
     }
 
     match /wise_democracy/{wise_demoId} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if hasRole('admin')
     }
 
     match /stakeholders/{stakeholderId} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if hasRole('admin')
     }
 
-     match /subscriptions/{subscriptions} {
-    	allow read: if true;
+    match /subscriptions/{subscriptions} {
+      allow read: if true;
       allow write: if hasRole('admin')
     }
   }

@@ -113,11 +113,11 @@ export function FirebaseCMS(props: any) {
 
                 (window as any).fbStorage = fbApp.storage();
                 (window as any).fireDB = fbApp.firestore();
-                // if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
+                if (process.env.REACT_APP_FUNCTIONS_URL && process.env.REACT_APP_FUNCTIONS_URL.indexOf('http://localhost:') === 0) {
                     fbApp.functions().useEmulator("localhost", 5001);
                     fbApp.auth().useEmulator("http://localhost:9099");
                     (window as any).fireDB.useEmulator("localhost", 8080);
-                // // }
+                }
                 if (document.location.port.length === 0) { // ignore dev environments
                     (window as any).logUse = fbApp.analytics();
                 } else {
