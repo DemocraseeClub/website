@@ -33,7 +33,7 @@ class Rallies extends React.Component {
     try {
       let snapshots = await window.fireDB.collection("rallies").limit(25).get();
       const rallies = await Promise.all(
-        snapshots.docs.map((doc, i) => normalizeRally(doc, 0))
+        snapshots.docs.map((doc, i) => normalizeRally(doc, ["picture", "research"]))
       );
       this.setState({ loading: false, rallies: rallies, error: false });
       console.log(rallies, "OLA BBE");

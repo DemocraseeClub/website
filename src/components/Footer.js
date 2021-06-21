@@ -13,18 +13,37 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {rallyStyles} from "../Util/ThemeUtils";
 import {withCmsHooks} from "../views/firebaseCMS/FirebaseCMS";
 
+import userContext from '../contexts/userContext';
+
 class Footer extends React.Component {
+
+    static contextType = userContext
 
     constructor(p) {
         super(p);
         this.state = { dialog : false }
         this.toggleDialog = this.toggleDialog.bind(this);
         this.changeTheme = this.changeTheme.bind(this);
+        
     }
 
     changeTheme(event) {
         this.props.dispatch(setThemeMode(event.target.checked === true ? 'dark' : 'light'));
     };
+
+    componentDidMount() {
+        // this.user = this.context
+    
+        // console.log(user, "user footer") 
+    }
+
+    componentDidUpdate() {
+
+        // this.user = this.context
+
+        console.log(this.context, "user footer update") 
+
+    }
 
     toggleDialog() {
         this.setState({dialog:!this.state.dialog});
@@ -71,8 +90,8 @@ class Footer extends React.Component {
                     </Grid>
                     <Grid item>
                         <ul className={classes.menuList}>
-                            {this.props.authController && this.props.authController.loggedUser ?
-                                <li><NavLink to={'/citizen/'+this.props.authController.loggedUser.uid + '/edit'}>My Account</NavLink></li>
+                            { this.context.user != null ?
+                                <li><NavLink to={'/citizen/'+this.context.user.uid + '/edit'}>My Account</NavLink></li>
                                 :
                                 <li><NavLink to={'/login'}>Sign In / Up</NavLink></li>
                             }

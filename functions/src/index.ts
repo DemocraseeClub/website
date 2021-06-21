@@ -169,7 +169,7 @@ app.post("/syncUser", async (req, res) => {
             }
 
             if (!firebaseUser.displayName) {
-                firebaseUser.displayName = 'Citizen'; // random string
+                firebaseUser.displayName = decodedToken.name; // random string
             }
             if (!firebaseUser.roles) {
                 firebaseUser.roles = [];
