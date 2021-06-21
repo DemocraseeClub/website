@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import {normalizeUser} from "../redux/entityDataReducer"
 
 class About extends React.Component {
   scrollTo(t) {
@@ -20,53 +20,21 @@ class About extends React.Component {
 
   componentWillMount() {
 
-    fetch(process.env.REACT_APP_FUNCTIONS_URL + "/users/board")
-      .then(resp => resp.json())
-      .then(async data => {
-        //get the images urls
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].picture) {
-            let path = window.fbStorage.ref(data[i].picture);
-            const url = await path.getDownloadURL();
-            data[i].picture = url;
-          }
-        }
+    window.fireDB.collection("users").where("roles", "array-contains", "board").get()
+      .then(async (users) => {
+        let auxTeam = [];
+        users.forEach((doc) => auxTeam.push(normalizeUser(doc, ["picture"])))
 
-        return data;
+        let team = await Promise.all(auxTeam)
+
+        this.setState({ team, loading: false });
 
       })
-      .then(team => this.setState({ team , loading: false }))
-      .catch(err => console.log(err));
-
-
-    // window.fireDB
-    //   .collection("users")
-    //   .where("roles", "array-contains", "board")
-    //   .get()
-    //   .then((users) => {
-    //     let auxTeam = [];
-    //     users.forEach((doc) => auxTeam.push({ key: doc.id, ...doc.data() }));
-    //     return auxTeam;
-    //   })
-    //   .then((auxTeam) => {
-    //     (async function () {
-    //       for (let i = 0; i < auxTeam.length; i++) {
-    //         if (auxTeam[i].picture) {
-    //           let path = window.fbStorage.ref(auxTeam[i].picture);
-    //           const url = await path.getDownloadURL();
-    //           auxTeam[i].picture = url;
-    //         }
-    //       }
-    //       return auxTeam;
-    //     })().then((t) => {
-    //       this.setState({ team: t, loading: false });
-    //     });
-    //   })
-    //   .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   render() {
-    // const {classes} = this.props;
+   
     const { team, loading } = this.state;
 
     if (loading) {
@@ -81,7 +49,7 @@ class About extends React.Component {
             {team.map((t) => (
               <Grid
                 item
-                key={t.key}
+                key={t.id}
                 style={{ textAlign: "center", cursor: "pointer" }}
                 onClick={(e) => this.scrollTo(t)}
               >
@@ -97,7 +65,7 @@ class About extends React.Component {
 
           {team.map((t) => (
             <Paper
-              key={t.key}
+              key={t.id}
               id={"teamstory-" + t.displayName}
               style={{ padding: 10, margin: "20px 10px" }}
             >

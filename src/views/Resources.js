@@ -23,6 +23,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import OfficeHours from "../components/OfficeHours";
 import Masonry from "react-masonry-css";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import {normalizeResource} from "../redux/entityDataReducer"
 
 class Resources extends React.Component {
   constructor(p) {
@@ -60,11 +61,11 @@ class Resources extends React.Component {
     let collection = window.fireDB.collection("resources");
     if (rTypes.length > 0) {
       // TODO: fix filter per: https://stackoverflow.com/a/53141199/624160. || https://youtu.be/Elg2zDVIcLo?t=276
-      let filters = await Promise.all(
+      let filters = 
         rTypes.map((o) => {
-          return window.fireDB.collection("resource_type").doc(o.id);
+          return window.fireDB.collection("resource_types").doc(o.id);
         })
-      );
+      
       console.log("FILTERING RESOURCE TYPES: ", filters);
       collection = collection.where("resource_type", "in", filters);
     }
@@ -75,41 +76,10 @@ class Resources extends React.Component {
 
     let snapshots = await collection.limit(25).get();
     const resources = await Promise.all(
-      snapshots.docs.map(async (doc) => {
-        let obj = {
-          id: doc.id,
-          ...doc.data(),
-        };
-        if (obj?.author) {
-          const author = await obj.author.get();
-          obj.author = { id: author.id, ...author.data() };
-        }
-
-        if (obj?.resource_type) {
-          const resource_type = await obj.resource_type.get();
-          obj.resource_type = { id: resource_type.id, ...resource_type.data() };
-        }
-
-        /* if (obj?.office_hours) {
-              if (obj.office_hours.start_date) obj.office_hours.start_date = doc.office_hours.start_date.toDate();
-              if (obj.office_hours.end_date) obj.office_hours.end_date = doc.office_hours.end_date.toDate();
-            } */
-
-        if (obj.image) {
-          try {
-            let path = window.fbStorage.ref(obj.image);
-            const url = await path.getDownloadURL();
-            obj.image = url;
-          } catch (e) {
-            console.log(e);
-          }
-        }
-
-        return obj;
-      })
+      snapshots.docs.map(async (doc) => normalizeResource(doc, ["image", "author", "resource_type"]))
     );
-    console.log(resources);
-    this.setState({ resources: resources, loading: false });
+    console.log(resources, "resources");
+    this.setState({ resources, loading: false });
   }
 
   render() {

@@ -33,6 +33,7 @@ import {
 } from "@material-ui/core/styles";
 
 import { CMSMainView } from "@camberi/firecms";
+import {UserContextProvider} from "./contexts/userContext"
 
 const baseTheme = {
   typography: {
@@ -86,109 +87,111 @@ function App(props) {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <FirebaseCMS dispatch={props.dispatch} {...cmsParams}>
-        <SnackbarProvider
-          maxSnack={3}
-          ref={notistackRef}
-          action={(key) => <CancelIcon onClick={() => onClickDismiss(key)} />}
-        >
-          <div
-            className="App"
-            id={appTheme.palette.type === "dark" ? "darkMode" : "lightMode"}
-            style={{ backgroundColor: appTheme.palette.background.default }}
+      <UserContextProvider>
+        <FirebaseCMS dispatch={props.dispatch} {...cmsParams}>
+          <SnackbarProvider
+            maxSnack={3}
+            ref={notistackRef}
+            action={(key) => <CancelIcon onClick={() => onClickDismiss(key)} />}
           >
-            <Router>
-              <Dialog open={isOpen}>
-                <div style={{ padding: 30 }}>
-                  <p style={{ textAlign: "right", marginBottom: 30 }}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      onClick={() => closeWarning(false)}
-                    >
-                      Close
-                    </Button>
-                  </p>
-                  <p>
-                    This site is just a prototype. If interested please share
-                    your ideal{" "}
-                    <NavLink
-                      onClick={() => closeWarning(false)}
-                      to={"/rally/templates"}
-                    >
-                      meeting template
-                    </NavLink>
-                  </p>
-                  <p>
-                    To subscribe, visit the live site{" "}
-                    <a
-                      href="https://democrasee.club"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Democrasee.club
-                    </a>
-                    .
-                  </p>
-                </div>
-              </Dialog>
-              <Header />
-
-              <Switch>
-                <Route path="/cms">
-                  <CMSMainView {...cmsParams} />
-                </Route>
-                <Route path="/login">
-                  <CMSMainView {...cmsParams} />
-                </Route>
-                <Route path="/c/:entity">
-                  <CMSMainView {...cmsParams} />
-                </Route>
-                <Route path="/rallies">
-                  <Rallies />
-                  <div style={{ display: "none" }}>
-                    <CMSMainView {...cmsParams} />
+            <div
+              className="App"
+              id={appTheme.palette.type === "dark" ? "darkMode" : "lightMode"}
+              style={{ backgroundColor: appTheme.palette.background.default }}
+            >
+              <Router>
+                <Dialog open={isOpen}>
+                  <div style={{ padding: 30 }}>
+                    <p style={{ textAlign: "right", marginBottom: 30 }}>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={() => closeWarning(false)}
+                      >
+                        Close
+                      </Button>
+                    </p>
+                    <p>
+                      This site is just a prototype. If interested please share
+                      your ideal{" "}
+                      <NavLink
+                        onClick={() => closeWarning(false)}
+                        to={"/rally/templates"}
+                      >
+                        meeting template
+                      </NavLink>
+                    </p>
+                    <p>
+                      To subscribe, visit the live site{" "}
+                      <a
+                        href="https://democrasee.club"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Democrasee.club
+                      </a>
+                      .
+                    </p>
                   </div>
-                </Route>
-                <Route path="/values">
-                  <Topics />
-                </Route>
-                <Route path="/resources">
-                  <Resources />
-                </Route>
-                <Route path="/sponsors">
-                  <Sponsors />
-                </Route>
-                <Route
-                  exact
-                  path="/rally/:rid/meeting/:mid"
-                  component={MeetingHome}
-                />
-                <Route
-                  exact
-                  path="/rally/templates"
-                  component={RallyTemplates}
-                />
-                <Route exact path="/rally/:rid" component={RallyHome} />
-                <Route exact path="/office-hours/:uid" component={Home} />
-                <Route exact path="/citizen/:uid" component={Citizen} />
-                <Route exact path="/citizen/:uid/edit" component={CitizenEdit}/>
-                <Route path="/about">
-                  <About />
-                </Route>
-                <Route path="/ethics">
-                  <Ethics />
-                </Route>
-                <Route path="/">
-                  <Home />
-                </Route>
-              </Switch>
+                </Dialog>
+                <Header />
 
-              <Footer dispatch={props.dispatch} />
-            </Router>
-          </div>
-        </SnackbarProvider>
-      </FirebaseCMS>
+                <Switch>
+                  <Route path="/cms">
+                    <CMSMainView {...cmsParams} />
+                  </Route>
+                  <Route path="/login">
+                    <CMSMainView {...cmsParams} />
+                  </Route>
+                  <Route path="/c/:entity">
+                    <CMSMainView {...cmsParams} />
+                  </Route>
+                  <Route path="/rallies">
+                    <Rallies />
+                    <div style={{ display: "none" }}>
+                      <CMSMainView {...cmsParams} />
+                    </div>
+                  </Route>
+                  <Route path="/values">
+                    <Topics />
+                  </Route>
+                  <Route path="/resources">
+                    <Resources />
+                  </Route>
+                  <Route path="/sponsors">
+                    <Sponsors />
+                  </Route>
+                  <Route
+                    exact
+                    path="/rally/:rid/meeting/:mid"
+                    component={MeetingHome}
+                  />
+                  <Route
+                    exact
+                    path="/rally/templates"
+                    component={RallyTemplates}
+                  />
+                  <Route exact path="/rally/:rid" component={RallyHome} />
+                  <Route exact path="/office-hours/:uid" component={Home} />
+                  <Route exact path="/citizen/:uid" component={Citizen} />
+                  <Route exact path="/citizen/:uid/edit" component={CitizenEdit}/>
+                  <Route path="/about">
+                    <About />
+                  </Route>
+                  <Route path="/ethics">
+                    <Ethics />
+                  </Route>
+                  <Route path="/">
+                    <Home />
+                  </Route>
+                </Switch>
+
+                <Footer dispatch={props.dispatch} />
+              </Router>
+            </div>
+          </SnackbarProvider>
+        </FirebaseCMS>
+      </UserContextProvider>
     </ThemeProvider>
   );
 }
