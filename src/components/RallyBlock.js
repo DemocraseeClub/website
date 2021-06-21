@@ -209,7 +209,6 @@ class RallyHome extends Component {
                     }
 
                 </Grid>
-
             </React.Fragment>
         );
     }
