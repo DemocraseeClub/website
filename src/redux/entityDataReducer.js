@@ -83,15 +83,13 @@ export const normalizeMeeting = async (doc, fields) => {
         ...doc.data(),
     };
 
-    if (meet?.agenda && fields.includes("agenda")) {
+    if (meet?.agenda) {
         meet.agenda = JSON.parse(meet.agenda);
     }
 
     if(meet?.meeting_type && fields.includes("meeting_type")) {
-
         const meeting_type = await meet.meeting_type.get();
         meet.meeting_type = {id: meeting_type.id, ...meeting_type.data()}
-
     }
 
     if(meet?.city && fields.includes("city")) { //TODO normalize city
@@ -101,14 +99,14 @@ export const normalizeMeeting = async (doc, fields) => {
 
     }
 
-    if(meet?.author && fields.includes("author")) { 
+    if(meet?.author && fields.includes("author")) {
 
         const author = await meet.author.get();
         meet.author = normalizeUser(author, ["picture"])
 
     }
 
-    if(meet?.speakers && fields.includes("speakers")) { 
+    if(meet?.speakers && fields.includes("speakers")) {
 
         meet.speakers = [];
             for (let i = 0; i < meet.speakers.length; i++) {
@@ -120,7 +118,7 @@ export const normalizeMeeting = async (doc, fields) => {
 
     }
 
-    if(meet?.moderators && fields.includes("moderators")) { 
+    if(meet?.moderators && fields.includes("moderators")) {
 
         meet.moderators = [];
             for (let i = 0; i < meet.moderators.length; i++) {
@@ -153,8 +151,8 @@ export const normalizeUser = async (doc, fields) => {
 }
 
 export const normalizeResource = async (doc, fields) => {
-    let obj = {id: doc.id, ...doc.data()}; 
-    
+    let obj = {id: doc.id, ...doc.data()};
+
     if(obj?.author && fields.includes("author")) {
 
         const author = await obj.author.get();
@@ -162,7 +160,7 @@ export const normalizeResource = async (doc, fields) => {
     }
 
 
-    if (obj?.image && fields.includes("image")) { 
+    if (obj?.image && fields.includes("image")) {
         let path = window.fbStorage.ref(obj.image);
         const url = await path.getDownloadURL();
         obj.image = url;
@@ -205,9 +203,9 @@ export const normalizeRally = async (doc, fields) => {
         if (meetingDocs?.docs && meetingDocs?.docs.length > 0) {
             obj.meetings = [];
             for (let i = 0; i < meetingDocs.docs.length; i++) {
-                obj.meetings.push(await 
+                obj.meetings.push(await
                     normalizeMeeting(
-                        meetingDocs.docs[i], 
+                        meetingDocs.docs[i],
                         []
                         )
                     );
@@ -215,7 +213,7 @@ export const normalizeRally = async (doc, fields) => {
         }
     }
 
-    if (obj?.research && fields.includes("research")) {
+    if (obj?.research) {
         obj.research = JSON.parse(obj.research);
     }
 

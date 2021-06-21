@@ -42,7 +42,7 @@ class RallyHome extends Component {
 
     componentDidMount() {
         const user = this.context
-    
+
         console.log(user, "user")
       }
 
@@ -120,10 +120,10 @@ class RallyHome extends Component {
         console.log("PROFILES", profiles);
 
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
-      
+
         return (
             <React.Fragment>
-                <Box p={1} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} >
+                <Box p={1} className={classes.paperRoot} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} >
                     <Typography variant={'subtitle2'}>
                         {tags}
                     </Typography>
@@ -145,7 +145,7 @@ class RallyHome extends Component {
                         }
                     </Grid>
                     <Grid item >
-                        <Box p={1}>
+                        <Box p={1} >
                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
                         {rally.description ? <SanitizedHTML
                             allowedTags={Config.allowedTags}
@@ -192,8 +192,7 @@ class RallyHome extends Component {
                     </Grid>
 
 
-                    {(rally?.research && rally.research.length > 0)
-                        ?
+                    {rally.research && rally.research.length > 0 &&
                         <Box mt={4} p={3} style={{width:'100%'}}>
                             <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
                             <List component="nav" aria-label="research links">
@@ -206,7 +205,7 @@ class RallyHome extends Component {
                                     </ListItem>
                                 })}
                             </List>
-                        </Box> : ''
+                        </Box>
                     }
 
                 </Grid>

@@ -63,6 +63,18 @@ let darkMode = {
       contrastText: "#d0dce0",
     },
   },
+  overrides: {
+    MuiPaper : {
+      root : {
+        color:'#fff'
+      }
+    },
+    MuiBox : {
+      root : {
+        color:'#fff'
+      }
+    }
+  }
 };
 
 //#1B3033#264347
