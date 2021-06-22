@@ -37,6 +37,18 @@ let lightMode = {
       paper: "#fbffff",
     },
   },
+   overrides: {
+    MuiPaper : {
+      root : {
+        color:'#000'
+      }
+    },
+    MuiBox : {
+      root : {
+        color:'#000'
+      }
+    }
+  }
 };
 
 let darkMode = {
@@ -77,7 +89,6 @@ let darkMode = {
   }
 };
 
-//#1B3033#264347
 const initialState = {
   me: false,
   siteTheme: process.env.NODE_ENV === "development" ? darkMode : lightMode,
