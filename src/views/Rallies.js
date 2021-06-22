@@ -18,7 +18,7 @@ import { withRouter } from "react-router";
 import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { normalizeRally } from "../redux/entityDataReducer";
 import Masonry from "react-masonry-css";
-
+import RallieItem from "../components/RallieItem";
 class Rallies extends React.Component {
   constructor(p) {
     super(p);
@@ -108,85 +108,11 @@ class Rallies extends React.Component {
         >
           {this.state.error !== false ? (
             <Typography variant={"h4"}>{this.state.error}</Typography>
-          ) : loading === true ? (
-            [1, 2, 3, 4, 5, 6].map((num, key) => (
-              <div key={"rskeleton" + key}>
-                <Card className={classes.cardSkeleton}>
-                  <CardActionArea>
-                    <Skeleton variant="rect" width="100%" height={200} />
-                    <CardContent>
-                      <Skeleton width="40%" />
-                      <Skeleton />
-                      <Skeleton />
-                      <Skeleton />
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions style={{ justifyContent: "space-between" }}>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Subscribe
-                    </Button>
-                  </CardActions>
-                </Card>
-              </div>
-            ))
-          ) : (
-            this.state.rallies.map((item, key) => (
-              <div key={"rally" + key}>
-                <Card className={classes.card}>
-                  <CardActionArea>
-                    <NavLink to={`/rally/${item.id}`}>
-                      <CardMedia
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://kaikucaffelatte.com/blog/wp-content/uploads/2020/03/shutterstock_510679489-scaled.jpg";
-                        }}
-                        className={classes.cardMedia}
-                        component="img"
-                        alt={item.title}
-                        height="200"
-                        style={{ objectFit: "contain" }}
-                        image={item.picture}
-                      />
-                    </NavLink>
-                    <CardContent>
-                      <Typography gutterBottom variant="h4" component="h2">
-                        {item.title}
-                      </Typography>
-                      <Typography variant="body2" component="div">
-                        <SanitizedHTML
-                          allowedTags={Config.allowedTags}
-                          allowedAttributes={Config.allowedAttributes}
-                          html={item.description}
-                        />
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions style={{ justifyContent: "space-between" }}>
-                    <NavLink to={`/rally/${item.id}`}>
-                      <Button
-                        size="small"
-                        color="primary"
-                        style={{ minWidth: "auto" }}
-                      >
-                        View
-                      </Button>
-                    </NavLink>
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => this.trackSubscribe(`/rally/${item.id}`)}
-                    >
-                      Subscribe
-                    </Button>
-                  </CardActions>
-                </Card>
-              </div>
-            ))
-          )}
+          ) : (this.state.loading ? [1, 2, 3, 4, 5, 6] : this.state.rallies).map((item, key) =>
+            <div key={"rallie" + key}>
+              <RallieItem loading={this.state.loading} item={item}/>
+            </div>)
+          }
         </Masonry>
       </React.Fragment>
     );
