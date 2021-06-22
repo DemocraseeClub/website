@@ -7,6 +7,7 @@ import RallyBlock from "../components/RallyBlock";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import {NavLink} from "react-router-dom";
+import Card from "@material-ui/core/Card";
 
 class RallyHome extends Component {
 
@@ -50,6 +51,7 @@ class RallyHome extends Component {
 
         return (
             <React.Fragment>
+                <Card style={{ background: 'none', boxShadow: 'none'}}>
                 <RallyBlock rally={rally} meeting={this.state.meeting} />
 
                 <Box p={3}>
@@ -68,6 +70,7 @@ class RallyHome extends Component {
                         </React.Fragment>
                 }
                 </Box>
+                </Card>
             </React.Fragment>
         );
     }
