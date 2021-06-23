@@ -5,7 +5,7 @@ import { rallyStyles } from "../Util/ThemeUtils";
 import { withRouter } from "react-router";
 import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { withSnackbar } from "notistack";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -21,8 +21,7 @@ import Config from "../Config";
 import Masonry from "react-masonry-css";
 import SettingsSharpIcon from "@material-ui/icons/SettingsSharp";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import {normalizeUser, normalizeResource} from "../redux/entityDataReducer"
-
+import { normalizeUser, normalizeResource } from "../redux/entityDataReducer";
 
 class Citizen extends React.Component {
   constructor(p) {
@@ -42,27 +41,32 @@ class Citizen extends React.Component {
   }
 
   async fetchCitizenInfo() {
-
-    let userRef = window.fireDB.collection("users").doc(this.props.match.params.uid)
-    
+    let userRef = window.fireDB
+      .collection("users")
+      .doc(this.props.match.params.uid);
 
     //get citizen
-    let auxCitizen = await window.fireDB.collection("users").doc(this.props.match.params.uid).get()
-    
-    let citizen = await normalizeUser(auxCitizen, ["picture", "coverPhoto"])
-  
+    let auxCitizen = await window.fireDB
+      .collection("users")
+      .doc(this.props.match.params.uid)
+      .get();
+
+    let citizen = await normalizeUser(auxCitizen, ["picture", "coverPhoto"]);
+
     //get citizen's resources
-    let auxResources =  await window.fireDB.collection("resources").where("author", "==", userRef).get();
+    let auxResources = await window.fireDB
+      .collection("resources")
+      .where("author", "==", userRef)
+      .get();
 
     let promiseResources = [];
-    auxResources.forEach((doc) => promiseResources.push(normalizeResource(doc, ["image", "resource_type", ])))
+    auxResources.forEach((doc) =>
+      promiseResources.push(normalizeResource(doc, ["image", "resource_type"]))
+    );
 
-    let resources = await Promise.all(promiseResources)
+    let resources = await Promise.all(promiseResources);
 
-
-    this.setState({citizen, resources, loading: false})
-
-
+    this.setState({ citizen, resources, loading: false });
   }
 
   render() {
@@ -72,7 +76,6 @@ class Citizen extends React.Component {
       loading,
     } = this.state;
 
-    console.log(this.state)
     const { classes } = this.props;
     const preventDefault = (event) => event.preventDefault();
     const breakpoints = {
@@ -109,107 +112,115 @@ class Citizen extends React.Component {
             </div>
           )}
           <Box className={this.props.classes.section}>
-              {loading ? (
-                <React.Fragment>
-                  <Skeleton />
-                  <Skeleton />
+            {loading ? (
+              <React.Fragment>
+                <Skeleton />
+                <Skeleton />
+                <Chip
+                  className={classes.profileChip}
+                  icon={<WebIcon />}
+                  label="User name"
+                />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Typography variant="h1" className={classes.profileName}>
+                  {realName ? realName : displayName}
+
+                  {this.props.authController?.loggedUser?.uid ===
+                    this.props.match.params.uid && (
+                    <Button
+                      style={{ float: "right" }}
+                      component={Link}
+                      to={`/citizen/${this.props.match.params.uid}/edit`}
+                      color={"primary"}
+                      variant={"contained"}
+                    >
+                      Edit Profile
+                    </Button>
+                  )}
+                </Typography>
+                {website && (
                   <Chip
                     className={classes.profileChip}
                     icon={<WebIcon />}
-                    label="User name"
+                    label={website}
+                    onClick={preventDefault}
                   />
-                  <Skeleton />
-                  <Skeleton />
-                  <Skeleton />
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <Typography variant="h1" className={classes.profileName}>
-                    {realName ? realName : displayName}
-
-                    {this.props.authController?.loggedUser?.uid === this.props.match.params.uid &&
-                    <Button style={{float:'right'}} component={Link} to={`/citizen/${this.props.match.params.uid}/edit`} color={'primary'} variant={'contained'}>Edit Profile</Button>}
-                  </Typography>
-                  {
-                    website && 
-                    <Chip
-                      className={classes.profileChip}
-                      icon={<WebIcon />}
-                      label={website}
-                      onClick={preventDefault}
-                    />
-                  }
-                  {
-                    bio && 
-                    <Typography variant="body1" className={classes.profileBio}>
-                      <SanitizedHTML
-                        allowedIframeDomains={["linkedin.com"]}
-                        allowedIframeHostnames={["www.linkedin.com"]}
-                        allowIframeRelativeUrls={false}
-                        allowedSchemes={["data", "https"]}
-                        allowedTags={Config.richTags}
-                        allowedAttributes={Config.richAttributes}
-                        exclusiveFilter={(frame) => {
-                          if (frame.tag === "iframe") {
-                            if (
-                              frame.attribs.src.indexOf(
-                                "https://linkedin.com"
-                              ) !== 0
-                            ) {
-                              return true;
-                            }
+                )}
+                {bio && (
+                  <Typography variant="body1" className={classes.profileBio}>
+                    <SanitizedHTML
+                      allowedIframeDomains={["linkedin.com"]}
+                      allowedIframeHostnames={["www.linkedin.com"]}
+                      allowIframeRelativeUrls={false}
+                      allowedSchemes={["data", "https"]}
+                      allowedTags={Config.richTags}
+                      allowedAttributes={Config.richAttributes}
+                      exclusiveFilter={(frame) => {
+                        if (frame.tag === "iframe") {
+                          if (
+                            frame.attribs.src.indexOf(
+                              "https://linkedin.com"
+                            ) !== 0
+                          ) {
+                            return true;
                           }
-                          return false;
-                        }}
-                        html={bio}
-                      />
-                    </Typography>
-                  }
-                </React.Fragment>
-              )}
-            </Box>
+                        }
+                        return false;
+                      }}
+                      html={bio}
+                    />
+                  </Typography>
+                )}
+              </React.Fragment>
+            )}
+          </Box>
           <Box className={this.props.classes.section}>
-              <Chip
-                icon={<SettingsSharpIcon />}
-                label="Resources"
-                onClick={preventDefault}
-              />
-              <Masonry
-                breakpointCols={breakpoints}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column"
-              >
-                {loading
-                  ? [1, 2, 3, 4, 5, 6].map((item, key) => (
-                      <div key={"rskeleton" + key}>
-                        <Card className={this.props.classes.cardSkeleton}>
-                          <CardActionArea>
-                            <Skeleton
-                              variant="rect"
-                              width="100%"
-                              height={200}
-                            />
-                            <CardContent>
-                              <Skeleton width="40%" />
-                              <Skeleton />
-                              <Skeleton />
-                              <Skeleton />
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </div>
-                    ))
-                  : resources.length > 0 && resources.map((item, key) => ( //TODO error loading resources with materialui card
+            <Chip
+              icon={<SettingsSharpIcon />}
+              label="Resources"
+              onClick={preventDefault}
+            />
+            <Masonry
+              breakpointCols={breakpoints}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {loading
+                ? [1, 2, 3, 4, 5, 6].map((item, key) => (
+                    <div key={"rskeleton" + key}>
+                      <Card className={this.props.classes.cardSkeleton}>
+                        <CardActionArea>
+                          <Skeleton variant="rect" width="100%" height={200} />
+                          <CardContent>
+                            <Skeleton width="40%" />
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton />
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </div>
+                  ))
+                : resources.length > 0 &&
+                  resources.map(
+                    (
+                      item,
+                      key //TODO error loading resources with materialui card
+                    ) => (
                       <div key={"resource" + key}>
-                        <img src={item.image} alt="test"/>
+                        <img src={item.image} alt="test" />
                         <p>{item.title}</p>
                         {console.log(item)}
                         <Card className={this.props.classes.card}>
                           <CardMedia
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src =
-                                "/images/greenicons.png";
+                              e.target.src = "/images/greenicons.png";
                             }}
                             className={this.props.classes.cardMedia}
                             component="img"
@@ -254,9 +265,10 @@ class Citizen extends React.Component {
                           </CardContent>
                         </Card>
                       </div>
-                    ))}
-              </Masonry>
-            </Box>
+                    )
+                  )}
+            </Masonry>
+          </Box>
         </Box>
       </Paper>
     );
