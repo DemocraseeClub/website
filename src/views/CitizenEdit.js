@@ -14,7 +14,6 @@ import Button from "@material-ui/core/Button";
 import ImageIcon from "@material-ui/icons/Image";
 import SaveIcon from "@material-ui/icons/Save";
 import { normalizeUser } from "../redux/entityDataReducer";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 class CitizenEdit extends React.Component {
@@ -22,7 +21,11 @@ class CitizenEdit extends React.Component {
     super(p);
     this.state = {
       loading: true,
-      citizen: {},
+      realName: null,
+      displayName: null,
+      website: null,
+      bio: null,
+      picture: null,
     };
   }
 
@@ -39,20 +42,48 @@ class CitizenEdit extends React.Component {
 
     let citizen = await normalizeUser(auxCitizen, ["picture", "coverPhoto"]);
 
-    console.log(citizen);
-    this.setState({ citizen, loading: false });
+    const { realName, displayName, website, bio, picture } = citizen;
+
+    this.setState({
+      realName,
+      displayName,
+      website,
+      bio,
+      picture,
+      loading: false,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { realName, displayName, website, bio } = this.state;
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ realName, displayName, website, bio }),
+    };
+
+    fetch(
+      process.env.REACT_APP_FUNCTIONS_URL + "citizen/:uid/edit",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data, ""));
   }
 
   render() {
-    const {
-      citizen: { realName, displayName, website, bio, coverPhoto, picture },
-      loading,
-    } = this.state;
+    const { realName, displayName, website, bio, picture, loading } =
+      this.state;
     const { classes } = this.props;
+
     return (
       <Paper className={classes.root}>
         <Box display="flex" justifyContent="center">
-          <form className={classes.profileEditFormContainer}>
+          <form
+            className={classes.profileEditFormContainer}
+            onSubmit={this.handleSubmit.bind(this)}
+          >
             <Grid container justify="start" spacing={3}>
               <Grid item md={6}>
                 {" "}
@@ -114,7 +145,11 @@ class CitizenEdit extends React.Component {
                   className={classes.profileEditInput}
                   label="Real Name"
                   variant="outlined"
+                  required
                   value={realName}
+                  onChange={(e) =>
+                    this.setState({ ...this.state, realName: e.target.value })
+                  }
                   InputProps={{
                     endAdornment: <>{loading ? <CircularProgress /> : <></>}</>,
                   }}
@@ -127,10 +162,17 @@ class CitizenEdit extends React.Component {
                   className={classes.profileEditInput}
                   label="Display Name"
                   variant="outlined"
+                  required
                   value={displayName}
                   InputProps={{
                     endAdornment: <>{loading ? <CircularProgress /> : <></>}</>,
                   }}
+                  onChange={(e) =>
+                    this.setState({
+                      ...this.state,
+                      displayName: e.target.value,
+                    })
+                  }
                 />
               </Grid>
               <Grid item md={6}>
@@ -144,6 +186,13 @@ class CitizenEdit extends React.Component {
                   InputProps={{
                     endAdornment: <>{loading ? <CircularProgress /> : <></>}</>,
                   }}
+                  required
+                  onChange={(e) =>
+                    this.setState({
+                      ...this.state,
+                      website: e.target.value,
+                    })
+                  }
                 />
               </Grid>{" "}
               <Grid item md={12}>
@@ -159,15 +208,22 @@ class CitizenEdit extends React.Component {
                   InputProps={{
                     endAdornment: <>{loading ? <CircularProgress /> : <></>}</>,
                   }}
+                  required
+                  onChange={(e) =>
+                    this.setState({
+                      ...this.state,
+                      bio: e.target.value,
+                    })
+                  }
                 />
               </Grid>
               <Grid item md={12}>
                 <Box display="flex" justifyContent="flex-end">
                   <Button
                     variant="contained"
-                    component="span"
                     size="large"
                     color="primary"
+                    type="submit"
                   >
                     <SaveIcon />
                     Save{" "}
