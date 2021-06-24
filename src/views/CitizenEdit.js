@@ -56,7 +56,20 @@ class CitizenEdit extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    const { realName, displayName, website, bio } = this.state;
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ realName, displayName, website, bio }),
+    };
+
+    fetch(
+      process.env.REACT_APP_FUNCTIONS_URL + "citizen/:uid/edit",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data, ""));
   }
 
   render() {
