@@ -1,13 +1,16 @@
-import { normalizeRally} from '../redux/entityDataReducer';
+import {normalizeRally} from '../redux/entityDataReducer';
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
 import ProgressLoading from "../components/ProgressLoading";
 import RallyBlock from "../components/RallyBlock";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
 import {NavLink} from "react-router-dom";
-import Card from "@material-ui/core/Card";
+import Paper from "@material-ui/core/Paper";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class RallyHome extends Component {
 
@@ -35,7 +38,6 @@ class RallyHome extends Component {
             let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);
             let meeting = false;
             if (rally?.meetings.length > 0){
-                // sort by start desc
                 meeting = rally.meetings[0];
             }
             this.setState({rally, meeting, loading:false, error:false})
@@ -50,28 +52,28 @@ class RallyHome extends Component {
         const {rally} = this.state;
 
         return (
-            <React.Fragment>
-                <Card style={{ background: 'none', boxShadow: 'none'}}>
-                <RallyBlock rally={rally} meeting={this.state.meeting} />
+                <Paper elevation={0}>
+                    <RallyBlock rally={rally} meeting={this.state.meeting} />
 
-                <Box p={3}>
-                {!rally.meetings ? '' :
-                (rally.meetings.length === 0)
-                    ?
-                    <span>No meetings yet. <u onClick={() => window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
-                    :
-                        <React.Fragment>
-                            <Typography variant='subtitle1'>Meetings</Typography>
-                            {rally.meetings.map((r, i) => {
-                                return <Grid item key={r.title + '-' + i}>
-                                    <Typography component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} variant={'h4'}>{r.title}</Typography>
-                                </Grid>
-                            })}
-                        </React.Fragment>
-                }
-                </Box>
-                </Card>
-            </React.Fragment>
+                    <Box component={"div"} p={3}>
+                    {!rally.meetings ? '' :
+                    (rally.meetings.length === 0)
+                        ?
+                        <span>No meetings yet. <u onClick={() => window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
+                        :
+                            <React.Fragment>
+                                <List component="nav" aria-label="main mailbox folders">
+                                <ListSubheader>Meetings</ListSubheader>
+                                {rally.meetings.map((r, i) => {
+                                    return (<ListItem button  key={r.title + '-' + i} component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} >
+                                        <ListItemText primary={r.title} secondary={r.start_end_times?.date_start?.seconds} />
+                                    </ListItem>)
+                                })}
+                                </List>
+                            </React.Fragment>
+                    }
+                    </Box>
+                </Paper>
         );
     }
 }
