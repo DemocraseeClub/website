@@ -41,41 +41,26 @@ class RallyHome extends Component {
     }
 
     componentDidMount() {
-        const user = this.context
+        const user = this.context;
 
         console.log(user, "user")
       }
 
      trackSubscribe(event, id) {
-
         let {rally, meeting} = this.props
 
         if(rally && meeting && this.context.user) {
-
            let subRef =  window.fireDB.collection("subscriptions").doc()
-
-
-
-           subRef.set(
-               {
-                    subscriber: window.fireDB.collection("users").doc(this.context.user.uid),
-                    rally: window.fireDB.collection("rallies").doc(rally.id),
-                    meeting: window.fireDB.collection("rallies").doc(rally.id).collection("meetings").doc(meeting.id),
-                    status: "pending"
-               }
-           )
-           .then(()=>{
-
-             this.props.enqueueSnackbar('You have applied!');
-
+           subRef.set({
+                subscriber: window.fireDB.collection("users").doc(this.context.user.uid),
+                rally: window.fireDB.collection("rallies").doc(rally.id),
+                meeting: window.fireDB.collection("rallies").doc(rally.id).collection("meetings").doc(meeting.id),
+                status: "pending"
            })
-
-
+           .then(()=>{
+             this.props.enqueueSnackbar('You have applied!');
+           })
         }
-
-
-        // this.props.enqueueSnackbar('We track clicks on this to prioritize development and schedule. Please only click once for any rallies you are interested in');
-
         window.logUse.logEvent('rally-'+event, {'id':id});
     }
 
@@ -129,10 +114,10 @@ class RallyHome extends Component {
                     </Typography>
                 </Box>
                 <Grid container justify={'space-around'} alignContent={'center'} >
-                    {rally.videofile ?
+                    {rally.promo_video && rally.promo_video.indexOf('http') === 0 ?
                         <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
                             <video controls width={'100%'}>
-                                <source src={rally.videofile} type="video/mp4" />
+                                <source src={rally.promo_video} type="video/mp4" />
                             </video></Grid> : ''}
                     <Grid item xs={12} sm={6} style={{textAlign:'center', paddingRight:8}}>
                         {(rally.picture) ?

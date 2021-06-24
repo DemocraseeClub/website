@@ -42,12 +42,12 @@ class MeetingHome extends Component {
         const rallyRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
         let doc = await rallyRef.get();
         if (doc.exists) {
-            let rally = await normalizeRally(doc, ["picture", "research", "wise_demo", "topics", "stakeholders"]);
+            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "topics", "stakeholders", "wise_demo"]);
             let meeting = false;
             const meetRef = rallyRef.collection('meetings').doc(this.props.match.params.mid)
             doc = await meetRef.get();
             if (doc.exists) {
-                meeting = await normalizeMeeting(doc, ["agenda", "speakers", "moderators"]);
+                meeting = await normalizeMeeting(doc, ['author', 'speakers', 'moderators', 'city', 'meeting_type']);
             };
             this.props.dispatch(entityDataSuccess(rally, meeting));
         } else {

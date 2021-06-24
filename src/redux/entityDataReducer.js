@@ -78,10 +78,7 @@ export const normalizeDoc = async (docs, type) => {
 }
 
 export const normalizeMeeting = async (doc, fields) => {
-    let meet = {
-        id: doc.id,
-        ...doc.data(),
-    };
+    let meet = (typeof doc.data === 'function') ? {id: doc.id, ...doc.data()} : doc;
 
     if (meet?.agenda) {
         meet.agenda = JSON.parse(meet.agenda);
@@ -102,7 +99,7 @@ export const normalizeMeeting = async (doc, fields) => {
     if(meet?.author && fields.includes("author")) {
 
         const author = await meet.author.get();
-        meet.author = normalizeUser(author, ["picture"])
+        meet.author = await normalizeUser(author, ["picture"])
 
     }
 
@@ -203,12 +200,11 @@ export const normalizeRally = async (doc, fields) => {
         if (meetingDocs?.docs && meetingDocs?.docs.length > 0) {
             obj.meetings = [];
             for (let i = 0; i < meetingDocs.docs.length; i++) {
-                obj.meetings.push(await
-                    normalizeMeeting(
-                        meetingDocs.docs[i],
-                        []
-                        )
-                    );
+                if (i === 0) {
+                    obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], ['author', 'speakers', 'moderators', 'city', 'meeting_type']));
+                } else {
+                    obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], ['author', 'city', 'meeting_type']));
+                }
             }
         }
     }

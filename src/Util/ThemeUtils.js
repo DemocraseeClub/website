@@ -278,7 +278,6 @@ export const rallyStyles = (theme) => ({
   },
   cardSkeleton: {
     width: "100%",
-    height: "100%",
     boxShadow: "none",
   },
   card: {
