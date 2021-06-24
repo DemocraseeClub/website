@@ -1,36 +1,27 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { withSnackbar } from "notistack";
-import { NavLink } from "react-router-dom";
+import {withStyles} from "@material-ui/core/styles";
+import {withSnackbar} from "notistack";
+import {NavLink} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Checkbox,
-  FormControlLabel,
-} from "@material-ui/core";
+import {Checkbox, FormControlLabel,} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { rallyStyles } from "../Util/ThemeUtils";
-import Config from "../Config";
-import SanitizedHTML from "react-sanitized-html";
-import Skeleton from "@material-ui/lab/Skeleton";
-import OfficeHours from "../components/OfficeHours";
+import {rallyStyles} from "../Util/ThemeUtils";
 import Masonry from "react-masonry-css";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import {normalizeResource} from "../redux/entityDataReducer"
 import ResourceItem from "../components/ResourceItem"
+import RallySkeleton from "../components/RallySkeleton";
+
 class Resources extends React.Component {
   constructor(p) {
     super(p);
     this.state = {
       rTypes: [],
       selected: [],
+      error:false,
       hasOfficeHours: false,
       loading: true,
       resources: [],
@@ -50,22 +41,17 @@ class Resources extends React.Component {
     this.handleChange([]);
   }
 
-  redeem(email) {
-    this.props.enqueueSnackbar("Email: " + email);
-    window.logUse.logEvent("resource-redeem", { email: email });
-  }
-
   async handleChange(rTypes) {
     this.setState({ selected: rTypes, loading: true });
 
     let collection = window.fireDB.collection("resources");
-    if (rTypes.length > 0) {
+    if (rTypes.length > 0 && this.state.rTypes.length !== rTypes.length) {
       // TODO: fix filter per: https://stackoverflow.com/a/53141199/624160. || https://youtu.be/Elg2zDVIcLo?t=276
-      let filters = 
+      let filters =
         rTypes.map((o) => {
           return window.fireDB.collection("resource_types").doc(o.id);
         })
-      
+
       console.log("FILTERING RESOURCE TYPES: ", filters);
       collection = collection.where("resource_type", "in", filters);
     }
@@ -79,7 +65,7 @@ class Resources extends React.Component {
       snapshots.docs.map(async (doc) => normalizeResource(doc, ["image", "author", "resource_type"]))
     );
     console.log(resources, "resources");
-    this.setState({ resources, loading: false });
+    this.setState({ resources:resources, loading: false, error: false });
   }
 
   render() {
@@ -93,7 +79,7 @@ class Resources extends React.Component {
 
     return (
       <React.Fragment>
-        <Grid container item className={classes.sectionSecondary}>
+        <Grid container className={classes.sectionSecondary}>
           <Grid item xs={10}>
             <Typography variant={"h5"} className={classes.sectionTitle}>
               <b>Request and Receive Help From Your Community</b>
@@ -120,12 +106,13 @@ class Resources extends React.Component {
           </Grid>
         </Grid>
         <Grid
-          className={classes.section}
+            container
+            spacing={2}
           alignContent={"center"}
           justify={"space-around"}
           wrap={"nowrap"}
         >
-          <Grid item style={{ flexGrow: 1 }}>
+          <Grid item>
             <Select
               id="resource_type_filter"
               displayEmpty={true}
@@ -162,7 +149,6 @@ class Resources extends React.Component {
             <FormControlLabel
               value={this.state.hasOfficeHours}
               style={{
-                marginLeft: 0,
                 color:
                   this.props.theme.palette.text[
                     this.state.hasOfficeHours ? "primary" : "hint"
@@ -179,7 +165,7 @@ class Resources extends React.Component {
                   color="primary"
                 />
               }
-              label="Office Hours"
+              label="Has Office Hours"
               labelPlacement="start"
             />
           </Grid>
@@ -219,10 +205,13 @@ class Resources extends React.Component {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {(this.state.loading ? [1, 2, 3, 4, 5, 6] : this.state.resources).map((item, key) => (
-            <div key={"resource" + key}>
-              <ResourceItem item={item} loading={this.state.loading} />
-            </div>))}
+          {
+            this.state.error !== false
+                ? <Typography variant={"h4"}>{this.state.error}</Typography>
+                : this.state.loading
+                ? ([1, 2, 3, 4, 5, 6]).map(i => <RallySkeleton key={"skeleton" + i}/>)
+                : this.state.resources.map((item, key) => <ResourceItem item={item} key={"resourceItem" + key}/>)
+          }
         </Masonry>
       </React.Fragment>
     );

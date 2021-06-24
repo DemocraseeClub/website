@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@camberi/firecms": "^0.39.0",
+    "@camberi/firecms": "^0.41.1",
     "@date-io/moment": "^2.10.11",
     "@draft-js-plugins/alignment": "^4.0.0",
     "@draft-js-plugins/anchor": "^4.0.0",
