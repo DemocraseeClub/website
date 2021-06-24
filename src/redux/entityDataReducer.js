@@ -104,27 +104,19 @@ export const normalizeMeeting = async (doc, fields) => {
     }
 
     if(meet?.speakers && fields.includes("speakers")) {
-
         meet.speakers = [];
-            for (let i = 0; i < meet.speakers.length; i++) {
-
-                let speaker  = await meet.speakers[i].get()
-
-                meet.speakers.push(await normalizeUser(speaker, ["picture"]));
-            }
-
+        for (let i = 0; i < meet.speakers.length; i++) {
+            let speaker  = await meet.speakers[i].get()
+            meet.speakers.push(await normalizeUser(speaker, ["picture"]));
+        }
     }
 
     if(meet?.moderators && fields.includes("moderators")) {
-
         meet.moderators = [];
             for (let i = 0; i < meet.moderators.length; i++) {
-
                 let moderator  = await meet.moderators[i].get()
-
                 meet.moderators.push(await normalizeUser(moderator, ["picture"]));
             }
-
     }
 
     console.log("NORMALIZED MEETING: " + fields, meet);

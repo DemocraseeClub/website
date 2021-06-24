@@ -8,7 +8,6 @@ import {withStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-// import PersonIcon from "@material-ui/icons/Person";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
 import {withSnackbar} from "notistack";
 import Config from "../Config";
@@ -59,7 +58,10 @@ class RallyHome extends Component {
            })
            .then(()=>{
              this.props.enqueueSnackbar('You have applied!');
-           })
+           }).catch(e => {
+               this.props.enqueueSnackbar('ERROR: ' + e.message, {variant:'error'});
+            })
+
         }
         window.logUse.logEvent('rally-'+event, {'id':id});
     }
@@ -108,7 +110,7 @@ class RallyHome extends Component {
 
         return (
             <React.Fragment>
-                <Box p={1} className={classes.paperRoot} style={{textAlign: 'center', borderBottom: '1px solid #ccc', marginBottom: 20}} >
+                <Box p={1} className={classes.paperRoot} style={{textAlign: 'center', borderBottom: '1px solid #ccc', padding:4, marginBottom: 20}} >
                     <Typography variant={'subtitle2'}>
                         {tags}
                     </Typography>
@@ -143,7 +145,7 @@ class RallyHome extends Component {
                                 <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe to Schedule</Button>
                             </Box>
                             :
-                            <Typography variant='h6' >{start.format()}</Typography>
+                            <Typography variant='h6' >{start.format('dddd, MMMM Do YYYY, h:mm a')}</Typography>
                         }
                         </Box>
 
@@ -169,7 +171,7 @@ class RallyHome extends Component {
                                     : r.id ?
                                     <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName}>{r.displayName[0].toUpperCase()}</Avatar>
                                     :
-                                    <Avatar component={NavLink} to={'/c/subscriptions#new/'} key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
+                                    <Avatar onClick={() => this.trackSubscribe('speak', rally.title) } key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
                                 )}
                             </AvatarGroup>
                         </Box>

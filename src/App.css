@@ -7,16 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.App { display:flex; flex-direction:column; justify-content: space-between; min-height: 100vh; height: 100% }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
-}
-
-#lightMode, #darkMode {
-  min-height: 100vh;
-  justify-content:stretch;
-  display: flex;
-  flex-direction: column;
 }
 
 #lightMode #mainHeader {
