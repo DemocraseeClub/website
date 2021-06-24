@@ -196,6 +196,13 @@ app.post("/syncUser", async (req, res) => {
         });
 });
 
+app.post("/citizen/:uid/edit", async (req, res) => {
+
+    console.log(req);
+
+    return res.status(200).json({});
+});
+
 function getIdentityMap(provider) {
     // phone { phone: [ '+18088555665' ] }
     // password { email: [ 'eliabrahamtaylor@gmail.com' ] }
