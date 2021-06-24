@@ -11,12 +11,13 @@ import {withSnackbar} from "notistack";
 import RallyBlock from "../components/RallyBlock";
 import Create from "@material-ui/icons/Create";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import {connect} from 'react-redux';
 import {
     entityDataFailure,
     entityDataStarted,
     entityDataSuccess,
-    initCounter, normalizeMeeting,
+    normalizeMeeting,
     normalizeRally
 } from "../redux/entityDataReducer";
 
@@ -64,7 +65,7 @@ class MeetingHome extends Component {
         if (!this.props.entity.meeting) return 'no meeting';
 
         return (
-            <div className={classes.root}>
+            <Paper elevation={0}>
                     <RallyBlock rally={this.props.entity.rally} meeting={this.props.entity.meeting} />
 
                     <PlanList classes={this.props.classes}
@@ -83,7 +84,7 @@ class MeetingHome extends Component {
                     }} startIcon={<ExportIcon />} variant={'contained'} disableElevation={true} >Export Meeting</Button>
                 </Grid>
 
-            </div>
+            </Paper>
         );
     }
 }

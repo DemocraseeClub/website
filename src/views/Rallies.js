@@ -49,7 +49,6 @@ class Rallies extends React.Component {
     }
 
     render() {
-        const {loading} = this.state;
         const {classes} = this.props;
 
         const breakpoints = {
@@ -61,7 +60,6 @@ class Rallies extends React.Component {
             <React.Fragment>
                 <Grid
                     container
-                    item
                     className={classes.sectionSecondary}
                     align={"center"}
                     justify={"space-between"}
@@ -98,7 +96,7 @@ class Rallies extends React.Component {
                         this.state.error !== false
                             ? <Typography variant={"h4"}>{this.state.error}</Typography>
                             : this.state.loading
-                            ? ([1, 2, 3, 4, 5, 6]).map(i => <RallySkeleton key={"rallySkeleton" + i}/>)
+                            ? ([1, 2, 3, 4, 5, 6]).map(i => <RallySkeleton key={"skeleton" + i}/>)
                             : this.state.rallies.map((item, key) => <RallyItem item={item} key={"rallyItem" + key}/>)
                     }
                 </Masonry>

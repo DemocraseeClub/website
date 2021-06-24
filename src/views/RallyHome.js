@@ -11,6 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
+import moment from "moment";
 
 class RallyHome extends Component {
 
@@ -62,11 +63,12 @@ class RallyHome extends Component {
                         <span>No meetings yet. <u onClick={() => window.logUse.logEvent('rally-subscribe', {'id':this.props.match.params.rid})}>Subscribe</u> to help schedule one</span>
                         :
                             <React.Fragment>
-                                <List component="nav" aria-label="main mailbox folders">
-                                <ListSubheader>Meetings</ListSubheader>
+                                <List component="nav" aria-label="rally meetings">
+                                <ListSubheader>MEETINGS</ListSubheader>
                                 {rally.meetings.map((r, i) => {
                                     return (<ListItem button  key={r.title + '-' + i} component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} >
-                                        <ListItemText primary={r.title} secondary={r.start_end_times?.date_start?.seconds} />
+                                        <ListItemText primary={r.title} secondary={r.start_end_times?.date_start?.seconds
+                                        ? moment(r.start_end_times?.date_start?.seconds * 1000).format('dddd, MMMM Do YYYY, h:mm a') : null} />
                                     </ListItem>)
                                 })}
                                 </List>

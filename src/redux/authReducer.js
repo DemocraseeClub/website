@@ -15,6 +15,7 @@ export const LOG_OUT = "LOG_OUT"; // generally async anyway (client kills token,
 export const SET_THEME_COLORS = "SET_THEME_COLORS";
 
 let lightMode = {
+  spacing: 4,
   palette: {
     type: "light",
     primary: {
@@ -35,6 +36,7 @@ let lightMode = {
     background: {
       default: "#ffffff",
       paper: "#fbffff",
+      contrastText:"#202020"
     },
   },
    overrides: {
@@ -71,7 +73,7 @@ let darkMode = {
     },
     background: {
       default: "#002e36",
-      paper: "#035353",
+      paper: "#132f36",
       contrastText: "#d0dce0",
     },
   },

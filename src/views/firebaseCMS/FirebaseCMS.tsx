@@ -190,7 +190,6 @@ export function FirebaseCMS(props: any) {
                     } else {
                         console.log('setting firebase user: ', data);
                         setFbUser(data);
-                        props.authController.setExtra(data);
                     }
 
                     return data
