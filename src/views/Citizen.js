@@ -22,6 +22,8 @@ import Masonry from "react-masonry-css";
 import SettingsSharpIcon from "@material-ui/icons/SettingsSharp";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { normalizeUser, normalizeResource } from "../redux/entityDataReducer";
+import { NavLink } from "react-router-dom";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 class Citizen extends React.Component {
   constructor(p) {
@@ -127,6 +129,10 @@ class Citizen extends React.Component {
               </React.Fragment>
             ) : (
               <React.Fragment>
+                <NavLink to={`/citizen/${this.props.match.params.uid}/edit`}>
+                  <SettingsIcon />
+                </NavLink>
+
                 <Typography variant="h1" className={classes.profileName}>
                   {realName ? realName : displayName}
 
