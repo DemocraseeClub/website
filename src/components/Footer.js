@@ -54,61 +54,49 @@ class Footer extends React.Component {
         return (
             <footer className={classes.paperRoot}>
                 <Grid container justify={'space-around'} style={{padding:'20px 5px 10px 5px'}}>
-                    <Grid item container xs={12} sm={3} direction={'column'}>
-                        <Grid item container alignContent={'center'} justify={'center'} style={{marginBottom:20}} spacing={1}>
+                    <Grid item container xs={12} sm={12} direction={'column'}>
+                        <Grid className="footerpadding" item container alignContent={'center'} justify={'left'} style={{marginBottom:20}} spacing={1}>
                             <Grid item>
                                 <NavLink to={'/'}>
                                     <img src='/images/democrasee_logo_white.png' alt={'logo'} height={40} />
                                 </NavLink>
                             </Grid>
                             <Grid item>
-                                <img src="/images/democrasee_text_white.png" alt={'democrasee'} height={20} />
-                                <div className={classes.slogan}>Incentivizing Civic Action</div>
+                                <NavLink to={'/'}><img src="/images/democrasee_text_white.png" alt={'democrasee'} height={20} /></NavLink>
+                                <div className={classes.slogan}><NavLink to={'/'} className="slogan">Incentivizing Civic Action</NavLink></div>
                             </Grid>
-                        </Grid>
-
-                        <Grid item container alignContent={'center'} spacing={4} >
-                            <Grid item xs={6}>
-                                <Button disableElevation={true}  variant={'contained'} className={classes.redBtn} fullWidth={true} onClick={e => this.setState({dialog:true})}>Subscribe</Button>
+                            <Grid item xs={1}></Grid>
+                            <Grid item>
+                                <Button disableElevation={true}  variant={'contained'} color={'secondary'} fullWidth={true} onClick={e => this.setState({dialog:true})}>Newsletter</Button>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item>
                             <NavLink to={'/sponsors'} style={{textDecoration:'none', marginTop:20}}>
                                 <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Sponsor</Button>
                             </NavLink>
                             </Grid>
+                            <Grid className={classes.menuList} item>
+                             { this.context.user != null ?
+                            <NavLink to={'/citizen/'+this.context.user.uid + '/edit'} style={{textDecoration:'none', marginTop:20}}>
+                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>My Account</Button>
+                            </NavLink>
+                             :
+                            <NavLink to={'/login'} style={{textDecoration:'none', marginTop:20}}>
+                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Login</Button>
+                            </NavLink>
+                               }
+                            </Grid>
+                            <Grid item >
+                            <NavLink to={'/about'} style={{textDecoration:'none', marginTop:20}}>
+                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Team</Button>
+                            </NavLink>
+                            </Grid>
+                            <Grid item>
+                            <NavLink to={'/ethics'} style={{textDecoration:'none', marginTop:20}}>
+                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Ethics</Button>
+                            </NavLink>
+                            </Grid>
                         </Grid>
-
-                        <Dialog onClose={this.toggleDialog} aria-labelledby="customized-dialog-title" open={this.state.dialog}>
-                            <DialogTitle id="customized-dialog-title" onClose={this.toggleDialog}>
-                                Subscribe
-                            </DialogTitle>
-                            <DialogContent dividers>
-                                Please sign up at <a href={'https://democrasee.club'} rel="noopener noreferrer" target={"_blank"}>Democrasee.club</a>
-                            </DialogContent>
-                        </Dialog>
-
-                    </Grid>
-                    <Grid item>
-                        <ul className={classes.menuList}>
-                            { this.context.user != null ?
-                                <li><NavLink to={'/citizen/'+this.context.user.uid + '/edit'}>My Account</NavLink></li>
-                                :
-                                <li><NavLink to={'/login'}>Sign In / Up</NavLink></li>
-                            }
-                            <li><NavLink to={'/rallies'}>Rallies</NavLink></li>
-                            <li><NavLink to={'/resources'}>Resources</NavLink></li>
-
-                        </ul>
-                    </Grid>
-                    <Grid item>
-                        <ul className={classes.menuList}>
-                            <li><NavLink to={'/'}>Home</NavLink></li>
-                            <li><NavLink to={'/sponsors'}>Sponsors</NavLink></li>
-                            <li><NavLink to={'/about'}>Team</NavLink></li>
-                            <li><NavLink to={'/ethics'}>Terms of Use</NavLink></li>
-                            <li><NavLink to={'/cms'}>FireCMS</NavLink></li>
-                            <li>
-                                <FormControlLabel
+                        <FormControlLabel
                                     fontSize={'small'}
                                     control={
                                         <Switch
@@ -122,13 +110,22 @@ class Footer extends React.Component {
                                     labelPlacement={"end"}
                                     label="Dark Mode"
                                 />
-                            </li>
-                        </ul>
+
+                        <Dialog onClose={this.toggleDialog} aria-labelledby="customized-dialog-title" open={this.state.dialog}>
+                            <DialogTitle id="customized-dialog-title" onClose={this.toggleDialog}>
+                                Subscribe
+                            </DialogTitle>
+                            <DialogContent dividers>
+                                Please sign up at <a href={'https://democrasee.club'} rel="noopener noreferrer" target={"_blank"}>Democrasee.club</a>
+                            </DialogContent>
+                        </Dialog>
+
                     </Grid>
                 </Grid>
                 <div style={{padding: 5}} className={classes.redBg}></div>
 
-                <div style={{padding: 10, textAlign: 'right', color:this.props.theme.palette.secondary.contrastText, backgroundColor: this.props.theme.palette.secondary.light}}>
+                <div style={{padding: '10px 55px', textAlign: 'right', color:this.props.theme.palette.secondary.contrastText, backgroundColor: this.props.theme.palette.secondary.light}}>
+                <NavLink to={'/cms'} style={{float: 'left'}}>FireCMS</NavLink>
                     (ɔ) 2021 - Available <a style={{textDecoration:'underline'}} href={"https://github.com/DemocraseeClub/website"} target={"_blank"}>Open Source</a> via <a href={"https://www.gnu.org/licenses/gpl-3.0.html"} target={"_blank"}>GNU</a>
                 </div>
             </footer>
