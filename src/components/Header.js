@@ -5,8 +5,18 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { NavLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { rallyStyles } from "../Util/ThemeUtils";
+import userContext from '../contexts/userContext';
 
 class Header extends React.Component {
+    static contextType = userContext
+
+    componentDidUpdate() {
+
+        // this.user = this.context
+
+        console.log(this.context, "user header update") 
+
+    }
   render() {
     const { classes } = this.props;
     return (
@@ -25,12 +35,12 @@ class Header extends React.Component {
             />
           </NavLink>
           <div style={{ textAlign: "left" }}>
-            <img
+            <NavLink to={'/'}><img
               src="/images/democrasee_text_white.png"
               alt={"democrasee"}
               height={20}
-            />
-            <div className={classes.slogan}>Incentivizing Civic Action</div>
+            /></NavLink>
+            <div className={classes.slogan}><NavLink to={'/'} className="slogan">Incentivizing Civic Action</NavLink></div>
           </div>
 
           <Grid
@@ -41,6 +51,11 @@ class Header extends React.Component {
           >
             <NavLink to={"/rallies"}>Rallies</NavLink>
             <NavLink to={"/resources"}>Resources</NavLink>
+            { this.context.user != null ?
+            <NavLink className="loginnav" to={'/citizen/'+this.context.user.uid + '/edit'}>My Account</NavLink>
+             :
+            <NavLink className="loginnav" to={"/login"}>Sign Up</NavLink>
+           }
           </Grid>
         </Toolbar>
       </AppBar>
