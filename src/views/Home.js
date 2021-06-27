@@ -48,57 +48,25 @@ class Home extends React.Component {
 
                 <Card style={{padding:5, background: 'none', boxShadow: 'none'}}>
 
-                <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} style={{textAlign:'center', marginBottom: '30px'}}>
+                <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} className="homepageboxes">
                     <Grid item xs={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/researchicon.png' alt='research' width={45} />
+                        <Typography variant={'h2'} className={classes.errorColor} >Research & Report</Typography>
+                        <Typography variant={'p'} className={classes.paragraph}>Select your values, define what they mean to you, and post the research that guides your position.</Typography>
+                        <NavLink className={classes.errorColor} to={'/values'}>Select your values</NavLink>
                     </Grid>
                     <Grid item xs={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/connecticon.png' alt='organize' width={45} />
-                    </Grid>
+                        <Typography variant={'h2'} className={classes.infoColor} >Rally & Refine</Typography>
+                        <Typography variant={'p'} className={classes.paragraph}>Rally your friends and foes for the change you want to see. Use our Meeting tools to guide conversations towards a productive purpose.</Typography>
+                        <NavLink className={classes.infoColor}  to={'/rallies'}>Rally for a Cause</NavLink>
+                   </Grid>
                     <Grid item xs={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/votingicon.png' alt='act' width={45} />
-                    </Grid>
-                </Grid>
-
-                <Grid container justify={'space-around'} alignContent={'center'} style={{textAlign:'center',  marginBottom: '30px'}}>
-
-                    <Grid item xs={4}>
-                        <Typography variant={'h2'} className={classes.errorColor} >Research & Report</Typography>
-                    </Grid>
-
-                    <Grid item xs={4}>
-                        <Typography variant={'h2'} className={classes.infoColor} >Rally & Refine</Typography>
-                    </Grid>
-                    <Grid item xs={4}>
                         <Typography variant={'h2'} className={classes.primaryColor} >Engage &amp; Exchange</Typography>
-                    </Grid>
-                </Grid>
-
-                    <Grid container justify={'space-around'} alignContent={'center'} spacing={3} style={{ marginBottom: '30px'}}>
-
-                    <Grid item xs={4}>
-                        <Typography variant={'p'} className={classes.paragraph}>Select your values, define what they mean to you, and post the research that guides your position.</Typography>
-                    </Grid>
-
-                    <Grid item xs={4}>
-                        <Typography variant={'p'} className={classes.paragraph}>Rally your friends and foes for the change you want to see. Use our Meeting tools to guide conversations towards a productive purpose.</Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Typography variant={'p'} className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryColor} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</Typography>
-                    </Grid>
-                </Grid>
-
-                <Grid container justify={'space-around'} alignContent={'center'} style={{textAlign:'center',  marginBottom: '30px'}}>
-                    <Grid item xs={4}>
-                        <NavLink className={classes.errorColor} to={'/values'}>Select your values</NavLink>
-                    </Grid>
-
-                    <Grid item xs={4}>
-                        <NavLink className={classes.infoColor}  to={'/rallies'}>Rally for a Cause</NavLink>
-                    </Grid>
-                    <Grid item xs={4}>
+                        <Typography variant={'p'} className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryColor,'inline'} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</Typography>
                         <NavLink className={classes.primaryColor}  to={'/resources'}>Find Support Resources</NavLink>
-                    </Grid>
+                     </Grid>
                 </Grid>
 
 
@@ -113,6 +81,75 @@ class Home extends React.Component {
                         <img src='/images/coin-payouts.png' alt={'payouts'} style={{width:'100%'}} />
                     </DialogContent>
                 </Dialog>
+
+                 <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} className="homepageinfo">
+
+                <Grid item xs={12}>
+                     <h2>Cultivating a platform that is rooted in ethics and a moral compass</h2>
+                 </Grid>
+                  <Grid item xs={6}>
+                           <Grid container alignContent={'left'} alignItems={'left'}>
+                              <Grid item xs={6}>
+                                  <img src="/images/democrasee_logo.png" alt={'missionlogo'} />
+                              </Grid>   
+                              <Grid item xs={6}>
+                                  <h3>Our Mission</h3>
+                                  <p>Build social tools that support efficient democratic dialoguue that re-engages citizens in the political process.</p>
+                                </Grid> 
+                            </Grid>
+                    </Grid>
+
+                     <Grid item xs={6}>
+                           <Grid container alignContent={'left'} alignItems={'left'}>
+                              <Grid item xs={6}>
+                                  <img src="/images/trusticon.png" alt={'trustlogo'} />
+                              </Grid>   
+                              <Grid item xs={6}>
+                                  <h3>Trust & Privacy</h3>
+                                  <p>Reliable environment that promotes authentic engagement and user-driven transparent data sharing policies.</p>
+                               </Grid> 
+                            </Grid>
+                     </Grid>
+
+                     <Grid item xs={6}>
+                           <Grid container alignContent={'left'} alignItems={'left'}>
+                              <Grid item xs={6}>
+                                  <img src="/images/worldicon.png" alt={'trustlogo'} />
+                              </Grid>   
+                              <Grid item xs={6}>
+                                  <h3>Accountability</h3>
+                                    <p>Ethically responsible environment that builds conscious productivity regardless of affiliation.</p>
+                               </Grid> 
+                            </Grid>
+                      </Grid>
+
+                     <Grid item xs={6}>
+                           <Grid container alignContent={'left'} alignItems={'left'}>
+                              <Grid item xs={6}>
+                                  <img src="/images/healthheart.png" alt={'heartlogo'} />
+                              </Grid>   
+                              <Grid item xs={6}>
+                                  <h3>Wellbeing</h3>
+                                   <p>Promoting civic environment that improves the health of the individuals and community.</p>
+                               </Grid> 
+                            </Grid>
+                    </Grid>
+                </Grid>
+
+                 <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} className="homepagebottom">
+                        <Grid item xs={1}></Grid>
+                        <Grid item xs={8}>
+                             <h2>Share your ideas and skills with the community</h2>
+                             <p>Join today for free!</p>
+                              <Grid item style={{padding:30}} >
+                        <NavLink style={{textDecoration: 'none'}} to={'/login'}><Button style={{backgroundColor:this.props.theme.palette.error.main, color:this.props.theme.palette.error.contrastText, marginRight:10}}
+                            variant={'contained'} disableElevation={true}>Sign Up</Button></NavLink>
+                    </Grid>
+
+                         </Grid>
+                          <Grid item xs={1}></Grid>
+
+                 </Grid>
 
 
                 </Card>
