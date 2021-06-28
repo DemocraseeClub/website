@@ -60,7 +60,7 @@ class RallyItem extends React.Component {
                         color="primary"
                         onClick={() => this.trackSubscribe(`/rally/${item.id}`)}
                     >
-                        Subscribe
+                        Join
                     </Button>
                 </CardActions>
             </Card>)

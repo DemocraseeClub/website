@@ -27,7 +27,7 @@ class RallySkeleton extends React.Component {
                         View
                     </Button>
                     <Button size="small" color="primary">
-                        Subscribe
+                        Join
                     </Button>
                 </CardActions>
             </Card>)

@@ -28,7 +28,7 @@ class Home extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container direction={'column'} className={this.props.classes.section}>
+            <Grid container direction={'column'} className={this.props.classes.section, 'homestyles'}>
 
                 <Grid style={{backgroundImage:"url('/images/cityscape.png')", backgroundPosition:'bottom right', backgroundRepeat:'no-repeat', minHeight:400, marginBottom:30}}
                      container justify={'space-around'} direction={'column'} alignItems={'flex-start'} >
@@ -89,7 +89,7 @@ class Home extends React.Component {
                  </Grid>
                   <Grid item xs={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={6}>
+                              <Grid item xs={5}>
                                   <img src="/images/democrasee_logo.png" alt={'missionlogo'} />
                               </Grid>   
                               <Grid item xs={6}>
@@ -101,7 +101,7 @@ class Home extends React.Component {
 
                      <Grid item xs={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={6}>
+                              <Grid item xs={5}>
                                   <img src="/images/trusticon.png" alt={'trustlogo'} />
                               </Grid>   
                               <Grid item xs={6}>
@@ -113,7 +113,7 @@ class Home extends React.Component {
 
                      <Grid item xs={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={6}>
+                              <Grid item xs={5}>
                                   <img src="/images/worldicon.png" alt={'trustlogo'} />
                               </Grid>   
                               <Grid item xs={6}>
@@ -125,7 +125,7 @@ class Home extends React.Component {
 
                      <Grid item xs={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={6}>
+                              <Grid item xs={5}>
                                   <img src="/images/healthheart.png" alt={'heartlogo'} />
                               </Grid>   
                               <Grid item xs={6}>
