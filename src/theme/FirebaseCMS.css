@@ -1,3 +1,26 @@
 .cms-container > div {
     width: 100% !important;
 }
+
+
+
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(4),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(5),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(6),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(7),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(8),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(9),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(10),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(11),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(12),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(13),
+body.user  div[class*='MuiGrid-grid-md-4']:nth-child(14)
+{
+    display: none;
+}
+
+
+body.editor  div[class*='MuiGrid-grid-md-4']:nth-child(14)
+{
+    display: none;
+}
