@@ -60,12 +60,12 @@ class Rallies extends React.Component {
             <React.Fragment>
                 <Grid
                     container
-                    className={classes.sectionSecondary}
+                    className={classes.sectionSecondary, 'rallyarchivestyles'}
                     align={"center"}
                     justify={"space-between"}
                 >
                     <Grid item>
-                        <Typography variant={"h3"}>Rallying</Typography>
+                        <Typography variant={"h3"}>Rally about a cause</Typography>
                     </Grid>
                     <Grid item>
                         <NavLink
