@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import {rallyStyles} from '../Util/ThemeUtils';
 import {withStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -10,25 +8,10 @@ import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
 import {withSnackbar} from "notistack";
-import Config from "../Config";
-import SanitizedHTML from "react-sanitized-html";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import moment from "moment";
 import DialogSubscription from "./DialogSubscriptions"
 import userContext from '../contexts/userContext';
 
-const ROUNDTABLEMAP = [
-    {top:39, left:181},
-    {top:97, left:300},
-    {top:218, left:334},
-    {top:321, left:255},
-    {top:325, left:-118, flexDirection:'row-reverse'},
-    {top:227, left:-204, flexDirection:'row-reverse'},
-    {top:103, left:-179, flexDirection:'row-reverse'}
-]
 
 class RallyHome extends Component {
 
@@ -87,18 +70,24 @@ class RallyHome extends Component {
 
         let profiles = [], dups = {};
         if (meeting) {
-            meeting.moderators.forEach(user => {
-                if (!dups[user.id] && user.displayName) {
-                    dups[user.id] = true;
-                    profiles.push(user);
-                }
-            })
-            meeting.speakers.forEach(user => {
-                if (!dups[user.id] && user.displayName) {
-                    dups[user.id] = true;
-                    profiles.push(user);
-                }
-            })
+            if (meeting.moderators) {
+                meeting.moderators.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+
+            if (meeting.speakers) {
+                meeting.speakers.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+
         }
         while(profiles.length < 7) {
             profiles.push({displayName:'Apply to Speak', icon:'+'})

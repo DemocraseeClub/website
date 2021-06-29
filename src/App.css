@@ -1,26 +1,32 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.App { display:flex; flex-direction:column; justify-content: space-between; min-height: 100vh; height: 100% }
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    height: 100%
+}
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 #lightMode #mainHeader {
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0a5760+0,0a5760+25,0a5760+25,0a5760+25,d65248+26,d65248+34,b9dff4+27,b9dff4+100 */
-  background: #0a5760; /* Old browsers */
-  background: -moz-linear-gradient(45deg,  #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(45deg,  #0a5760 0%,#0a5760 26%,#0a5760 26%,#0a5760 26%,#d65248 26%,#d65248 28%,#b9dff4 28%,#b9dff4 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(45deg,  #0a5760 0%,#0a5760 26%,#0a5760 26%,#0a5760 26%,#d65248 26%,#d65248 28%,#b9dff4 28%,#b9dff4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a5760', endColorstr='#b9dff4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0a5760+0,0a5760+25,0a5760+25,0a5760+25,d65248+26,d65248+34,b9dff4+27,b9dff4+100 */
+    background: #0a5760; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0a5760', endColorstr='#b9dff4', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
 
 #lightMode .MuiTypography-root a,
@@ -28,74 +34,52 @@ code {
 #lightMode a .MuiTypography-root,
 #darkMode a .MuiTypography-root,
 #lightMode a.MuiTypography-root,
-#darkMode a.MuiTypography-root { color:inherit; }
-body button a, body .MuiCardActions-root a {text-decoration: none}
+#darkMode a.MuiTypography-root {
+    color: inherit;
+}
+
+body button a, body .MuiCardActions-root a {
+    text-decoration: none
+}
 
 #darkMode #mainHeader {
-  background: #0a5760; /* Old browsers */
-  background: -moz-linear-gradient(45deg,  #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(45deg,  #0a5760 0%,#0a5760 26%,#0a5760 26%,#0a5760 26%,#d65248 26%,#d65248 28%,#b9dff4 28%,#b9dff4 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(45deg,  #0a5760 0%,#0a5760 26%,#0a5760 26%,#0a5760 26%,#d65248 26%,#d65248 28%,#b9dff4 28%,#b9dff4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a5760', endColorstr='#b9dff4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #0a5760; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #0a5760 0%, #0a5760 26%, #0a5760 26%, #0a5760 26%, #d65248 26%, #d65248 28%, #b9dff4 28%, #b9dff4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0a5760', endColorstr='#b9dff4', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
 
-iframe { min-height:450px; width: 100%}
+iframe {
+    min-height: 450px;
+    width: 100%
+}
 
 .my-masonry-grid {
-  display: -webkit-box; /* Not needed if autoprefixing */
-  display: -ms-flexbox; /* Not needed if autoprefixing */
-  display: flex;
-  margin-left: -30px; /* gutter size offset */
-  width: auto;
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -30px; /* gutter size offset */
+    width: auto;
 }
+
 .my-masonry-grid_column {
-  padding-left: 30px; /* gutter size */
-  background-clip: padding-box;
+    padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
 }
 
 /* Style your items */
 .my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
-  margin: 30px 15px;
+    margin: 30px 15px;
 }
 
 /*************************** Polina's styles *****************************/
 
-#lightMode h1, #lightMode h3{
-  color: #015761;
+#lightMode h1, #lightMode h3 {
+    color: #015761;
 }
-.homestyles {
-  padding:0 !important;
-}
-.homestyles > .MuiGrid-root{
-  background-image: url(/images/democrasee_hero.png) !important;
-  background-size:contain !important;
-  background-position: center center !important;
-  height: 530px !important;
-  min-height: auto !important;
-  display: block !important;
-    padding-top: 55px !important;
 
-}
-.homestyles .MuiGrid-container .MuiPaper-elevation1{
-  width: 480px;
-  max-width: 100%;
-  margin:0 !important;
-  padding:0 !important;
-}
-.homestyles .MuiGrid-container .MuiPaper-elevation1 h1{
-    font-size: 3em;
-    padding-bottom: 20px;
-}
-.homestyles .MuiGrid-container .MuiPaper-elevation1 h3{
-  font-size: 21px;
-}
-.homestyles .MuiGrid-container .MuiGrid-item{
-      padding: 0px 75px 25px 75px !important;
-}
-.homestyles .MuiButton-containedSecondary{
-  background-color: #B9DFF4 !important;
-}
-footer .MuiFormControlLabel-root{
+#brandFooter.MuiFormControlLabel-root {
     position: fixed;
     left: 0px;
     bottom: 10px;
@@ -103,289 +87,263 @@ footer .MuiFormControlLabel-root{
     border-radius: 10px;
     padding: 10px;
 }
-footer .MuiFormControlLabel-label{
-    display:none;
+
+#brandFooter.MuiFormControlLabel-label {
+    display: none;
 }
-.MuiButton-root{
+
+/* waaaaay to broad
+.MuiButton-root {
     padding: 8px 25px;
     margin-right: 20px !important;
     font-size: 1em !important;
 }
+ */
+
 #mainHeader div {
-  color: #fff !important;
+    color: #fff !important;
 }
-header .MuiGrid-container{
+
+#mainHeader .MuiGrid-container {
     display: block;
     text-align: right;
     padding-right: 55px;
 }
-header .MuiGrid-container a{
+
+#mainHeader .MuiGrid-container a {
     font-weight: 500 !important;
     background-color: #fff;
     margin-left: 35px;
     padding: 8px 25px 9px;
     border-radius: 5px;
 }
-header .MuiGrid-container a:first-child{
+
+#mainHeader .MuiGrid-container a:first-child {
     color: #025761 !important;
 }
-header .MuiGrid-container a.loginnav{
-      color: #da372c !important;
+
+#mainHeader .MuiGrid-container a.loginnav {
+    color: #da372c !important;
 }
-header .MuiGrid-container a:hover{
-      background-color: #025761 !important;
+
+#mainHeader .MuiGrid-container a:hover {
+    background-color: #025761 !important;
     color: #fff !important;
 }
-.MuiToolbar-gutters{
-  padding-left:12px !important;
-  padding-right:12px !important;
-}
-.homepageboxes img{
-    margin-bottom: 20px;
-}
-.homepageboxes h2{
-  padding-bottom: 10px;
-      font-weight: 500 !important;
-}
-.homepageboxes span{
-      padding: 0px;
-}
-.homepageboxes a{
-      display: block;
-    padding-top: 10px;
-    padding-bottom: 30px;
-}
-.inline{
-  display: inline !important;
-}
-#darkMode .homepageboxes img,
-#darkMode .homepageinfo img{
-  filter: brightness(0) invert(1);
-}
-.slogan{
-  color:#fff !important;
-}
-.footerpadding{
-  padding:0px 55px;
-  margin-bottom:0px !important;
-}
-.footerpadding .MuiGrid-item{
-  margin-right:25px;
-}
-.homepageinfo{
-      border-top: 4px #015761 solid;
-    margin-top: 20px;
-}
-.homepageinfo h2{
-      color: #015761;
-    font-size: 3em;
-    text-align: center;
-    width: 600px;
-    max-width: 100%;
-    margin: 80px auto 30px ;
-}
-.homepageinfo img{
-  max-width:130px;
-  margin:auto;
-}
-.homestyles .homepageinfo .MuiGrid-item .MuiGrid-item{
-      padding: 40px 10px !important;
-          text-align: center;
-}
-h1,h2,h3,h4,h5{
-  font-family: "Rubik", "Roboto", "Helvetica", "Arial", sans-serif !important;
-}
-.homepageinfo h3{
-  font-size:2em;
-      color: #015761;
-          text-align: left;
-          margin-top: 0px;
-    margin-bottom: 5px;
-}
-.homepageinfo p{
-      color: #015761;
-          text-align: left;
 
+.MuiToolbar-gutters {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
 }
-.homepagebottom h2,
-.homepagebottom p{
 
-      color: #015761;
+.inline {
+    display: inline !important;
 }
-#darkMode .homepageinfo h3,
-#darkMode .homepageinfo h2,
-#darkMode .homepageinfo p,
-#darkMode .homepagebottom h2,
-#darkMode .homepagebottom p{
-      color: #fff;
+
+.slogan {
+    color: #fff !important;
 }
-.homepagebottom h2{
-  font-size: 2em;
+
+.footerpadding {
+    padding: 0px 55px;
+    margin-bottom: 0px !important;
 }
-.homepagebottom p{
-  font-size:18px;
-  padding-bottom:12px;
+
+.footerpadding .MuiGrid-item {
+    margin-right: 25px;
 }
-.homepagebottom{
-  padding-top:20px;
-  text-align:center;
-  padding-bottom:60px;
+
+h1, h2, h3, h4, h5 {
+    font-family: "Rubik", "Roboto", "Helvetica", "Arial", sans-serif !important; /* use createMuiTheme */
 }
-.MuiButton-containedSecondary{
-  background-color:#fff !important;
-  box-shadow: none !important;
+
+.MuiButton-containedSecondary {
+    background-color: #fff !important;
+    box-shadow: none !important;
 }
 
 .rallyarchivestyles {
     padding: 2% 4% !important;
     background-color: #c6e5f7;
 }
-.rallyarchivestyles h3{
+
+.rallyarchivestyles h3 {
     padding-top: 8px;
 }
-.my-masonry-grid .MuiCard-root .MuiTypography-h3{
+
+.my-masonry-grid .MuiCard-root .MuiTypography-h3 {
     padding-top: 6px;
 }
-.my-masonry-grid{
+
+.my-masonry-grid {
     max-width: 1400px;
     margin: auto !important;
     padding-right: 70px;
 }
-.my-masonry-grid .MuiCard-root > .MuiCardContent-root{
+
+.my-masonry-grid .MuiCard-root > .MuiCardContent-root {
     box-shadow: 0px 0px 10px #ccc;
     margin: 20px;
     padding: 0px;
     border-radius: 10px;
     overflow: hidden;
 }
-.my-masonry-grid .MuiCardActions-spacing{
-  margin-top: -60px;
+
+.my-masonry-grid .MuiCardActions-spacing {
+    margin-top: -60px;
     margin-left: 20px;
     margin-right: 20px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     overflow: hidden;
     padding: 0px !important;
-    margin-bottom:40px;
-        z-index: 9999999;
+    margin-bottom: 40px;
+    z-index: 9999999;
     position: relative;
 }
-.my-masonry-grid .MuiCardActions-spacing a{
-      width: 50%;
+
+.my-masonry-grid .MuiCardActions-spacing a {
+    width: 50%;
     text-align: center;
     background-color: #b8dff5;
 }
-.my-masonry-grid .MuiCardActions-spacing a button{
-      min-width: auto;
+
+.my-masonry-grid .MuiCardActions-spacing a button {
+    min-width: auto;
     width: 50%;
     text-align: center;
     background-color: #b8dff5;
     padding: 8px;
 }
-.my-masonry-grid .MuiCardActions-spacing button{
-      width: 50%;
+
+.my-masonry-grid .MuiCardActions-spacing button {
+    width: 50%;
     margin: 0px !important;
     background-color: #e8e8e8;
     height: 40px;
     border-radius: 0px;
 }
-.my-masonry-grid .MuiCardContent-root .MuiCardContent-root{
-  padding: 20px 30px 40px;
-  margin-bottom: 24px;
+
+.my-masonry-grid .MuiCardContent-root .MuiCardContent-root {
+    padding: 20px 30px 40px;
+    margin-bottom: 24px;
     max-height: 156px;
     overflow: scroll;
 }
-.my-masonry-grid{
-  padding-top:40px;
-  padding-bottom:40px;
+
+.my-masonry-grid {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
- .my-masonry-grid .MuiCardContent-root a{
-  /* height: 160px;
-    overflow: hidden; */
+
+.my-masonry-grid .MuiCardContent-root a {
+    /* height: 160px;
+      overflow: hidden; */
     display: block;
- }
- .my-masonry-grid .MuiCardContent-root img{
-  height: auto;
 }
-.my-masonry-grid_column > div{
-      margin: 0px 15px 0px;
+
+.my-masonry-grid .MuiCardContent-root img {
+    height: auto;
 }
-.rallyheadstyle .MuiGrid-grid-sm-8{
-padding-top: 30px;
-padding-left:30px;
+
+.my-masonry-grid_column > div {
+    margin: 0px 15px 0px;
+}
+
+.rallyheadstyle .MuiGrid-grid-sm-8 {
+    padding-top: 30px;
+    padding-left: 30px;
     padding-right: 55px !important;
 }
-.rallyheadstyle{
-  border-bottom: 1px #025761 solid;
+
+.rallyheadstyle {
+    border-bottom: 1px #025761 solid;
 }
-.rallyheadstyle .MuiGrid-grid-sm-4{
+
+.rallyheadstyle .MuiGrid-grid-sm-4 {
     margin-bottom: -3px;
 }
-.rallyheadstyle h6{
+
+.rallyheadstyle h6 {
     font-size: 18px;
 }
-.rallyheadstyle  h6 div{
-      padding-top: 0px;
+
+.rallyheadstyle h6 div {
+    padding-top: 0px;
     padding-bottom: 10px;
     font-weight: normal;
     font-size: 14px;
 }
-.rallyheadstyle h1{
-      padding-bottom: 10px;
+
+.rallyheadstyle h1 {
+    padding-bottom: 10px;
     font-size: 3em;
 }
-.rallyheadstyle .MuiButton-containedSecondary{
-background-color: #B9DFF4 !important;
+
+.rallyheadstyle .MuiButton-containedSecondary {
+    background-color: #B9DFF4 !important;
 }
-.mainsectionstyles{
-      width: 63% !important; /* NOT RESPONSIVE */
+
+.mainsectionstyles {
+    width: 63% !important; /* NOT RESPONSIVE */
     display: inline-block !important;
     vertical-align: top;
-    margin-left:3% !important;
+    margin-left: 3% !important;
 }
-.mainsectionstyles .MuiGrid-grid-sm-6{
+
+.mainsectionstyles .MuiGrid-grid-sm-6 {
     display: inline-block !important;
     vertical-align: top;
     padding: 55px !important;
 }
-.rallymeetingsstyle{
+
+.rallymeetingsstyle {
     width: 33% !important; /* Use <Grid md={4} sm={6} xs={12} > */
     display: inline-block !important;
     vertical-align: top;
 }
-.rallymeetingsstyle nav{
+
+.rallymeetingsstyle nav {
     padding: 55px !important;
 }
+
 .rallymeetingsstyle nav,
-.mainsectionstyles .MuiGrid-grid-sm-6{
-padding-top:25px !important;
+.mainsectionstyles .MuiGrid-grid-sm-6 {
+    padding-top: 25px !important;
 }
+
 .mainsectionstyles .MuiTypography-subtitle1,
-.rallymeetingsstyle  .MuiTypography-subtitle1{
-padding-bottom:10px;
-color: #83aaaf !important;
+.rallymeetingsstyle .MuiTypography-subtitle1 {
+    padding-bottom: 10px;
+    color: #83aaaf !important;
 }
-.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root{
+
+.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root {
     box-shadow: 0px 0px 10px #ccc;
     border-radius: 8px;
     margin-bottom: 20px;
 }
-.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root img{
+
+.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root img {
     width: 50px !important;
     height: auto !important;
 }
-.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root a{
-  font-size: 14px;
+
+.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root a {
+    font-size: 14px;
     text-decoration: none !important;
 }
-.mainsectionstyles video{
-      margin-bottom: 20px;
+
+.mainsectionstyles video {
+    margin-bottom: 20px;
 }
-.rallymeetingsstyle .MuiButtonBase-root{
-  box-shadow: 0px 0px 10px #d85143;
+
+.rallymeetingsstyle .MuiButtonBase-root {
+    box-shadow: 0px 0px 10px #d85143;
     border-radius: 8px;
     margin-bottom: 20px;
 }
-.rallymeetingsstyle .MuiButtonBase-root span{
-  font-weight:bold !important;
+
+.rallymeetingsstyle .MuiButtonBase-root span {
+    font-weight: bold !important;
 }

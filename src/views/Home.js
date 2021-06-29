@@ -1,4 +1,5 @@
 import React from 'react';
+import "../theme/HomeStyles.css";
 import {withStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -41,7 +42,7 @@ class Home extends React.Component {
                     <Grid item style={{padding:30}} >
                         <NavLink style={{textDecoration: 'none'}} to={'/rallies'}><Button style={{backgroundColor:this.props.theme.palette.error.main, color:this.props.theme.palette.error.contrastText, marginRight:10}}
                             variant={'contained'} disableElevation={true}>Join a Rally</Button></NavLink>
-                        <NavLink style={{textDecoration: 'none'}} to={'/rally/templates'}><Button color={'secondary'}
+                        <NavLink style={{textDecoration: 'none'}} to={'/templates'}><Button color={'secondary'}
                                variant={'contained'} disableElevation={true}>Start a Rally</Button></NavLink>
                     </Grid>
                 </Grid>
