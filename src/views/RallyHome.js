@@ -2,16 +2,36 @@ import {normalizeRally} from '../redux/entityDataReducer';
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import ProgressLoading from "../components/ProgressLoading";
+import {rallyStyles} from '../Util/ThemeUtils';
+import {withStyles} from "@material-ui/core/styles";
 import RallyBlock from "../components/RallyBlock";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
+import {withSnackbar} from "notistack";
 import Paper from "@material-ui/core/Paper";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import Config from "../Config";
+import SanitizedHTML from "react-sanitized-html";
 import moment from "moment";
+const ROUNDTABLEMAP = [
+    {top:39, left:181},
+    {top:97, left:300},
+    {top:218, left:334},
+    {top:321, left:255},
+    {top:325, left:-118, flexDirection:'row-reverse'},
+    {top:227, left:-204, flexDirection:'row-reverse'},
+    {top:103, left:-179, flexDirection:'row-reverse'}
+]
 
 class RallyHome extends Component {
 
@@ -38,9 +58,10 @@ class RallyHome extends Component {
         if (doc.exists) {
             let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);
             let meeting = false;
-            if (rally?.meetings.length > 0){
+            if(rally.meetings){
+            if (rally.meetings.length > 0){
                 meeting = rally.meetings[0];
-            }
+            }}
             this.setState({rally, meeting, loading:false, error:false})
         } else {
             this.setState({rally:false, loading:false, error:'invalid id'})
@@ -48,15 +69,139 @@ class RallyHome extends Component {
     }
 
     render() {
-        if (this.state.loading === true) return <ProgressLoading/>;
+         if (this.state.loading === true) return <ProgressLoading/>;
         if (this.state.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography variant='h2'>{this.state.error}</Typography></div>;
         const {rally} = this.state;
+         const {classes,  meeting} = this.props;
+
+        console.log(meeting)
+
+        let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
+            if (rally[val]) {
+                acc = acc.concat(rally[val].map(o => o.name));
+            }
+            return acc;
+        }, [])
+        if (tags.length > 0) {
+            tags = [<div key={'tags'}>{tags.join(' ● ')}</div>]
+        }
+        if (document.location.pathname.indexOf('/meetings/') > -1) {
+            let href = document.location.pathname.split('/').slice(0, 3).join('/');
+            tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
+        }
+
+        let profiles = [], dups = {};
+        if (meeting) {
+            meeting.moderators.forEach(user => {
+                if (!dups[user.id] && user.displayName) {
+                    dups[user.id] = true;
+                    profiles.push(user);
+                }
+            })
+            meeting.speakers.forEach(user => {
+                if (!dups[user.id] && user.displayName) {
+                    dups[user.id] = true;
+                    profiles.push(user);
+                }
+            })
+        }
+        while(profiles.length < 7) {
+            profiles.push({displayName:'Apply to Speak', icon:'+'})
+        }
+
+        console.log("PROFILES", profiles);
+
+        let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
+
+
+       
 
         return (
                 <Paper elevation={0}>
                     <RallyBlock rally={rally} meeting={this.state.meeting} />
+                     <Grid container className="mainsectionstyles" justify={'space-around'} alignContent={'center'} >
 
-                    <Box component={"div"} p={3}>
+                 <Grid item xs={6} sm={6} style={{textAlign:'left', paddingRight:8}}>
+                 <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RALLY DETAILS</Typography>
+
+                  {rally.promo_video && rally.promo_video.indexOf('http') === 0 ?
+                            <video controls width={'100%'}>
+                                <source src={rally.promo_video} type="video/mp4" />
+                            </video> : ''}
+                    
+                        <Box p={1} >
+                       
+                        {rally.description ? <SanitizedHTML
+                            allowedTags={Config.allowedTags}
+                            allowedAttributes={Config.allowedAttributes}
+                            html={rally.description} /> : ''}
+
+                        
+                        </Box>
+                 </Grid>
+                 <Grid item xs={6} sm={6} style={{textAlign:'left', paddingRight:8}}>
+                
+
+
+                    <Grid container justify={'space-around'} alignContent={'center'} >
+                    <Grid item xs={12}>
+
+                 <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>SPEAKERS</Typography>
+
+
+                    
+
+                        {start && start.isAfter() ?
+                        <Box mt={4} p={1} className={classes.roundtable} >
+                            {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
+                            {profiles.map((r,i) =>
+                                <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={r.uid ? '/citizen/'+r.uid : '/c/subscriptions#new/'}>
+                                    <ListItemIcon>
+                                        {r.picture ? <Avatar alt={r.displayName} src={r.picture} />
+                                        :
+                                        <Avatar>{r.icon || r.displayName}</Avatar>}
+                                    </ListItemIcon>
+                                    <ListItemText primary={r.displayName} secondary={r.tagline}/>
+                                </ListItem>
+                                )}
+                        </Box>
+                        :
+                        <Box mt={4} p={1} >
+                            <AvatarGroup max={7} spacing={8}>
+                                {profiles.map((r, i) => r.picture ?
+                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName} alt={r.displayName} src={r.picture}/>
+                                    : r.id ?
+                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName}>{r.displayName[0].toUpperCase()}</Avatar>
+                                    :
+                                    <Avatar onClick={() => this.trackSubscribe('speak', rally.title) } key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
+                                )}
+                            </AvatarGroup>
+                        </Box>
+                        }
+                    </Grid>
+
+
+                    {rally.research && rally.research.length > 0 &&
+                        <Box mt={4} p={3} style={{width:'100%'}}>
+                            <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
+                            <List component="nav" aria-label="research links">
+                                {rally.research.map(r => {
+                                    return <ListItem button key={r.link}>
+                                        {r.img && <ListItemIcon>
+                                            <img src={r.img} height={20} alt={'source logo'} />
+                                        </ListItemIcon>}
+                                        <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
+                                    </ListItem>
+                                })}
+                            </List>
+                        </Box>
+                    }
+
+                </Grid>
+                </Grid>
+                </Grid>
+
+                    <Box className="rallymeetingsstyle" component={"div"} p={3}>
                     {!rally.meetings ? '' :
                     (rally.meetings.length === 0)
                         ?
@@ -64,7 +209,8 @@ class RallyHome extends Component {
                         :
                             <React.Fragment>
                                 <List component="nav" aria-label="rally meetings">
-                                <ListSubheader>MEETINGS</ListSubheader>
+                                
+                 <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>MEETINGS</Typography>
                                 {rally.meetings.map((r, i) => {
                                     return (<ListItem button  key={r.title + '-' + i} component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} >
                                         <ListItemText primary={r.title} secondary={r.start_end_times?.date_start?.seconds

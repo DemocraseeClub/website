@@ -63,10 +63,10 @@ iframe { min-height:450px; width: 100%}
 #lightMode h1, #lightMode h3{
   color: #015761;
 }
-div[class*="Home-section-"] {
+.homestyles {
   padding:0 !important;
 }
-div[class*="Home-section-"] > .MuiGrid-root{
+.homestyles > .MuiGrid-root{
   background-image: url(/images/democrasee_hero.png) !important;
   background-size:contain !important;
   background-position: center center !important;
@@ -76,21 +76,24 @@ div[class*="Home-section-"] > .MuiGrid-root{
     padding-top: 55px !important;
 
 }
-div[class*="Home-section-"] .MuiGrid-container .MuiPaper-elevation1{
-  width: 440px;
+.homestyles .MuiGrid-container .MuiPaper-elevation1{
+  width: 480px;
   max-width: 100%;
   margin:0 !important;
   padding:0 !important;
 }
-div[class*="Home-section-"] .MuiGrid-container .MuiPaper-elevation1 h1{
+.homestyles .MuiGrid-container .MuiPaper-elevation1 h1{
     font-size: 3em;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
-div[class*="Home-section-"] .MuiGrid-container .MuiPaper-elevation1 h3{
+.homestyles .MuiGrid-container .MuiPaper-elevation1 h3{
   font-size: 21px;
 }
-div[class*="Home-section-"] .MuiGrid-container .MuiGrid-item{
+.homestyles .MuiGrid-container .MuiGrid-item{
       padding: 0px 75px 25px 75px !important;
+}
+.homestyles .MuiButton-containedSecondary{
+  background-color: #B9DFF4 !important;
 }
 footer .MuiFormControlLabel-root{
     position: fixed;
@@ -170,7 +173,7 @@ header .MuiGrid-container a:hover{
   margin-right:25px;
 }
 .homepageinfo{
-      border-top: 10px #015761 solid;
+      border-top: 4px #015761 solid;
     margin-top: 20px;
 }
 .homepageinfo h2{
@@ -179,13 +182,13 @@ header .MuiGrid-container a:hover{
     text-align: center;
     width: 600px;
     max-width: 100%;
-    margin: 40px auto;
+    margin: 80px auto 30px ;
 }
 .homepageinfo img{
-  max-width:150px;
+  max-width:130px;
   margin:auto;
 }
-div[class*="Home-section-"] .homepageinfo .MuiGrid-item .MuiGrid-item{
+.homestyles .homepageinfo .MuiGrid-item .MuiGrid-item{
       padding: 40px 10px !important;
           text-align: center;
 }
@@ -219,8 +222,172 @@ h1,h2,h3,h4,h5{
 .homepagebottom h2{
   font-size: 2em;
 }
+.homepagebottom p{
+  font-size:18px;
+  padding-bottom:12px;
+}
 .homepagebottom{
   padding-top:20px;
   text-align:center;
   padding-bottom:60px;
+}
+.MuiButton-containedSecondary{
+  background-color:#fff !important;
+  box-shadow: none !important;
+}
+
+.rallyarchivestyles {
+padding: 17px 45px !important;
+    background-color: #c6e5f7;
+}
+.rallyarchivestyles h3{
+
+    padding-top: 8px;
+
+}
+.my-masonry-grid .MuiCard-root .MuiTypography-h3{
+    padding-top: 6px;
+}
+.my-masonry-grid{
+      width: 1400px;
+    margin: auto !important;
+    padding-right: 70px;
+}
+.my-masonry-grid .MuiCard-root > .MuiCardContent-root{
+      box-shadow: 0px 0px 10px #ccc;
+    margin: 20px;
+    padding: 0px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.my-masonry-grid .MuiCardActions-spacing{
+  margin-top: -60px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    padding: 0px !important;
+    margin-bottom:40px;
+        z-index: 9999999;
+    position: relative;
+}
+.my-masonry-grid .MuiCardActions-spacing a{
+      width: 50%;
+    text-align: center;
+    background-color: #b8dff5;
+}
+.my-masonry-grid .MuiCardActions-spacing a button{
+      min-width: auto;
+    width: 50%;
+    text-align: center;
+    background-color: #b8dff5;
+    padding: 8px;
+}
+.my-masonry-grid .MuiCardActions-spacing button{
+      width: 50%;
+    margin: 0px !important;
+    background-color: #e8e8e8;
+    height: 40px;
+    border-radius: 0px;
+}
+.my-masonry-grid .MuiCardContent-root .MuiCardContent-root{
+  padding: 20px 30px 40px;
+  margin-bottom: 24px;
+    max-height: 156px;
+    overflow: scroll;
+}
+.my-masonry-grid{
+  padding-top:40px;
+  padding-bottom:40px;
+}
+ .my-masonry-grid .MuiCardContent-root a{
+  height: 160px;
+    overflow: hidden;
+    display: block;
+ }
+ .my-masonry-grid .MuiCardContent-root img{
+  height: auto;
+}
+.my-masonry-grid_column > div{
+      margin: 0px 15px 0px;
+}
+.rallyheadstyle .MuiGrid-grid-sm-8{
+padding-top: 30px;
+padding-left:30px;
+    padding-right: 55px !important;
+}
+.rallyheadstyle{
+  border-bottom: 1px #025761 solid;
+}
+.rallyheadstyle .MuiGrid-grid-sm-4{
+    margin-bottom: -3px;
+}
+.rallyheadstyle h6{
+    font-size: 18px;
+}
+.rallyheadstyle  h6 div{
+      padding-top: 0px;
+    padding-bottom: 10px;
+    font-weight: normal;    
+    font-size: 14px;
+}
+.rallyheadstyle h1{
+      padding-bottom: 10px;
+    font-size: 3em;
+}
+.rallyheadstyle .MuiButton-containedSecondary{
+background-color: #B9DFF4 !important;
+}
+.mainsectionstyles{
+      width: 63% !important;
+    display: inline-block !important;
+    vertical-align: top;
+    margin-left:3% !important;
+}
+.mainsectionstyles .MuiGrid-grid-sm-6{
+    display: inline-block !important;
+    vertical-align: top;
+    padding: 55px !important;
+}
+.rallymeetingsstyle{
+    width: 33% !important;
+    display: inline-block !important;
+    vertical-align: top;
+}
+.rallymeetingsstyle nav{
+    padding: 55px !important;
+}
+.rallymeetingsstyle nav,
+.mainsectionstyles .MuiGrid-grid-sm-6{
+padding-top:25px !important;
+}
+.mainsectionstyles .MuiTypography-subtitle1,
+.rallymeetingsstyle  .MuiTypography-subtitle1{
+padding-bottom:10px;
+color: #83aaaf !important;
+}
+.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root{
+    box-shadow: 0px 0px 10px #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root img{
+    width: 50px !important;
+    height: auto !important;
+}
+.mainsectionstyles nav.MuiList-padding .MuiButtonBase-root a{
+  font-size: 14px;
+    text-decoration: none !important;
+}
+.mainsectionstyles video{
+      margin-bottom: 20px;
+}
+.rallymeetingsstyle .MuiButtonBase-root{
+  box-shadow: 0px 0px 10px #d85143;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.rallymeetingsstyle .MuiButtonBase-root span{
+  font-weight:bold !important;
 }
