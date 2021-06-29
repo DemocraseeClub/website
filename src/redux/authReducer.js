@@ -32,6 +32,7 @@ let lightMode = {
     },
     error: {
       main: "#D83933",
+      contrastText:"#fbffff"
     },
     background: {
       default: "#ffffff",
@@ -70,6 +71,7 @@ let darkMode = {
     },
     error: {
       main: "#D83933",
+      contrastText:"#fbffff"
     },
     background: {
       default: "#002e36",

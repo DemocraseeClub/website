@@ -24,7 +24,7 @@ class Footer extends React.Component {
         this.state = { dialog : false }
         this.toggleDialog = this.toggleDialog.bind(this);
         this.changeTheme = this.changeTheme.bind(this);
-        
+
     }
 
     changeTheme(event) {
@@ -33,15 +33,15 @@ class Footer extends React.Component {
 
     componentDidMount() {
         // this.user = this.context
-    
-        // console.log(user, "user footer") 
+
+        // console.log(user, "user footer")
     }
 
     componentDidUpdate() {
 
         // this.user = this.context
 
-        console.log(this.context, "user footer update") 
+        console.log(this.context, "user footer update")
 
     }
 
@@ -55,44 +55,43 @@ class Footer extends React.Component {
             <footer className={classes.paperRoot}>
                 <Grid container justify={'space-around'} style={{padding:'20px 5px 10px 5px'}}>
                     <Grid item container xs={12} sm={12} direction={'column'}>
-                        <Grid className="footerpadding" item container alignContent={'center'} justify={'left'} style={{marginBottom:20}} spacing={1}>
+                        <Grid className="footerpadding" item container alignContent={'center'} justify={'center'} spacing={1} >
                             <Grid item>
                                 <NavLink to={'/'}>
                                     <img src='/images/democrasee_logo_white.png' alt={'logo'} height={40} />
                                 </NavLink>
                             </Grid>
-                            <Grid item>
+                            <Grid item style={{flexGrow:1}}>
                                 <NavLink to={'/'}><img src="/images/democrasee_text_white.png" alt={'democrasee'} height={20} /></NavLink>
                                 <div className={classes.slogan}><NavLink to={'/'} className="slogan">Incentivizing Civic Action</NavLink></div>
                             </Grid>
-                            <Grid item xs={1}></Grid>
                             <Grid item>
-                                <Button disableElevation={true}  variant={'contained'} color={'secondary'} fullWidth={true} onClick={e => this.setState({dialog:true})}>Newsletter</Button>
+                                <Button size={'small'} disableElevation={true}  variant={'contained'} color={'secondary'}  onClick={e => this.setState({dialog:true})}>Newsletter</Button>
                             </Grid>
                             <Grid item>
-                            <NavLink to={'/sponsors'} style={{textDecoration:'none', marginTop:20}}>
-                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Sponsor</Button>
-                            </NavLink>
+                                <NavLink to={'/sponsors'} style={{textDecoration:'none'}}>
+                                    <Button size={'small'} disableElevation={true} variant={'contained'} color={'secondary'} >Sponsor</Button>
+                                </NavLink>
                             </Grid>
-                            <Grid className={classes.menuList} item>
+                            <Grid item>
                              { this.context.user != null ?
-                            <NavLink to={'/citizen/'+this.context.user.uid + '/edit'} style={{textDecoration:'none', marginTop:20}}>
-                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>My Account</Button>
-                            </NavLink>
-                             :
-                            <NavLink to={'/login'} style={{textDecoration:'none', marginTop:20}}>
-                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Login</Button>
-                            </NavLink>
+                                <NavLink to={'/citizen/'+this.context.user.uid + '/edit'} style={{textDecoration:'none'}}>
+                                    <Button size={'small'} disableElevation={true} variant={'contained'} color={'secondary'} >My Account</Button>
+                                </NavLink>
+                                 :
+                                <NavLink to={'/signin'} style={{textDecoration:'none'}}>
+                                    <Button size={'small'} disableElevation={true} variant={'contained'} color={'secondary'} >Sign In</Button>
+                                </NavLink>
                                }
                             </Grid>
                             <Grid item >
-                            <NavLink to={'/about'} style={{textDecoration:'none', marginTop:20}}>
-                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Team</Button>
+                            <NavLink to={'/about'} style={{textDecoration:'none'}}>
+                                <Button size={'small'} disableElevation={true} variant={'contained'} color={'secondary'} >Team</Button>
                             </NavLink>
                             </Grid>
                             <Grid item>
-                            <NavLink to={'/ethics'} style={{textDecoration:'none', marginTop:20}}>
-                                <Button disableElevation={true} variant={'contained'} color={'secondary'} fullWidth={true}>Ethics</Button>
+                            <NavLink to={'/ethics'} style={{textDecoration:'none'}}>
+                                <Button size={'small'} disableElevation={true} variant={'contained'} color={'secondary'} >Ethics</Button>
                             </NavLink>
                             </Grid>
                         </Grid>

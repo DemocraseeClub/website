@@ -44,7 +44,7 @@ class Rallies extends React.Component {
             );
             this.props.sideEntityController.open({collectionPath: "/rallies"});
         } else {
-            this.props.history.push("/login");
+            this.props.history.push("/signup");
         }
     }
 
