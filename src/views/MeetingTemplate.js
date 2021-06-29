@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button";
 import {withSnackbar} from "notistack";
 import Create from "@material-ui/icons/Create";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import {connect} from 'react-redux';
 import {
     entityDataFailure,
@@ -20,6 +19,8 @@ import {
     normalizeRally
 } from "../redux/entityDataReducer";
 import RallyCreate from "./RallyCreate";
+import Box from "@material-ui/core/Box";
+
 
 class MeetingTemplate extends Component {
 

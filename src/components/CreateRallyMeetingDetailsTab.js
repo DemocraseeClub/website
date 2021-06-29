@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {withSnackbar} from "notistack";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -10,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 class CreateRallyMeetingDetailsTab extends Component {
   constructor(props) {

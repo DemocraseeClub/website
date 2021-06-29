@@ -1,9 +1,9 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Box from "@material-ui/core/Box";
 import {rallyStyles} from '../Util/ThemeUtils';
 import {withRouter} from "react-router";
+import Box from "@material-ui/core/Box";
 
 class RallyTemplates extends React.Component {
 
@@ -12,7 +12,7 @@ class RallyTemplates extends React.Component {
         return (
             <div style={{padding:20}}>
 
-                <Box mt={2} mb={6}>
+                <Box mt={2} mb={6} >
                     <Typography variant={'h1'}>Pick a Meeting Template</Typography>
                     <Typography variant={'body1'}>Within a Rally, several meetings are needed to move from starting the conversation on Democrasee to taking an action toward policy impact. This strategy outlines the use of 2 frameworks to inform the sequencing and substance of the meetings within a rally. There are 4 main meeting types intended to be scheduled in sequential order based on the Creative Problem Solving Process, in addition to 7 additional types based on the 7 Wise Democracy pattern categories. Depending on the rally topic and number of participants, the group might accomplish an action plan in 4 meetings or it might take 7, 10, etc.</Typography>
                 </Box>

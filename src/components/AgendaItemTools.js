@@ -2,10 +2,10 @@ import React from 'react';
 import HtmlEditor from "./HtmlEditor";
 import SpeakerNotes from '@material-ui/icons/SpeakerNotes';
 import Sms from '@material-ui/icons/Sms';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import '../theme/AgendaItemOverride.css';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Box from "@material-ui/core/Box";
 
 class AgendaItemTools extends React.Component {
 

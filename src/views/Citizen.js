@@ -7,7 +7,6 @@ import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { withSnackbar } from "notistack";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import WebIcon from "@material-ui/icons/Web";
 import Chip from "@material-ui/core/Chip";
@@ -24,6 +23,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import { normalizeUser, normalizeResource, normalizeSubscription } from "../redux/entityDataReducer";
 import { NavLink } from "react-router-dom";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Box from "@material-ui/core/Box";
 
 class Citizen extends React.Component {
   constructor(p) {
@@ -307,8 +307,8 @@ class Citizen extends React.Component {
           <Box className={this.props.classes.section}>
                 {
                   this.state.subscriptions && this.state.subscriptions.length > 0 &&
-                  <> 
-                  
+                  <>
+
                       <Chip
                         icon={<SettingsSharpIcon />}
                         label="Subscriptions"
@@ -333,7 +333,7 @@ class Citizen extends React.Component {
                                       label={`Meeting: ${sub.meeting.title}`}
                                       color="secondary"
                                     />
-                                    <Chip 
+                                    <Chip
                                       label={`Status: ${sub.status}`}
                                     />
                                   </Box>
