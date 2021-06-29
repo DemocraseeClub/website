@@ -48,20 +48,21 @@ class RallyHome extends Component {
      trackSubscribe(event, id) {
         let {rally, meeting} = this.props
 
-        if(rally && meeting && this.context.user) {
-           let subRef =  window.fireDB.collection("subscriptions").doc()
-           subRef.set({
+        if (!this.context.user || !this.context.user.id) {
+            this.props.enqueueSnackbar('Please sign-in or sign-up to subscribe', {variant:'error'});
+        } else if(rally && meeting) {
+            let subRef = window.fireDB.collection("subscriptions").doc()
+            subRef.set({
                 subscriber: window.fireDB.collection("users").doc(this.context.user.uid),
                 rally: window.fireDB.collection("rallies").doc(rally.id),
                 meeting: window.fireDB.collection("rallies").doc(rally.id).collection("meetings").doc(meeting.id),
                 status: "pending"
-           })
-           .then(()=>{
-             this.props.enqueueSnackbar('You have applied!');
-           }).catch(e => {
-               this.props.enqueueSnackbar('ERROR: ' + e.message, {variant:'error'});
             })
-
+                .then(() => {
+                    this.props.enqueueSnackbar('You have applied!');
+                }).catch(e => {
+                this.props.enqueueSnackbar('ERROR: ' + e.message, {variant: 'error'});
+            })
         }
         window.logUse.logEvent('rally-'+event, {'id':id});
     }
@@ -111,7 +112,7 @@ class RallyHome extends Component {
             <React.Fragment>
 
                 <Grid className="rallyheadstyle" container justify={'space-around'} alignContent={'center'} >
-                           
+
                     <Grid item xs={12} sm={4} style={{textAlign:'left', paddingRight:8}}>
                         {(rally.picture) ?
                                 <img alt={rally.title} src={rally.picture} style={{maxWidth: '100%', textAlign:'center'}} />
@@ -132,9 +133,9 @@ class RallyHome extends Component {
                          {!start ?
                             <Box mt={4}>
                                 <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
-                                <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Join This Rally</Button>                                
+                                <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Join This Rally</Button>
                                 {
-                                    this.context.user.uid === rally.author.id && 
+                                    this.context.user && this.context.user.uid === rally.author.id &&
                                     <DialogSubscription rallyId={rally.id}/>
                                 }
                             </Box>
@@ -144,7 +145,7 @@ class RallyHome extends Component {
 
                     </Grid>
                 </Grid>
-               
+
             </React.Fragment>
         );
     }

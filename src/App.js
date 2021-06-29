@@ -140,7 +140,10 @@ function App(props) {
                   <Route path="/cms">
                     <CMSMainView {...cmsParams} />
                   </Route>
-                  <Route path="/login">
+                  <Route path="/signup">
+                    <CMSMainView {...cmsParams} />
+                  </Route>
+                  <Route path="/signin">
                     <CMSMainView {...cmsParams} />
                   </Route>
                   <Route path="/c/:entity">

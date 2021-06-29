@@ -111,7 +111,7 @@ footer .MuiFormControlLabel-label{
     margin-right: 20px !important;
     font-size: 1em !important;
 }
-#mainHeader div{
+#mainHeader div {
   color: #fff !important;
 }
 header .MuiGrid-container{
@@ -237,24 +237,22 @@ h1,h2,h3,h4,h5{
 }
 
 .rallyarchivestyles {
-padding: 17px 45px !important;
+    padding: 2% 4% !important;
     background-color: #c6e5f7;
 }
 .rallyarchivestyles h3{
-
     padding-top: 8px;
-
 }
 .my-masonry-grid .MuiCard-root .MuiTypography-h3{
     padding-top: 6px;
 }
 .my-masonry-grid{
-      width: 1400px;
+    max-width: 1400px;
     margin: auto !important;
     padding-right: 70px;
 }
 .my-masonry-grid .MuiCard-root > .MuiCardContent-root{
-      box-shadow: 0px 0px 10px #ccc;
+    box-shadow: 0px 0px 10px #ccc;
     margin: 20px;
     padding: 0px;
     border-radius: 10px;
@@ -302,8 +300,8 @@ padding: 17px 45px !important;
   padding-bottom:40px;
 }
  .my-masonry-grid .MuiCardContent-root a{
-  height: 160px;
-    overflow: hidden;
+  /* height: 160px;
+    overflow: hidden; */
     display: block;
  }
  .my-masonry-grid .MuiCardContent-root img{
@@ -329,7 +327,7 @@ padding-left:30px;
 .rallyheadstyle  h6 div{
       padding-top: 0px;
     padding-bottom: 10px;
-    font-weight: normal;    
+    font-weight: normal;
     font-size: 14px;
 }
 .rallyheadstyle h1{
@@ -340,7 +338,7 @@ padding-left:30px;
 background-color: #B9DFF4 !important;
 }
 .mainsectionstyles{
-      width: 63% !important;
+      width: 63% !important; /* NOT RESPONSIVE */
     display: inline-block !important;
     vertical-align: top;
     margin-left:3% !important;
@@ -351,7 +349,7 @@ background-color: #B9DFF4 !important;
     padding: 55px !important;
 }
 .rallymeetingsstyle{
-    width: 33% !important;
+    width: 33% !important; /* Use <Grid md={4} sm={6} xs={12} > */
     display: inline-block !important;
     vertical-align: top;
 }
