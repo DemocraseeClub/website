@@ -18,28 +18,28 @@ class RallyTemplates extends React.Component {
                 </Box>
 
                 <Box>
-                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/rally/templates/meeting/kickoff`)}>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/templates/kickoff`)}>
                         <div style={{cursor:'pointer'}}>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Kickoff</Typography>
                             <Typography variant={'body1'}>Choose this template for team building around any idea</Typography>
                         </div>
                         <Typography variant={'caption'}>diversity ● big picture ● caring</Typography>
                     </Box>
-                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/rally/templates/meeting/survey`)}>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/templates/survey`)}>
                         <div style={{cursor:'pointer'}}>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Survey</Typography>
                             <Typography variant={'body1'}>Choose this template to create self-assessed video surveys</Typography>
                         </div>
                         <Typography variant={'caption'}>caring ● action</Typography>
                     </Box>
-                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/rally/templates/meeting/action`)}>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/templates/action`)}>
                         <div style={{cursor:'pointer'}}>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Action plan</Typography>
                             <Typography variant={'body1'}>Choose this template to guide your conversation towards drafting a concrete action plan or legislation</Typography>
                         </div>
                         <Typography variant={'caption'}>action ● realizing potential</Typography>
                     </Box>
-                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/rally/templates/meeting/course`)}>
+                    <Box item className={classes.topLevelLabel} mt={2} mb={2} onClick={() => this.props.history.push(`/templates/course`)}>
                         <div style={{cursor:'pointer'}}>
                             <Typography variant={'h2'} className={classes.stepLabelText}>Class</Typography>
                             <Typography variant={'body1'}>Choose this template to write up a lesson plan for screen and document sharing</Typography>

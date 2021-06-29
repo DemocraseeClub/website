@@ -60,7 +60,7 @@ class Rallies extends React.Component {
             <React.Fragment>
                 <Grid
                     container
-                    className={classes.sectionSecondary, 'rallyarchivestyles'}
+                    className={classes.sectionSecondary}
                     align={"center"}
                     justify={"space-between"}
                 >
@@ -69,11 +69,11 @@ class Rallies extends React.Component {
                     </Grid>
                     <Grid item>
                         <NavLink
-                            to={"/rally/templates"}
+                            to={"/templates"}
                             style={{textDecoration: "none", marginRight: 5}}
                         >
                             <Button variant={"contained"} color={"secondary"}>
-                                Rally Templates
+                                Meeting Templates
                             </Button>
                         </NavLink>
 

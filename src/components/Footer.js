@@ -52,7 +52,7 @@ class Footer extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <footer className={classes.paperRoot}>
+            <footer className={classes.paperRoot} id={"brandFooter"}>
                 <Grid container justify={'space-around'} style={{padding:'20px 5px 10px 5px'}}>
                     <Grid item container xs={12} sm={12} direction={'column'}>
                         <Grid className="footerpadding" item container alignContent={'center'} justify={'center'} spacing={1} >

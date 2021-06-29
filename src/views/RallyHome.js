@@ -58,10 +58,9 @@ class RallyHome extends Component {
         if (doc.exists) {
             let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);
             let meeting = false;
-            if(rally.meetings){
-            if (rally.meetings.length > 0){
+            if(rally.meetings && rally.meetings.length > 0) {
                 meeting = rally.meetings[0];
-            }}
+            }
             this.setState({rally, meeting, loading:false, error:false})
         } else {
             this.setState({rally:false, loading:false, error:'invalid id'})
@@ -92,18 +91,23 @@ class RallyHome extends Component {
 
         let profiles = [], dups = {};
         if (meeting) {
-            meeting.moderators.forEach(user => {
-                if (!dups[user.id] && user.displayName) {
-                    dups[user.id] = true;
-                    profiles.push(user);
-                }
-            })
-            meeting.speakers.forEach(user => {
-                if (!dups[user.id] && user.displayName) {
-                    dups[user.id] = true;
-                    profiles.push(user);
-                }
-            })
+            if (meeting.moderators) {
+                meeting.moderators.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+
+            if (meeting.speakers) {
+                meeting.speakers.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
         }
         while(profiles.length < 7) {
             profiles.push({displayName:'Apply to Speak', icon:'+'})
@@ -114,7 +118,7 @@ class RallyHome extends Component {
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
 
-       
+
 
         return (
                 <Paper elevation={0}>
@@ -128,19 +132,19 @@ class RallyHome extends Component {
                             <video controls width={'100%'}>
                                 <source src={rally.promo_video} type="video/mp4" />
                             </video> : ''}
-                    
+
                         <Box p={1} >
-                       
+
                         {rally.description ? <SanitizedHTML
                             allowedTags={Config.allowedTags}
                             allowedAttributes={Config.allowedAttributes}
                             html={rally.description} /> : ''}
 
-                        
+
                         </Box>
                  </Grid>
                  <Grid item xs={6} sm={6} style={{textAlign:'left', paddingRight:8}}>
-                
+
 
 
                     <Grid container justify={'space-around'} alignContent={'center'} >
@@ -149,7 +153,7 @@ class RallyHome extends Component {
                  <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>SPEAKERS</Typography>
 
 
-                    
+
 
                         {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
@@ -209,7 +213,7 @@ class RallyHome extends Component {
                         :
                             <React.Fragment>
                                 <List component="nav" aria-label="rally meetings">
-                                
+
                  <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>MEETINGS</Typography>
                                 {rally.meetings.map((r, i) => {
                                     return (<ListItem button  key={r.title + '-' + i} component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} >

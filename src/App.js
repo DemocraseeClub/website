@@ -34,6 +34,7 @@ import {
 
 import { CMSMainView } from "@camberi/firecms";
 import {UserContextProvider} from "./contexts/userContext"
+import MeetingTemplate from "./views/MeetingTemplate";
 
 const baseTheme = {
   typography: {
@@ -56,8 +57,7 @@ const baseTheme = {
     h3: { fontSize: "1.25rem" },
     h4: { fontSize: "1rem" },
     h5: { fontSize: ".9rem" },
-    h6: { fontSize: ".8rem" },
-    useNextVariants: true,
+    h6: { fontSize: ".8rem" }
   },
 };
 
@@ -116,7 +116,7 @@ function App(props) {
                       your ideal{" "}
                       <NavLink
                         onClick={() => closeWarning(false)}
-                        to={"/rally/templates"}
+                        to={"/templates"}
                       >
                         meeting template
                       </NavLink>
@@ -171,8 +171,13 @@ function App(props) {
                   />
                   <Route
                     exact
-                    path="/rally/templates"
+                    path="/templates"
                     component={RallyTemplates}
+                  />
+                  <Route
+                      exact
+                      path="/templates/:mid"
+                      component={MeetingTemplate}
                   />
                   <Route exact path="/rally/:rid" component={RallyHome} />
                   <Route exact path="/office-hours/:uid" component={Home} />
