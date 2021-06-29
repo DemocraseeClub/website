@@ -83,7 +83,7 @@ export const normalizeSubscription = async (doc, fields) => {
     if(obj?.subscriber && fields.includes("subscriber")) {
 
         const subscriber = await obj.subscriber.get();
-        obj.subscriber = await normalizeUser(subscriber, [])
+        obj.subscriber = await normalizeUser(subscriber, ["picture"])
     }
 
     if(obj?.rally && fields.includes("rally")) {

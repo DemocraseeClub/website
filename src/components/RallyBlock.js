@@ -17,7 +17,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import moment from "moment";
-
+import DialogSubscription from "./DialogSubscriptions"
 import userContext from '../contexts/userContext';
 
 const ROUNDTABLEMAP = [
@@ -69,7 +69,6 @@ class RallyHome extends Component {
     render() {
         const {classes, rally, meeting} = this.props;
 
-        console.log(meeting)
 
         let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
@@ -143,6 +142,11 @@ class RallyHome extends Component {
                             <Box mt={4}>
                                 <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
                                 <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Subscribe to Schedule</Button>
+                                
+                                {
+                                    this.context.user.uid === rally.author.id && 
+                                    <DialogSubscription rallyId={rally.id}/>
+                                }
                             </Box>
                             :
                             <Typography variant='h6' >{start.format('dddd, MMMM Do YYYY, h:mm a')}</Typography>
