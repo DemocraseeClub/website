@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import {rallyStyles} from '../Util/ThemeUtils';
 import {withStyles} from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import InsertPhoto from "@material-ui/icons/InsertPhoto";
@@ -11,7 +10,7 @@ import {withSnackbar} from "notistack";
 import moment from "moment";
 import DialogSubscription from "./DialogSubscriptions"
 import userContext from '../contexts/userContext';
-
+import Box from "@material-ui/core/Box";
 
 class RallyHome extends Component {
 

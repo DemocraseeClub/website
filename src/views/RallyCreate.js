@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {withSnackbar} from "notistack";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
-import Box from "@material-ui/core/Box";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import StepConnector from "@material-ui/core/StepConnector";
@@ -11,6 +10,7 @@ import Check from "@material-ui/icons/Check";
 import CreateRallyMeetingDetailsTab from "../components/CreateRallyMeetingDetailsTab";
 import CreateRallyTab from "../components/CreateRallyTab";
 import {rallyStyles} from "../Util/ThemeUtils";
+import Box from "@material-ui/core/Box";
 
 const QontoConnector = withStyles(theme => ({
     alternativeLabel: {
