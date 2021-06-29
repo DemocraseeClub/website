@@ -77,6 +77,31 @@ export const normalizeDoc = async (docs, type) => {
     return results;
 }
 
+export const normalizeSubscription = async (doc, fields) => {
+    let obj = {id: doc.id, ...doc.data()};
+
+    if(obj?.subscriber && fields.includes("subscriber")) {
+
+        const subscriber = await obj.subscriber.get();
+        obj.subscriber = await normalizeUser(subscriber, [])
+    }
+
+    if(obj?.rally && fields.includes("rally")) {
+
+        const rally = await obj.rally.get();
+        obj.rally = await normalizeRally(rally, [])
+    }
+
+    if(obj?.meeting && fields.includes("meeting")) {
+
+        const meeting = await obj.meeting.get();
+        obj.meeting = await normalizeMeeting(meeting, [])
+    }
+
+
+    return obj;
+}
+
 export const normalizeMeeting = async (doc, fields) => {
     let meet = (typeof doc.data === 'function') ? {id: doc.id, ...doc.data()} : doc;
     console.log(doc.data(), "meetingData")
