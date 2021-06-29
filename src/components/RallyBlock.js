@@ -22,16 +22,10 @@ class RallyHome extends Component {
         this.state = {editMode: p.editMode || false};
     }
 
-    componentDidMount() {
-        const user = this.context;
-
-        console.log(user, "user")
-      }
-
      trackSubscribe(event, id) {
         let {rally, meeting} = this.props
 
-        if (!this.context.user || !this.context.user.id) {
+        if (!this.context.user || !this.context.user.uid) {
             this.props.enqueueSnackbar('Please sign-in or sign-up to subscribe', {variant:'error'});
         } else if(rally && meeting) {
             let subRef = window.fireDB.collection("subscriptions").doc()
@@ -42,7 +36,7 @@ class RallyHome extends Component {
                 status: "pending"
             })
                 .then(() => {
-                    this.props.enqueueSnackbar('You have applied!');
+                    this.props.enqueueSnackbar(event === 'speak' ? 'Application pending approval' : "Thank you. We'll notify you as this rally grows");
                 }).catch(e => {
                 this.props.enqueueSnackbar('ERROR: ' + e.message, {variant: 'error'});
             })
@@ -122,7 +116,7 @@ class RallyHome extends Component {
                          {!start ?
                             <Box mt={4}>
                                 <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
-                                <Button variant={'contained'} color={'secondary'} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Join This Rally</Button>
+                                <Button variant={'contained'} color={'secondary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Join This Rally</Button>
                                 {
                                     this.context.user && this.context.user.uid === rally.author.id &&
                                     <DialogSubscription rallyId={rally.id}/>
