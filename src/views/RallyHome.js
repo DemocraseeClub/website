@@ -31,7 +31,10 @@ class RallyHome extends Component {
 
     constructor(p) {
         super(p);
-        this.state = {editMode: false, loading: true,
+        this.state = {
+            editMode: false,
+            loading: true,
+            profiles: [],
             rally: false,
             error: null};
     }
@@ -55,7 +58,33 @@ class RallyHome extends Component {
             if(rally.meetings && rally.meetings.length > 0) {
                 meeting = rally.meetings[0];
             }
-            this.setState({rally, meeting, loading:false, error:false})
+
+        let profiles = [], dups = {};
+        if (meeting) {
+            if (meeting.moderators) {
+                meeting.moderators.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+
+            if (meeting.speakers) {
+                meeting.speakers.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+        }
+        while(profiles.length < 7) {
+            profiles.push({displayName:'Apply to Speak', icon:'+'})
+        }
+
+  
+            this.setState({rally, meeting, loading:false, error:false, profiles})
         } else {
             this.setState({rally:false, loading:false, error:'invalid id'})
         }
@@ -83,31 +112,7 @@ class RallyHome extends Component {
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = [], dups = {};
-        if (meeting) {
-            if (meeting.moderators) {
-                meeting.moderators.forEach(user => {
-                    if (!dups[user.id] && user.displayName) {
-                        dups[user.id] = true;
-                        profiles.push(user);
-                    }
-                })
-            }
-
-            if (meeting.speakers) {
-                meeting.speakers.forEach(user => {
-                    if (!dups[user.id] && user.displayName) {
-                        dups[user.id] = true;
-                        profiles.push(user);
-                    }
-                })
-            }
-        }
-        while(profiles.length < 7) {
-            profiles.push({displayName:'Apply to Speak', icon:'+'})
-        }
-
-        console.log("PROFILES", profiles);
+        
 
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
@@ -152,7 +157,7 @@ class RallyHome extends Component {
                         {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
-                            {profiles.map((r,i) =>
+                            {this.state.profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={r.uid ? '/citizen/'+r.uid : '/c/subscriptions#new/'}>
                                     <ListItemIcon>
                                         {r.picture ? <Avatar alt={r.displayName} src={r.picture} />
@@ -166,12 +171,9 @@ class RallyHome extends Component {
                         :
                         <Box mt={4} p={1} >
                             <AvatarGroup max={7} spacing={8}>
-                                {profiles.map((r, i) => r.picture ?
-                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName} alt={r.displayName} src={r.picture}/>
-                                    : r.id ?
-                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName}>{r.displayName[0].toUpperCase()}</Avatar>
-                                    :
-                                    <Avatar onClick={() => this.trackSubscribe('speak', rally.title) } key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
+                                {console.log(this.state.profiles, "profiles")}
+                                {this.state.profiles.map((r, i) =>  
+                                    <Avatar component={NavLink} to={'/citizen/'+r?.id} key={'speakerGroup-'+ i}  title={r?.displayName} alt={r?.displayName} src={r?.picture}/>
                                 )}
                             </AvatarGroup>
                         </Box>
