@@ -2,7 +2,6 @@ import React from "react";
 import { rallyStyles } from "../Util/ThemeUtils";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
-import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { withSnackbar } from "notistack";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -15,6 +14,9 @@ import SaveIcon from "@material-ui/icons/Save";
 import { normalizeUser } from "../redux/entityDataReducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
+
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
 
 class CitizenEdit extends React.Component {
   constructor(p) {
@@ -35,7 +37,7 @@ class CitizenEdit extends React.Component {
 
   async fetchCitizenInfo() {
     //get citizen
-    let auxCitizen = await window.fireDB
+    let auxCitizen = await firebase.firestore()
       .collection("users")
       .doc(this.props.match.params.uid)
       .get();
@@ -239,5 +241,5 @@ class CitizenEdit extends React.Component {
 }
 
 export default withStyles(rallyStyles, { withTheme: true })(
-  withSnackbar(withCmsHooks(withRouter(CitizenEdit)))
+  withSnackbar(withRouter(CitizenEdit))
 );

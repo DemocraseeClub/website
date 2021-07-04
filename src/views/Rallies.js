@@ -7,11 +7,13 @@ import Button from "@material-ui/core/Button";
 import {withSnackbar} from "notistack";
 import {rallyStyles} from "../Util/ThemeUtils";
 import {withRouter} from "react-router";
-import {withCmsHooks} from "./firebaseCMS/FirebaseCMS";
 import {normalizeRally} from "../redux/entityDataReducer";
 import Masonry from "react-masonry-css";
 import RallyItem from "../components/RallyItem";
 import RallySkeleton from "../components/RallySkeleton";
+
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
 
 class Rallies extends React.Component {
     constructor(p) {
@@ -25,7 +27,7 @@ class Rallies extends React.Component {
 
     async handleChange() {
         try {
-            let snapshots = await window.fireDB.collection("rallies").limit(25).get();
+            let snapshots = await firebase.firestore().collection("rallies").limit(25).get();
             const rallies = await Promise.all(
                 snapshots.docs.map((doc, i) => normalizeRally(doc, ["picture", "research"]))
             );
@@ -106,5 +108,5 @@ class Rallies extends React.Component {
 }
 
 export default withStyles(rallyStyles, {withTheme: true})(
-    withSnackbar(withCmsHooks(withRouter(Rallies)))
+    withSnackbar(withRouter(Rallies))
 );

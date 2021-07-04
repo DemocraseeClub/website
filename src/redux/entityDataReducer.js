@@ -1,4 +1,6 @@
-import firebase from "firebase";
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
+import "firebase/storage"
 
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
 const ITEM_DATA_FAILURE = 'entity:ITEM_DATA_FAILURE';
@@ -186,12 +188,12 @@ export const normalizeMeeting = async (doc, fields) => {
 export const normalizeUser = async (doc, fields) => {
     let obj = {id: doc.id, ...doc.data()}; // TODO: just get picture, roles, displayName (maybe bio)
     if (obj?.picture && fields.includes("picture")) {
-        let path = window.fbStorage.ref(obj.picture);
+        let path = firebase.storage().ref(obj.picture);
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
     if (obj?.coverPhoto && fields.includes("coverPhoto")) { // TODO: only request if on user's profile page
-        let path = window.fbStorage.ref(obj.coverPhoto);
+        let path = firebase.storage().ref(obj.coverPhoto);
         const url = await path.getDownloadURL();
         obj.coverPhoto = url;
     }
@@ -209,7 +211,7 @@ export const normalizeResource = async (doc, fields) => {
 
 
     if (obj?.image && fields.includes("image")) {
-        let path = window.fbStorage.ref(obj.image);
+        let path = firebase.storage().ref(obj.image);
         const url = await path.getDownloadURL();
         obj.image = url;
     }
@@ -235,13 +237,13 @@ export const normalizeRally = async (doc, fields) => {
     }
 
     if (obj?.picture && fields.includes("picture")) {
-        let path = window.fbStorage.ref(obj.picture);
+        let path = firebase.storage().ref(obj.picture);
         const url = await path.getDownloadURL();
         obj.picture = url;
     }
 
     if (obj?.promo_video && fields.includes("promo_video")) {
-        let path = window.fbStorage.ref(obj.promo_video);
+        let path = firebase.storage().ref(obj.promo_video);
         const url = await path.getDownloadURL();
         obj.promo_video = url;
     }

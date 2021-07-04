@@ -12,6 +12,9 @@ import DialogSubscription from "./DialogSubscriptions"
 import userContext from '../contexts/userContext';
 import Box from "@material-ui/core/Box";
 
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
+
 class RallyHome extends Component {
 
     static contextType = userContext
@@ -27,11 +30,11 @@ class RallyHome extends Component {
         if (!this.context.user || !this.context.user.uid) {
             this.props.enqueueSnackbar('Please sign-in or sign-up to subscribe', {variant:'error'});
         } else if(rally && meeting) {
-            let subRef = window.fireDB.collection("subscriptions").doc()
+            let subRef = firebase.firestore().collection("subscriptions").doc()
             subRef.set({
-                subscriber: window.fireDB.collection("users").doc(this.context.user.uid),
-                rally: window.fireDB.collection("rallies").doc(rally.id),
-                meeting: window.fireDB.collection("rallies").doc(rally.id).collection("meetings").doc(meeting.id),
+                subscriber: firebase.firestore().collection("users").doc(this.context.user.uid),
+                rally: firebase.firestore().collection("rallies").doc(rally.id),
+                meeting: firebase.firestore().collection("rallies").doc(rally.id).collection("meetings").doc(meeting.id),
                 status: "pending"
             })
                 .then(() => {

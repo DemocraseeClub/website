@@ -21,6 +21,9 @@ import {
     normalizeRally
 } from "../redux/entityDataReducer";
 
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
+
 class MeetingHome extends Component {
 
     constructor(p) {
@@ -40,7 +43,7 @@ class MeetingHome extends Component {
 
     async refresh() {
         this.props.dispatch(entityDataStarted(this.props.location.pathname));
-        const rallyRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
+        const rallyRef = firebase.firestore().collection("rallies").doc(this.props.match.params.rid)
         let doc = await rallyRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "topics", "stakeholders", "wise_demo"]);

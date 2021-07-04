@@ -17,6 +17,11 @@ import Box from "@material-ui/core/Box";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
 import moment from "moment";
+
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
+
+
 const ROUNDTABLEMAP = [
     {top:39, left:181},
     {top:97, left:300},
@@ -50,7 +55,7 @@ class RallyHome extends Component {
     }
 
     async refresh() {
-        const roomRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
+        const roomRef = firebase.firestore().collection("rallies").doc(this.props.match.params.rid)
         let doc = await roomRef.get();
         if (doc.exists) {
             let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);

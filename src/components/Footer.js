@@ -11,7 +11,6 @@ import {setThemeMode} from "../redux/authActions";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {rallyStyles} from "../Util/ThemeUtils";
-import {withCmsHooks} from "../views/firebaseCMS/FirebaseCMS";
 
 import userContext from '../contexts/userContext';
 
@@ -132,4 +131,4 @@ class Footer extends React.Component {
     }
 }
 
-export default withStyles(rallyStyles, {withTheme: true})(withCmsHooks(Footer));
+export default withStyles(rallyStyles, {withTheme: true})(Footer);

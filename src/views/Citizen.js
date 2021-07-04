@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { rallyStyles } from "../Util/ThemeUtils";
 import { withRouter } from "react-router";
-import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
+
 import { withSnackbar } from "notistack";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
@@ -25,6 +25,9 @@ import { NavLink } from "react-router-dom";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Box from "@material-ui/core/Box";
 
+import firebase from "../firebaseConfig";
+import "firebase/firestore"
+
 class Citizen extends React.Component {
   constructor(p) {
     super(p);
@@ -44,12 +47,12 @@ class Citizen extends React.Component {
   }
 
   async fetchCitizenInfo() {
-    let userRef = window.fireDB
+    let userRef = firebase.firestore()
       .collection("users")
       .doc(this.props.match.params.uid);
 
     //get citizen
-    let auxCitizen = await window.fireDB
+    let auxCitizen = await firebase.firestore()
       .collection("users")
       .doc(this.props.match.params.uid)
       .get();
@@ -57,7 +60,7 @@ class Citizen extends React.Component {
     let citizen = await normalizeUser(auxCitizen, ["picture", "coverPhoto"]);
 
     //get citizen's resources
-    let auxResources = await window.fireDB
+    let auxResources = await firebase.firestore()
       .collection("resources")
       .where("author", "==", userRef)
       .get();
@@ -71,7 +74,7 @@ class Citizen extends React.Component {
 
     //get citizen's subscriptions
 
-    let auxSubscriptions = await window.fireDB
+    let auxSubscriptions = await firebase.firestore()
     .collection("subscriptions")
     .where("subscriber", "==", userRef)
     .get()
@@ -90,7 +93,7 @@ class Citizen extends React.Component {
 
       console.log("delete item")
 
-      window.fireDB.collection("subscriptions").doc(id).delete()
+      firebase.firestore().collection("subscriptions").doc(id).delete()
       .then(() => {
         this.props.enqueueSnackbar('the application has been deleted!');
         this.fetchCitizenInfo()
@@ -355,5 +358,5 @@ class Citizen extends React.Component {
 }
 
 export default withStyles(rallyStyles, { withTheme: true })(
-  withSnackbar(withCmsHooks(withRouter(Citizen)))
+  withSnackbar(withRouter(Citizen))
 );
