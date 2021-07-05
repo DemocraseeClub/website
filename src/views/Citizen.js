@@ -7,7 +7,6 @@ import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { withSnackbar } from "notistack";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import WebIcon from "@material-ui/icons/Web";
 import Chip from "@material-ui/core/Chip";
@@ -21,9 +20,10 @@ import Config from "../Config";
 import Masonry from "react-masonry-css";
 import SettingsSharpIcon from "@material-ui/icons/SettingsSharp";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import { normalizeUser, normalizeResource } from "../redux/entityDataReducer";
+import { normalizeUser, normalizeResource, normalizeSubscription } from "../redux/entityDataReducer";
 import { NavLink } from "react-router-dom";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Box from "@material-ui/core/Box";
 
 class Citizen extends React.Component {
   constructor(p) {
@@ -34,6 +34,7 @@ class Citizen extends React.Component {
       hasOfficeHours: false,
       loading: true,
       resources: [],
+      subscriptions: [],
       citizen: {},
     };
   }
@@ -68,7 +69,35 @@ class Citizen extends React.Component {
 
     let resources = await Promise.all(promiseResources);
 
-    this.setState({ citizen, resources, loading: false });
+    //get citizen's subscriptions
+
+    let auxSubscriptions = await window.fireDB
+    .collection("subscriptions")
+    .where("subscriber", "==", userRef)
+    .get()
+
+    let promiseSubscriptions = [];
+    auxSubscriptions.forEach((doc) =>
+       promiseSubscriptions.push(normalizeSubscription(doc, ["meeting", "rally"]))
+    );
+
+    let subscriptions = await Promise.all(promiseSubscriptions);
+
+    this.setState({ citizen, resources, subscriptions, loading: false });
+  }
+
+  handleDelete(id) {
+
+      console.log("delete item")
+
+      window.fireDB.collection("subscriptions").doc(id).delete()
+      .then(() => {
+        this.props.enqueueSnackbar('the application has been deleted!');
+        this.fetchCitizenInfo()
+      }).catch((error) => {
+          console.error("Error removing document: ", error);
+      });
+
   }
 
   render() {
@@ -275,6 +304,50 @@ class Citizen extends React.Component {
                   )}
             </Masonry>
           </Box>
+          <Box className={this.props.classes.section}>
+                {
+                  this.state.subscriptions && this.state.subscriptions.length > 0 &&
+                  <>
+
+                      <Chip
+                        icon={<SettingsSharpIcon />}
+                        label="Subscriptions"
+                        onClick={preventDefault}
+                      />
+                     <div style={{width: "100%", display:"flex", flexWrap: "wrap"}}>
+                        {
+
+                            this.state.subscriptions.map((sub, i) => {
+                              console.log(sub)
+                              return (
+                                <>
+                                  <Box style={{display: "flex", flexDirection: "column", width: "max-content", margin:"20px"}}>
+                                    <Chip
+                                      key={i}
+                                      label={<b style={{fontSize:"18px"}}>{`Rally: ${sub.rally.title}`}</b>}
+                                      onDelete={(e) => this.handleDelete(sub.id) }
+                                      color="primary"
+                                    />
+                                    <Chip
+                                      key={i}
+                                      label={`Meeting: ${sub.meeting.title}`}
+                                      color="secondary"
+                                    />
+                                    <Chip
+                                      label={`Status: ${sub.status}`}
+                                    />
+                                  </Box>
+                                </>
+                              )
+
+                            })
+
+                        }
+                     </div>
+
+                  </>
+                }
+        </Box>
         </Box>
       </Paper>
     );

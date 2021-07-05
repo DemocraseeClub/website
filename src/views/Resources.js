@@ -6,9 +6,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {Checkbox, FormControlLabel,} from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Box from "@material-ui/core/Box";
 import {rallyStyles} from "../Util/ThemeUtils";
 import Masonry from "react-masonry-css";
 import {normalizeResource} from "../redux/entityDataReducer"

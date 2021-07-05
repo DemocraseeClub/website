@@ -1,6 +1,5 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -20,6 +19,7 @@ import {withSnackbar} from "notistack";
 import CitySelector from "../components/CitySelector";
 import Dialog from '@material-ui/core/Dialog';
 import {NavLink} from "react-router-dom";
+import Box from "@material-ui/core/Box";
 
 const CITIES = [
     {

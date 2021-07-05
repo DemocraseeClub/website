@@ -1,0 +1,130 @@
+
+.homestyles {
+    padding: 0 !important;
+}
+
+.homestyles > .MuiGrid-root {
+    background-image: url(/images/democrasee_hero.png) !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    height: 530px !important;
+    min-height: auto !important;
+    display: block !important;
+    padding-top: 55px !important;
+
+}
+
+.homestyles .MuiGrid-container .MuiPaper-elevation1 {
+    width: 480px;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.homestyles .MuiGrid-container .MuiPaper-elevation1 h1 {
+    font-size: 3em;
+    padding-bottom: 20px;
+}
+
+.homestyles .MuiGrid-container .MuiPaper-elevation1 h3 {
+    font-size: 21px;
+}
+
+.homestyles .MuiGrid-container .MuiGrid-item {
+    padding: 0px 75px 25px 75px !important;
+}
+
+.homestyles .MuiButton-containedSecondary {
+    background-color: #B9DFF4 !important;
+}
+
+.homepageboxes img {
+    margin-bottom: 20px;
+}
+
+.homepageboxes h2 {
+    padding-bottom: 10px;
+    font-weight: 500 !important;
+}
+
+.homepageboxes span {
+    padding: 0px;
+}
+
+.homepageboxes a {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+#darkMode .homepageboxes img,
+#darkMode .homepageinfo img {
+    filter: brightness(0) invert(1);
+}
+
+.homepageinfo {
+    border-top: 4px #015761 solid;
+    margin-top: 20px;
+}
+
+.homepageinfo h2 {
+    color: #015761;
+    font-size: 3em;
+    text-align: center;
+    width: 600px;
+    max-width: 100%;
+    margin: 80px auto 30px;
+}
+
+.homepageinfo img {
+    max-width: 130px;
+    margin: auto;
+}
+
+.homestyles .homepageinfo .MuiGrid-item .MuiGrid-item {
+    padding: 40px 10px !important;
+    text-align: center;
+}
+
+.homepageinfo h3 {
+    font-size: 2em;
+    color: #015761;
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.homepageinfo p {
+    color: #015761;
+    text-align: left;
+
+}
+
+.homepagebottom h2,
+.homepagebottom p {
+
+    color: #015761;
+}
+
+#darkMode .homepageinfo h3,
+#darkMode .homepageinfo h2,
+#darkMode .homepageinfo p,
+#darkMode .homepagebottom h2,
+#darkMode .homepagebottom p {
+    color: #fff;
+}
+
+.homepagebottom h2 {
+    font-size: 2em;
+}
+
+.homepagebottom p {
+    font-size: 18px;
+    padding-bottom: 12px;
+}
+
+.homepagebottom {
+    padding-top: 20px;
+    text-align: center;
+    padding-bottom: 60px;
+}

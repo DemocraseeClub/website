@@ -14,7 +14,7 @@ class Header extends React.Component {
 
         // this.user = this.context
 
-        console.log(this.context, "user header update") 
+        console.log(this.context, "user header update")
 
     }
   render() {
@@ -54,7 +54,7 @@ class Header extends React.Component {
             { this.context.user != null ?
             <NavLink className="loginnav" to={'/citizen/'+this.context.user.uid + '/edit'}>My Account</NavLink>
              :
-            <NavLink className="loginnav" to={"/login"}>Sign Up</NavLink>
+            <NavLink className="loginnav" to={"/signup"}>Sign Up</NavLink>
            }
           </Grid>
         </Toolbar>
