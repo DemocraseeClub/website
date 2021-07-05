@@ -6,20 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import ProgressLoading from "../components/ProgressLoading";
-import {rallyStyles} from '../Util/ThemeUtils';
-import {withStyles} from "@material-ui/core/styles";
 import RallyBlock from "../components/RallyBlock";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
-import {withSnackbar} from "notistack";
 import Paper from "@material-ui/core/Paper";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import Box from "@material-ui/core/Box";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
 import moment from "moment";
@@ -37,7 +31,10 @@ class RallyHome extends Component {
 
     constructor(p) {
         super(p);
-        this.state = {editMode: false, loading: true,
+        this.state = {
+            editMode: false,
+            loading: true,
+            profiles: [],
             rally: false,
             error: null};
     }
@@ -58,11 +55,36 @@ class RallyHome extends Component {
         if (doc.exists) {
             let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);
             let meeting = false;
-            if(rally.meetings){
-            if (rally.meetings.length > 0){
+            if(rally.meetings && rally.meetings.length > 0) {
                 meeting = rally.meetings[0];
-            }}
-            this.setState({rally, meeting, loading:false, error:false})
+            }
+
+        let profiles = [], dups = {};
+        if (meeting) {
+            if (meeting.moderators) {
+                meeting.moderators.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+
+            if (meeting.speakers) {
+                meeting.speakers.forEach(user => {
+                    if (!dups[user.id] && user.displayName) {
+                        dups[user.id] = true;
+                        profiles.push(user);
+                    }
+                })
+            }
+        }
+        while(profiles.length < 7) {
+            profiles.push({displayName:'Apply to Speak', icon:'+'})
+        }
+
+  
+            this.setState({rally, meeting, loading:false, error:false, profiles})
         } else {
             this.setState({rally:false, loading:false, error:'invalid id'})
         }
@@ -90,31 +112,12 @@ class RallyHome extends Component {
             tags.push(<NavLink key={'series'} to={href}>Rally Series</NavLink>)
         }
 
-        let profiles = [], dups = {};
-        if (meeting) {
-            meeting.moderators.forEach(user => {
-                if (!dups[user.id] && user.displayName) {
-                    dups[user.id] = true;
-                    profiles.push(user);
-                }
-            })
-            meeting.speakers.forEach(user => {
-                if (!dups[user.id] && user.displayName) {
-                    dups[user.id] = true;
-                    profiles.push(user);
-                }
-            })
-        }
-        while(profiles.length < 7) {
-            profiles.push({displayName:'Apply to Speak', icon:'+'})
-        }
-
-        console.log("PROFILES", profiles);
+        
 
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
 
-       
+
 
         return (
                 <Paper elevation={0}>
@@ -128,19 +131,19 @@ class RallyHome extends Component {
                             <video controls width={'100%'}>
                                 <source src={rally.promo_video} type="video/mp4" />
                             </video> : ''}
-                    
+
                         <Box p={1} >
-                       
+
                         {rally.description ? <SanitizedHTML
                             allowedTags={Config.allowedTags}
                             allowedAttributes={Config.allowedAttributes}
                             html={rally.description} /> : ''}
 
-                        
+
                         </Box>
                  </Grid>
                  <Grid item xs={6} sm={6} style={{textAlign:'left', paddingRight:8}}>
-                
+
 
 
                     <Grid container justify={'space-around'} alignContent={'center'} >
@@ -149,12 +152,12 @@ class RallyHome extends Component {
                  <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>SPEAKERS</Typography>
 
 
-                    
+
 
                         {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
-                            {profiles.map((r,i) =>
+                            {this.state.profiles.map((r,i) =>
                                 <ListItem key={'speakerTable-'+ i} className={classes.roundtableSeat} style={ROUNDTABLEMAP[i]} component={NavLink} to={r.uid ? '/citizen/'+r.uid : '/c/subscriptions#new/'}>
                                     <ListItemIcon>
                                         {r.picture ? <Avatar alt={r.displayName} src={r.picture} />
@@ -168,12 +171,9 @@ class RallyHome extends Component {
                         :
                         <Box mt={4} p={1} >
                             <AvatarGroup max={7} spacing={8}>
-                                {profiles.map((r, i) => r.picture ?
-                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName} alt={r.displayName} src={r.picture}/>
-                                    : r.id ?
-                                    <Avatar component={NavLink} to={'/citizen/'+r.id} key={'speakerGroup-'+ i}  title={r.displayName}>{r.displayName[0].toUpperCase()}</Avatar>
-                                    :
-                                    <Avatar onClick={() => this.trackSubscribe('speak', rally.title) } key={'applytospeak-' + i} title={'apply to speak'}>{r.icon}</Avatar>
+                                {console.log(this.state.profiles, "profiles")}
+                                {this.state.profiles.map((r, i) =>  
+                                    <Avatar component={NavLink} to={'/citizen/'+r?.id} key={'speakerGroup-'+ i}  title={r?.displayName} alt={r?.displayName} src={r?.picture}/>
                                 )}
                             </AvatarGroup>
                         </Box>
@@ -209,7 +209,7 @@ class RallyHome extends Component {
                         :
                             <React.Fragment>
                                 <List component="nav" aria-label="rally meetings">
-                                
+
                  <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>MEETINGS</Typography>
                                 {rally.meetings.map((r, i) => {
                                     return (<ListItem button  key={r.title + '-' + i} component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} >

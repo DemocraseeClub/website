@@ -2,7 +2,6 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Badge from '@material-ui/core/Badge';
 import RemoteVideo from "./RemoteVideo";
@@ -16,6 +15,7 @@ import {getParam} from '../Util/WindowUtils';
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ShareIcon from "@material-ui/icons/Share";
 import PasswordIcon from "@material-ui/icons/VpnKey";
+import Box from "@material-ui/core/Box";
 
 const VideoStreamMerger = require('video-stream-merger')
 
@@ -218,7 +218,7 @@ class Room extends React.Component {
         const auxList1 = roomRef.onSnapshot(async snapshot => {
 
             const data = snapshot.data();
-            
+
             if(data) {
 
                 if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
@@ -226,7 +226,7 @@ class Room extends React.Component {
                     const rtcSessionDescription = new RTCSessionDescription(data.answer);
                     await this.peerConnection.setRemoteDescription(rtcSessionDescription);
                 }
-    
+
                 let viewers = snapshot.data().roomsViewing;
                 let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
                 for(let i = viewers.length - 1; i>=0 ;i--){

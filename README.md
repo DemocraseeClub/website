@@ -5,3 +5,12 @@
 Check the [Issues](https://github.com/DemocraseeClub/website/issues) here if you're interested in helping out.
 
 (ɔ) 2021 - Available via [GNU](https://www.gnu.org/licenses/gpl-3.0.html)
+
+
+## To Run
+- `yarn install`
+- `yarn start`
+
+# To Build & Deploy
+- `yarn run build && firebase deploy`
+

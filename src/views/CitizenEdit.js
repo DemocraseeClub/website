@@ -8,13 +8,13 @@ import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ImageIcon from "@material-ui/icons/Image";
 import SaveIcon from "@material-ui/icons/Save";
 import { normalizeUser } from "../redux/entityDataReducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Box from "@material-ui/core/Box";
 
 class CitizenEdit extends React.Component {
   constructor(p) {

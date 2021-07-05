@@ -77,9 +77,34 @@ export const normalizeDoc = async (docs, type) => {
     return results;
 }
 
+export const normalizeSubscription = async (doc, fields) => {
+    let obj = {id: doc.id, ...doc.data()};
+
+    if(obj?.subscriber && fields.includes("subscriber")) {
+
+        const subscriber = await obj.subscriber.get();
+        obj.subscriber = await normalizeUser(subscriber, ["picture"])
+    }
+
+    if(obj?.rally && fields.includes("rally")) {
+
+        const rally = await obj.rally.get();
+        obj.rally = await normalizeRally(rally, [])
+    }
+
+    if(obj?.meeting && fields.includes("meeting")) {
+
+        const meeting = await obj.meeting.get();
+        obj.meeting = await normalizeMeeting(meeting, [])
+    }
+
+
+    return obj;
+}
+
 export const normalizeMeeting = async (doc, fields) => {
     let meet = (typeof doc.data === 'function') ? {id: doc.id, ...doc.data()} : doc;
-
+    console.log(doc.data(), "meetingData")
     if (meet?.agenda) {
         meet.agenda = JSON.parse(meet.agenda);
     }
@@ -97,26 +122,60 @@ export const normalizeMeeting = async (doc, fields) => {
     }
 
     if(meet?.author && fields.includes("author")) {
-
+       
         const author = await meet.author.get();
         meet.author = await normalizeUser(author, ["picture"])
 
     }
 
     if(meet?.speakers && fields.includes("speakers")) {
-        meet.speakers = [];
+        let speakers = [];
+        
         for (let i = 0; i < meet.speakers.length; i++) {
-            let speaker  = await meet.speakers[i].get()
-            meet.speakers.push(await normalizeUser(speaker, ["picture"]));
+
+            let speaker = meet.speakers[i]
+           
+            let aux = await new Promise( (resolve, reject) => {
+
+                speaker.get()
+                .then(async (doc) => {
+
+                    resolve(await normalizeUser(doc, ["picture"]))
+
+                })
+
+
+            })
+
+            speakers.push(aux);
         }
+
+        meet.speakers = speakers
     }
 
     if(meet?.moderators && fields.includes("moderators")) {
-        meet.moderators = [];
-            for (let i = 0; i < meet.moderators.length; i++) {
-                let moderator  = await meet.moderators[i].get()
-                meet.moderators.push(await normalizeUser(moderator, ["picture"]));
-            }
+        let moderators = [];
+        
+        for (let i = 0; i < meet.moderators.length; i++) {
+
+            let moderator = meet.moderators[i]
+           
+            let aux = await new Promise( (resolve, reject) => {
+
+                moderator.get()
+                .then(async (doc) => {
+
+                    resolve(await normalizeUser(doc, ["picture"]))
+
+                })
+
+
+            })
+
+            moderators.push(aux);
+        }
+
+        meet.moderators = moderators
     }
 
     console.log("NORMALIZED MEETING: " + fields, meet);

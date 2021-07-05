@@ -142,24 +142,32 @@ export function FirebaseCMS(props: any) {
             navItems.push(
                 buildResourceCollection(user, fbUser),
                 buildRallyCollection(user, fbUser),
-                buildActionPlanCollection(user, fbUser)
+                buildActionPlanCollection(user, fbUser),
+
+                buildMeetingTypeCollection(user, fbUser),
+                buildSubscriptionCollection(user, fbUser),
+                buildTopicCollection(user, fbUser),
+                buildResourceTypeCollection(user, fbUser),
+                buildStateCollection(user, fbUser),
+                buildStakeholderCollection(user, fbUser),
+                buildPartyCollection(user, fbUser),
+                buildOfficialCollection(user, fbUser),
+                buildCityCollection(user, fbUser),
+                wiseDemoCollection(user, fbUser),
+
+                buildUserCollection(user, fbUser)
             )
             if (fbUser?.roles.includes('editor')) {
-                navItems.push(
-                    buildMeetingTypeCollection(user, fbUser),
-                    buildSubscriptionCollection(user, fbUser),
-                    buildTopicCollection(user, fbUser),
-                    buildResourceTypeCollection(user, fbUser),
-                    buildStateCollection(user, fbUser),
-                    buildStakeholderCollection(user, fbUser),
-                    buildPartyCollection(user, fbUser),
-                    buildOfficialCollection(user, fbUser),
-                    buildCityCollection(user, fbUser),
-                    wiseDemoCollection(user, fbUser)
-                )
-            }
-            if (fbUser?.roles.includes('admin')) {
-                navItems.push(buildUserCollection(user, fbUser))
+
+                document.querySelector("body")?.classList.add("editor")
+                
+            } else if (fbUser?.roles.includes('admin')) {
+
+                document.querySelector("body")?.classList.add("user")
+ 
+            } else {
+
+                document.querySelector("body")?.classList.add("user")
             }
         }
         // console.log(navItems);
