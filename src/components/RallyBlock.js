@@ -12,7 +12,7 @@ import DialogSubscription from "./DialogSubscriptions"
 import userContext from '../contexts/userContext';
 import Box from "@material-ui/core/Box";
 
-class RallyHome extends Component {
+class RallyBlock extends Component {
 
     static contextType = userContext
 
@@ -133,4 +133,4 @@ class RallyHome extends Component {
     }
 }
 
-export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(RallyHome));
+export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(RallyBlock));
