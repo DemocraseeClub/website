@@ -17,6 +17,9 @@ class Header extends React.Component {
         console.log(this.context, "user header update")
 
     }
+    openMenu(){
+      document.getElementById('headernnavd').classList.toggle('unhide');
+    }
   render() {
     const { classes } = this.props;
     return (
@@ -40,10 +43,16 @@ class Header extends React.Component {
               alt={"democrasee"}
               height={20}
             /></NavLink>
-            <div className={classes.slogan}><NavLink to={'/'} className="slogan">Incentivizing Civic Action</NavLink></div>
+            <div id="headslogan" className={classes.slogan}><NavLink to={'/'} className="slogan"> incentivizing civic action</NavLink></div>
           </div>
+          <div id="headernav_mobile" onClick={this.openMenu}>
+          <img
+              src="/images/mobilemenu.png"
+              alt={"Menu"}
+              height={35}
+            /></div>
 
-          <Grid
+          <Grid id="headernnavd"
             container
             style={{ flexGrow: 1 }}
             justify={"space-around"}

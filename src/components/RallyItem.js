@@ -33,9 +33,9 @@ class RallyItem extends React.Component {
                         />
                     </NavLink>
                     <CardContent>
-                        <Typography gutterBottom variant="h4" component="h2">
+                        <NavLink to={`/rally/${item.id}`}> <Typography gutterBottom variant="h4" component="h2">
                             {item.title}
-                        </Typography>
+                        </Typography> </NavLink>
                         <Typography variant="body2" component="div">
                             <SanitizedHTML
                                 allowedTags={Config.allowedTags}
@@ -43,26 +43,9 @@ class RallyItem extends React.Component {
                                 html={item.description}
                             />
                         </Typography>
+                        <NavLink to={`/rally/${item.id}`}>Read More</NavLink>
                     </CardContent>
                 </CardContent>
-                <CardActions style={{justifyContent: "space-between"}}>
-                    <NavLink to={`/rally/${item.id}`}>
-                        <Button
-                            size="small"
-                            color="primary"
-                            style={{minWidth: "auto"}}
-                        >
-                            View
-                        </Button>
-                    </NavLink>
-                    <Button
-                        size="small"
-                        color="primary"
-                        onClick={() => this.trackSubscribe(`/rally/${item.id}`)}
-                    >
-                        Join
-                    </Button>
-                </CardActions>
             </Card>)
     }
 }
