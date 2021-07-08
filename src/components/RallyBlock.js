@@ -93,29 +93,14 @@ class RallyBlock extends Component {
         return (
             <React.Fragment>
 
-                <Grid className="rallyheadstyle" container justify={'space-around'} alignContent={'center'} >
+                <Grid container justify={'space-around'} alignContent={'center'} >
 
-                    <Grid item xs={12} sm={4} style={{textAlign:'left', paddingRight:8}}>
-                        {(rally.picture) ?
-                                <img alt={rally.title} src={rally.picture} style={{maxWidth: '100%', textAlign:'center'}} />
-                                :
-                                <Box p={2} ml={4}>
-                                    <Button variant={'contained'} disableElevation={true} color={'secondary'}
-                                            startIcon={<InsertPhoto/>}>Cover Image</Button>
-                                </Box>
-                            }
-
-                    </Grid>
-
-                    <Grid item xs={12} sm={8} style={{textAlign:'left', paddingRight:8}}>
-                    <Typography variant={'subtitle2'}>
-                        {tags}
-                    </Typography>
-                         <Typography variant='h1' className={classes.title} color={'error'}>{rally.title}</Typography>
-                         {!start ?
+                    <Grid item className="rallyactions" xs={12} sm={12} style={{textAlign:'left', paddingRight:8}}>
+                        {!start ?
                             <Box mt={4}>
-                                <Button variant={'contained'} color={'primary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
-                                <Button variant={'contained'} color={'secondary'} style={{marginRight:15}} onClick={() => this.trackSubscribe('subscribe', rally.title) }>Join This Rally</Button>
+                         <Typography variant='h1'>{rally.title}</Typography>
+                                <Button variant={'contained'} className="bluebtn" onClick={() => this.trackSubscribe('speak', rally.title) }>Apply to Speak</Button>
+                                <Button variant={'contained'} className="redbtn"  onClick={() => this.trackSubscribe('subscribe', rally.title) }>Join This Rally</Button>
                                 {
                                     this.context.user && this.context.user.uid === rally.author.id &&
                                     <DialogSubscription rallyId={rally.id}/>

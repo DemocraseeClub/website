@@ -17,6 +17,10 @@ import Box from "@material-ui/core/Box";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
 import moment from "moment";
+import Button from "@material-ui/core/Button";
+import InsertPhoto from "@material-ui/icons/InsertPhoto";
+import { DiscussionEmbed } from 'disqus-react';
+
 const ROUNDTABLEMAP = [
     {top:39, left:181},
     {top:97, left:300},
@@ -91,6 +95,7 @@ class RallyHome extends Component {
     }
 
     render() {
+
          if (this.state.loading === true) return <ProgressLoading/>;
         if (this.state.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography variant='h2'>{this.state.error}</Typography></div>;
         const {rally} = this.state;
@@ -121,40 +126,27 @@ class RallyHome extends Component {
 
         return (
                 <Paper elevation={0}>
+                 <Grid className="rallyheadstyle" container justify={'space-around'} alignContent={'center'} >
+
                     <RallyBlock rally={rally} meeting={this.state.meeting} />
-                     <Grid container className="mainsectionstyles" justify={'space-around'} alignContent={'center'} >
+                    <Grid container  className="rallyFeatured">
+                     <Grid item sm={12} md={8} style={{textAlign:'left', paddingRight:8}}>
 
-                 <Grid item xs={6} sm={6} style={{textAlign:'left', paddingRight:8}}>
-                 <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RALLY DETAILS</Typography>
+                     <Grid container  className="mainsectionstyles">
+                     <Grid item xs={12}>
 
-                  {rally.promo_video && rally.promo_video.indexOf('http') === 0 ?
-                            <video controls width={'100%'}>
-                                <source src={rally.promo_video} type="video/mp4" />
-                            </video> : ''}
-
-                        <Box p={1} >
-
-                        {rally.description ? <SanitizedHTML
-                            allowedTags={Config.allowedTags}
-                            allowedAttributes={Config.allowedAttributes}
-                            html={rally.description} /> : ''}
-
-
-                        </Box>
-                 </Grid>
-                 <Grid item xs={6} sm={6} style={{textAlign:'left', paddingRight:8}}>
-
-
-
-                    <Grid container justify={'space-around'} alignContent={'center'} >
-                    <Grid item xs={12}>
-
-                 <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>SPEAKERS</Typography>
-
-
-
-
-                        {start && start.isAfter() ?
+                     {(rally.picture) ?
+                                <div className="circlecrop"><img alt={rally.title} src={rally.picture} style={{maxWidth: '100%', textAlign:'center'}} /></div>
+                                :
+                                <Box p={2} ml={4}>
+                                    <Button variant={'contained'} disableElevation={true} color={'secondary'}
+                                            startIcon={<InsertPhoto/>}>Cover Image</Button>
+                                </Box>
+                            }
+                     <Typography variant={'subtitle2'}>
+                        {tags}
+                    </Typography>
+                     {start && start.isAfter() ?
                         <Box mt={4} p={1} className={classes.roundtable} >
                             {/* TODO: navigate "Apply to Speak" to custom form based on http://localhost:3000/c/subscriptions#new */}
                             {this.state.profiles.map((r,i) =>
@@ -178,30 +170,13 @@ class RallyHome extends Component {
                             </AvatarGroup>
                         </Box>
                         }
-                    </Grid>
+                        </Grid>
+
+                     <Grid item xs={12}>
+                     <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>UPCOMING MEETINGS</Typography>
 
 
-                    {rally.research && rally.research.length > 0 &&
-                        <Box mt={4} p={3} style={{width:'100%'}}>
-                            <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
-                            <List component="nav" aria-label="research links">
-                                {rally.research.map(r => {
-                                    return <ListItem button key={r.link}>
-                                        {r.img && <ListItemIcon>
-                                            <img src={r.img} height={20} alt={'source logo'} />
-                                        </ListItemIcon>}
-                                        <ListItemText primary={<a href={r.link} target='_blank'>{r.title}</a>} />
-                                    </ListItem>
-                                })}
-                            </List>
-                        </Box>
-                    }
-
-                </Grid>
-                </Grid>
-                </Grid>
-
-                    <Box className="rallymeetingsstyle" component={"div"} p={3}>
+                          <Box className="rallymeetingsstyle" component={"div"} p={3}>
                     {!rally.meetings ? '' :
                     (rally.meetings.length === 0)
                         ?
@@ -209,18 +184,91 @@ class RallyHome extends Component {
                         :
                             <React.Fragment>
                                 <List component="nav" aria-label="rally meetings">
-
-                 <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>MEETINGS</Typography>
                                 {rally.meetings.map((r, i) => {
                                     return (<ListItem button  key={r.title + '-' + i} component={NavLink} to={`/rally/${rally.id}/meeting/${r.id}`} >
                                         <ListItemText primary={r.title} secondary={r.start_end_times?.date_start?.seconds
-                                        ? moment(r.start_end_times?.date_start?.seconds * 1000).format('dddd, MMMM Do YYYY, h:mm a') : null} />
+                                        ? moment(r.start_end_times?.date_start?.seconds * 1000).format('dddd, MMMM Do YYYY, h:mm a') : 'Meeting date not yet set'} />
+                                        <Button className="bluebtn">View Details</Button>
                                     </ListItem>)
                                 })}
                                 </List>
                             </React.Fragment>
                     }
                     </Box>
+
+
+                      <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RALLY DETAILS</Typography>
+
+                         <div className="rallymaindescription">
+                  
+
+                        <Box p={1} >
+
+                        {rally.description ? <SanitizedHTML
+                            allowedTags={Config.allowedTags}
+                            allowedAttributes={Config.allowedAttributes}
+                            html={rally.description} /> : ''}
+
+
+                        </Box>
+                        </div>
+
+                        </Grid>
+                        </Grid></Grid>
+
+                    <Grid item sm={12} md={4} style={{textAlign:'left', paddingRight:8}}>
+
+                    <div className="rallyvideo">
+
+                    {rally.promo_video && rally.promo_video.indexOf('http') === 0 ?
+                            <video controls width={'100%'}>
+                                <source src={rally.promo_video} type="video/mp4" />
+                            </video> : ''}
+                            </div>
+
+                            <Grid container justify={'space-around'} alignContent={'center'} >
+                   
+
+
+                    {rally.research && rally.research.length > 0 &&
+                        <Box mt={4} p={3} style={{width:'100%'}}>
+                            <Typography variant='subtitle1' style={{marginTop:30, marginBottom:0}}>RESEARCH</Typography>
+                            <List component="nav" aria-label="research links">
+                                {rally.research.map(r => {
+                                    return <a href={r.link} target='_blank'><ListItem button key={r.link}><div className="researchbox">
+                                        {r.img && <ListItemIcon>
+                                          <img src={r.img} height={20} alt={'source logo'} />
+                                        </ListItemIcon>}
+                                        <ListItemText primary={r.title} />
+                                    </div></ListItem></a>
+                                })}
+                            </List>
+                        </Box>
+                    }
+
+                </Grid>
+                            
+
+                    </Grid>
+                    </Grid>
+                    </Grid>
+                 <Grid container className="mainsectionstyles" justify={'space-around'} alignContent={'center'} >
+
+                 <Grid item xs={12} sm={12} style={{textAlign:'left', paddingRight:8}}>
+     <DiscussionEmbed
+    shortname='democraseeclub'
+    config={
+        {
+            url: 'http://democraseeclub.web.app/rally/8ghDgZWvr9XZvDOHQ7E8',
+            identifier: '8ghDgZWvr9XZvDOHQ7E8',
+            title: 'Cash for Local Crops'
+        }
+    }
+/>
+      </Grid>
+                </Grid>
+
+                  
                 </Paper>
         );
     }
