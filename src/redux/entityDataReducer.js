@@ -131,61 +131,37 @@ export const normalizeMeeting = async (doc, fields) => {
 
     }
 
-    // if(meet?.speakers && fields.includes("speakers")) {
-    //     let speakers = [];
+    if(meet?.speakers && fields.includes("speakers")) {
+        let speakers = [];
         
-    //     for (let i = 0; i < meet.speakers.length; i++) {
+        for (let i = 0; i < meet.speakers.length; i++) {
 
-    //         let speaker = meet.speakers[i]
-           
-    //         let aux = await new Promise( (resolve, reject) => {
+            let speaker = await meet.speakers[i].get()
 
-    //             speaker.get()
-    //             .then(async (doc) => {
+            speakers.push(normalizeUser(speaker, ["picture"]))
 
+        }
 
+        promises.push(getArray(meet, speakers, "speakers"))
+    }
 
-    //                 resolve(await normalizeUser(doc, ["picture"]))
-
-    //             })
-
-
-    //         })
-
-    //         speakers.push(aux);
-    //     }
-
-    //     meet.speakers = speakers
-    // }
-
-    // if(meet?.moderators && fields.includes("moderators")) {
-    //     let moderators = [];
+    if(meet?.moderators && fields.includes("moderators")) {
+        let moderators = [];
         
-    //     for (let i = 0; i < meet.moderators.length; i++) {
+        for (let i = 0; i < meet.moderators.length; i++) {
 
-    //         let moderator = meet.moderators[i]
-           
-    //         let aux = await new Promise( (resolve, reject) => {
+            let moderator = await meet.moderators[i].get()
 
-    //             moderator.get()
-    //             .then(async (doc) => {
+            moderators.push(normalizeUser(moderator, ["picture"]))
 
-    //                 resolve(await normalizeUser(doc, ["picture"]))
+        }
 
-    //             })
+        promises.push(getArray(meet, moderators, "moderators"))
+    }
 
-
-    //         })
-
-    //         moderators.push(aux);
-    //     }
-
-    //     meet.moderators = moderators
-    // }
-
+    await Promise.all(promises)
     console.log("NORMALIZED MEETING: " + fields, meet);
 
-    Promise.all(promises)
 
     return meet;
 }
@@ -261,7 +237,7 @@ const getArray = async (obj, promises, propertyName) => {
 
 }
 
-const getEntity = async (ref ) => {
+const getEntity = async (ref) => {
 
     let retrieved = await ref.get()
     return {id:retrieved.id, ...retrieved.data()}
