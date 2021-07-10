@@ -105,6 +105,9 @@ export const normalizeSubscription = async (doc, fields) => {
 export const normalizeMeeting = async (doc, fields) => {
     let meet = (typeof doc.data === 'function') ? {id: doc.id, ...doc.data()} : doc;
     console.log(doc.data(), "meetingData")
+
+    let promises = []
+
     if (meet?.agenda) {
         meet.agenda = JSON.parse(meet.agenda);
     }
@@ -124,78 +127,98 @@ export const normalizeMeeting = async (doc, fields) => {
     if(meet?.author && fields.includes("author")) {
        
         const author = await meet.author.get();
-        meet.author = await normalizeUser(author, ["picture"])
+        promises.push(normalizeUser(author, ["picture"], meet, "author"))
 
     }
 
-    if(meet?.speakers && fields.includes("speakers")) {
-        let speakers = [];
+    // if(meet?.speakers && fields.includes("speakers")) {
+    //     let speakers = [];
         
-        for (let i = 0; i < meet.speakers.length; i++) {
+    //     for (let i = 0; i < meet.speakers.length; i++) {
 
-            let speaker = meet.speakers[i]
+    //         let speaker = meet.speakers[i]
            
-            let aux = await new Promise( (resolve, reject) => {
+    //         let aux = await new Promise( (resolve, reject) => {
 
-                speaker.get()
-                .then(async (doc) => {
-
-                    resolve(await normalizeUser(doc, ["picture"]))
-
-                })
+    //             speaker.get()
+    //             .then(async (doc) => {
 
 
-            })
 
-            speakers.push(aux);
-        }
+    //                 resolve(await normalizeUser(doc, ["picture"]))
 
-        meet.speakers = speakers
-    }
+    //             })
 
-    if(meet?.moderators && fields.includes("moderators")) {
-        let moderators = [];
+
+    //         })
+
+    //         speakers.push(aux);
+    //     }
+
+    //     meet.speakers = speakers
+    // }
+
+    // if(meet?.moderators && fields.includes("moderators")) {
+    //     let moderators = [];
         
-        for (let i = 0; i < meet.moderators.length; i++) {
+    //     for (let i = 0; i < meet.moderators.length; i++) {
 
-            let moderator = meet.moderators[i]
+    //         let moderator = meet.moderators[i]
            
-            let aux = await new Promise( (resolve, reject) => {
+    //         let aux = await new Promise( (resolve, reject) => {
 
-                moderator.get()
-                .then(async (doc) => {
+    //             moderator.get()
+    //             .then(async (doc) => {
 
-                    resolve(await normalizeUser(doc, ["picture"]))
+    //                 resolve(await normalizeUser(doc, ["picture"]))
 
-                })
+    //             })
 
 
-            })
+    //         })
 
-            moderators.push(aux);
-        }
+    //         moderators.push(aux);
+    //     }
 
-        meet.moderators = moderators
-    }
+    //     meet.moderators = moderators
+    // }
 
     console.log("NORMALIZED MEETING: " + fields, meet);
+
+    Promise.all(promises)
 
     return meet;
 }
 
-export const normalizeUser = async (doc, fields) => {
+export const normalizeUser = async (doc, fields, data, propertyName) => {
+   
     let obj = {id: doc.id, ...doc.data()}; // TODO: just get picture, roles, displayName (maybe bio)
+
+    let promises = []
+
+
     if (obj?.picture && fields.includes("picture")) {
         let path = window.fbStorage.ref(obj.picture);
-        const url = await path.getDownloadURL();
-        obj.picture = url;
+        promises.push(getResourceURL(path, obj, "picture"))
     }
     if (obj?.coverPhoto && fields.includes("coverPhoto")) { // TODO: only request if on user's profile page
         let path = window.fbStorage.ref(obj.coverPhoto);
-        const url = await path.getDownloadURL();
-        obj.coverPhoto = url;
+        promises.push(getResourceURL(path, obj, "coverPhoto"))
     }
-    return obj;
+
+    await Promise.all(promises)
+
+
+    if(data && propertyName) {
+
+        data[propertyName] = obj
+
+    }
+
+    return obj
+
+
+
 }
 
 export const normalizeResource = async (doc, fields) => {
@@ -226,37 +249,59 @@ export const normalizeResource = async (doc, fields) => {
     return obj;
 }
 
+const getResourceURL = async (path, data, propertyName) => {
+
+    const url = await path.getDownloadURL()
+    data[propertyName] = url
+}
+
+const getArray = async (obj, promises, propertyName) => {
+
+    obj[propertyName] = await Promise.all(promises)
+
+}
+
+const getEntity = async (ref ) => {
+
+    let retrieved = await ref.get()
+    return {id:retrieved.id, ...retrieved.data()}
+
+}
+
 export const normalizeRally = async (doc, fields) => {
     let obj = {id: doc.id, ...doc.data()};
 
+    let promises = []
+
     if (obj?.author && fields.includes("author")) {
         const author = await obj.author.get();
-        obj.author = await normalizeUser(author, ["picture"])
+        promises.push(normalizeUser(author, ["picture"], obj, "author"))
     }
 
     if (obj?.picture && fields.includes("picture")) {
         let path = window.fbStorage.ref(obj.picture);
-        const url = await path.getDownloadURL();
-        obj.picture = url;
+        promises.push(getResourceURL(path, obj, "picture"))
     }
 
     if (obj?.promo_video && fields.includes("promo_video")) {
         let path = window.fbStorage.ref(obj.promo_video);
-        const url = await path.getDownloadURL();
-        obj.promo_video = url;
+        promises.push(getResourceURL(path, obj, "promo_video"))
     }
 
     if (fields.includes("meetings")) {
         let meetingDocs = await doc.ref.collection("meetings").get();
         if (meetingDocs?.docs && meetingDocs?.docs.length > 0) {
-            obj.meetings = [];
+            let meetings = [];
             for (let i = 0; i < meetingDocs.docs.length; i++) {
                 if (i === 0) {
-                    obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], ['author', 'speakers', 'moderators', 'city', 'meeting_type']));
+                    meetings.push(normalizeMeeting(meetingDocs.docs[i], ['author', 'speakers', 'moderators', 'city', 'meeting_type']));
                 } else {
-                    obj.meetings.push(await normalizeMeeting(meetingDocs.docs[i], ['author', 'city', 'meeting_type']));
+                    meetings.push(normalizeMeeting(meetingDocs.docs[i], ['author', 'city', 'meeting_type']));
                 }
             }
+
+            promises.push(getArray(obj, meetings, "meetings"))
+
         }
     }
 
@@ -268,37 +313,34 @@ export const normalizeRally = async (doc, fields) => {
        let topics = [];
             for (let i = 0; i <obj.topics.length; i++) {
 
-                let topic = await obj.topics[i].get()
-
-                topics.push({id:topic.id, ...topic.data()});
+                topics.push(getEntity(obj.topics[i]));
         }
 
-        obj.topics = topics
+        promises.push(getArray(obj, topics, "topics"))
     }
 
     if (obj?.stakeholders && fields.includes("stakeholders")) {
         let stakeholders = [];
             for (let i = 0; i <obj.stakeholders.length; i++) {
 
-                let stakeholder = await obj.stakeholders[i].get()
+                stakeholders.push(getEntity(obj.stakeholders[i]));
+            }
 
-                stakeholders.push({id:stakeholder.id, ...stakeholder.data()});
-        }
-
-        obj.stakeholders = stakeholders
+        promises.push(getArray(obj, stakeholders, "stakeholders"))
     }
 
     if (obj?.wise_demo && fields.includes("wise_demo")) {
         let wise_demo = [];
             for (let i = 0; i <obj.wise_demo.length; i++) {
 
-                let wise = await obj.wise_demo[i].get()
-
-                wise_demo.push({id:wise.id, ...wise.data()});
+                wise_demo.push(getEntity(obj.wise_demo[i]));
         }
 
-        obj.wise_demo = wise_demo
+        promises.push(getArray(obj, wise_demo, "wise_demo"))
     }
+
+
+    await Promise.all(promises)
 
     console.log("NORMALIZED RALLY BY " + fields, obj)
     return obj;
