@@ -1,10 +1,9 @@
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {rallyStyles} from "../Util/ThemeUtils";
-import {Card, CardActions, CardContent,} from "@material-ui/core";
+import {Card, CardContent} from "@material-ui/core";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Skeleton from "@material-ui/lab/Skeleton";
-import Button from "@material-ui/core/Button";
 
 class RallySkeleton extends React.Component {
 
@@ -12,7 +11,7 @@ class RallySkeleton extends React.Component {
         const {classes} = this.props;
 
         return (
-            <Card className={classes.cardSkeleton}>
+            <Card className={classes.card}>
                 <CardActionArea>
                     <Skeleton variant="rect" width="100%" height={200}/>
                     <CardContent>
@@ -22,14 +21,6 @@ class RallySkeleton extends React.Component {
                         <Skeleton/>
                     </CardContent>
                 </CardActionArea>
-                <CardActions style={{justifyContent: "space-between"}}>
-                    <Button size="small" color="primary">
-                        View
-                    </Button>
-                    <Button size="small" color="primary">
-                        Join
-                    </Button>
-                </CardActions>
             </Card>)
     }
 }
