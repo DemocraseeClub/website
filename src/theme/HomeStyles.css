@@ -128,3 +128,52 @@
     text-align: center;
     padding-bottom: 60px;
 }
+    .homestyles p{
+        padding-left:0px !important;
+        padding-right:0px !important;
+    }
+@media only screen and (max-width: 768px){
+   .homestyles .MuiPaper-elevation1{
+    width:100%;
+   }
+   .homestyles .MuiGrid-container .MuiGrid-item{
+        padding:0px 20px !important;
+    text-align: center;
+    }
+ .homestyles h1,  .homestyles h3{
+    text-align: center;
+
+    }
+     .homestyles  h1{
+    font-size: 26px !important;
+}
+ .homestyles h3{
+    font-size: 17px !important;
+    padding:0px 20px 20px;
+
+    }
+    .homestyles > .MuiGrid-root{
+        background-position: center bottom !important;
+    height: 400px !important;
+    }
+    .homepageinfo h2{
+            font-size: 26px;
+    }
+    .homepageinfo img{
+        width: 130px;
+    max-width: 100%;
+    }
+     .homepageinfo h3{
+        padding:0px;
+        text-align:left;
+     }
+      .homestyles  .homepageinfo .MuiGrid-item{
+        padding:0px !important;
+
+     }
+     .homestyles  .homepageinfo  p{
+        font-size:15px !important;
+     }
+}
+
+

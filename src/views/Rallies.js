@@ -58,16 +58,8 @@ class Rallies extends React.Component {
         };
         return (
             <React.Fragment>
-                <Grid
-                    container
-                    className={classes.sectionSecondary}
-                    align={"center"}
-                    justify={"space-between"}
-                >
-                    <Grid item>
-                        <Typography variant={"h3"}>Rally about a cause</Typography>
-                    </Grid>
-                    <Grid item>
+                 <Grid container className="ralliesheader">
+                  <Grid item sm={12}>
                         <NavLink
                             to={"/templates"}
                             style={{textDecoration: "none", marginRight: 5}}
@@ -76,7 +68,6 @@ class Rallies extends React.Component {
                                 Meeting Templates
                             </Button>
                         </NavLink>
-
                         <Button
                             variant={"contained"}
                             className={classes.redBtn}
@@ -84,7 +75,7 @@ class Rallies extends React.Component {
                         >
                             Start a Rally
                         </Button>
-                    </Grid>
+                 </Grid>
                 </Grid>
 
                 <Masonry
