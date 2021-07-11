@@ -65,14 +65,21 @@ class MeetingHome extends Component {
         if (!this.props.entity.meeting) return 'no meeting';
 
         return (
-            <Paper elevation={0}>
+            <Paper className="meetingformat" elevation={0}>
+             <Grid container>
+             <Grid Item sm={12}>
+           
                     <RallyBlock rally={this.props.entity.rally} meeting={this.props.entity.meeting} />
+                    </Grid>
 
+                    <Grid Item sm={12} md={12}>
                     <PlanList classes={this.props.classes}
                               dispatch={this.props.dispatch}
                               editMode={this.state.editMode}
                               rally={this.props.entity.rally}
                               meeting={this.props.entity.meeting} />
+                              </Grid>
+                </Grid>
 
                 <Grid container justify={'space-between'} style={{padding:20}}>
                     <Button startIcon={<Create/>} variant={'contained'}
@@ -83,6 +90,7 @@ class MeetingHome extends Component {
                         this.props.enqueueSnackbar('For now, e-mail eli the JSON printed to your console in Developer Tools');
                     }} startIcon={<ExportIcon />} variant={'contained'} disableElevation={true} >Export Meeting</Button>
                 </Grid>
+
 
             </Paper>
         );

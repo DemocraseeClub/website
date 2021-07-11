@@ -102,12 +102,17 @@ class PlanList extends React.Component {
 
         return (
             <div className={classes.root} style={{marginTop: 20, textAlign: 'left'}}>
+            <Grid container>
+            <Grid Item className="videoArea" sm={12} md={6}>
 
                 <AppBar position={'sticky'} className={classes.appBar} >
                     <Room classes={classes} />
                 </AppBar>
+                </Grid>
 
-                <AppBar position="fixed" color="primary" style={{top: 'auto', bottom: 0}} >
+            <Grid Item sm={12} md={6}>
+
+                <AppBar className="agendatoolbar" position="relative" color="primary" >
                     <Toolbar>
                         <Grid container justify={'space-between'} alignItems={'center'}>
 
@@ -202,6 +207,8 @@ class PlanList extends React.Component {
 
 
                 </div>
+                </Grid>
+                </Grid>
 
 
             </div>

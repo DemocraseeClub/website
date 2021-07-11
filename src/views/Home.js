@@ -50,19 +50,19 @@ class Home extends React.Component {
                 <Card style={{padding:5, background: 'none', boxShadow: 'none'}}>
 
                 <Grid container justify={'space-around'} alignContent={'center'} alignItems={'center'} className="homepageboxes">
-                    <Grid item xs={4}>
+                    <Grid item sm={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/researchicon.png' alt='research' width={45} />
                         <Typography variant={'h2'} className={classes.errorColor} >Research & Report</Typography>
                         <Typography variant={'body1'} className={classes.paragraph}>Select your values, define what they mean to you, and post the research that guides your position.</Typography>
                         <NavLink className={classes.errorColor} to={'/values'}>Select your values</NavLink>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item sm={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/connecticon.png' alt='organize' width={45} />
                         <Typography variant={'h2'} className={classes.infoColor} >Rally & Refine</Typography>
                         <Typography variant={'body1'} className={classes.paragraph}>Rally your friends and foes for the change you want to see. Use our Meeting tools to guide conversations towards a productive purpose.</Typography>
                         <NavLink className={classes.infoColor}  to={'/rallies'}>Rally for a Cause</NavLink>
                    </Grid>
-                    <Grid item xs={4}>
+                    <Grid item sm={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/votingicon.png' alt='act' width={45} />
                         <Typography variant={'h2'} className={classes.primaryColor} >Engage &amp; Exchange</Typography>
                         <Typography variant={'body1'} className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryColor,'inline'} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</Typography>
@@ -88,9 +88,9 @@ class Home extends React.Component {
                 <Grid item xs={12}>
                      <h2>Cultivating a platform that is rooted in ethics and a moral compass</h2>
                  </Grid>
-                  <Grid item xs={6}>
+                  <Grid item sm={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={5}>
+                              <Grid item xs={4}>
                                   <img src="/images/democrasee_logo.png" alt={'missionlogo'} />
                               </Grid>
                               <Grid item xs={6}>
@@ -100,9 +100,9 @@ class Home extends React.Component {
                             </Grid>
                     </Grid>
 
-                     <Grid item xs={6}>
+                     <Grid item sm={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={5}>
+                              <Grid item xs={4}>
                                   <img src="/images/trusticon.png" alt={'trustlogo'} />
                               </Grid>
                               <Grid item xs={6}>
@@ -112,9 +112,9 @@ class Home extends React.Component {
                             </Grid>
                      </Grid>
 
-                     <Grid item xs={6}>
+                     <Grid item sm={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={5}>
+                              <Grid item xs={4}>
                                   <img src="/images/worldicon.png" alt={'trustlogo'} />
                               </Grid>
                               <Grid item xs={6}>
@@ -124,9 +124,9 @@ class Home extends React.Component {
                             </Grid>
                       </Grid>
 
-                     <Grid item xs={6}>
+                     <Grid item sm={6}>
                            <Grid container alignContent={'left'} alignItems={'left'}>
-                              <Grid item xs={5}>
+                              <Grid item xs={4}>
                                   <img src="/images/healthheart.png" alt={'heartlogo'} />
                               </Grid>
                               <Grid item xs={6}>
