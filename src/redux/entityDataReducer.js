@@ -125,7 +125,7 @@ export const normalizeMeeting = async (doc, fields) => {
     }
 
     if(meet?.author && fields.includes("author")) {
-       
+
         const author = await meet.author.get();
         promises.push(normalizeUser(author, ["picture"], meet, "author"))
 
@@ -133,7 +133,7 @@ export const normalizeMeeting = async (doc, fields) => {
 
     if(meet?.speakers && fields.includes("speakers")) {
         let speakers = [];
-        
+
         for (let i = 0; i < meet.speakers.length; i++) {
 
             let speaker = await meet.speakers[i].get()
@@ -147,7 +147,7 @@ export const normalizeMeeting = async (doc, fields) => {
 
     if(meet?.moderators && fields.includes("moderators")) {
         let moderators = [];
-        
+
         for (let i = 0; i < meet.moderators.length; i++) {
 
             let moderator = await meet.moderators[i].get()
@@ -167,7 +167,7 @@ export const normalizeMeeting = async (doc, fields) => {
 }
 
 export const normalizeUser = async (doc, fields, data, propertyName) => {
-   
+
     let obj = {id: doc.id, ...doc.data()}; // TODO: just get picture, roles, displayName (maybe bio)
 
     let promises = []
@@ -244,8 +244,8 @@ const getEntity = async (ref) => {
 
 }
 
-export const normalizeRally = async (doc, fields) => {
-    let obj = {id: doc.id, ...doc.data()};
+export const normalizeRally = async (doc, fields, obj) => {
+    obj = (!obj) ? {id: doc.id, ...doc.data()} : obj;
 
     let promises = []
 
