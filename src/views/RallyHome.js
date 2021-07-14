@@ -42,6 +42,9 @@ class RallyHome extends Component {
             rally: false,
             error: null
         };
+    }
+
+    componentDidMount() {
         this.refresh();
     }
 
