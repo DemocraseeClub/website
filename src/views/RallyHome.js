@@ -42,9 +42,6 @@ class RallyHome extends Component {
             rally: false,
             error: null
         };
-    }
-
-    componentDidMount() {
         this.refresh();
     }
 
@@ -58,7 +55,10 @@ class RallyHome extends Component {
         const roomRef = window.fireDB.collection("rallies").doc(this.props.match.params.rid)
         let doc = await roomRef.get();
         if (doc.exists) {
-            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "meetings", "topics", "stakeholders", "wise_demo"]);
+            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "topics", "stakeholders", "wise_demo"]);
+            this.setState({rally, loading: false, error: false})
+
+            rally = await normalizeRally(doc, ["meetings"], rally);
             let meeting = false;
             if (rally.meetings && rally.meetings.length > 0) {
                 meeting = rally.meetings[0];
@@ -88,8 +88,7 @@ class RallyHome extends Component {
                 profiles.push({displayName: 'Apply to Speak', icon: '+'})
             }
 
-
-            this.setState({rally, meeting, loading: false, error: false, profiles})
+            this.setState({meeting, loading: false, error: false, profiles})
         } else {
             this.setState({rally: false, loading: false, error: 'invalid id'})
         }
@@ -98,12 +97,9 @@ class RallyHome extends Component {
     render() {
 
         if (this.state.loading === true) return <ProgressLoading/>;
-        if (this.state.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography
-            variant='h2'>{this.state.error}</Typography></div>;
+        if (this.state.error) return <div style={{width: '100%', textAlign: 'center', margin: '20px auto'}}><Typography variant='h2'>{this.state.error}</Typography></div>;
         const {rally} = this.state;
         const {classes, meeting} = this.props;
-
-        console.log(meeting)
 
         let tags = ['wise_demo', 'topics', 'stakeholders'].reduce((acc, val) => {
             if (rally[val]) {
