@@ -20,7 +20,8 @@ function getTURNCredentials(name, secret){
 
 const Config = {
     api: {
-        base: process.env.REACT_APP_API_URL, // set in .env
+        cdn: process.env.REACT_APP_JSONAPI_CDN, // set in .env
+        base: process.env.REACT_APP_JSONAPI_URL, // set in .env
         client: process.env.NODE_ENV === 'production' ? 'https://democraseeclub.web.app' : '//localhost:3000'
     },
     allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt',

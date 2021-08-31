@@ -2,7 +2,6 @@ import React from "react";
 import { rallyStyles } from "../Util/ThemeUtils";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
-import { withCmsHooks } from "./firebaseCMS/FirebaseCMS";
 import { withSnackbar } from "notistack";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -239,5 +238,5 @@ class CitizenEdit extends React.Component {
 }
 
 export default withStyles(rallyStyles, { withTheme: true })(
-  withSnackbar(withCmsHooks(withRouter(CitizenEdit)))
+  withSnackbar(withRouter(CitizenEdit))
 );

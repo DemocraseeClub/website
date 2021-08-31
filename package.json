@@ -3,7 +3,6 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@camberi/firecms": "^0.41.1",
     "@date-io/moment": "^2.10.11",
     "@draft-js-plugins/alignment": "^4.0.0",
     "@draft-js-plugins/anchor": "^4.0.0",
@@ -36,7 +35,7 @@
     "disqus-react": "^1.1.1",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
-    "firebase": "8.6.2",
+    "http-proxy-middleware": "^2.0.1",
     "material-ui-dropzone": "^3.5.0",
     "moment": "^2.29.1",
     "notistack": "^0.8.8",
@@ -60,7 +59,7 @@
     "video-stream-merger": "^3.6.3"
   },
   "scripts": {
-    "start": "set HTTPS=true && react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build": "node build.js"

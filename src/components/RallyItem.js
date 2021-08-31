@@ -25,25 +25,25 @@ class RallyItem extends React.Component {
         return (
             <Card className={classes.card}>
                 <CardContent>
-                    <NavLink to={`/rally/${item.id}`}>
+                    <NavLink to={`/rally/${item.get('id')}`}>
                         <img
                             className={classes.cardMedia}
-                            alt={item.title}
-                            src={item.picture}
+                            alt={item.get('title')}
+                            src={item.getMediaSource( 0)}
                         />
                     </NavLink>
                     <CardContent>
-                        <NavLink to={`/rally/${item.id}`}> <Typography gutterBottom variant="h4" component="h2">
-                            {item.title}
+                        <NavLink to={`/rally/${item.json.id}`}> <Typography gutterBottom variant="h4" component="h2">
+                            {item.get('title')}
                         </Typography> </NavLink>
                         <Typography variant="body2" component="div">
                             <SanitizedHTML
                                 allowedTags={Config.allowedTags}
                                 allowedAttributes={Config.allowedAttributes}
-                                html={item.description}
+                                html={item.get('body', 'summary') ? item.get('body', 'summary') : item.get('body', 'value')}
                             />
                         </Typography>
-                        <NavLink to={`/rally/${item.id}`}>Read More</NavLink>
+                        <NavLink to={`/rally/${item.json.id}`}>Read More</NavLink>
                     </CardContent>
                 </CardContent>
             </Card>)

@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import API from "../Util/API";
 
 const ITEM_DATA_SUCCESS = 'entity:ITEM_DATA_SUCCESS';
 const ITEM_DATA_FAILURE = 'entity:ITEM_DATA_FAILURE';
@@ -330,6 +330,12 @@ export const fbRally = (id) => {
         if (state.entity.loading === true) return false;
         dispatch(entityDataStarted(id));
 
+        API.Get('/rallies').then(res => {
+            console.info(res.data);
+        }).catch(e => {
+            console.warn(e);
+        })
+        /*
         const roomRef = firebase.firestore().collection("rallies").doc(id)
         let doc = await roomRef.get();
         if (doc.exists) {
@@ -338,6 +344,7 @@ export const fbRally = (id) => {
         } else {
             dispatch(entityDataFailure('invalid rally id'));
         }
+         */
     };
 };
 

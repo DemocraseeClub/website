@@ -7,11 +7,12 @@ import Button from "@material-ui/core/Button";
 import {withSnackbar} from "notistack";
 import {rallyStyles} from "../Util/ThemeUtils";
 import {withRouter} from "react-router";
-import {withCmsHooks} from "./firebaseCMS/FirebaseCMS";
 import {normalizeRally} from "../redux/entityDataReducer";
 import Masonry from "react-masonry-css";
 import RallyItem from "../components/RallyItem";
 import RallySkeleton from "../components/RallySkeleton";
+import API from "../Util/API";
+import MyJsonApi from "../Util/MyJsonApi";
 
 class Rallies extends React.Component {
     constructor(p) {
@@ -24,17 +25,14 @@ class Rallies extends React.Component {
     }
 
     async handleChange() {
-        try {
-            let snapshots = await window.fireDB.collection("rallies").limit(25).get();
-            const rallies = await Promise.all(
-                snapshots.docs.map((doc, i) => normalizeRally(doc, ["picture", "research"]))
-            );
+        API.Get('/node/rallies?fields[file--file]=uri,url&include=field_topics.field_image,field_media.field_media_video_file,field_media.field_media_image').then(res => {
+            let rallies = res.data.data.map(o => new MyJsonApi(o, res.data.included));
             this.setState({loading: false, rallies: rallies, error: false});
-        } catch (error) {
-            this.setState({loading: false, error: error.message});
-        }
+        }).catch(e => {
+            console.error(e);
+            this.setState({loading: false, error: e.message});
+        })
     }
-
 
     showRallyForm() {
         if (this.props.authController && this.props.authController.loggedUser) {
@@ -97,5 +95,5 @@ class Rallies extends React.Component {
 }
 
 export default withStyles(rallyStyles, {withTheme: true})(
-    withSnackbar(withCmsHooks(withRouter(Rallies)))
+    withSnackbar(withRouter(Rallies))
 );

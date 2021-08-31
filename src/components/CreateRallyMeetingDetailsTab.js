@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {withSnackbar} from "notistack";
 import Typography from "@material-ui/core/Typography";
-import "date-fns";
-import DateFnsUtils from "@date-io/date-fns";
+import moment from "moment";
+import MomentUtils from "@date-io/moment";
 import {KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider,} from "@material-ui/pickers";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -40,7 +40,7 @@ class CreateRallyMeetingDetailsTab extends Component {
       },
     ];
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={'en'}>
         <Box className={classes.container}>
           <Typography variant={"h5"} className={classes.title}>
             {" "}

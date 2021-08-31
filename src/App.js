@@ -15,7 +15,6 @@ import {
 } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import FirebaseCMS from "./views/firebaseCMS/FirebaseCMS";
 import Topics from "./views/Topics";
 import Resources from "./views/Resources";
 import RallyHome from "./views/RallyHome";
@@ -32,7 +31,6 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 
-import { CMSMainView } from "@camberi/firecms";
 import {UserContextProvider} from "./contexts/userContext"
 import MeetingTemplate from "./views/MeetingTemplate";
 
@@ -88,7 +86,6 @@ function App(props) {
   return (
     <ThemeProvider theme={appTheme}>
       <UserContextProvider>
-        <FirebaseCMS dispatch={props.dispatch} {...cmsParams}>
           <SnackbarProvider
             maxSnack={3}
             ref={notistackRef}
@@ -137,23 +134,8 @@ function App(props) {
                 <Header />
 
                 <Switch>
-                  <Route path="/cms">
-                    <CMSMainView {...cmsParams} />
-                  </Route>
-                  <Route path="/signup">
-                    <CMSMainView {...cmsParams} />
-                  </Route>
-                  <Route path="/signin">
-                    <CMSMainView {...cmsParams} />
-                  </Route>
-                  <Route path="/c/:entity">
-                    <CMSMainView {...cmsParams} />
-                  </Route>
                   <Route path="/rallies">
                     <Rallies />
-                    <div style={{ display: "none" }}>
-                      <CMSMainView {...cmsParams} />
-                    </div>
                   </Route>
                   <Route path="/values">
                     <Topics />
@@ -198,7 +180,6 @@ function App(props) {
               </Router>
             </div>
           </SnackbarProvider>
-        </FirebaseCMS>
       </UserContextProvider>
     </ThemeProvider>
   );

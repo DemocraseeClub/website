@@ -8,16 +8,23 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
-import firebase from 'firebase';
 import {normalizeSubscription} from "../redux/entityDataReducer"
+import API from "../Util/API";
 
 
 function SimpleDialog(props) {
- 
+
   const { onClose, open, subscriptions, setSubscriptions } = props;
 
   const handleDeny = (subId, i) => {
 
+      API.Get('subscription').then(res => {
+          console.info(res.data);
+      }).catch(e => {
+        console.warn(e);
+      })
+
+      /*
     window.fireDB.collection("subscriptions").doc(subId)
     .update({status: "denied"})
     .then(() => {
@@ -30,11 +37,13 @@ function SimpleDialog(props) {
 
     })
 
+       */
+
   }
 
   const handleApprove = (subId, i) => {
 
-    
+
 
     window.fireDB.collection("subscriptions").doc(subId)
     .update({status: "approved"})
@@ -45,6 +54,7 @@ function SimpleDialog(props) {
         let meeting = subscriptions[i].meeting
         let subscriber = subscriptions[i].subscriber
 
+        /*
         let subscriberRef = window.fireDB.collection("users").doc(subscriber.id)
 
         window.fireDB
@@ -56,12 +66,13 @@ function SimpleDialog(props) {
         .then(() => {
 
             let auxSubs = [...subscriptions]
-    
-            auxSubs.splice(i, 1)
-    
-            setSubscriptions(auxSubs)
 
+            auxSubs.splice(i, 1)
+
+            setSubscriptions(auxSubs)
         })
+
+         */
     })
 
   }
@@ -78,12 +89,12 @@ function SimpleDialog(props) {
 
                 return (
                 <ListItem key={sub.id}>
-                    <div style={{display:"flex", flexDirection:"column", alignItems:"center", border:"2px solid black", borderRadius:"10px", padding:"10px"}}> 
+                    <div style={{display:"flex", flexDirection:"column", alignItems:"center", border:"2px solid black", borderRadius:"10px", padding:"10px"}}>
                         <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
 
                             <ListItemAvatar>
                             {
-                            subscriber.picture 
+                            subscriber.picture
                             ? <Avatar alt={subscriber.displayName} src={subscriber.picture} />
                             :
                             <Avatar alt={subscriber.displayName} >{subscriber.icon || <PersonIcon />}</Avatar>
@@ -91,7 +102,7 @@ function SimpleDialog(props) {
                             </ListItemAvatar>
                         <ListItemText primary={subscriber.displayName} />
                         </div>
-                        
+
                         <div style={{display:"flex", justifyContent:"center", marginTop:"5px"}}>
                             <Button variant={'contained'} color={'primary'} onClick={() => handleApprove(sub.id, i) }>Approve</Button>
                             <Button variant={'contained'} color={'primary'} onClick={() => handleDeny(sub.id, i) }>Deny</Button>
@@ -123,12 +134,12 @@ export default function DialogSubscription({rallyId}) {
     .where("rally", "==", rallyRef)
     .where("status", "==", "pending")
     .get()
-    
+
     let promiseSubscriptions = [];
       auxSubscriptions.forEach((doc) =>
          promiseSubscriptions.push(normalizeSubscription(doc, ["subscriber"]))
       );
-    
+
       let subs = await Promise.all(promiseSubscriptions);
 
       return subs
@@ -137,13 +148,13 @@ export default function DialogSubscription({rallyId}) {
 
 
   useEffect(()=> {
-    
+
 
     getSubscriptions(rallyId).then(setSubscriptions)
 
 
   }, [rallyId])
- 
+
 
   const handleClickOpen = () => {
     setOpen(true);
