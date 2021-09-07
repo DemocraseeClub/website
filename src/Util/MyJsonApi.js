@@ -42,6 +42,25 @@ class MyJsonApi {
         return this.json[field].length;
     }
 
+    getMediaSourceByType(type) {
+        if (!this.json.relationships.field_media || !this.json.relationships.field_media.data.length) return null;
+        let mediaRel = this.json.relationships.field_media.data.find(m => m.type === type);
+        if (!mediaRel) return null;
+
+        let media = this.included.find(o => o.id === mediaRel.id);
+
+        let props = ['field_media_image', 'field_media_document', 'field_media_video_file', 'field_media_audio_file', 'field_media_oembed_video', 'thumbnail'];
+
+        let file = false;
+        for (let r in media.relationships) {
+            if (props.indexOf(r) > -1) {
+                file = this.included.find(o => o.id === media.relationships[r].data.id)
+            }
+        }
+        if (!file) return null;
+        return Config.api.cdn + file.attributes.uri.url;
+    }
+
     getMediaSource(delta) {
         if (!this.json['relationships'].field_media) return null;
         if (!delta) delta = 0;
@@ -62,6 +81,11 @@ class MyJsonApi {
         return Config.api.cdn + file.attributes.uri.url;
     }
 
+    getAttr(field) {
+        if (typeof this.json['attributes'][field] === 'boolean') return this.json['attributes'][field] ? 'True' : 'False';
+        return this.json['attributes'][field];
+    }
+
     // field_media, included.id > relationships
     get(field, prop, delta) { // field_media, field_media_image.url
         if (this.json['attributes'][field] && this.json['attributes'][field][prop]) return this.json['attributes'][field][prop];
@@ -73,7 +97,6 @@ class MyJsonApi {
 
         if (rel[prop]) return rel[prop];
         if (!rel.id) return null
-
 
         let included = this.included.find(o => o.id === rel.id); // get included.media--image, media--remote_video, media--video
         if (!included) return included;

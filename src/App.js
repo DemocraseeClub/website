@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import "./theme/PolinaStyles.css";
 import Home from "./views/Home";
 import About from "./views/About";
 import Ethics from "./views/Ethics";
@@ -7,12 +8,7 @@ import Sponsors from "./views/Sponsors";
 import CitizenEdit from "./views/CitizenEdit";
 import Citizen from "./views/Citizen";
 import Rallies from "./views/Rallies";
-import {
-  BrowserRouter as Router,
-  NavLink,
-  Route,
-  Switch,
-} from "react-router-dom";
+import {BrowserRouter as Router, NavLink, Route, Switch,} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Topics from "./views/Topics";
@@ -22,14 +18,10 @@ import MeetingHome from "./views/MeetingHome";
 import RallyTemplates from "./views/RallyTemplates";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import { SnackbarProvider } from "notistack";
+import {SnackbarProvider} from "notistack";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useSelector } from "react-redux";
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-} from "@material-ui/core/styles";
+import {useSelector} from "react-redux";
+import {createMuiTheme, responsiveFontSizes, ThemeProvider,} from "@material-ui/core/styles";
 
 import {UserContextProvider} from "./contexts/userContext"
 import MeetingTemplate from "./views/MeetingTemplate";

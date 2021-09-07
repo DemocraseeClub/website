@@ -1,7 +1,6 @@
 import React, {createContext, useState} from "react"
 
 
-
 let initialData = {  user: null, setUser: (newData) => {}}
 
 const UserContext = createContext(initialData)

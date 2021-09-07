@@ -1,10 +1,10 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import { rallyStyles } from "../Util/ThemeUtils";
+import {rallyStyles} from "../Util/ThemeUtils";
 import userContext from '../contexts/userContext';
 
 class Header extends React.Component {

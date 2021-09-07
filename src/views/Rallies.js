@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import {withSnackbar} from "notistack";
 import {rallyStyles} from "../Util/ThemeUtils";
 import {withRouter} from "react-router";
-import {normalizeRally} from "../redux/entityDataReducer";
 import Masonry from "react-masonry-css";
 import RallyItem from "../components/RallyItem";
 import RallySkeleton from "../components/RallySkeleton";
