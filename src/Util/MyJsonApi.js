@@ -75,10 +75,11 @@ class MyJsonApi {
         if (!rel.id) return null
 
 
-        let included = this.included.find(o => o.id === rel.id); // get included.media--image
+        let included = this.included.find(o => o.id === rel.id); // get included.media--image, media--remote_video, media--video
         if (!included) return included;
         if (included && included['attributes'][prop]) return included['attributes'][prop];
 
+        // this part doesn't work yet
         included = this.included.find(o => o.id === included.relationships.id); // included.media--image.relationships[type= file--file
         if (!included) return included;
         if (included && included['attributes'][prop]) return included['attributes'][prop];

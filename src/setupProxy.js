@@ -8,7 +8,7 @@ const onError = function (err, req, res) {
 module.exports = function (app) {
     app.use(
         createProxyMiddleware("/v2", {
-            target: "https://localcms.democrasee.club",
+            target: process.env.REACT_APP_JSONAPI_CDN,
             changeOrigin:true,
             onError,
             secure: false
