@@ -5,7 +5,7 @@ class API {
 
     constructor() {
       this.requester = axios.create({
-          baseURL: '/v2',
+          baseURL: process.env.NODE_ENV === 'production' ? process.env.REACT_APP_JSONAPI_URL : '/v2',
           timeout: process.env.NODE_ENV === 'production' ? 30000 : 0,
           params: {
 //              '_format': 'json',

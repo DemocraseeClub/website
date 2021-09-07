@@ -28,4 +28,27 @@
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCubTr3IB_wPVF4UcC8JrUwZM4OrzAEFDI",
+        authDomain: "democrasee-app.firebaseapp.com",
+        projectId: "democrasee-app",
+        storageBucket: "democrasee-app.appspot.com",
+        messagingSenderId: "672838883663",
+        appId: "1:672838883663:web:b81db6c262ee8626c00d3a",
+        measurementId: "G-EVMDT9EJ22"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
 </body>
