@@ -58,7 +58,7 @@ class RallyBlock extends Component {
                         Rally</Button>
                     {
                         this.context.user && this.context.user.uid === rally.get('uid', 'id') &&
-                        <DialogSubscription rallyId={rally.get('id')}/>
+                        <DialogSubscription rallyId={rally.getAttr('id')}/>
                     }
                 </Grid>
             </Grid>

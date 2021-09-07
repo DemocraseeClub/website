@@ -82,6 +82,7 @@ class MyJsonApi {
     }
 
     getAttr(field) {
+        if (this.json[field]) return this.json[field];
         if (typeof this.json['attributes'][field] === 'boolean') return this.json['attributes'][field] ? 'True' : 'False';
         return this.json['attributes'][field];
     }

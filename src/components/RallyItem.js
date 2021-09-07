@@ -1,12 +1,12 @@
 import React from "react";
-import {withStyles} from "@material-ui/core/styles";
-import {rallyStyles} from "../Util/ThemeUtils";
-import {withSnackbar} from "notistack";
 import {Card, CardContent} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Config from "../Config";
 import SanitizedHTML from "react-sanitized-html";
+import {withSnackbar} from "notistack";
+import {withStyles} from "@material-ui/core/styles";
+import {rallyStyles} from "../Util/ThemeUtils";
 
 class RallyItem extends React.Component {
 
@@ -16,29 +16,34 @@ class RallyItem extends React.Component {
         return (
             <Card className={classes.card}>
                 <CardContent>
-                    <NavLink to={`/rally/${item.get('id')}`}>
+                    <NavLink to={`/rally/${item.getAttr('id')}`}>
                         <img
                             className={classes.cardMedia}
-                            alt={item.get('title')}
-                            src={item.getMediaSource( 0)}
+                            alt={item.getAttr('title')}
+                            src={item.getMediaSource(0)}
                         />
                     </NavLink>
                     <CardContent>
-                        <NavLink to={`/rally/${item.get('id')}`}> <Typography gutterBottom variant="h4" component="h2">
-                            {item.get('title')}
+                        <NavLink to={`/rally/${item.getAttr('id')}`}> <Typography gutterBottom variant="h4" component="h2">
+                            {item.getAttr('title')}
                         </Typography> </NavLink>
-                        <Typography variant="body2" component="div">
-                            <SanitizedHTML
-                                allowedTags={Config.allowedTags}
-                                allowedAttributes={Config.allowedAttributes}
-                                html={item.get('body', 'summary') ? item.get('body', 'summary') : item.get('body', 'f')}
-                            />
-                        </Typography>
-                        <NavLink to={`/rally/${item.get('id')}`}>Read More</NavLink>
-                    </CardContent>
-                </CardContent>
-            </Card>)
-    }
-}
 
-export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(RallyItem));
+                        {item.get('body', 'summary') ?
+                            <Typography variant="body2" component="div"><p>{item.get('body', 'summary')}</p></Typography>
+                            :
+                            (item.get('body', 'processed') ?
+                                <Typography variant="body2" component="div"><SanitizedHTML
+                                    allowedTags={Config.allowedTags}
+                                    allowedAttributes={Config.allowedAttributes}
+                                    html={item.get('body', 'processed')}/></Typography>
+                                : '')
+                        }
+
+                    <NavLink to={`/rally/${item.getAttr('id')}`}>Read More</NavLink>
+                </CardContent>
+            </CardContent>
+    </Card>)
+    }
+    }
+
+    export default withStyles(rallyStyles, {withTheme: true})(withSnackbar(RallyItem));
