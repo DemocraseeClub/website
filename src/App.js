@@ -6,6 +6,7 @@ import About from "./views/About";
 import Ethics from "./views/Ethics";
 import Sponsors from "./views/Sponsors";
 import CitizenEdit from "./views/CitizenEdit";
+import SignIn from "./views/SignIn";
 import Citizen from "./views/Citizen";
 import Rallies from "./views/Rallies";
 import {BrowserRouter as Router, NavLink, Route, Switch,} from "react-router-dom";
@@ -126,6 +127,8 @@ function App(props) {
                 <Header />
 
                 <Switch>
+                  <Route exact path="/signin" component={SignIn} />
+                  <Route exact path="/signup" component={SignIn} />
                   <Route path="/rallies">
                     <Rallies />
                   </Route>

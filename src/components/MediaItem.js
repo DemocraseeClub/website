@@ -1,5 +1,7 @@
 import React from "react";
 import PdfIcon from "@material-ui/icons/PictureAsPdf";
+import ReactPlayer from 'react-player'
+
 
 class MediaItem extends React.Component {
 
@@ -8,14 +10,20 @@ class MediaItem extends React.Component {
     }
 
     render() {
-        const {type, url} = this.props;
-        if (type === 'media--image') {
-            return <img src={url}  style={{maxWidth: '100%', textAlign: 'center'}} alt={this.props.title || url.substr(url.lastIndexOf('/'))} />;
-        } else if (type === 'media--video') {
-            return <video src={url} controls preload={'metadata'} style={{width:'100%', maxHeight:'300'}} />;
-        } else if (type === 'media--remote_video') {
-            return <video src={url} controls preload={'metadata'} />; // TODO: implement ReactPlayer
-        } else if (type === 'media--document') {
+        const {media} = this.props;
+
+        let passAlong = {}
+        if (media.thumbnail) {
+            passAlong.fileConfig = { attributes: { poster: media.thumbnail } }
+        }
+
+        if (media.type === 'media--image') {
+            return <img src={media.url}  style={{maxWidth: '100%', textAlign: 'center'}} alt={media.name} />;
+        } else if (media.type === 'media--video') {
+            return <ReactPlayer url={media.url} controls preload={'metadata'} width={'100%'} {...passAlong} />
+        } else if (media.type === 'media--remote_video') {
+            return <ReactPlayer url={media.url} controls  width={'100%'} {...passAlong} />
+        } else if (media.type === 'media--document') {
             // icons per doc type
             return <PdfIcon />
         }

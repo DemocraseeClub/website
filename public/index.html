@@ -28,27 +28,28 @@
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js"></script>
+<script type="text/javascript">
+    if (document.location.port.length === 0) { // ignore dev environments
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyCubTr3IB_wPVF4UcC8JrUwZM4OrzAEFDI",
-        authDomain: "democrasee-app.firebaseapp.com",
-        projectId: "democrasee-app",
-        storageBucket: "democrasee-app.appspot.com",
-        messagingSenderId: "672838883663",
-        appId: "1:672838883663:web:b81db6c262ee8626c00d3a",
-        measurementId: "G-EVMDT9EJ22"
-    };
+        const app = firebase.initializeApp({
+            apiKey: "AIzaSyCubTr3IB_wPVF4UcC8JrUwZM4OrzAEFDI",
+            authDomain: "democrasee-app.firebaseapp.com",
+            projectId: "democrasee-app",
+            storageBucket: "democrasee-app.appspot.com",
+            messagingSenderId: "672838883663",
+            appId: "1:672838883663:web:b81db6c262ee8626c00d3a",
+            measurementId: "G-EVMDT9EJ22"
+        });
+        window.logUse = firebase.analytics(app);
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    } else {
+        window.logUse = {
+            logEvent: (e, d) => console.log('Fake LOG ' + e, d),
+            setUserProperties: o => console.log('Fake SET ', o)
+        };
+    }
+
 </script>
 </body>

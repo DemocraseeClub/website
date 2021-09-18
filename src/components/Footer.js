@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import {setThemeMode} from "../redux/authActions";
+import {setThemeMode} from "../redux/authReducer";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {rallyStyles} from "../Util/ThemeUtils";

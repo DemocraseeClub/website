@@ -69,6 +69,10 @@ class MyJsonApi {
 
         let media = this.included.find(o => o.id === mediaRel.id);
 
+        if (mediaRel.type === "media--remote_video") {
+            return media.attributes.field_media_oembed_video;
+        }
+
         let props = ['field_media_image', 'field_media_document', 'field_media_video_file', 'field_media_audio_file', 'field_media_oembed_video', 'thumbnail'];
 
         let file = false;
@@ -79,6 +83,38 @@ class MyJsonApi {
         }
         if (!file) return null;
         return Config.api.cdn + file.attributes.uri.url;
+    }
+
+    getMediaObj(delta) {
+        if (!this.json['relationships'].field_media) return null;
+        if (!delta) delta = 0;
+        let mediaRel = (delta) ? this.json.relationships.field_media.data[delta] : this.json.relationships.field_media.data[0];
+        if (!mediaRel) return null; // || !rel.relationships
+
+        let media = this.included.find(o => o.id === mediaRel.id);
+        let obj = {type:mediaRel.type};
+        if (media.attributes.name) {
+            obj.name = media.attributes.name;
+        }
+
+        let props = {'field_media_image':'url', 'field_media_document':'url', 'field_media_video_file':'url', 'field_media_audio_file':'url', 'field_media_oembed_video':'url'};
+        if (mediaRel.type === "media--remote_video") {
+            obj.url = media.attributes.field_media_oembed_video;
+            props = {'thumbnail':'thumbnail'};
+        } else if (mediaRel.type === "media--video") {
+            props = {'field_media_video_file':'url', 'thumbnail':'thumbnail'};
+        }
+
+        let file = false;
+        for (let r in media.relationships) {
+            if (props[r]) {
+                file = this.included.find(o => o.id === media.relationships[r].data.id)
+                if (file) {
+                    obj[props[r]] = Config.api.cdn + file.attributes.uri.url;
+                }
+            }
+        }
+        return obj;
     }
 
     getAttr(field) {

@@ -24,7 +24,8 @@ class Rallies extends React.Component {
     }
 
     async handleChange() {
-        API.Get('/node/rallies?fields[file--file]=uri,url&include=field_topics.field_image,field_media.field_media_video_file,field_media.field_media_image').then(res => {
+        let props = ['field_media_image', 'field_media_document', 'field_media_video_file', 'field_media_audio_file', 'field_media_oembed_video'];
+        API.Get('/node/rallies?fields[file--file]=uri,url&include=field_topics.field_image,field_media.field_media_video_file,field_media.field_media_image,field_media.thumbnail,field_media.field_media_document,field_media.field_media_audio_file').then(res => {
             let rallies = res.data.data.map(o => new MyJsonApi(o, res.data.included));
             this.setState({loading: false, rallies: rallies, error: false});
         }).catch(e => {
@@ -48,11 +49,6 @@ class Rallies extends React.Component {
     render() {
         const {classes} = this.props;
 
-        const breakpoints = {
-            default: 3,
-            1100: 2,
-            700: 1,
-        };
         return (
             <React.Fragment>
                  <Grid container className="ralliesheader">
@@ -76,7 +72,11 @@ class Rallies extends React.Component {
                 </Grid>
 
                 <Masonry
-                    breakpointCols={breakpoints}
+                    breakpointCols={{
+                        default: 3,
+                        1100: 2,
+                        700: 1,
+                    }}
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column"
                 >

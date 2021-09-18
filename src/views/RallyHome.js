@@ -19,6 +19,7 @@ import Button from "@material-ui/core/Button";
 import API from "../Util/API";
 import MyJsonApi from "../Util/MyJsonApi";
 import MediaItem from "../components/MediaItem";
+import MediaCounts from "../components/MediaCounts";
 
 const ROUNDTABLEMAP = [
     {top: 39, left: 181},
@@ -60,18 +61,19 @@ class RallyHome extends Component {
             this.setState({loading: false, rally: rally, error: false});
 
 
-            API.Get(`/node/meetings?filter[field_rally.id]=${this.props.match.params.rid}&fields[file--file]=uri,url&include=uid.user_picture`).then(res => {
-                let meetings = res.data.data.map(o => new MyJsonApi(o, res.data.included));
-                this.setState({meetings: meetings});
+            if (rally.getAttr('field_count_meetings') > 0) {
+                API.Get(`/node/meetings?filter[field_rally.id]=${this.props.match.params.rid}&fields[file--file]=uri,url&include=uid.user_picture`).then(res => {
+                    let meetings = res.data.data.map(o => new MyJsonApi(o, res.data.included));
+                    this.setState({meetings: meetings, error: false});
+                });
+            }
 
+            if (rally.getAttr('field_count_publications') > 0) {
                 API.Get(`/node/publication?filter[field_relationships.id]=${this.props.match.params.rid}&fields[file--file]=uri,url&include=uid.user_picture,field_media.field_media_video_file,field_media.field_media_image`).then(res => {
                     let publications = res.data.data.map(o => new MyJsonApi(o, res.data.included));
                     this.setState({publications: publications, error: false});
-
                 });
-
-            });
-
+            }
 
         }).catch(e => {
             console.error(e);
@@ -130,19 +132,13 @@ class RallyHome extends Component {
                         : ''
                 }
 
-                {rally.json.relationships.field_media && rally.json.relationships.field_media.data.length > 1 &&
-                <Grid container justify={'space-around'} alignContent={'center'} spacing={2}>
+                {rally.json.relationships.field_media && rally.json.relationships.field_media.data.length > 0 &&
+                <Grid container justify={'space-around'} alignContent={'center'} spacing={2} >
                     {rally.json.relationships.field_media.data.map((o, i) =>
-                        i > 0
-                            ?
-                            <Grid xs={12} sm={6} md={4} item key={'rallymedia' + i}>
-                                <MediaItem index={i}
-                                           type={rally.get('field_media', 'type', i)}
-                                           url={rally.getMediaSource(i)}/>
+                            <Grid xs={6} sm={4} md={3} item key={'rallymedia' + i}>
+                                <MediaItem media={rally.getMediaObj(i)}/>
                             </Grid>
-                            : null
-                    )
-                    }
+                    )}
                 </Grid>
                 }
 
@@ -175,13 +171,21 @@ class RallyHome extends Component {
                     <Typography variant='subtitle1' style={{marginTop: 30, marginBottom: 0}}>PUBLICATIONS</Typography>
                     <List component="nav" aria-label="rally meetings">
                         {publications.map((r, i) => {
+                            let counts = r.getAttr('field_count_media_types');
+                            if (counts) {
+                                counts = JSON.parse(counts);
+                                counts = <MediaCounts counts={counts} />
+                            }
+
+                            let title = <div>{r.getAttr('title')} {counts}</div>
+
                             return (<ListItem button key={r.getAttr('id') + '-' + i}
                                               component={NavLink}
                                               to={`/rally/${rally.getAttr('id')}/publication/${r.getAttr('id')}`}>
                                 <ListItemAvatar>
                                         <Avatar src={r.getMediaSourceByType('media--image')} />
                                 </ListItemAvatar>
-                                <ListItemText primary={r.getAttr('title')} />
+                                <ListItemText primary={title} />
                                 <Button className="bluebtn">Open</Button>
                             </ListItem>)
                         })}

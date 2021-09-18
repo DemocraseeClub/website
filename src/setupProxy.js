@@ -8,7 +8,7 @@ const onError = function (err, req, res) {
 module.exports = function (app) {
     app.use(
         createProxyMiddleware("/v2", {
-            target: process.env.REACT_APP_JSONAPI_CDN,
+            target: process.env.REACT_APP_JSONAPI_URL.substr(0, process.env.REACT_APP_JSONAPI_URL.lastIndexOf('/')),
             changeOrigin:true,
             onError,
             secure: false

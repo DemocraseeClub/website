@@ -14,6 +14,38 @@ export function getParam(name, url, d) {
     return vals;
 };
 
+
+const segmentMap = {
+    users: "aid",
+    rallies: "rid",
+    publications: "pid",
+    meetings: "mid",
+    comments: "cid",
+};
+
+export function getIdbySegment(url) {
+    const tdata = {};
+    let parts = url.split("/");
+    Object.entries(segmentMap).forEach(([segName, param]) => {
+        let index = parts.indexOf(segName);
+        if (index > 0 && parseInt(parts[index + 1]) > 0) {
+            tdata[param] = parseInt(parts[index + 1]);
+        }
+    });
+    tdata.bundle = parts
+        .reverse()
+        .find(
+            (e) =>
+                !parseInt(e) &&
+                e !== "delete" &&
+                e !== "add" &&
+                e !== "edit" &&
+                e !== ""
+        );
+    if (!tdata.bundle) delete tdata.bundle;
+    return tdata;
+}
+
 export const formatSeconds = (sec, len) => {
     if (!Number(sec)) sec = 0;
     let date = new Date(null);

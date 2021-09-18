@@ -22,7 +22,10 @@ const Config = {
     api: {
         cdn: process.env.REACT_APP_JSONAPI_CDN, // set in .env
         base: process.env.REACT_APP_JSONAPI_URL, // set in .env
-        client: process.env.NODE_ENV === 'production' ? 'https://democraseeclub.web.app' : '//localhost:3000'
+        client: process.env.NODE_ENV === 'production' ? 'https://democraseeclub.web.app' : '//localhost:3000',
+        client_id: process.env.REACT_APP_OAUTH2_ID,
+        client_secret: process.env.REACT_APP_OAUTH2_SECRET,
+        tokName: process.env.REACT_APP_LOCALSTORAGE_NAME
     },
     allowedTags: ['blockquote', 'p', 'ul', 'li', 'ol', 'dl', 'dd', 'dt',
         'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
@@ -53,18 +56,5 @@ const Config = {
 Config.richTags = Config.allowedTags.concat(['figure', 'img', 'video', 'audio', 'iframe']);
 Config.richAttributes = {...Config.allowedAttributes};
 Config.richAttributes['iframe'] = ['src', 'allowfullscreen', 'frameborder'];
-
-// console.log(Config);
-
-export const fbConfig = {
-    apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
-    authDomain: "democraseeclub.firebaseapp.com",
-    databaseURL: "https://democraseeclub.firebaseio.com",
-    projectId: "democraseeclub",
-    storageBucket: "democraseeclub.appspot.com",
-    messagingSenderId: "1051506392090",
-    appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
-    measurementId: "G-XYVYDC8L1N"
-}
 
 export default Config;
