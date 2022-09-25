@@ -4,7 +4,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {normalizeUser} from "../redux/entityDataReducer"
 
 class About extends React.Component {
   scrollTo(t) {
@@ -20,21 +19,10 @@ class About extends React.Component {
 
   componentWillMount() {
 
-    window.fireDB.collection("users").where("roles", "array-contains", "board").get()
-      .then(async (users) => {
-        let auxTeam = [];
-        users.forEach((doc) => auxTeam.push(normalizeUser(doc, ["picture"])))
-
-        let team = await Promise.all(auxTeam)
-
-        this.setState({ team, loading: false });
-
-      })
-      .catch((err) => console.log(err));
   }
 
   render() {
-   
+
     const { team, loading } = this.state;
 
     if (loading) {

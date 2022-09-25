@@ -1,9 +1,9 @@
 import {push} from "connected-react-router";
-import {getParam, getIdbySegment} from "../Util/WindowUtils";
-import {setLoader, addNotice} from "./progressReducer";
+import {getIdbySegment, getParam} from "../Util/WindowUtils";
+import {addNotice, setLoader} from "./progressReducer";
 import Config from '../Config';
 import API from "../Util/API";
-import {signUpSuccess, logInSuccess} from "./authReducer";
+import {logInSuccess, signUpSuccess} from "./authReducer";
 
 export function getToken(user_email, password, scope) {
     return (dispatch) => {

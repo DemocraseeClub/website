@@ -14,9 +14,7 @@ import {connect} from 'react-redux';
 import {
     entityDataFailure,
     entityDataStarted,
-    entityDataSuccess,
-    normalizeMeeting,
-    normalizeRally
+    entityDataSuccess
 } from "../redux/entityDataReducer";
 import RallyCreate from "./RallyCreate";
 import Box from "@material-ui/core/Box";
@@ -40,24 +38,7 @@ class MeetingTemplate extends Component {
     }
 
     async refresh() {
-        this.props.dispatch(entityDataStarted(this.props.location.pathname));
-        const rallyRef = window.fireDB.collection("rallies").doc('templates')
-        let doc = await rallyRef.get();
-        if (doc.exists) {
-            let rally = await normalizeRally(doc, ["author", "picture", "promo_video", "topics", "stakeholders", "wise_demo", "meetings"]);
-            let meeting = (rally.meetings) ? rally.meetings[0] : false;
-            if (this.props.match.params.mid) {
-                const meetRef = rallyRef.collection('meetings').doc(this.props.match.params.mid)
-                doc = await meetRef.get();
-                if (doc.exists) {
-                    meeting = await normalizeMeeting(doc, ['author', 'speakers', 'moderators', 'city', 'meeting_type']);
-                }
 
-            }
-            this.props.dispatch(entityDataSuccess(rally, meeting));
-        } else {
-            this.props.dispatch(entityDataFailure('invalid template id'));
-        }
     }
 
     render() {

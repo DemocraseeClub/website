@@ -1,3 +1,5 @@
+import {fade} from '@material-ui/core/styles';
+
 export function lightOrDark(color) {
   // Variables for red, green, blue values
   var r, g, b, hsp;
@@ -388,3 +390,246 @@ export const rallyStyles = (theme) => ({
     width: "100%",
   },
 });
+
+
+
+
+export const pStyles = theme => ({
+  card: {
+    width: '100%',
+    maxWidth: 960,
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  list: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  paperBg: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  paper: {
+    padding: 8
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  content: {
+    padding: theme.spacing(1)
+  },
+  centeredHeader: {
+    textAlign: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  actions: {
+    padding: '3px 6px 3px 6px',
+    margin: '10px auto 10px auto',
+    display: 'flex',
+    width: '100%',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'space-between'
+  },
+  earnerLabel: {
+    fontSize: '90%',
+    fontWeight: 700,
+    marginBottom: 8,
+  },
+  tagline: {
+    fontWeight: 300,
+    marginTop: 0,
+    marginBottom: 18,
+    fontStyle: 'italic',
+    textAlign: 'center'
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  gridList: {
+    marginTop: theme.spacing(2),
+    flexWrap: 'nowrap',
+    transform: 'translateZ(0)',
+  },
+  addSquareBtn: {
+    backgroundColor: theme.palette.background.default,
+    boxShadow: 'inset 0px 0px 5px 0px ' + theme.palette.secondary.main
+  },
+  addIcon: {
+    position: 'absolute',
+    opacity: .5,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  },
+  chipRoot: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+    overflow: 'visible',
+    borderRadius: '30px 13px 15px 30px',
+    width: '100%',
+    flexGrow: 1,
+    height: 30,
+    cursor: 'pointer',
+    padding: '2px 5px 2px 0',
+    border: '1px solid ' + (theme.palette.type === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]),
+    borderWidth: '1px 1px 2px 2px',
+    textDecoration: 'none',
+    margin: '12px 0',
+    '&.half': {
+      flexGrow: 0,
+      borderWidth: '1px 1px 1px 1px',
+      width: '48%',
+      border: '1px solid ' + (theme.palette.type === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]),
+      opacity: .6,
+    },
+    '&.primary': {
+      backgroundColor: theme.palette.primary.main,
+      border: '1px solid ' + theme.palette.primary.main,
+    },
+    '&.secondary': {
+      backgroundColor: theme.palette.secondary.main,
+      borderColor: theme.palette.secondary.main,
+    }
+  },
+  chipAvatar: {
+    color: (theme.palette.type === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]),
+    backgroundColor: (theme.palette.type === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]),
+    borderRadius: 48,
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    padding: 1,
+    marginLeft: '-2px!important',
+    height: '36px!important',
+    width: '36px!important',
+    '&.small': {
+      padding: 3,
+      width: '30px!important',
+      height: 'auto!important',
+      '& svg': {
+        height: '100%',
+        width: '100%'
+      }
+    },
+    '&.primary': {
+      backgroundColor: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+    '&.secondary': {
+      backgroundColor: theme.palette.secondary.main,
+      borderColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
+    }
+  },
+  chipLabel: {
+    flexGrow: 1,
+    marginLeft: theme.spacing(1),
+    fontWeight: 600,
+    '&.earns::after': {
+      content: '"earns"',
+      color: (theme.palette.type === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]),
+      fontSize: 9,
+      fontWeight: 100,
+      marginTop: -3,
+      display: 'block',
+      verticalAlign: 'super',
+    }
+  },
+  chipValue: {
+    fontWeight: 900,
+    '&.dollar::before': {
+      content: '"$"',
+      fontSize: 9,
+      color: (theme.palette.type === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]),
+      verticalAlign: 'super',
+    }
+  },
+  statCount: {
+    padding: theme.spacing(2),
+    fontSize: '90%',
+    width: '40px!important',
+    height: '40px!important',
+  },
+  subHeading: {
+    margin: 0,
+    fontSize: '80%',
+    fontWeight: 'normal',
+    fontStyle: 'italic'
+  },
+  subheadTopBorder: {
+    fontWeight: 700, textAlign: 'right', width: '100%',
+    margin: '1px 0 5px 0',
+    borderTop: '1px solid ' + (theme.palette.type === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]),
+    paddingTop: 2
+  },
+  helpTopBorder: {
+    fontWeight: 200, fontSize: 12, margin: 0,
+    borderTop: '1px solid ' + (theme.palette.type === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]),
+  },
+  strongTopBorder: {
+    margin: '30px 0 5px 0', padding: '6px 0 10px 0',
+    fontWeight: 200, fontSize: 12,
+    borderTop: '1px solid ' + (theme.palette.type === 'light' ? theme.palette.grey[900] : theme.palette.grey[100]),
+  },
+  noUnderline: {
+    textDecoration: 'none',
+    '& a': {
+      textDecoration: 'none'
+    }
+  },
+  miniText: {
+    fontWeight: 500, fontSize: '.75rem'
+  },
+  tabIconBtn:{
+    minWidth:20
+  },
+  fullButton : {
+    textAlign:'center',
+    height:'100%',
+    flexDirection:'column',
+    alignContent:'center',
+    justifyContent:'space-around',
+    border:'1px solid ' + (theme.palette.type === 'light' ? theme.palette.grey[700] : theme.palette.grey[300]),
+    padding:4,
+    margin:4,
+    borderRadius:4,
+    display:'flex',
+    textDecoration:'none'
+
+  },
+  badge: {
+    fontSize: '70%',
+    padding: '0px 3px'
+  },
+  masonryImg : {
+    width:'100%'
+  },
+  taForm : {
+    '& .MuiGrid-item:nth-child(odd)' : {
+      backgroundColor:fade(theme.palette.background.paper, .75)
+    },
+    '& .MuiGrid-item:nth-child(even)' : {
+      backgroundColor:fade(theme.palette.background.paper, .5)
+    }
+  }
+
+
+});
+

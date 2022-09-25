@@ -11,7 +11,7 @@ import Masonry from "react-masonry-css";
 import RallyItem from "../components/RallyItem";
 import RallySkeleton from "../components/RallySkeleton";
 import API from "../Util/API";
-import MyJsonApi from "../Util/MyJsonApi";
+import Drupal2Json from "../Util/Drupal2Json";
 
 class Rallies extends React.Component {
     constructor(p) {
@@ -24,26 +24,13 @@ class Rallies extends React.Component {
     }
 
     async handleChange() {
-        let props = ['field_media_image', 'field_media_document', 'field_media_video_file', 'field_media_audio_file', 'field_media_oembed_video'];
-        API.Get('/node/rallies?fields[file--file]=uri,url&include=field_topics.field_image,field_media.field_media_video_file,field_media.field_media_image,field_media.thumbnail,field_media.field_media_document,field_media.field_media_audio_file').then(res => {
-            let rallies = res.data.data.map(o => new MyJsonApi(o, res.data.included));
+        API.Get('/api/rallies').then(res => {
+            let rallies = res.data;
             this.setState({loading: false, rallies: rallies, error: false});
         }).catch(e => {
             console.error(e);
             this.setState({loading: false, error: e.message});
         })
-    }
-
-    showRallyForm() {
-        if (this.props.authController && this.props.authController.loggedUser) {
-            console.log(
-                this.props.authContext,
-                this.props.sideEntityController.sidePanels
-            );
-            this.props.sideEntityController.open({collectionPath: "/rallies"});
-        } else {
-            this.props.history.push("/signup");
-        }
     }
 
     render() {
@@ -61,13 +48,16 @@ class Rallies extends React.Component {
                                 Meeting Templates
                             </Button>
                         </NavLink>
+                      <NavLink
+                          to={"/forms/rallies/"}
+                          style={{textDecoration: "none", marginRight: 5}}
+                      >
                         <Button
                             variant={"contained"}
-                            className={classes.redBtn}
-                            onClick={() => this.showRallyForm()}
-                        >
+                            className={classes.redBtn}>
                             Start a Rally
                         </Button>
+                      </NavLink>
                  </Grid>
                 </Grid>
 

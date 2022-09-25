@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
-import {normalizeSubscription} from "../redux/entityDataReducer"
 import API from "../Util/API";
 
 
@@ -18,62 +17,9 @@ function SimpleDialog(props) {
 
   const handleDeny = (subId, i) => {
 
-      API.Get('subscription').then(res => {
-          console.info(res.data);
-      }).catch(e => {
-        console.warn(e);
-      })
-
-      /*
-    window.fireDB.collection("subscriptions").doc(subId)
-    .update({status: "denied"})
-    .then(() => {
-
-        let auxSubs = [...subscriptions]
-
-        auxSubs.splice(i, 1)
-
-        setSubscriptions(auxSubs)
-
-    })
-
-       */
-
   }
 
   const handleApprove = (subId, i) => {
-
-
-
-    window.fireDB.collection("subscriptions").doc(subId)
-    .update({status: "approved"})
-    .then(() => {
-
-
-        let rally = subscriptions[i].rally
-        let meeting = subscriptions[i].meeting
-        let subscriber = subscriptions[i].subscriber
-
-        /*
-        let subscriberRef = window.fireDB.collection("users").doc(subscriber.id)
-
-        window.fireDB
-        .collection("rallies")
-        .doc(rally.id)
-        .collection("meetings")
-        .doc(meeting.id)
-        .update({speakers: firebase.firestore.FieldValue.arrayUnion(subscriberRef)})
-        .then(() => {
-
-            let auxSubs = [...subscriptions]
-
-            auxSubs.splice(i, 1)
-
-            setSubscriptions(auxSubs)
-        })
-
-         */
-    })
 
   }
 
@@ -128,21 +74,7 @@ export default function DialogSubscription({rallyId}) {
 
   const getSubscriptions = async (rallyId) => {
 
-    const rallyRef = window.fireDB.collection("rallies").doc(rallyId)
 
-    let auxSubscriptions = await window.fireDB.collection("subscriptions")
-    .where("rally", "==", rallyRef)
-    .where("status", "==", "pending")
-    .get()
-
-    let promiseSubscriptions = [];
-      auxSubscriptions.forEach((doc) =>
-         promiseSubscriptions.push(normalizeSubscription(doc, ["subscriber"]))
-      );
-
-      let subs = await Promise.all(promiseSubscriptions);
-
-      return subs
 
   }
 
