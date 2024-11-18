@@ -36,7 +36,7 @@
     "disqus-react": "^1.1.1",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
-    "firebase": "8.6.2",
+    "firebase": "10.9.0",
     "material-ui-dropzone": "^3.5.0",
     "moment": "^2.29.1",
     "notistack": "^0.8.8",
