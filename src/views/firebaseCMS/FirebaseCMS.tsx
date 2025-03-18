@@ -35,14 +35,13 @@ import firebase from "firebase/app";
 import userContext from "../../contexts/userContext";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAlMzICClI1d0VPAs5zGmyOO6JEUqLQAic",
-    authDomain: "democraseeclub.firebaseapp.com",
-    databaseURL: "https://democraseeclub.firebaseio.com",
-    projectId: "democraseeclub",
-    storageBucket: "democraseeclub.appspot.com",
-    messagingSenderId: "1051506392090",
-    appId: "1:1051506392090:web:721f69ed2b5afde2a4a5a3",
-    measurementId: "G-XYVYDC8L1N",
+    apiKey: "AIzaSyBX9--yZc8QteBXzHZNyWhivyvaB47WB60",
+    authDomain: "democrasee-f8173.firebaseapp.com",
+    projectId: "democrasee-f8173",
+    storageBucket: "democrasee-f8173.firebasestorage.app",
+    messagingSenderId: "85609226169",
+    appId: "1:85609226169:web:ec78ec5e1db911b56b6068",
+    measurementId: "G-DPTS9R6135"
 };
 
 interface FbUser {
@@ -160,11 +159,11 @@ export function FirebaseCMS(props: any) {
             if (fbUser?.roles.includes('editor')) {
 
                 document.querySelector("body")?.classList.add("editor")
-                
+
             } else if (fbUser?.roles.includes('admin')) {
 
                 document.querySelector("body")?.classList.add("user")
- 
+
             } else {
 
                 document.querySelector("body")?.classList.add("user")

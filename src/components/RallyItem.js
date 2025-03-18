@@ -2,8 +2,7 @@ import React from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {rallyStyles} from "../Util/ThemeUtils";
 import {withSnackbar} from "notistack";
-import {Card, CardActions, CardContent} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import {Card, CardContent} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Config from "../Config";
@@ -25,13 +24,15 @@ class RallyItem extends React.Component {
         return (
             <Card className={classes.card}>
                 <CardContent>
-                    <NavLink to={`/rally/${item.id}`}>
-                        <img
-                            className={classes.cardMedia}
-                            alt={item.title}
-                            src={item.picture}
-                        />
-                    </NavLink>
+                    {item.picture &&
+                        <NavLink to={`/rally/${item.id}`}>
+                            <img
+                                className={classes.cardMedia}
+                                alt={item.title}
+                                src={item.picture}
+                            />
+                        </NavLink>
+                    }
                     <CardContent>
                         <NavLink to={`/rally/${item.id}`}> <Typography gutterBottom variant="h4" component="h2">
                             {item.title}

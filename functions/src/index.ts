@@ -16,9 +16,14 @@ app.use(cors());
 
 if (process.env.NODE_ENV === "development") {
     admin.initializeApp({
-        credential: admin.credential.cert("../democraseeclub-firebase-admin.json"),
-        databaseURL: "https://democraseeclub.firebaseio.com",
-        storageBucket: "gs://democraseeclub.appspot.com",
+        credential: admin.credential.cert("../../keys/democrasee-f8173-firebase-adminsdk-fbsvc-d2127b8a0f.json"),
+        apiKey: "AIzaSyBX9--yZc8QteBXzHZNyWhivyvaB47WB60",
+        authDomain: "democrasee-f8173.firebaseapp.com",
+        projectId: "democrasee-f8173",
+        storageBucket: "democrasee-f8173.firebasestorage.app",
+        messagingSenderId: "85609226169",
+        appId: "1:85609226169:web:ec78ec5e1db911b56b6068",
+        measurementId: "G-DPTS9R6135"
     });
 } else {
     admin.initializeApp();
@@ -53,9 +58,9 @@ app.get("/citizen/:uid", async (req, res) => {
             ...doc.data(),
         }));
 
-        for(let i = 0; i< resources.length; i++) {
+        for (let i = 0; i < resources.length; i++) {
 
-            if(resources[i]?.resource_type) {
+            if (resources[i]?.resource_type) {
 
                 const resource_type = await resources[i].resource_type.get()
 
@@ -108,7 +113,7 @@ app.post("/syncUser", async (req, res) => {
 
             if (!uid) {
                 functions.logger.error("UID IS NULL: ", decodedToken);
-                return res.status(204).send({message:'invalid uid'});
+                return res.status(204).send({message: 'invalid uid'});
             }
             let snapshot = await db.collection("users").doc(uid).get();
 
@@ -117,7 +122,7 @@ app.post("/syncUser", async (req, res) => {
                 if (query.size > 0) {
                     snapshot = query.docs[0];
                     uid = query.docs[0].id;
-                    functions.logger.warn("found user by phone "  + uid, snapshot.data());
+                    functions.logger.warn("found user by phone " + uid, snapshot.data());
                 } else {
                     functions.logger.info("no user by phone " + decodedToken.phone_number);
                 }
@@ -128,7 +133,7 @@ app.post("/syncUser", async (req, res) => {
                 if (query.size > 0) {
                     snapshot = query.docs[0];
                     uid = query.docs[0].id;
-                    functions.logger.warn("found user by email"  + uid, snapshot.data());
+                    functions.logger.warn("found user by email" + uid, snapshot.data());
                 } else {
                     functions.logger.info("no user by email " + decodedToken.email);
                 }
@@ -136,7 +141,7 @@ app.post("/syncUser", async (req, res) => {
 
             const now = admin.firestore.FieldValue.serverTimestamp();
 
-            let firebaseUser =  (snapshot.exists) ?
+            let firebaseUser = (snapshot.exists) ?
                 snapshot.data()
                 :
                 {created: now, modified: now}
@@ -177,11 +182,11 @@ app.post("/syncUser", async (req, res) => {
 
             // explore: use Firebase Functions to set [Custom Claim](https://firebase.google.com/docs/auth/admin/custom-claims) for faster database Security Rules
 
-            await db.collection("users").doc(uid).set(firebaseUser, {merge:true});
+            await db.collection("users").doc(uid).set(firebaseUser, {merge: true});
             const doc = await db.collection('users').doc(uid).get();
             if (!doc.exists) {
-                functions.logger.log('Failed to sync doc ',  firebaseUser);
-                return res.status(500).json({message:'Failed to sync your account profiles'});
+                functions.logger.log('Failed to sync doc ', firebaseUser);
+                return res.status(500).json({message: 'Failed to sync your account profiles'});
             }
 
             let obj = doc.data();
@@ -248,13 +253,13 @@ exports.injectMeta = functions.https.onRequest((req, res, next) => {
 //listen for updates and changing modified timestamp in every collection
 
 
-function onUpdateEntity(change, context){
+function onUpdateEntity(change, context) {
 
     const data = change.after.data();
     const previousData = change.before.data();
 
-    if(JSON.stringify(data?.modified) !== JSON.stringify(previousData?.modified)) {
-         return null
+    if (JSON.stringify(data?.modified) !== JSON.stringify(previousData?.modified)) {
+        return null
     }
 
     const modified = admin.firestore.FieldValue.serverTimestamp();
@@ -264,36 +269,35 @@ function onUpdateEntity(change, context){
     }, {merge: true});
 }
 
-exports.onUpdateUser = functions.firestore.document('users/{userId}').onUpdate( onUpdateEntity );
+exports.onUpdateUser = functions.firestore.document('users/{userId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateCity = functions.firestore.document('cities/{cityId}').onUpdate( onUpdateEntity );
+exports.onUpdateCity = functions.firestore.document('cities/{cityId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateMeetingType = functions.firestore.document('meeting_types/{meeting_typeId}').onUpdate( onUpdateEntity );
+exports.onUpdateMeetingType = functions.firestore.document('meeting_types/{meeting_typeId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateOfficial = functions.firestore.document('officials/{officialId}').onUpdate( onUpdateEntity );
+exports.onUpdateOfficial = functions.firestore.document('officials/{officialId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateParty = functions.firestore.document('parties/{partyId}').onUpdate( onUpdateEntity );
+exports.onUpdateParty = functions.firestore.document('parties/{partyId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateRally = functions.firestore.document('rallies/{rallyId}').onUpdate( onUpdateEntity );
+exports.onUpdateRally = functions.firestore.document('rallies/{rallyId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateResourceType = functions.firestore.document('resource_types/{resource_typeId}').onUpdate( onUpdateEntity );
+exports.onUpdateResourceType = functions.firestore.document('resource_types/{resource_typeId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateResource = functions.firestore.document('resources/{resourceId}').onUpdate( onUpdateEntity );
+exports.onUpdateResource = functions.firestore.document('resources/{resourceId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateStakeholder = functions.firestore.document('stakeholders/{stakeholderId}').onUpdate( onUpdateEntity );
+exports.onUpdateStakeholder = functions.firestore.document('stakeholders/{stakeholderId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateStates = functions.firestore.document('states/{stateId}').onUpdate( onUpdateEntity );
+exports.onUpdateStates = functions.firestore.document('states/{stateId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateTopics = functions.firestore.document('topics/{topicId}').onUpdate( onUpdateEntity );
+exports.onUpdateTopics = functions.firestore.document('topics/{topicId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateWiseDemocracy = functions.firestore.document('wise_democracy/{wise_democracyId}').onUpdate( onUpdateEntity );
+exports.onUpdateWiseDemocracy = functions.firestore.document('wise_democracy/{wise_democracyId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateActionPlan = functions.firestore.document('action_plans/{action_planId}').onUpdate( onUpdateEntity );
+exports.onUpdateActionPlan = functions.firestore.document('action_plans/{action_planId}').onUpdate(onUpdateEntity);
 
-exports.onUpdateSubscription = functions.firestore.document('subscriptions/{subscriptionId}').onUpdate( onUpdateEntity );
+exports.onUpdateSubscription = functions.firestore.document('subscriptions/{subscriptionId}').onUpdate(onUpdateEntity);
 
-exports.onUpdatePage = functions.firestore.document('pages/{pageId}').onUpdate( onUpdateEntity );
-
+exports.onUpdatePage = functions.firestore.document('pages/{pageId}').onUpdate(onUpdateEntity);
 
 
 //listen for new entities creation
@@ -309,38 +313,35 @@ function onCreateEntity(snap, context) {
 
 }
 
-exports.onCreateUser = functions.firestore.document('users/{usersId}').onCreate( onCreateEntity );
+exports.onCreateUser = functions.firestore.document('users/{usersId}').onCreate(onCreateEntity);
 
-exports.onCreateCity = functions.firestore.document('cities/{cityId}').onCreate( onCreateEntity );
+exports.onCreateCity = functions.firestore.document('cities/{cityId}').onCreate(onCreateEntity);
 
-exports.onCreateMeetingType = functions.firestore.document('meeting_types/{meeting_typeId}').onCreate( onCreateEntity );
+exports.onCreateMeetingType = functions.firestore.document('meeting_types/{meeting_typeId}').onCreate(onCreateEntity);
 
-exports.onCreateOfficial = functions.firestore.document('officials/{officialId}').onCreate( onCreateEntity );
+exports.onCreateOfficial = functions.firestore.document('officials/{officialId}').onCreate(onCreateEntity);
 
-exports.onCreateParty = functions.firestore.document('parties/{partyId}').onCreate( onCreateEntity );
+exports.onCreateParty = functions.firestore.document('parties/{partyId}').onCreate(onCreateEntity);
 
-exports.onCreateRally = functions.firestore.document('rallies/{rallyId}').onCreate( onCreateEntity );
+exports.onCreateRally = functions.firestore.document('rallies/{rallyId}').onCreate(onCreateEntity);
 
-exports.onCreateResourceType = functions.firestore.document('resource_types/{resource_typeId}').onCreate( onCreateEntity );
+exports.onCreateResourceType = functions.firestore.document('resource_types/{resource_typeId}').onCreate(onCreateEntity);
 
-exports.onCreateResource = functions.firestore.document('resources/{resourceId}').onCreate( onCreateEntity );
+exports.onCreateResource = functions.firestore.document('resources/{resourceId}').onCreate(onCreateEntity);
 
-exports.onCreateStakeholder = functions.firestore.document('stakeholders/{stakeholderId}').onUpdate( onCreateEntity );
+exports.onCreateStakeholder = functions.firestore.document('stakeholders/{stakeholderId}').onUpdate(onCreateEntity);
 
-exports.onCreateStates = functions.firestore.document('states/{stateId}').onCreate( onCreateEntity );
+exports.onCreateStates = functions.firestore.document('states/{stateId}').onCreate(onCreateEntity);
 
-exports.onCreateTopics = functions.firestore.document('topics/{topicId}').onCreate( onCreateEntity );
+exports.onCreateTopics = functions.firestore.document('topics/{topicId}').onCreate(onCreateEntity);
 
-exports.onCreateWiseDemocracy = functions.firestore.document('wise_democracy/{wise_democracyId}').onCreate( onCreateEntity );
+exports.onCreateWiseDemocracy = functions.firestore.document('wise_democracy/{wise_democracyId}').onCreate(onCreateEntity);
 
-exports.onCreateActionPlan = functions.firestore.document('action_plans/{action_planId}').onCreate( onCreateEntity );
+exports.onCreateActionPlan = functions.firestore.document('action_plans/{action_planId}').onCreate(onCreateEntity);
 
-exports.onCreateSubscription = functions.firestore.document('subscriptions/{subscriptionId}').onCreate( onCreateEntity );
+exports.onCreateSubscription = functions.firestore.document('subscriptions/{subscriptionId}').onCreate(onCreateEntity);
 
-exports.onCreatePage = functions.firestore.document('pages/{pageId}').onCreate( onCreateEntity );
-
-
-
+exports.onCreatePage = functions.firestore.document('pages/{pageId}').onCreate(onCreateEntity);
 
 
 /*
