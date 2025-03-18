@@ -95,8 +95,8 @@ class AgendaItemForm extends Component {
                             onChange={this.onChange}
                         />
 
-                        <TextField name="title" label="Title" value={this.props.item.title} fullWidth={true} variant={'standard'} className={classes.field}
-                                   variant={'outlined'}
+                        <TextField name="title" label="Title" value={this.props.item.title} fullWidth={true}
+                                   variant={'standard'} className={classes.field}
                                    onChange={this.onChange} />
 
                         <TextField name="seconds" label="Seconds" type="number"

@@ -29,7 +29,7 @@ class Home extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container direction={'column'} className={this.props.classes.section, 'homestyles'}>
+            <Grid container direction={'column'} className={`${this.props.classes.section} homestyles`}>
 
                 <Grid style={{backgroundImage:"url('/images/cityscape.png')", backgroundPosition:'bottom right', backgroundRepeat:'no-repeat', minHeight:400, marginBottom:30}}
                      container justify={'space-around'} direction={'column'} alignItems={'flex-start'} >
@@ -65,7 +65,7 @@ class Home extends React.Component {
                     <Grid item sm={4}>
                         <img src='https://democrasee.club/wp-content/uploads/2020/08/votingicon.png' alt='act' width={45} />
                         <Typography variant={'h2'} className={classes.primaryColor} >Engage &amp; Exchange</Typography>
-                        <Typography variant={'body1'} className={classes.paragraph}>Exchange your <a href={"#coin"} className={classes.primaryColor,'inline'} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</Typography>
+                        <Typography variant={'body1'} className={classes.paragraph}>Exchange your <a href={"#coin"} className={`${classes.primaryColor} inline`} onClick={e => this.toggleCoinDef(e)}>CitizenCoin</a> in our marketplace to employ skills and resources from your community, for your community.</Typography>
                         <NavLink className={classes.primaryColor}  to={'/resources'}>Find Support Resources</NavLink>
                      </Grid>
                 </Grid>
