@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "democraseeclub"
-  }
+    "default": "democraseeclub",
+    "staging": "democrasee-f8173"
+  },
+  "targets": {},
+  "etags": {}
 }

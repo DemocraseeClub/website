@@ -8,9 +8,14 @@ Check the [Issues](https://github.com/DemocraseeClub/website/issues) here if you
 
 
 ## To Run
-- `yarn install`
-- `yarn start`
+- `npm install`
+- `npm start`
 
-# To Build & Deploy
-- `yarn run build && firebase deploy`
+# To Build
+- `nvm use 16`
+- `npm run build`
 
+# To Deploy
+- `nvm use 18`
+- `firebase deploy --only hosting`
+- `firebase deploy --only functions`

@@ -2,20 +2,37 @@
   "title": "5G Infrastructure",
   "desc": "5G improves internet speeds, but only at very short distances. This is a conversation about whether that makes it a worthwhile public investment",
   "profile": "/images/communications.png",
-  "videofile" : "https://clock.taylormadetraffic.com/screencasts/5g-take1.mp4",
+  "videofile": "https://clock.taylormadetraffic.com/screencasts/5g-take1.mp4",
   "cover": null,
   "type": "rally",
-  "wisedemo": ["Interaction"],
-  "targets": ["Cities"],
-  "topics": ["Communication", "Technology", "Infrastructure"],
-  "stakeholders": ["Students", "Entrepreneurs"],
+  "wisedemo": [
+    "Interaction"
+  ],
+  "targets": [
+    "Cities"
+  ],
+  "topics": [
+    "Communication",
+    "Technology",
+    "Infrastructure"
+  ],
+  "stakeholders": [
+    "Students",
+    "Entrepreneurs"
+  ],
   "author": [
-    {"img":"/images/eli.png", "name":"Eli"}
+    {
+      "img": "/images/eli.png",
+      "name": "Eli"
+    }
   ],
   "hosts": [
-    {"img":"/images/eli.png", "name":"Eli"}
+    {
+      "img": "/images/eli.png",
+      "name": "Eli"
+    }
   ],
-  "research_json" : [
+  "research_json": [
     {
       "title": "Deploying 5G Will Cost at Least $130 Billion in Fiber, Study Says",
       "img": "https://media2.govtech.com/images/940*719/Flickr-fiber-optic.jpg",
@@ -24,8 +41,8 @@
     {
       "title": "Net Neutrality in the United States",
       "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Internet_map_1024_-_transparent%2C_inverted.png/150px-Internet_map_1024_-_transparent%2C_inverted.png",
-      "link" : "https://en.wikipedia.org/wiki/Net_neutrality#United_States"
+      "link": "https://en.wikipedia.org/wiki/Net_neutrality#United_States"
     }
   ],
-  "meetings" : []
+  "meetings": []
 }

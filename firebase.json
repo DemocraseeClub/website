@@ -50,8 +50,7 @@
     }
   },
   "functions": {
-    "runtime": "nodejs12",
-    "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build",
+    "runtime": "nodejs18",
     "source": "functions"
   }
 }

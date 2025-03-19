@@ -172,6 +172,7 @@ export const normalizeMeeting = async (doc, fields) => {
 }
 
 function isFbStorage(url) {
+    return false; // not using currently
     return url && url.indexOf("/") === 0
 }
 

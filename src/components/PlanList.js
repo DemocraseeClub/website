@@ -29,8 +29,8 @@ class PlanList extends React.Component {
             showAll: false,
             running: false,
             headers: [],
-            topPad:0,
-            showDrawer:false,
+            topPad: 0,
+            showDrawer: false,
             meeting: p.meeting || false
         }
 
@@ -39,7 +39,7 @@ class PlanList extends React.Component {
     }
 
     toggleDrawer() {
-        this.setState({showDrawer:!this.state.showDrawer});
+        this.setState({showDrawer: !this.state.showDrawer});
     }
 
     handleNext = () => {
@@ -57,7 +57,7 @@ class PlanList extends React.Component {
     runTimers() {
         if (this.state.activeStep === -1) {
             this.setState({activeStep: 0, running: true}, this.runTimers);
-            document.getElementById('meetingAgenda').scrollIntoView({block:'start', behavior:'smooth'})
+            document.getElementById('meetingAgenda').scrollIntoView({block: 'start', behavior: 'smooth'})
         } else if (this.state.running === false) {
             this.setState({running: true}, this.runTimers)
         } else {
@@ -88,7 +88,7 @@ class PlanList extends React.Component {
     toggleAll() {
         this.setState({showAll: !this.state.showAll}, () => {
             if (this.state.showAll === true) {
-                document.getElementById('meetingAgenda').scrollIntoView({block:'start', behavior:'smooth'})
+                document.getElementById('meetingAgenda').scrollIntoView({block: 'start', behavior: 'smooth'})
             }
         })
     }
@@ -102,112 +102,114 @@ class PlanList extends React.Component {
 
         return (
             <div className={classes.root} style={{marginTop: 20, textAlign: 'left'}}>
-            <Grid container>
-            <Grid Item className="videoArea" sm={12} md={6}>
+                <Grid container>
+                    <Grid Item className="videoArea" sm={12} md={6}>
 
-                <AppBar position={'sticky'} className={classes.appBar} >
-                    <Room classes={classes} />
-                </AppBar>
-                </Grid>
+                        <AppBar color={'transparent'} position={'sticky'} className={classes.appBar}>
+                            <Room classes={classes}/>
+                        </AppBar>
+                    </Grid>
 
-            <Grid Item sm={12} md={6}>
+                    <Grid Item sm={12} md={6}>
 
-                <AppBar className="agendatoolbar" position="relative" color="primary" >
-                    <Toolbar>
-                        <Grid container justify={'space-between'} alignItems={'center'}>
+                        <AppBar className="agendatoolbar" position="relative" color="transparent">
+                            <Toolbar>
+                                <Grid container justify={'space-between'} alignItems={'center'}>
 
-                            {this.state.running === true ?
-                                <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers}
-                                        startIcon={<StopIcon/>}>Pause</Button>
-                                :
-                                <Button variant={'contained'} color={'secondary'} onClick={this.runTimers}
-                                        startIcon={<TimerIcon />}>Start Clock</Button>
-                            }
-
-                            <Typography variant='h6' >
-                                <Typography variant='inherit'
-                                            color={'error'}> {formatSeconds(this.props.meeting.countRemains)} </Typography>
-                                /
-                                <Typography
-                                    variant='inherit'> {formatSeconds(this.props.meeting.countScheduled)}</Typography>
-                            </Typography>
-
-                            {this.state.showAll === true ?
-                                <Button style={{alignSelf: 'center'}} startIcon={<UnfoldLess/>} variant='contained'
-                                        color={'secondary'}
-                                        onClick={e => this.toggleAll()}>Close All</Button>
-                                :
-                                <Button style={{alignSelf: 'center'}} startIcon={<UnfoldMore/>} variant='contained'
-                                        color={'secondary'}
-                                        onClick={e => this.toggleAll()}>Read Agenda</Button>
-                            }
-
-
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                edge="end"
-                                onClick={() => this.toggleDrawer()}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-
-                        </Grid>
-                    </Toolbar>
-                </AppBar>
-
-                <div className={classes.agendaContent} id={'meetingAgenda'}>
-
-                    <Stepper activeStep={activeStep} orientation="vertical" className={classes.vertStepper} >
-                        {this.props.meeting.agenda.map((curItem, index) => {
-                            let header = null;
-                            if (curItem.nest.length > 0) {
-                                if (typeof nesting[curItem.nest] === 'undefined') {
-                                    nesting[curItem.nest] = true;
-                                    header = this.props.meeting.headers.find(h => h.label === curItem.nest);
-                                    if (header) {
-                                        header = <div className={classes.stepSection}><Typography variant='h3'
-                                                                                                  className={classes.topLevelLabel}>{curItem.nest}</Typography>
-                                        </div>
+                                    {this.state.running === true ?
+                                        <Button variant={'contained'} color={'secondary'} onClick={this.stopTimers}
+                                                startIcon={<StopIcon/>}>Pause</Button>
+                                        :
+                                        <Button variant={'contained'} color={'secondary'} onClick={this.runTimers}
+                                                startIcon={<TimerIcon/>}>Start Clock</Button>
                                     }
-                                }
-                            }
-                            return <AgendaItem
-                                    forceShow={this.state.showAll}
-                                    activeStep={activeStep}
-                                    key={'ai' + index}
-                                    curItem={curItem} index={index} classes={classes} header={header}
-                                    editMode={this.props.editMode}
-                                    dispatch={this.props.dispatch}
-                                    handleBack={this.handleBack}
-                                    handleNext={this.handleNext}
-                                />
-                        })}
-                    </Stepper>
 
-                    {activeStep === this.props.meeting.agenda.length && (
-                        <Paper square elevation={0} className={classes.resetContainer}>
-                            <Button onClick={this.handleReset} className={classes.button}>
-                                Reset Clock
-                            </Button>
-                        </Paper>
-                    )}
+                                    <Typography variant='h6'>
+                                        <Typography variant='inherit'
+                                                    color={'error'}> {formatSeconds(this.props.meeting.countRemains)} </Typography>
+                                        /
+                                        <Typography
+                                            variant='inherit'> {formatSeconds(this.props.meeting.countScheduled)}</Typography>
+                                    </Typography>
+
+                                    {this.state.showAll === true ?
+                                        <Button style={{alignSelf: 'center'}} startIcon={<UnfoldLess/>}
+                                                variant='contained'
+                                                color={'secondary'}
+                                                onClick={e => this.toggleAll()}>Close All</Button>
+                                        :
+                                        <Button style={{alignSelf: 'center'}} startIcon={<UnfoldMore/>}
+                                                variant='contained'
+                                                color={'secondary'}
+                                                onClick={e => this.toggleAll()}>Read Agenda</Button>
+                                    }
 
 
-                    <Drawer
-                        variant="persistent"
-                        anchor="right"
-                        id={'notesDrawer'}
-                        className={this.state.showDrawer ? classes.drawer :[classes.drawer, classes.hide].join(' ')}
-                        classes={{paper: classes.drawerInner}}
-                        open={this.state.showDrawer}
-                    >
-                        <AgendaItemTools classes={classes} />
-                    </Drawer>
+                                    <IconButton
+                                        color="inherit"
+                                        aria-label="open drawer"
+                                        edge="end"
+                                        onClick={() => this.toggleDrawer()}
+                                    >
+                                        <MenuIcon/>
+                                    </IconButton>
+
+                                </Grid>
+                            </Toolbar>
+                        </AppBar>
+
+                        <div className={classes.agendaContent} id={'meetingAgenda'}>
+
+                            <Stepper activeStep={activeStep} orientation="vertical" className={classes.vertStepper}>
+                                {this.props.meeting.agenda.map((curItem, index) => {
+                                    let header = null;
+                                    if (curItem.nest.length > 0) {
+                                        if (typeof nesting[curItem.nest] === 'undefined') {
+                                            nesting[curItem.nest] = true;
+                                            header = this.props.meeting.headers.find(h => h.label === curItem.nest);
+                                            if (header) {
+                                                header = <div className={classes.stepSection}><Typography variant='h3'
+                                                                                                          className={classes.topLevelLabel}>{curItem.nest}</Typography>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                    return <AgendaItem
+                                        forceShow={this.state.showAll}
+                                        activeStep={activeStep}
+                                        key={'ai' + index}
+                                        curItem={curItem} index={index} classes={classes} header={header}
+                                        editMode={this.props.editMode}
+                                        dispatch={this.props.dispatch}
+                                        handleBack={this.handleBack}
+                                        handleNext={this.handleNext}
+                                    />
+                                })}
+                            </Stepper>
+
+                            {activeStep === this.props.meeting.agenda.length && (
+                                <Paper square elevation={0} className={classes.resetContainer}>
+                                    <Button onClick={this.handleReset} className={classes.button}>
+                                        Reset Clock
+                                    </Button>
+                                </Paper>
+                            )}
 
 
-                </div>
-                </Grid>
+                            <Drawer
+                                variant="persistent"
+                                anchor="right"
+                                id={'notesDrawer'}
+                                className={this.state.showDrawer ? classes.drawer : [classes.drawer, classes.hide].join(' ')}
+                                classes={{paper: classes.drawerInner}}
+                                open={this.state.showDrawer}
+                            >
+                                <AgendaItemTools classes={classes}/>
+                            </Drawer>
+
+
+                        </div>
+                    </Grid>
                 </Grid>
 
 

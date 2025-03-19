@@ -1,9 +1,10 @@
 {
   "title":"Open ideation conversation",
+  "rally_title": "Building Democrasee",
   "start": "October 18th, 2020 11:00am",
   "profile": "/images/democrasee_logo_black.png",
   "videofile" : "https://clock.taylormadetraffic.com/screencasts/Meeting-2020-10-18_11.20.52.mp4",
-  "city":"Oakland - LA, CA",
+  "city":"Oakland, CA",
   "type": "meeting",
   "template": "kickoff.1",
   "hosts":[

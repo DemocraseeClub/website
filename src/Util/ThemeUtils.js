@@ -46,7 +46,6 @@ export const rallyStyles = (theme) => ({
   paperRoot: {
     width: "100%",
     textAlign: "left",
-    backgroundColor: theme.palette.primary.dark,
     color: theme.palette.primary.contrastText,
     "& a": {
       color: "inherit",

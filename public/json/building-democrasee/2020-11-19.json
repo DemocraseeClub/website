@@ -1,9 +1,10 @@
 {
   "title":"Development roadmap with Polina and Eli",
+  "rally_title": "Building Democrasee",
   "start": "Thursday, November 19th 9:30am - 11:00am",
   "profile": "/images/democrasee_logo_black.png",
   "videofile" : "https://clock.taylormadetraffic.com/screencasts/Screen%20Recording%202020-11-19%20at%209.50.24%20AM.mp4",
-  "city":"Oakland - LA, CA",
+  "city":"Oakland, CA",
   "type": "meeting",
   "template": "kickoff.1",
   "hosts":[

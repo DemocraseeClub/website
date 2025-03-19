@@ -13,8 +13,12 @@ src/Draftail
 *.mov
 *.mp4
 
+keys
+
 # dependencies
 /node_modules
+*/node_modules
+
 /.pnp
 .pnp.js
 package-lock.json

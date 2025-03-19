@@ -86,7 +86,7 @@ class RallyBlock extends Component {
             profiles.push({displayName:'Apply to Speak', icon:'+'})
         }
 
-        console.log("PROFILES", profiles);
+        // console.log("SPEAKER PROFILES", profiles);
 
         let start = !meeting || !meeting.start_end_times || !meeting.start_end_times.date_start ? false : moment(meeting.start_end_times.date_start.seconds * 1000);
 
