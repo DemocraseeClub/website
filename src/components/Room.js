@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
 import Badge from '@material-ui/core/Badge';
 import RemoteVideo from "./RemoteVideo";
-import Config from "../Config";
 import {withSnackbar} from 'notistack';
 import VideoElement from "./VideoElement";
 import VideoCamIcon from '@material-ui/icons/Videocam';
@@ -16,395 +15,524 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import ShareIcon from "@material-ui/icons/Share";
 import PasswordIcon from "@material-ui/icons/VpnKey";
 import Box from "@material-ui/core/Box";
-
-const VideoStreamMerger = require('video-stream-merger')
-
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import Collapse from "@material-ui/core/Collapse";
+import ViewerManagement from "./ViewerManagement";
+import RoomStore from "../redux/RoomStore";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Room extends React.Component {
+    constructor(props) {
+        super(props);
 
-    constructor(p) {
-        super(p);
+        // Initialize state from the store
+        this.store = RoomStore.getInstance();
         this.state = {
-            myRoom: null,
-            showRoomId : false,
-            enabled: {'video': false, 'audio': false, 'screen': false},
-            startingRoom:false,
-            roomsViewing: [],
-            myStream:null,
-            viewers: [],
+            ...this.store.getState(),
             roomFieldText: '',
-            listener:[],
-            numberOfViewers: 0
-
-        }
-
-        this.peerConnection = null;
-        this.screenStream = null;
-        this.camStream = null;
-
-        this.castBtnRef = React.createRef('');
+            videoLoading: false,
+            audioLoading: false,
+            screenLoading: false
+        };
     }
 
     componentDidMount() {
+        // Subscribe to store changes with event support
+        this.unsubscribe = this.store.subscribe((state, event) => {
+            // Update state
+            this.setState(state);
+
+            // Handle specific events
+            if (event) {
+                switch (event.type) {
+                    case 'mediaError':
+                        this.props.enqueueSnackbar(
+                            `Media error: ${event.error || 'Could not access media'}`,
+                            {variant: 'error'}
+                        );
+                        this.setState({
+                            videoLoading: false,
+                            audioLoading: false,
+                            screenLoading: false
+                        });
+                        break;
+
+                    case 'broadcasterReconnected':
+                        this.props.enqueueSnackbar(
+                            'Broadcaster reconnected',
+                            {variant: 'info'}
+                        );
+                        break;
+                }
+            }
+        });
+
+        // Check URL for roomId
         let roomId = getParam('roomId', document.location.search);
         if (roomId.length === 20) {
-            this.setState({roomFieldText:roomId});
-            document.getElementById('roomIdField').scrollIntoView({block:'start', behavior:'smooth'})
-            this.props.enqueueSnackbar(`Enable your Cam/Mic/Screen & click connect when you are ready to join`, {variant:'success', persist:true});
-        }
-    }
-
-    async componentWillUnmount() {
-        if(this.state.listener.length > 0) {
-            this.state.listener[0]();
-            this.state.listener[1]();
+            this.setState({roomFieldText: roomId});
+            document.getElementById('roomIdField').scrollIntoView({block: 'start', behavior: 'smooth'});
+            this.props.enqueueSnackbar(
+                `Enable your Cam/Mic/Screen & click connect when you are ready to join`,
+                {variant: 'success', persist: true}
+            );
         }
 
-        this.hangUp();
-    }
-
-    displayLocalStreams() {
-        let stream = null;
-        if (this.camStream && this.screenStream) {
-            var merger = new VideoStreamMerger()
-
-            // Add the screen capture. Position it to fill the whole stream (the default)
-            merger.addStream(this.screenStream, {
-                x: 0, // position of the topleft corner
-                y: 0,
-                width: merger.width,
-                height: merger.height,
-                mute: true // we don't want sound from the screen (if there is any)
-            })
-
-            // Add the webcam stream. Position it on the bottom left and resize it to 100x100.
-            merger.addStream(this.camStream, {
-                x: 0,
-                y: merger.height - Math.round(merger.height / 6),
-                width: Math.round(merger.width / 6),
-                height: Math.round(merger.height / 6),
-                mute: this.state.enabled.audio === true ? false : true
-            })
-
-            // Start the merging. Calling this makes the result available to us
-            merger.start()
-
-            // We now have a merged MediaStream!
-            stream = merger.result;
-        } else if (this.screenStream) {
-            stream = this.screenStream;
-        } else if (this.camStream) {
-            stream = this.camStream;
-        }
-
-        if (this.peerConnection) {
-            console.log("adding local stream on display");
-            stream.getTracks().forEach(track => {
-                this.peerConnection.addTrack(track, stream);
-            });
-        }
-
-        this.setState({myStream:stream});
-
-    }
-
-    async toggleCamMic(type) {
-        let enable = {...this.state.enabled};
-        enable[type] = !this.state.enabled[type];
-        if (enable[type] === true) {
-            let stream = await window.navigator.mediaDevices.getUserMedia(enable);
-            this.camStream = stream;
-        } else if (enable.video === false && enable.audio === false) {
-            this.camStream.getTracks().forEach(function(track) {
-                track.stop();
-            });
-            this.camStream = null;
-        }
-        this.setState({enabled: enable}, () => this.displayLocalStreams());
-    }
-
-    async shareScreen() {
-        let enable = {...this.state.enabled}
-        enable.screen = !enable.screen;
-        if (enable.screen === false) {
-            this.setState({enabled: enable});
-        } else {
-            let stream = await navigator.mediaDevices.getDisplayMedia({cursor: true});
-            this.screenStream = stream;
-            this.setState({enabled: enable}, () => this.displayLocalStreams());
-        }
-    }
-
-    createPeerConnection() {
-        console.log('Create PeerConnection with configuration: ', Config.peerConfig);
-        let peerConnection = new RTCPeerConnection(Config.peerConfig);
-        peerConnection.addEventListener('icegatheringstatechange', () => {
-            console.log(`ICE gathering state changed: ${peerConnection.iceGatheringState}`);
-        });
-
-        peerConnection.addEventListener('connectionstatechange', () => {
-            console.log(`Connection state change: ${peerConnection.connectionState}`);
-        });
-
-        peerConnection.addEventListener('signalingstatechange', () => {
-            console.log(`Signaling state change: ${peerConnection.signalingState}`);
-        });
-
-        peerConnection.addEventListener('iceconnectionstatechange ', () => {
-            console.log(`ICE connection state change: ${peerConnection.iceConnectionState}`);
-        });
-
-
-        if (this.state.myStream) {
-            console.log("adding local stream");
-            let stream = this.state.myStream;
-            stream.getTracks().forEach(track => {
-                peerConnection.addTrack(track, stream);
-            });
-            this.setState({myStream:stream})
-        }
-
-        return peerConnection;
-    }
-
-    async createRoom() {
-        this.setState({startingRoom:true}); // because this function can lag and we need to disable the button
-        const roomRef = await window.fireDB.collection('rooms').doc();
-
-        this.peerConnection = this.createPeerConnection();
-
-        this.peerConnection.onaddstream = (event => {
-            console.log("ON ADDED STREAM createRoom", event);
-            this.setState({myStream:event.stream})
-        });
-
-        // Code for collecting ICE candidates below
-        const callerCandidatesCollection = roomRef.collection('callerCandidates');
-        this.peerConnection.addEventListener('icecandidate', event => {
-            if (!event.candidate) {
-                console.log('Got final candidate!');
-                return;
-            }
-            console.log('Got candidate: ', event.candidate);
-            callerCandidatesCollection.add(event.candidate.toJSON());
-        });
-        // Code for collecting ICE candidates above
-
-        // Code for creating a room below
-        const offer = await this.peerConnection.createOffer();
-        await this.peerConnection.setLocalDescription(offer);
-        console.log('Created offer:', offer);
-
-        const roomWithOffer = {'offer': {type: offer.type, sdp: offer.sdp}, viewers:0, roomsViewing: []};
-        await roomRef.set(roomWithOffer);
-
-        /*
-         this.peerConnection.addEventListener('track', event => {
-             console.log('Got viewer track: ', event);
-             console.log('event streams: ', event.streams);
-             let rooms = [...this.state.viewers];
-             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
-             this.setState({viewers: rooms})
-         });
-         this.peerConnection.ontrack = event => {
-             console.log('Got viewer track2:', event);
-             console.log('event streams: ', event.streams);
-             let rooms = [...this.state.viewers];
-             rooms.push({roomId: this.state.myRoom, stream: event.streams[0]});
-             this.setState({viewers: rooms})
-         }
-         */
-
-        const auxList1 = roomRef.onSnapshot(async snapshot => {
-
-            const data = snapshot.data();
-
-            if(data) {
-
-                if (!this.peerConnection.currentRemoteDescription && data && data.answer) {
-                    console.log('Got remote description: ', data.answer);
-                    const rtcSessionDescription = new RTCSessionDescription(data.answer);
-                    await this.peerConnection.setRemoteDescription(rtcSessionDescription);
+        // Check for previous broadcast
+        this.store.checkForPreviousBroadcast(roomId => {
+            this.props.enqueueSnackbar(
+                `You have a recent broadcast room. Would you like to reconnect?`,
+                {
+                    variant: 'info',
+                    persist: true,
+                    action: (
+                        <Button
+                            color="inherit"
+                            variant="outlined"
+                            size="small"
+                            onClick={() => this.handleReconnect(roomId)}
+                        >
+                            Reconnect
+                        </Button>
+                    )
                 }
-
-                let viewers = snapshot.data().roomsViewing;
-                let auxRoomsViewing = this.state.roomsViewing.map((r) => r.roomId)
-                for(let i = viewers.length - 1; i>=0 ;i--){
-                    if(auxRoomsViewing.indexOf(viewers[i])!==-1)
-                        viewers.splice(i,1);
-                }
-                this.setState({viewers: viewers, numberOfViewers:  snapshot.data().viewers })
-            }
-
+            );
         });
-        // Listening for remote session description above
 
-        // Listen for remote ICE candidates below
-        const auxList2 =  roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(async change => {
-                if (change.type === 'added') {
-                    let data = change.doc.data();
-                    console.log(`Got new remote calleeCandidates: ${JSON.stringify(data)}`);
-                    await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
+        // Add event listener for browser navigation
+        window.addEventListener('popstate', this.handlePopState);
+    }
+
+    componentWillUnmount() {
+        // Unsubscribe from store
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+
+        // Clean up store resources
+        this.store.cleanup();
+
+        // Remove event listener
+        window.removeEventListener('popstate', this.handlePopState);
+    }
+
+    // Handle browser navigation
+    handlePopState = (event) => {
+        const roomId = getParam('roomId', document.location.search);
+
+        // If we're broadcasting and navigating away from our room
+        if (this.state.myRoom && roomId !== this.state.myRoom) {
+            this.store.hangUp(true); // Keep room, just clean up local resources
+        }
+
+        // If we're viewing rooms and the URL changes
+        if (this.state.roomsViewing.length > 0) {
+            if (roomId.length === 20) {
+                // Check if we're already viewing this room
+                const existingRoom = this.state.roomsViewing.find(r => r.roomId === roomId);
+                if (!existingRoom) {
+                    // Set the room ID in the field and let the user connect manually
+                    this.setState({roomFieldText: roomId});
                 }
-            });
-        });
-        // Listen for remote ICE candidates above
+            }
+        }
+    };
 
+    // Handle reconnecting to a previous broadcast
+    handleReconnect = async (roomId) => {
+        const success = await this.store.reconnectToRoom(roomId);
 
-        this.setState({myRoom: roomRef.id, listener: [auxList1, auxList2]});
-
-        this.props.enqueueSnackbar(`Share your room ID - ${roomRef.id} - with anyone you want to view your broadcast`, {variant:'success'});
-        return this.peerConnection;
-    }
-
-    async joinRoom() {
-        let newRoomId = this.state.roomFieldText;
-        let rooms = [...this.state.roomsViewing];
-        let i = rooms.find(o => o.roomId === newRoomId);
-        if (!i) {
-            let room = {roomId: newRoomId, stream: new MediaStream()};
-            console.log('adding room', room);
-            rooms.push(room);
-            this.setState({roomsViewing: rooms}, e => {
-                this.setState({roomFieldText: ''})
-            })
+        if (success) {
+            this.props.enqueueSnackbar(
+                `Reconnected to your previous broadcast`,
+                {variant: 'success'}
+            );
         } else {
-            console.log('room already exists');
+            this.props.enqueueSnackbar(
+                `Failed to reconnect to your previous broadcast`,
+                {variant: 'error'}
+            );
         }
-    }
+    };
 
-    handleHangUp(id) {
-        let rooms = [...this.state.roomsViewing];
-        let i = rooms.findIndex(o => o.roomId === id);
-        if (i > -1) {
-            rooms.splice(i, 1);
-            this.setState({roomsViewing: rooms})
-            this.props.enqueueSnackbar('This room was closed');
+    // Handle toggling camera/microphone
+    handleToggleCamMic = async (type) => {
+        // Disable button immediately
+        const tempState = {};
+        tempState[`${type}Loading`] = true;
+        this.setState(tempState);
+
+        try {
+            const success = await this.store.toggleCamMic(type);
+
+            if (!success) {
+                this.props.enqueueSnackbar(
+                    `Failed to toggle ${type}`,
+                    {variant: 'error'}
+                );
+            }
+        } catch (error) {
+            console.error(`Error toggling ${type}:`, error);
+            this.props.enqueueSnackbar(
+                `Error: ${error.message || `Could not toggle ${type}`}`,
+                {variant: 'error'}
+            );
+        }
+
+        // Ensure loading state is cleared
+        tempState[`${type}Loading`] = false;
+        this.setState(tempState);
+    };
+
+    // Handle toggling screen sharing
+    handleToggleScreenShare = async () => {
+        // Disable button immediately
+        this.setState({screenLoading: true});
+
+        try {
+            const success = await this.store.toggleScreenShare();
+
+            if (!success) {
+                this.props.enqueueSnackbar(
+                    `Failed to toggle screen sharing`,
+                    {variant: 'error'}
+                );
+            }
+        } catch (error) {
+            console.error('Error toggling screen share:', error);
+            this.props.enqueueSnackbar(
+                `Error: ${error.message || 'Could not share screen'}`,
+                {variant: 'error'}
+            );
+        }
+
+        // Ensure loading state is cleared
+        this.setState({screenLoading: false});
+    };
+
+    // Handle creating a new room
+    handleCreateRoom = async () => {
+        const success = await this.store.createRoom();
+
+        if (success) {
+            this.props.enqueueSnackbar(
+                `Share your room ID - ${this.state.myRoom} - with anyone you want to view your broadcast`,
+                {variant: 'success'}
+            );
         } else {
-            console.log('room already hung up');
+            console.log(success)
+            this.props.enqueueSnackbar(
+                `Failed to create broadcast room`,
+                {variant: 'error'}
+            );
         }
-    }
+    };
 
-    async hangUp() {
-        console.log("HANGING UP MY ROOM!");
-        let cams = ['camStream', 'screenStream'];
-        cams.forEach(cam => {
-            if (this[cam]) {
-                const tracks = this[cam].getTracks();
-                tracks.forEach(track => {
-                    track.stop();
-                });
-            }
-        })
+    // Handle joining a room
+    handleJoinRoom = async () => {
+        const roomId = this.state.roomFieldText;
 
-        this.camStream = null;
-        this.screenStream = null;
+        if (roomId.length !== 20) {
+            this.props.enqueueSnackbar(
+                `Invalid room ID`,
+                {variant: 'error'}
+            );
 
-        if (this.peerConnection) {
-            this.peerConnection.close();
-            this.peerConnection = null;
+
+            return;
         }
 
-        if (this.state.myRoom) {
-            const roomRef = window.fireDB.collection('rooms').doc(this.state.myRoom);
-            const calleeCandidates = await roomRef.collection('calleeCandidates').get();
-            for (let l = 0; l < calleeCandidates.length; l++) {
-                await calleeCandidates[l].ref.delete();
-            }
-            const callerCandidates = await roomRef.collection('callerCandidates').get();
-            for (let l = 0; l < callerCandidates.length; l++) {
-                await callerCandidates[l].ref.delete();
-            }
-            await roomRef.delete();
+        // Check if already viewing this room
+        const existingRoom = this.state.roomsViewing.find(r => r.roomId === roomId);
+        if (existingRoom) {
+            this.props.enqueueSnackbar(
+                `Already connected to this room`,
+                {variant: 'warning'}
+            );
+            return;
         }
-        this.setState({myRoom:null, startingRoom:false, myStream:null, enabled: {'video': false, 'audio': false, 'screen': false}});
-    }
 
-    copyRoomUrl() {
-        let url = `${document.location.href}${document.location.href.indexOf('?') > -1 ? '&' : '?'}roomId=${this.state.myRoom}`;
-        navigator.clipboard.writeText(url);
-        this.props.enqueueSnackbar(`Your room URL has been copied to your clipboard`, {variant:'success'});
-    }
+        const result = await this.store.joinRoom(roomId);
+
+        if (result.status === 'approved') {
+            this.props.enqueueSnackbar(
+                `Connected to room ${roomId}`,
+                {variant: 'success'}
+            );
+            this.setState({roomFieldText: ''});
+        } else if (result.status === 'pending') {
+            this.props.enqueueSnackbar(
+                `Waiting for broadcaster approval`,
+                {variant: 'info', persist: true}
+            );
+            this.setState({roomFieldText: ''});
+        } else {
+            this.props.enqueueSnackbar(
+                `Failed to join room: ${result.error?.message || 'Unknown error'}`,
+                {variant: 'error'}
+            );
+        }
+    };
+
+    // Handle hanging up
+    handleHangUp = async () => {
+        await this.store.hangUp(true); // Keep room for reconnect
+        this.props.enqueueSnackbar(
+            `Broadcast disconnected`,
+            {variant: 'info'}
+        );
+    };
+
+    // Handle terminating a room
+    handleTerminateRoom = async () => {
+        await this.store.hangUp(false); // Terminate room completely
+        this.props.enqueueSnackbar(
+            `Broadcast terminated`,
+            {variant: 'info'}
+        );
+    };
+
+    // Handle leaving a specific room
+    handleLeaveRoom = async (roomId) => {
+        await this.store.handleHangUp(roomId);
+        this.props.enqueueSnackbar(
+            `Disconnected from room`,
+            {variant: 'info'}
+        );
+    };
+
+    // Handle toggling approve requirement
+    handleToggleRequireApproval = async () => {
+        const success = await this.store.toggleRequireApproval();
+
+        if (success) {
+            this.props.enqueueSnackbar(
+                `Viewer approval ${this.state.requireApproval ? 'enabled' : 'disabled'}`,
+                {variant: 'info'}
+            );
+        } else {
+            this.props.enqueueSnackbar(
+                `Failed to update approval setting`,
+                {variant: 'error'}
+            );
+        }
+    };
+
+    // Handle toggling room ID visibility
+    handleToggleShowRoomId = () => {
+        this.store.toggleShowRoomId();
+
+        if (!this.state.showRoomId) {
+            this.handleCopyRoomUrl();
+        }
+    };
+
+    // Handle copying room URL
+    handleCopyRoomUrl = () => {
+        const success = this.store.copyRoomUrl();
+
+        if (success) {
+            this.props.enqueueSnackbar(
+                `Your room URL has been copied to your clipboard`,
+                {variant: 'success'}
+            );
+        } else {
+            this.props.enqueueSnackbar(
+                `Failed to copy room URL`,
+                {variant: 'error'}
+            );
+        }
+    };
+
+    // Handle toggling viewer management
+    handleToggleViewerManagement = () => {
+        this.store.toggleViewerManagement();
+    };
 
     render() {
-        const isEnabled = this.state.enabled.video === true || this.state.enabled.audio === true || this.state.enabled.screen === true;
-        const hasVideos = (this.state.myStream || this.state.viewers.length > 0 || this.state.roomsViewing.length > 0);
+        const {
+            myRoom, showRoomId, enabled, startingRoom, roomsViewing,
+            myStream, viewers, numberOfViewers, showViewerManagement,
+            requireApproval, videoLoading, audioLoading, screenLoading,
+            approvedViewers, pendingViewers, blockedViewers
+        } = this.state;
+
+        const isEnabled = enabled.video || enabled.audio || enabled.screen;
+        const hasVideos = (myStream || viewers.length > 0 || roomsViewing.length > 0);
 
         return (
             <Box p={1}>
-                    <Grid container justify={'space-between'} alignItems="center" spacing={2} alignContent={'center'}>
-
-                    { (this.state.myRoom) ?
+                <Grid container justify={'space-between'} alignItems="center" spacing={2} alignContent={'center'}>
+                    {myRoom ? (
                         <React.Fragment>
                             <Grid item>
-                                <Button variant="contained" color="primary" onClick={e => this.hangUp()}>Hangup</Button>
-                            </Grid>
-                            <Grid item ><Badge showZero={true} color="error" badgeContent={this.state.numberOfViewers} ><VisibilityIcon /></Badge></Grid>
-                            <Grid item>
-                                <Button variant="contained" color="primary"
-                                        onClick={() => {
-                                            if (!this.state.showRoomId) this.copyRoomUrl();
-                                            this.setState({showRoomId:!this.state.showRoomId})
-                                        }}
-                                        endIcon={<PasswordIcon color={this.state.showRoomId === true ?  'error' : 'default'} />}
-                                >{this.state.showRoomId === true ? this.state.myRoom : ' **** '}</Button>
+                                <Button variant="contained" color="primary" onClick={this.handleHangUp}>Hangup</Button>
                             </Grid>
                             <Grid item>
-                                <ShareIcon onClick={() => this.copyRoomUrl()} />
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={this.handleTerminateRoom}
+                                >
+                                    Terminate
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <Badge showZero={true} color="error"
+                                       onClick={this.handleToggleViewerManagement}
+
+                                       badgeContent={numberOfViewers}>
+                                    <VisibilityIcon/>
+                                </Badge>
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={this.handleToggleShowRoomId}
+                                    endIcon={<PasswordIcon color={showRoomId ? 'error' : 'default'}/>}
+                                >
+                                    {showRoomId ? myRoom : ' **** '}
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <ShareIcon onClick={this.handleCopyRoomUrl}/>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={requireApproval}
+                                            onChange={this.handleToggleRequireApproval}
+                                            color="primary"
+                                        />
+                                    }
+                                    label="Require Approval to Join"
+                                />
                             </Grid>
                         </React.Fragment>
-                        :
+                    ) : (
                         <Grid item>
-                        <Button variant="contained" color="primary" disabled={isEnabled === false || this.state.startingRoom} onClick={e => this.createRoom('me')}>Broadcast</Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                disabled={!isEnabled || startingRoom}
+                                onClick={this.handleCreateRoom}
+                            >
+                                {startingRoom ? 'Starting...' : 'Broadcast'}
+                            </Button>
                         </Grid>
-                    }
+                    )}
 
-                        <Grid item style={{flexGrow:1}} >
-                            <ButtonGroup variant="contained" color="primary" aria-label="broadcast options" style={{marginLeft:10}}>
-                                <Button endIcon={<VideoCamIcon color={this.state.enabled.video === true ?  'error' : 'inherit'} />}
-                                        onClick={e => this.toggleCamMic('video')}>Cam</Button>
-                                <Button endIcon={<MicIcon color={this.state.enabled.audio === true ?  'error' : 'inherit'} />}
-                                        onClick={e => this.toggleCamMic('audio')}>Mic</Button>
-                                <Button endIcon={<ScreenShareIcon color={this.state.enabled.screen === true ? 'error' : 'inherit'} />}
-                                        onClick={e => this.shareScreen()}>Screen</Button>
-                            </ButtonGroup>
-                        </Grid>
-
-                        <Grid item>
-                            <TextField
-                                size={'small'}
-                                margin={'dense'}
-                                label="Enter Room ID"
-                                variant={'filled'}
-                                color="secondary"
-                                inputProps={{maxlength:20}}
-                                id={'roomIdField'}
-                                value={this.state.roomFieldText}
-                                onChange={e => this.setState({roomFieldText: e.target.value})}
-                                InputProps={{
-                                    endAdornment: (
-                                        <Button onClick={() => this.joinRoom()} variant={'contained'}
-                                                color={'secondary'}
-                                                style={this.state.roomFieldText.length !== 20 ? {} : {backgroundColor:'#D83933', color:'#ffffff'}}
-                                                disabled={this.state.roomFieldText.length !== 20}>Connect</Button>
-                                    )
-                                }}
-                            />
-                        </Grid>
-
+                    <Grid item style={{flexGrow: 1}}>
+                        <ButtonGroup variant="contained" color="primary" aria-label="broadcast options"
+                                     style={{marginLeft: 10}}>
+                            <Button
+                                endIcon={
+                                    videoLoading ?
+                                        <CircularProgress size={16} color="inherit"/> :
+                                        <VideoCamIcon color={enabled.video ? 'error' : 'inherit'}/>
+                                }
+                                onClick={() => this.handleToggleCamMic('video')}
+                                disabled={videoLoading || startingRoom}
+                            >
+                                {videoLoading ? 'Loading...' : 'Cam'}
+                            </Button>
+                            <Button
+                                endIcon={
+                                    audioLoading ?
+                                        <CircularProgress size={16} color="inherit"/> :
+                                        <MicIcon color={enabled.audio ? 'error' : 'inherit'}/>
+                                }
+                                onClick={() => this.handleToggleCamMic('audio')}
+                                disabled={audioLoading || startingRoom}
+                            >
+                                {audioLoading ? 'Loading...' : 'Mic'}
+                            </Button>
+                            <Button
+                                endIcon={
+                                    screenLoading ?
+                                        <CircularProgress size={16} color="inherit"/> :
+                                        <ScreenShareIcon color={enabled.screen ? 'error' : 'inherit'}/>
+                                }
+                                onClick={this.handleToggleScreenShare}
+                                disabled={screenLoading || startingRoom}
+                            >
+                                {screenLoading ? 'Loading...' : 'Screen'}
+                            </Button>
+                        </ButtonGroup>
                     </Grid>
-                {hasVideos === false ? '' :
-                <div className={this.props.classes.hScrollContainer}>
-                    <div className={this.props.classes.hScroller} >
-                        {this.state.myStream ?
-                            <div className={this.props.classes.hScrollItem} ><VideoElement roomId={this.state.myRoom} stream={this.state.myStream} muted={true} viewers={this.state.numberOfViewers} /></div> : ''}
-                        {this.state.viewers.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o+i} ><RemoteVideo roomId={o} myRoomId={this.state.myRoom} stream={new MediaStream()} handleHangUp={id => this.handleHangUp(id)} /></div>)}
-                        {this.state.roomsViewing.map((o, i) =>
-                            <div className={this.props.classes.hScrollItem} key={o.roomId+i} ><RemoteVideo roomId={o.roomId} myRoomId={this.state.myRoom} stream={o.stream} handleHangUp={id => this.handleHangUp(id)} /></div>)}
+
+                    <Grid item>
+                        <TextField
+                            size={'small'}
+                            margin={'dense'}
+                            label="Enter Room ID"
+                            variant={'filled'}
+                            color="secondary"
+                            inputProps={{maxLength: 20}}
+                            id={'roomIdField'}
+                            value={this.state.roomFieldText}
+                            onChange={e => this.setState({roomFieldText: e.target.value})}
+                            InputProps={{
+                                endAdornment: (
+                                    <Button
+                                        onClick={this.handleJoinRoom}
+                                        variant={'contained'}
+                                        color={'primary'}
+                                        size={'small'}
+                                        disabled={this.state.roomFieldText.length !== 20}
+                                    >
+                                        Connect
+                                    </Button>
+                                )
+                            }}
+                        />
+                    </Grid>
+                </Grid>
+
+                {/* Viewer Management Panel */}
+                <Collapse p={0} in={showViewerManagement}>
+                    <ViewerManagement
+                        roomId={myRoom}
+                        onManageViewer={(viewerId, action) => this.store.manageViewer(viewerId, action)}
+                        onRefresh={() => this.store.refreshViewerLists()}
+                        approvedViewers={approvedViewers || []}
+                        pendingViewers={pendingViewers || []}
+                        blockedViewers={blockedViewers || []}
+                        activeViewers={viewers || []}
+                    />
+                </Collapse>
+
+                {/* Video Streams */}
+                {hasVideos && (
+                    <div className={this.props.classes.hScrollContainer}>
+                        <div className={this.props.classes.hScroller}>
+                            {myStream && (
+                                <div className={this.props.classes.hScrollItem}>
+                                    <VideoElement
+                                        roomId={myRoom}
+                                        stream={myStream}
+                                        muted={true}
+                                        viewers={numberOfViewers}
+                                    />
+                                </div>
+                            )}
+
+                            {roomsViewing.map((room, index) => (
+                                <div className={this.props.classes.hScrollItem} key={room.roomId + index}>
+                                    <RemoteVideo
+                                        roomId={room.roomId}
+                                        myRoomId={myRoom}
+                                        stream={room.stream}
+                                        handleHangUp={(id) => this.handleLeaveRoom(id)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div> }
+                )}
             </Box>
         );
     }

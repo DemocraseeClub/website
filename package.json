@@ -62,7 +62,8 @@
   },
   "scripts": {
     "start": "set NODE_OPTIONS=--openssl-legacy-provider && set HTTPS=true && react-app-rewired start",
-    "build" :"set NODE_OPTIONS=--openssl-legacy-provider && set HTTPS=true && react-app-rewired build",
+    "start-no-hmr": "set NODE_OPTIONS=--openssl-legacy-provider && set HTTPS=true && set FAST_REFRESH=false && react-app-rewired start",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && set HTTPS=true && react-app-rewired build",
     "build2": "node build.js",
     "eject": "react-scripts eject"
   },

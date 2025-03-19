@@ -1,260 +1,352 @@
 import React from "react";
 import VideoElement from "./VideoElement";
 import PropTypes from "prop-types";
-import Config from "../Config";
+import Typography from "@material-ui/core/Typography";
 import {Beforeunload} from "react-beforeunload";
+import {withSnackbar} from 'notistack';
+import WebRTCService from "../redux/WebRTCService";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class RemoteVideo extends React.Component {
-  constructor(p) {
-    super(p);
-    this.state = { remoteStream: p.stream, view: false, added: false, viewers: null};
-  }
-
-  componentDidMount() {
-    this.joinRoomById(this.props.roomId);
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!this.props.roomId && prevProps.roomId) {
-      this.hangUp();
+    constructor(props) {
+        super(props);
+        this.rtcService = WebRTCService.getInstance();
+        this.state = {
+            remoteStream: props.stream,
+            accessStatus: "checking", // "checking", "approved", "pending", "blocked", "denied"
+            viewers: null,
+            loading: true
+        };
     }
 
-    if(!this.state.added && !prevProps.myRoomId && this.props.myRoomId) {
-      console.log('actualizando')
-      this.handleViewers('add')
-    }
+    componentDidMount() {
+        console.log("RemoteVideo mounting for room:", this.props.roomId);
 
-  }
-
-  async componentWillUnmount() {
-    await this.hangUp();
-    if (this.state.view) {
-      await this.handleViewers("remove");
-      this.setState({ view: false });
-    }
-  }
-
-  async handleViewers(action) {
-    const roomRef = window.fireDB.collection("rooms").doc(this.props.roomId);
-    const roomSnapshot = await roomRef.get();
-
-    if(!roomSnapshot.data()) return -1;
-
-    const viewers = roomSnapshot.data().viewers;
-    const roomsViewing = roomSnapshot.data().roomsViewing;
-
-
-    switch (action) {
-      case "add":
-        let auxRoomsAdd = new Set([...roomsViewing]);
-        if (this.props.myRoomId) {
-          auxRoomsAdd.add(this.props.myRoomId);
-          this.setState({added:true})
-        }
-        console.log(auxRoomsAdd, Array.from(auxRoomsAdd).length, "rommsadd")
-        roomRef.update({
-          viewers: this.props.myRoomId ? Array.from(auxRoomsAdd).length : viewers + 1,
-          roomsViewing: Array.from(auxRoomsAdd),
+        // Subscribe to WebRTC service events with enhanced error handling
+        this.unsubscribe = this.rtcService.subscribe((eventType, data) => {
+            try {
+                console.log("WebRTC event received:", eventType, data);
+                this.handleRtcEvent(eventType, data);
+            } catch (error) {
+                console.error("Error handling WebRTC event:", error);
+            }
         });
-        this.setState({viewers: this.props.myRoomId ? Array.from(auxRoomsAdd).length : viewers + 1})
 
-        break;
-      case "remove":
-        let auxRoomsRemove = [...roomsViewing];
-
-        if (this.props.myRoomId) {
-          let i = auxRoomsRemove.indexOf(this.props.myRoomId);
-          auxRoomsRemove.splice(i, 1);
-        }
-        console.log(auxRoomsRemove, Array.from(auxRoomsRemove).length, "romms remove")
-        roomRef.update({
-          viewers: this.props.myRoomId ?  auxRoomsRemove.length : viewers - 1,
-          roomsViewing: auxRoomsRemove,
-        });
-        this.setState({viewers: this.props.myRoomId ?  auxRoomsRemove.length : viewers - 1})
-        break;
-      default:
-        console.log("invalid action");
-        break;
-    }
-  }
-
-  async joinRoomById(room) {
-    const roomRef = window.fireDB.collection("rooms").doc(room);
-
-    const roomSnapshot = await roomRef.get();
-
-    if (roomSnapshot.data()) {
-      console.log("Got room:", roomSnapshot.exists, roomRef);
-      if (!roomSnapshot.exists) return false;
-
-      this.peerConnection = this.createPeerConnection();
-
-      this.peerConnection.onaddstream = (event) => {
-        console.log("ON ADDED STREAM", event);
-        this.setState({ remoteStream: event.stream });
-      };
-
-      //Updating viewers in Firestore
-      await this.handleViewers("add");
-      this.view = true;
-      this.setState({ view: true });
-      /** */
-
-      // Code for collecting ICE candidates below
-      const calleeCandidatesCollection = roomRef.collection("calleeCandidates");
-      this.peerConnection.addEventListener("icecandidate", (event) => {
-        if (!event.candidate) {
-          console.log("Got final icecandidate!", event);
-          return;
-        }
-        console.log("Got candidate: ", event.candidate);
-        calleeCandidatesCollection.add(event.candidate.toJSON());
-      });
-      // Code for collecting ICE candidates above
-
-      this.peerConnection.addEventListener("track", (event) => {
-        let remoteStream = this.state.remoteStream; // WARN: maybe clone this ?
-        console.log("Got presenter track:", event.streams[0]);
-        event.streams[0].getTracks().forEach((track) => {
-          console.log("Add a track to the remoteStream:", track);
-          remoteStream.addTrack(track);
-        });
-        this.setState({ remoteStream: remoteStream });
-      });
-
-      this.peerConnection.ontrack = (event) => {
-        let remoteStream = this.state.remoteStream; // WARN: maybe clone this ?
-        console.log("Got presenter track:", event.streams[0]);
-        event.streams[0].getTracks().forEach((track) => {
-          console.log("Add a track to the remoteStream:", track);
-          remoteStream.addTrack(track);
-        });
-        this.setState({ remoteStream: remoteStream });
-      };
-
-      // Code for creating SDP answer below
-      const offer = roomSnapshot.data().offer;
-      console.log("Got offer:", offer);
-      await this.peerConnection.setRemoteDescription(
-        new RTCSessionDescription(offer)
-      );
-      const answer = await this.peerConnection.createAnswer();
-      console.log("Created answer:", answer);
-      await this.peerConnection.setLocalDescription(answer);
-
-      const roomWithAnswer = {
-        answer: { type: answer.type, sdp: answer.sdp },
-      };
-      await roomRef.update(roomWithAnswer);
-      // Code for creating SDP answer above
-
-      // Listening for remote ICE candidates below
-      roomRef.collection("callerCandidates").onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach(async (change) => {
-          if (change.type === "added") {
-            let data = change.doc.data();
-            console.log(
-              `Got new remote callerCandidates: ${JSON.stringify(data)}`
+        // Connect to the room with better error reporting
+        this.connectToRoom().catch(error => {
+            console.error("Error in initial room connection:", error);
+            this.setState({
+                accessStatus: 'denied',
+                loading: false
+            });
+            this.props.enqueueSnackbar(
+                `Failed to connect: ${error.message || 'Unknown error'}`,
+                {variant: "error"}
             );
-            await this.peerConnection.addIceCandidate(
-              new RTCIceCandidate(data)
-            );
-          }
         });
-      });
-      // Listening for remote ICE candidates above
-    } else {
-      this.hangUp();
-      console.log("BAD ROOM", roomSnapshot);
-    }
-  }
-
-  createPeerConnection() {
-    console.log(
-      "Create PeerConnection with configuration: ",
-      Config.peerConfig
-    );
-    let peerConnection = new RTCPeerConnection(Config.peerConfig);
-    peerConnection.addEventListener("icegatheringstatechange", () => {
-      console.log(
-        `ICE gathering state changed: ${peerConnection.iceGatheringState}`
-      );
-    });
-
-    peerConnection.addEventListener("connectionstatechange", async () => {
-      console.log(`Connection state change: ${peerConnection.connectionState}`);
-
-      switch (peerConnection.connectionState) {
-        case "disconnected":
-          await this.handleViewers("remove");
-          this.setState({ view: false });
-
-          break;
-        default:
-          break;
-      }
-    });
-
-    peerConnection.addEventListener("signalingstatechange", () => {
-      console.log(`Signaling state change: ${peerConnection.signalingState}`);
-    });
-
-    peerConnection.addEventListener("iceconnectionstatechange ", () => {
-      console.log(
-        `ICE connection state change: ${peerConnection.iceConnectionState}`
-      );
-    });
-
-    if (this.state.remoteStream) {
-      console.log("adding remote stream");
-      this.state.remoteStream.getTracks().forEach((track) => {
-        peerConnection.addTrack(track, this.state.remoteStream);
-      });
     }
 
-    return peerConnection;
-  }
+    componentDidUpdate(prevProps) {
+        // If the room ID changed, reconnect
+        if (this.props.roomId !== prevProps.roomId) {
+            console.log("Room ID changed, reconnecting to:", this.props.roomId);
+            this.setState({loading: true, accessStatus: "checking"});
+            this.connectToRoom().catch(error => {
+                console.error("Error reconnecting to room:", error);
+                this.setState({
+                    accessStatus: 'denied',
+                    loading: false
+                });
+            });
+        }
 
-  async hangUp() {
-    console.log("HANGING UP REMOTE!");
-    if (this.remoteStream) {
-      this.remoteStream.getTracks().forEach((track) => track.stop());
+        // If the stream prop changes
+        if (prevProps.stream !== this.props.stream) {
+            console.log("Stream prop changed in RemoteVideo");
+            if (this.props.stream && this.props.stream.getTracks().length > 0) {
+                this.setState({remoteStream: this.props.stream});
+            }
+        }
     }
 
-    if (this.peerConnection) {
-      this.peerConnection.close();
+    componentWillUnmount() {
+        console.log("RemoteVideo unmounting for room:", this.props.roomId);
+
+        // Clean up event listener
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+
+        // Leave the room
+        this.rtcService.leaveRoom(this.props.myRoomId);
     }
 
-    this.setState({ remoteStream: null }, () => {
-      this.props.handleHangUp(this.props.roomId);
-    });
-  }
+    // Handle WebRTC service events
+    handleRtcEvent = (eventType, data) => {
+        switch (eventType) {
+            case 'remoteStreamReceived':
+                console.log("Remote stream received:", data);
 
-  async handleBeforeUnload(e) {
-    if (this.state.view) {
-      e.preventDefault();
-      await this.handleViewers("remove");
-      this.setState({ view: false });
+                // Log detailed track information
+                if (data.stream) {
+                    console.log(`Stream ID: ${data.stream.id}`);
+                    console.log(`Video tracks: ${data.stream.getVideoTracks().length}`);
+                    console.log(`Audio tracks: ${data.stream.getAudioTracks().length}`);
+
+                    data.stream.getTracks().forEach((track, index) => {
+                        console.log(`Track ${index}: ${track.kind}, enabled: ${track.enabled}, muted: ${track.muted}`);
+                    });
+                }
+
+                // Only update if it's for our room
+                if (this.props.roomId === data.roomId) {
+                    // Verify the stream has tracks
+                    if (data.stream) { //  && (data.stream.getVideoTracks().length > 0 || data.stream.getAudioTracks().length > 0)
+                        this.setState({
+                            remoteStream: data.stream,
+                            loading: false,
+                            trackInfo: {
+                                videoTracks: data.stream.getVideoTracks().length,
+                                audioTracks: data.stream.getAudioTracks().length
+                            }
+                        });
+                        // Since the VideoElement component will handle attaching the stream,
+                        // we don't need to duplicate that here
+                    } else {
+                        console.warn("Received stream has no tracks");
+                    }
+                }
+                break;
+
+            case 'roomJoined':
+                if (data.roomId === this.props.roomId && data.status === 'approved') {
+                    this.setState({
+                        accessStatus: 'approved',
+                        loading: false
+                    });
+                }
+                break;
+
+            case 'accessBlocked':
+                if (data.roomId === this.props.roomId) {
+                    this.setState({
+                        accessStatus: 'blocked',
+                        loading: false
+                    });
+                    this.props.enqueueSnackbar("You have been blocked from this room", {variant: "error"});
+                }
+                break;
+
+            case 'accessRevoked':
+                if (data.roomId === this.props.roomId) {
+                    this.setState({
+                        accessStatus: 'pending',
+                        loading: false
+                    });
+                    this.props.enqueueSnackbar("Waiting for broadcaster approval", {variant: "info"});
+                }
+                break;
+
+            case 'roomClosed':
+                if (data.roomId === this.props.roomId) {
+                    this.setState({
+                        accessStatus: 'denied',
+                        loading: false
+                    });
+                    this.props.enqueueSnackbar("This room has been closed", {variant: "info"});
+                    if (this.props.handleHangUp) {
+                        this.props.handleHangUp(this.props.roomId);
+                    }
+                }
+                break;
+
+            case 'broadcasterReconnected':
+                this.props.enqueueSnackbar("Broadcaster reconnected - reestablishing connection", {variant: "info"});
+                break;
+
+            case 'viewerCountChanged':
+                this.setState({viewers: data.count});
+                break;
+
+            case 'hungUp':
+                this.setState({loading: false});
+                break;
+        }
+    };
+
+    // Connect to the room
+    connectToRoom = async () => {
+        try {
+            console.log("Connecting to room:", this.props.roomId);
+            const result = await this.rtcService.joinRoom(this.props.roomId, this.props.myRoomId);
+            console.log("Join room result:", result);
+
+            if (result.status === 'approved') {
+                this.setState({
+                    accessStatus: 'approved',
+                    loading: false
+                });
+            } else if (result.status === 'pending') {
+                this.setState({
+                    accessStatus: 'pending',
+                    loading: false
+                });
+                this.props.enqueueSnackbar("Waiting for broadcaster approval", {variant: "info"});
+            } else {
+                this.setState({
+                    accessStatus: 'denied',
+                    loading: false
+                });
+                this.props.enqueueSnackbar("Could not join room", {variant: "error"});
+            }
+        } catch (error) {
+            console.error("Error joining room:", error);
+            this.setState({
+                accessStatus: 'denied',
+                loading: false
+            });
+            this.props.enqueueSnackbar("Error joining room: " + error.message, {variant: "error"});
+
+            if (this.props.handleHangUp) {
+                this.props.handleHangUp(this.props.roomId);
+            }
+        }
+    };
+
+    // Handle beforeunload event
+    handleBeforeUnload = (e) => {
+        e.preventDefault();
+        this.rtcService.leaveRoom(this.props.myRoomId);
+    };
+
+    render() {
+        const {accessStatus, remoteStream, viewers, loading} = this.state;
+
+        console.log("RemoteVideo render state:", {
+            accessStatus,
+            hasStream: !!remoteStream,
+            streamTracks: remoteStream ? remoteStream.getTracks().length : 0,
+            viewers,
+            loading
+        });
+
+        // Show loading state
+        if (loading) {
+            return (
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 20,
+                    height: 250,
+                    width: '100%',
+                    backgroundColor: '#f5f5f5',
+                    borderRadius: 4
+                }}>
+                    <CircularProgress size={40}/>
+                    <Typography variant="body1" style={{marginTop: 16}}>
+                        Connecting to room...
+                    </Typography>
+                </div>
+            );
+        }
+
+        // Show pending approval state
+        if (accessStatus === "pending") {
+            return (
+                <div style={{
+                    textAlign: "center",
+                    padding: 20,
+                    height: 250,
+                    width: '100%',
+                    backgroundColor: '#e3f2fd',
+                    borderRadius: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Typography variant="h6">Waiting for approval...</Typography>
+                    <Typography variant="body2">
+                        The broadcaster needs to approve your request to view this stream.
+                    </Typography>
+                </div>
+            );
+        }
+
+        // Show blocked or denied state
+        if (accessStatus === "blocked" || accessStatus === "denied") {
+            return (
+                <div style={{
+                    textAlign: "center",
+                    padding: 20,
+                    height: 250,
+                    width: '100%',
+                    backgroundColor: '#ffebee',
+                    borderRadius: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Typography variant="h6">Access Denied</Typography>
+                    <Typography variant="body2">
+                        {accessStatus === "blocked"
+                            ? "You have been blocked from viewing this stream."
+                            : "This room is not available or you do not have permission to join."}
+                    </Typography>
+                </div>
+            );
+        }
+
+        // Verify we have a valid stream with tracks
+        if (!remoteStream || remoteStream.getTracks().length === 0) {
+            return (
+                <div style={{
+                    textAlign: "center",
+                    padding: 20,
+                    height: 250,
+                    width: '100%',
+                    backgroundColor: '#fff9c4',
+                    borderRadius: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Typography variant="h6">Waiting for media...</Typography>
+                    <Typography variant="body2">
+                        Connected to room, but no video stream is available yet.
+                    </Typography>
+                </div>
+            );
+        }
+
+        // Show the video stream for approved users
+        return (
+            <Beforeunload onBeforeunload={this.handleBeforeUnload}>
+                <VideoElement
+                    stream={remoteStream}
+                    roomId={this.props.roomId}
+                    notShowCode={true}
+                    viewers={viewers}
+                />
+            </Beforeunload>
+        );
     }
-  }
-
-  render() {
-    return (
-      <Beforeunload onBeforeunload={(e) => this.handleBeforeUnload(e)}>
-        <VideoElement
-          stream={this.state.remoteStream}
-          roomId={this.props.roomId}
-          notShowCode={true}
-          viewers={this.state.viewers}
-        />
-      </Beforeunload>
-    );
-  }
 }
 
 RemoteVideo.propTypes = {
-  roomId: PropTypes.string.isRequired,
+    roomId: PropTypes.string.isRequired,
+    myRoomId: PropTypes.string,
+    stream: PropTypes.object,
+    handleHangUp: PropTypes.func,
+    enqueueSnackbar: PropTypes.func.isRequired
 };
 
-export default RemoteVideo;
+RemoteVideo.defaultProps = {
+    stream: new MediaStream()
+};
+
+export default withSnackbar(RemoteVideo);

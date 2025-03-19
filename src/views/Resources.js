@@ -29,8 +29,7 @@ class Resources extends React.Component {
   }
 
   componentDidMount() {
-    window.fireDB
-      .collection("resource_types")
+    window.fireDB.collection("resource_types")
       .get()
       .then((types) => {
         var rTypes = types.docs.map((doc) => ({ id: doc.id, ...doc.data() }));

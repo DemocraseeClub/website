@@ -10,10 +10,42 @@ const MOVE_RALLY_HEAD = 'rally:MOVE_RALLY_HEAD';
 const ITEM_INIT_COUNTER = 'rally:ITEM_INIT_COUNTER';
 const COUNTDOWN_TIMER = 'rally:COUNTDOWN_TIMER';
 
+// Add this function to entityDataReducer.js
+function stripCircularReferences(obj, seen = new WeakSet()) {
+    // If we've seen this object before, return null to break the circular reference
+    if (seen.has(obj)) return null;
+
+    // Add this object to our set of seen objects
+    if (typeof obj === 'object' && obj !== null) {
+        seen.add(obj);
+
+        // Handle arrays
+        if (Array.isArray(obj)) {
+            return obj.map(item => stripCircularReferences(item, seen));
+        }
+
+        // Handle objects
+        const result = {};
+        for (const key in obj) {
+            // Skip Firebase document references or functions
+            if (typeof obj[key] === 'function' ||
+                (obj[key] && typeof obj[key].get === 'function') ||
+                (obj[key] && typeof obj[key].onSnapshot === 'function')) {
+                continue;
+            }
+            result[key] = stripCircularReferences(obj[key], seen);
+        }
+        return result;
+    }
+
+    // Return primitive values as is
+    return obj;
+}
+
 export const entityDataSuccess = (rally, meeting) => ({
     type: ITEM_DATA_SUCCESS,
-    rally: rally,
-    meeting: meeting
+    rally: stripCircularReferences(rally),
+    meeting: stripCircularReferences(meeting)
 });
 
 export const entityDataStarted = (url) => ({
