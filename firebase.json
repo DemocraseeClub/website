@@ -19,10 +19,6 @@
     ],
     "rewrites": [
       {
-        "source": "/rally/**",
-        "function": "injectMeta"
-      },
-      {
         "source": "/api/**",
         "function": "api"
       },

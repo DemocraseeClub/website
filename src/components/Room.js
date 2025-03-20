@@ -198,6 +198,13 @@ class Room extends React.Component {
                     `Failed to toggle screen sharing`,
                     {variant: 'error'}
                 );
+            } else {
+                const stream = this.state.myStream;
+                console.log('[WRTC] Screen share stream tracks:', stream.getTracks().map(t => ({
+                    kind: t.kind,
+                    enabled: t.enabled,
+                    muted: t.muted
+                })));
             }
         } catch (error) {
             console.error('Error toggling screen share:', error);
@@ -399,10 +406,12 @@ class Room extends React.Component {
                             <Grid item>
                                 <ShareIcon onClick={this.handleCopyRoomUrl}/>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item>
                                 <FormControlLabel
+                                    size={'small'}
                                     control={
                                         <Switch
+                                            size={'small'}
                                             checked={requireApproval}
                                             onChange={this.handleToggleRequireApproval}
                                             color="primary"

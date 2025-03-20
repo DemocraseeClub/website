@@ -20,12 +20,20 @@ class RemoteVideo extends React.Component {
     }
 
     componentDidMount() {
-        console.log("RemoteVideo mounting for room:", this.props.roomId);
+        console.log("[WRTC] RemoteVideo mounting for room:", this.props.roomId);
+        console.log('[WRTC] Remote stream tracks:', this.props.stream?.getTracks().map(t => ({
+            kind: t.kind,
+            enabled: t.enabled,
+            muted: t.muted
+        })));
+        if (!this.props.stream) {
+            console.warn('No remote stream received in RemoteVideo');
+        }
 
         // Subscribe to WebRTC service events with enhanced error handling
         this.unsubscribe = this.rtcService.subscribe((eventType, data) => {
             try {
-                console.log("WebRTC event received:", eventType, data);
+                console.log("[WRTC] WebRTC event received:", eventType, data);
                 this.handleRtcEvent(eventType, data);
             } catch (error) {
                 console.error("Error handling WebRTC event:", error);
@@ -49,7 +57,7 @@ class RemoteVideo extends React.Component {
     componentDidUpdate(prevProps) {
         // If the room ID changed, reconnect
         if (this.props.roomId !== prevProps.roomId) {
-            console.log("Room ID changed, reconnecting to:", this.props.roomId);
+            console.log("[WRTC] Room ID changed, reconnecting to:", this.props.roomId);
             this.setState({loading: true, accessStatus: "checking"});
             this.connectToRoom().catch(error => {
                 console.error("Error reconnecting to room:", error);
@@ -62,7 +70,7 @@ class RemoteVideo extends React.Component {
 
         // If the stream prop changes
         if (prevProps.stream !== this.props.stream) {
-            console.log("Stream prop changed in RemoteVideo");
+            console.log("[WRTC] Stream prop changed in RemoteVideo");
             if (this.props.stream && this.props.stream.getTracks().length > 0) {
                 this.setState({remoteStream: this.props.stream});
             }
@@ -70,7 +78,7 @@ class RemoteVideo extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log("RemoteVideo unmounting for room:", this.props.roomId);
+        console.log("[WRTC] RemoteVideo unmounting for room:", this.props.roomId);
 
         // Clean up event listener
         if (this.unsubscribe) {
@@ -85,16 +93,16 @@ class RemoteVideo extends React.Component {
     handleRtcEvent = (eventType, data) => {
         switch (eventType) {
             case 'remoteStreamReceived':
-                console.log("Remote stream received:", data);
+                console.log("[WRTC] Remote stream received:", data);
 
                 // Log detailed track information
                 if (data.stream) {
-                    console.log(`Stream ID: ${data.stream.id}`);
-                    console.log(`Video tracks: ${data.stream.getVideoTracks().length}`);
-                    console.log(`Audio tracks: ${data.stream.getAudioTracks().length}`);
+                    console.log(`[WRTC] Stream ID: ${data.stream.id}`);
+                    console.log(`[WRTC] Video tracks: ${data.stream.getVideoTracks().length}`);
+                    console.log(`[WRTC] Audio tracks: ${data.stream.getAudioTracks().length}`);
 
                     data.stream.getTracks().forEach((track, index) => {
-                        console.log(`Track ${index}: ${track.kind}, enabled: ${track.enabled}, muted: ${track.muted}`);
+                        console.log(`[WRTC] Track ${index}: ${track.kind}, enabled: ${track.enabled}, muted: ${track.muted}`);
                     });
                 }
 
@@ -177,9 +185,9 @@ class RemoteVideo extends React.Component {
     // Connect to the room
     connectToRoom = async () => {
         try {
-            console.log("Connecting to room:", this.props.roomId);
+            console.log("[WRTC] Connecting to room:", this.props.roomId);
             const result = await this.rtcService.joinRoom(this.props.roomId, this.props.myRoomId);
-            console.log("Join room result:", result);
+            console.log("[WRTC] Join room result:", result);
 
             if (result.status === 'approved') {
                 this.setState({
@@ -221,14 +229,6 @@ class RemoteVideo extends React.Component {
 
     render() {
         const {accessStatus, remoteStream, viewers, loading} = this.state;
-
-        console.log("RemoteVideo render state:", {
-            accessStatus,
-            hasStream: !!remoteStream,
-            streamTracks: remoteStream ? remoteStream.getTracks().length : 0,
-            viewers,
-            loading
-        });
 
         // Show loading state
         if (loading) {

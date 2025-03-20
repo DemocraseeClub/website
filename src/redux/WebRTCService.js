@@ -16,7 +16,7 @@ class WebRTCService {
         this.eventListeners = {};
 
         // Initialize WebRTC diagnostics
-        WebRTCDiagnostics.addToWebRTCService(this);
+        window.WebRTCDiagnostics = WebRTCDiagnostics.addToWebRTCService(this);
         WebRTCDiagnostics.setupDiagnosticLogging();
     }
 
@@ -32,10 +32,10 @@ class WebRTCService {
      * Create a new RTCPeerConnection
      */
     createPeerConnection() {
-        console.log('Create PeerConnection with configuration:', Config.peerConfig);
+        console.log('[WRTC] Create PeerConnection with configuration:', Config.peerConfig);
 
         if (this.peerConnection) {
-            console.log('Closing existing peer connection before creating new one');
+            console.log('[WRTC] Closing existing peer connection before creating new one');
             this.peerConnection.close();
         }
 
@@ -43,18 +43,18 @@ class WebRTCService {
 
         // Enhanced event logging
         this.peerConnection.addEventListener('icegatheringstatechange', () => {
-            console.log(`ICE gathering state changed: ${this.peerConnection.iceGatheringState}`);
+            console.log(`[WRTC] ICE gathering state changed: ${this.peerConnection.iceGatheringState}`);
         });
 
         this.peerConnection.addEventListener('connectionstatechange', () => {
-            console.log(`Connection state change: ${this.peerConnection.connectionState}`);
+            console.log(`[WRTC] Connection state change: ${this.peerConnection.connectionState}`);
 
             // Log more details about connection state
             if (this.peerConnection.connectionState === 'connected') {
-                console.log('WebRTC connection established successfully');
+                console.log('[WRTC] WebRTC connection established successfully');
                 this.logConnectionStats(); // Added stats logging
             } else if (this.peerConnection.connectionState === 'failed') {
-                console.error('WebRTC connection failed');
+                console.error('[WRTC] WebRTC connection failed');
                 this.notifyListeners('connectionError', {
                     error: 'Connection failed',
                     state: this.peerConnection.connectionState
@@ -68,23 +68,23 @@ class WebRTCService {
         });
 
         this.peerConnection.addEventListener('signalingstatechange', () => {
-            console.log(`Signaling state change: ${this.peerConnection.signalingState}`);
+            console.log(`[WRTC] Signaling state change: ${this.peerConnection.signalingState}`);
         });
 
         this.peerConnection.addEventListener('iceconnectionstatechange', () => {
-            console.log(`ICE connection state change: ${this.peerConnection.iceConnectionState}`);
+            console.log(`[WRTC] ICE connection state change: ${this.peerConnection.iceConnectionState}`);
 
             // Add specific handling for failed ICE connections
             if (this.peerConnection.iceConnectionState === 'failed') {
-                console.error('ICE connection failed - attempting ICE restart');
+                console.error('[WRTC] ICE connection failed - attempting ICE restart');
                 this.restartIce();
             }
         });
 
         // Track event handler - CRITICAL for receiving remote streams
         this.peerConnection.addEventListener('track', event => {
-            console.log('Remote track received:', event);
-            console.log('Track info:', {
+            console.log('[WRTC] Remote track received:', event);
+            console.log('[WRTC] Track info:', {
                 kind: event.track.kind,
                 enabled: event.track.enabled,
                 readyState: event.track.readyState,
@@ -98,8 +98,10 @@ class WebRTCService {
 
                 // Add ended event listeners to track stream lifecycle
                 remoteStream.getTracks().forEach(track => {
+                    console.log('[WRTC] Adding screen track to peer connection:', track.kind);
+
                     track.addEventListener('ended', () => {
-                        console.log(`Remote ${track.kind} track ended`);
+                        console.log(`[WRTC] Remote ${track.kind} track ended`);
                     });
                 });
 
@@ -109,12 +111,12 @@ class WebRTCService {
                     roomId: this.roomId
                 });
             } else {
-                console.warn('Received track event without stream');
+                console.warn('[WRTC] Received track event without stream');
             }
         });
 
         // Debug the state of the connection
-        console.log('Peer connection created with initial states:', {
+        console.log('[WRTC] Peer connection created with initial states:', {
             signalingState: this.peerConnection.signalingState,
             iceGatheringState: this.peerConnection.iceGatheringState,
             iceConnectionState: this.peerConnection.iceConnectionState,
@@ -161,21 +163,21 @@ class WebRTCService {
                     }
                 });
 
-                console.log('Connection stats:', statsData);
+                console.log('[WRTC] Connection stats:', statsData);
 
                 // Look for potential issues
                 if (statsData.inbound.length === 0 && statsData.outbound.length > 0) {
-                    console.warn('Sending media but not receiving any - check remote side');
+                    console.warn('[WRTC] Sending media but not receiving any - check remote side');
                 } else if (statsData.inbound.length > 0 && statsData.outbound.length === 0) {
-                    console.warn('Receiving media but not sending any - check local streams');
+                    console.warn('[WRTC] Receiving media but not sending any - check local streams');
                 }
 
                 if (statsData.candidatePairs.length === 0) {
-                    console.warn('No successful candidate pairs - possible connectivity issue');
+                    console.warn('[WRTC] No successful candidate pairs - possible connectivity issue');
                 }
             })
             .catch(error => {
-                console.error('Error getting stats:', error);
+                console.error('[WRTC] Error getting stats:', error);
             });
     }
 
@@ -186,7 +188,7 @@ class WebRTCService {
         if (!this.peerConnection) return;
 
         try {
-            console.log('Attempting ICE restart');
+            console.log('[WRTC] Attempting ICE restart');
 
             // For broadcaster, create a new offer with ICE restart
             if (this.roomId && this.broadcasterId) {
@@ -205,14 +207,14 @@ class WebRTCService {
                         });
                     })
                     .then(() => {
-                        console.log('ICE restart offer sent');
+                        console.log('[WRTC] ICE restart offer sent');
                     })
                     .catch(error => {
-                        console.error('Error during ICE restart:', error);
+                        console.error('[WRTC] Error during ICE restart:', error);
                     });
             }
         } catch (error) {
-            console.error('Failed to restart ICE:', error);
+            console.error('[WRTC] Failed to restart ICE:', error);
         }
     }
 
@@ -221,7 +223,7 @@ class WebRTCService {
      */
     addLocalStreamsToPeerConnection() {
         if (!this.peerConnection) {
-            console.warn('No peer connection available for adding tracks');
+            console.warn('[WRTC] No peer connection available for adding tracks');
             return;
         }
 
@@ -230,10 +232,10 @@ class WebRTCService {
         senders.forEach(sender => {
             if (sender.track) {
                 try {
-                    console.log(`Removing track: ${sender.track.kind}`);
+                    console.log(`[WRTC] Removing track: ${sender.track.kind}`);
                     this.peerConnection.removeTrack(sender);
                 } catch (error) {
-                    console.warn("Error removing track:", error);
+                    console.warn("[WRTC] Error removing track:", error);
                 }
             }
         });
@@ -242,19 +244,19 @@ class WebRTCService {
         const streamToUse = this.localStreams.merged || this.localStreams.screen || this.localStreams.camera;
 
         if (streamToUse) {
-            console.log(`Adding tracks from ${streamToUse === this.localStreams.merged ? 'merged' :
+            console.log(`[WRTC] Adding tracks from ${streamToUse === this.localStreams.merged ? 'merged' :
                 streamToUse === this.localStreams.screen ? 'screen' : 'camera'} stream`);
 
             streamToUse.getTracks().forEach(track => {
-                console.log(`Adding track: ${track.kind}, enabled: ${track.enabled}, muted: ${track.muted}`);
+                console.log(`[WRTC] Adding track: ${track.kind}, enabled: ${track.enabled}, muted: ${track.muted}`);
                 this.peerConnection.addTrack(track, streamToUse);
             });
 
             // Log the senders after adding
             const updatedSenders = this.peerConnection.getSenders();
-            console.log(`Peer connection now has ${updatedSenders.length} senders`);
+            console.log(`[WRTC] Peer connection now has ${updatedSenders.length} senders`);
         } else {
-            console.warn('No local stream available to add to peer connection');
+            console.warn('[WRTC] No local stream available to add to peer connection');
         }
     }
 
@@ -337,7 +339,7 @@ class WebRTCService {
 
             return true;
         } catch (error) {
-            console.error(`Error toggling ${type}:`, error);
+            console.error(`[WRTC] Error toggling ${type}:`, error);
             // Notify listeners of the error
             this.notifyListeners('mediaError', {type, error: error.message});
             return false;
@@ -374,21 +376,19 @@ class WebRTCService {
                     video: {
                         cursor: "always",
                         displaySurface: "monitor"
-                    },
-                    audio: true // Try to capture audio too if available
+                    }
                 }).catch(err => {
-                    console.error("Error getting display media:", err);
+                    console.error("[WRTC] Error getting display media:", err);
                     throw err;
                 });
 
-                console.log(`Got screen share stream with ${stream.getTracks().length} tracks: `,
-                    stream.getTracks().map(t => `${t.kind}:${t.label}`));
+                console.log(`[WRTC] Got screen share stream with ${stream.getTracks().length} tracks`);
 
                 // Stop any existing screen tracks before replacing
                 if (this.localStreams.screen) {
                     this.localStreams.screen.getTracks().forEach(track => {
                         track.stop();
-                        console.log(`Stopped track: ${track.kind}`);
+                        console.log(`[WRTC] Stopped track: ${track.kind}`);
                     });
                 }
 
@@ -397,7 +397,7 @@ class WebRTCService {
                 // Set up track ended handler
                 stream.getTracks().forEach(track => {
                     track.onended = () => {
-                        console.log(`Screen share ${track.kind} track ended by user`);
+                        console.log(`[WRTC] Screen share ${track.kind} track ENDED by user`);
                         // Only handle screen stopping if we still have screen share enabled
                         if (this.localStreams.screen) {
                             this.toggleScreenShare(false);
@@ -410,7 +410,7 @@ class WebRTCService {
                 if (this.localStreams.screen) {
                     this.localStreams.screen.getTracks().forEach(track => {
                         track.stop();
-                        console.log(`Stopped ${track.kind} track: ${track.label}`);
+                        console.log(`[WRTC] Stopped ${track.kind} track: ${track.label}`);
                     });
                     this.localStreams.screen = null;
                 }
@@ -431,7 +431,7 @@ class WebRTCService {
 
             return true;
         } catch (error) {
-            console.error('Error toggling screen share:', error);
+            console.error('[WRTC] Error toggling screen share:', error);
             this.notifyListeners('mediaError', {type: 'screen', error: error.message});
             return false;
         }
@@ -441,13 +441,13 @@ class WebRTCService {
         if (!this.peerConnection) return;
 
         try {
-            console.log("Renegotiating connection after media change");
+            console.log("[WRTC] Renegotiating connection after media change");
 
             // Create a new offer with iceCandidates in flight
             const offer = await this.peerConnection.createOffer();
             await this.peerConnection.setLocalDescription(offer);
 
-            console.log("Created new offer for renegotiation:", {
+            console.log("[WRTC] Created new offer for renegotiation:", {
                 type: offer.type,
                 sdpLength: offer.sdp.length
             });
@@ -459,15 +459,15 @@ class WebRTCService {
                     'offer': {type: offer.type, sdp: offer.sdp},
                     'renegotiated': new Date().toISOString() // Add timestamp to track renegotiation
                 });
-                console.log("Updated room with new offer for renegotiation");
+                console.log("[WRTC] Updated room with new offer for renegotiation");
             }
             // For viewers with active connections - this implementation would need expansion
             else if (this.roomId && this.viewerId) {
                 // This is a simplified version - would need more work for bidirectional
-                console.log("Viewer renegotiation not fully implemented yet");
+                console.log("[WRTC] Viewer renegotiation not fully implemented yet");
             }
         } catch (error) {
-            console.error("Error renegotiating connection:", error);
+            console.error("[WRTC] Error renegotiating connection:", error);
         }
     }
 
@@ -485,7 +485,7 @@ class WebRTCService {
             this.localStreams.merged = null;
 
             if (this.localStreams.screen && this.localStreams.camera) {
-                console.log("Attempting to merge video and camera streams")
+                console.log("[WRTC] Attempting to merge video and camera streams")
                 // Create new merger
                 const VideoStreamMerger = require('video-stream-merger');
                 this.merger = new VideoStreamMerger();
@@ -525,7 +525,7 @@ class WebRTCService {
                     try {
                         this.peerConnection.removeTrack(sender);
                     } catch (error) {
-                        console.warn("Error removing track:", error);
+                        console.warn("[WRTC] Error removing track:", error);
                         // Continue despite error
                     }
                 });
@@ -539,7 +539,7 @@ class WebRTCService {
                 stream: this.localStreams.merged || this.localStreams.screen || this.localStreams.camera
             });
         } catch (error) {
-            console.error("Error updating merged stream:", error);
+            console.error("[WRTC] Error updating merged stream:", error);
             this.notifyListeners('mediaError', {error: error.message});
         }
     }
@@ -586,7 +586,7 @@ class WebRTCService {
         const callerCandidatesCollection = roomRef.collection('callerCandidates');
         this.peerConnection.addEventListener('icecandidate', event => {
             if (event.candidate) {
-                console.log('Got ICE candidate:', event.candidate);
+                console.log('[WRTC] Got ICE candidate:', event.candidate);
                 callerCandidatesCollection.add(event.candidate.toJSON());
             }
         });
@@ -597,7 +597,7 @@ class WebRTCService {
         // Create offer
         const offer = await this.peerConnection.createOffer();
         await this.peerConnection.setLocalDescription(offer);
-        console.log("Local description set, ICE gathering should start now");
+        console.log("[WRTC] Local description set, ICE gathering should start now");
 
         return {roomRef, roomId: this.roomId, offer};
     }
@@ -614,7 +614,7 @@ class WebRTCService {
 
             // If we have a remote answer but haven't set it yet
             if (!this.peerConnection.currentRemoteDescription && data.answer) {
-                console.log('Got remote description:', data.answer);
+                console.log('[WRTC] Got remote description:', data.answer);
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
                 await this.peerConnection.setRemoteDescription(rtcSessionDescription);
             }
@@ -630,12 +630,14 @@ class WebRTCService {
             snapshot.docChanges().forEach(async change => {
                 if (change.type === 'added') {
                     const data = change.doc.data();
-                    console.log('Got new remote ICE candidate:', data);
+                    console.log('[WRTC] Got new remote ICE candidate:', data);
                     try {
                         await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
                     } catch (error) {
-                        console.error('Error adding ICE candidate:', error);
+                        console.error('[WRTC] Error adding ICE candidate:', error);
                     }
+                } else {
+                    console.log(`[WRTC] calleeCandidates changed to ${change.type}:`);
                 }
             });
         });
@@ -675,9 +677,10 @@ class WebRTCService {
             // Notify listeners that room was created
             this.notifyListeners('roomCreated', {roomId: this.roomId});
 
+
             return this.roomId;
         } catch (error) {
-            console.error('Error creating room:', error);
+            console.error('[WRTC] Error creating room:', error);
             throw error;
         }
     }
@@ -705,7 +708,7 @@ class WebRTCService {
             }
 
             // Clear out old ICE candidates
-            console.log('Clearing previous ICE candidates');
+            console.log('[WRTC] Clearing previous ICE candidates');
             const callerCandidatesCollection = roomRef.collection('callerCandidates');
             const candidatesSnapshot = await callerCandidatesCollection.get();
             const deletePromises = candidatesSnapshot.docs.map(doc => doc.ref.delete());
@@ -729,7 +732,7 @@ class WebRTCService {
 
             return this.roomId;
         } catch (error) {
-            console.error('Error reconnecting to room:', error);
+            console.error('[WRTC] Error reconnecting to room:', error);
             throw error;
         }
     }
@@ -741,7 +744,7 @@ class WebRTCService {
      */
     async joinRoom(roomId, viewerId = null) {
         try {
-            console.log("Joining room:", roomId, "with viewerId:", viewerId);
+            console.log("[WRTC] Joining room:", roomId, "with viewerId:", viewerId);
 
             const roomRef = window.fireDB.collection('rooms').doc(roomId);
             const roomSnapshot = await roomRef.get();
@@ -750,15 +753,9 @@ class WebRTCService {
                 throw new Error('Room does not exist');
             }
 
-            const roomData = roomSnapshot.data();
+            this.roomId = roomId
 
-            // Debug the room data to help diagnose issues
-            console.log("Room data when joining:", {
-                roomId,
-                viewers: roomData.viewers,
-                roomsViewing: roomData.roomsViewing || [],
-                approvedViewers: roomData.approvedViewers || []
-            });
+            const roomData = roomSnapshot.data();
 
             // Check if viewer is blocked
             if (viewerId && roomData.blockedViewers && roomData.blockedViewers.includes(viewerId)) {
@@ -769,7 +766,7 @@ class WebRTCService {
             // This prevents confusion between broadcaster and viewer IDs
             if (!viewerId || viewerId === roomId) {
                 viewerId = 'viewer_' + Math.random().toString(36).substring(2, 15);
-                console.log("Generated new viewerId:", viewerId);
+                console.log("[WRTC] Generated new viewerId:", viewerId);
             }
 
             // Handle approval if required
@@ -785,6 +782,8 @@ class WebRTCService {
                         });
                     }
 
+                    console.log(`[WRTC] Joining Room awaiting Approval for ${viewerId}`);
+
                     // Return pending status
                     return {status: 'pending', roomId, viewerId};
                 }
@@ -799,15 +798,17 @@ class WebRTCService {
             }
 
             // Create peer connection
+            console.log(`[WRTC] Joining Room with new connection for ${viewerId}`, viewerId);
             this.createPeerConnection();
 
             // Set up event listener for remote tracks with improved logging
             this.peerConnection.addEventListener('track', event => {
-                console.log('Remote track received:', event.streams[0]);
-                console.log('Track info:', {
+                console.log('[WRTC] Track info on joined room:', {
                     kind: event.track.kind,
                     enabled: event.track.enabled,
-                    readyState: event.track.readyState
+                    readyState: event.track.readyState,
+                    id: event.track.id,
+                    label: event.track.label, // This often indicates screen sharing
                 });
 
                 // Store the roomId and viewerId to help with event filtering
@@ -822,18 +823,18 @@ class WebRTCService {
             const calleeCandidatesCollection = roomRef.collection('calleeCandidates');
             this.peerConnection.addEventListener('icecandidate', event => {
                 if (event.candidate) {
-                    console.log('Got ICE candidate as viewer:', event.candidate);
+                    console.log('[WRTC] Firestoring ICE candidate as viewer:', event.candidate);
                     calleeCandidatesCollection.add(event.candidate.toJSON());
                 }
             });
 
             // Additional connection state logging
             this.peerConnection.addEventListener('connectionstatechange', () => {
-                console.log(`Connection state changed to: ${this.peerConnection.connectionState}`);
+                console.log(`[WRTC] Connection state changed to: ${this.peerConnection.connectionState}`);
             });
 
             this.peerConnection.addEventListener('iceconnectionstatechange', () => {
-                console.log(`ICE connection state changed to: ${this.peerConnection.iceConnectionState}`);
+                console.log(`[WRTC] ICE connection state changed to: ${this.peerConnection.iceConnectionState}`);
             });
 
             // Process remote offer
@@ -842,17 +843,17 @@ class WebRTCService {
                 throw new Error('No offer found in room');
             }
 
-            console.log("Setting remote description with offer:", offer);
+            console.log("[WRTC] Setting remote description with offer:", offer);
             await this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
 
             // Create answer
-            console.log("Creating answer");
+            console.log("[WRTC] Creating answer");
             const answer = await this.peerConnection.createAnswer();
-            console.log("Setting local description with answer");
+            console.log("[WRTC] Setting local description with answer");
             await this.peerConnection.setLocalDescription(answer);
 
             // Update room with answer
-            console.log("Updating room with answer");
+            console.log("[WRTC] Updating room with answer");
             await roomRef.update({
                 answer: {type: answer.type, sdp: answer.sdp}
             });
@@ -861,7 +862,7 @@ class WebRTCService {
             if (viewerId) {
                 const roomsViewing = roomData.roomsViewing || [];
                 if (!roomsViewing.includes(viewerId)) {
-                    console.log("Adding viewerId to roomsViewing:", viewerId);
+                    console.log(`[WRTC] Adding viewerId ${viewerId} to roomsViewing`);
                     await roomRef.update({
                         roomsViewing: [...roomsViewing, viewerId],
                         viewers: (roomsViewing.length + 1)
@@ -874,14 +875,18 @@ class WebRTCService {
                 snapshot.docChanges().forEach(async change => {
                     if (change.type === 'added') {
                         const data = change.doc.data();
-                        console.log('Got new broadcaster ICE candidate:', data);
+                        console.log('[WRTC] Got new broadcaster ICE candidate:', data);
                         await this.peerConnection.addIceCandidate(new RTCIceCandidate(data));
+                    } else {
+                        console.log(`[WRTC] callerCandidates changed to ${change.type}`);
                     }
                 });
             });
 
             // Listen for offer changes (broadcaster reconnection)
             const roomListener = roomRef.onSnapshot(async snapshot => {
+                console.log("[WRTC] Room updated for viewer:", snapshot);
+
                 if (!snapshot.exists) {
                     // Room was deleted
                     this.hangUp();
@@ -912,7 +917,7 @@ class WebRTCService {
                 if (data.offer && this.peerConnection.remoteDescription) {
                     const currentOffer = this.peerConnection.remoteDescription.sdp;
                     if (data.offer.sdp !== currentOffer) {
-                        console.log('Broadcaster reconnected with new offer');
+                        console.log('[WRTC] Broadcaster reconnected with new offer');
 
                         // Create new answer for the new offer
                         await this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
@@ -945,7 +950,7 @@ class WebRTCService {
 
             return {status: 'approved', roomId, viewerId};
         } catch (error) {
-            console.error('Error joining room:', error);
+            console.error('[WRTC] Error joining room:', error);
             throw error;
         }
     }
@@ -968,7 +973,7 @@ class WebRTCService {
 
             return true;
         } catch (error) {
-            console.error('Error updating room settings:', error);
+            console.error('[WRTC] Error updating room settings:', error);
             throw error;
         }
     }
@@ -991,7 +996,7 @@ class WebRTCService {
 
             return snapshot.data();
         } catch (error) {
-            console.error('Error getting room data:', error);
+            console.error('[WRTC] Error getting room data:', error);
             throw error;
         }
     }
@@ -1058,7 +1063,7 @@ class WebRTCService {
 
             return true;
         } catch (error) {
-            console.error('Error managing viewer:', error);
+            console.error('[WRTC] Error managing viewer:', error);
             throw error;
         }
     }
@@ -1085,7 +1090,7 @@ class WebRTCService {
                 }
             }
         } catch (error) {
-            console.error('Error leaving room:', error);
+            console.error('[WRTC] Error leaving room:', error);
         }
 
         // Clean up connection
@@ -1124,7 +1129,7 @@ class WebRTCService {
             this.roomId = null;
             this.broadcasterId = null;
         } catch (error) {
-            console.error('Error terminating room:', error);
+            console.error('[WRTC] Error terminating room:', error);
             throw error;
         }
     }
@@ -1179,15 +1184,15 @@ class WebRTCService {
         if (!this.eventListeners) return;
 
         // Add debugging for important events
-        if (['remoteStreamReceived', 'roomCreated', 'roomReconnected', 'roomJoined', 'hungUp', 'connectionError', 'iceConnectionFailed'].includes(eventType)) {
-            console.log(`Notifying listeners of ${eventType} event:`, data);
-        }
+        // if (['remoteStreamReceived', 'roomCreated', 'roomReconnected', 'roomJoined', 'hungUp', 'connectionError', 'iceConnectionFailed'].includes(eventType)) {
+            console.log(`[WRTC] Notifying listeners of ${eventType} event:`, data);
+        // }
 
         Object.values(this.eventListeners).forEach(callback => {
             try {
                 callback(eventType, data);
             } catch (error) {
-                console.error(`Error in event listener for ${eventType}:`, error);
+                console.error(`[WRTC] Error in event listener for ${eventType}:`, error);
             }
         });
     }

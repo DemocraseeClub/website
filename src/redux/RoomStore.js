@@ -47,6 +47,9 @@ class RoomStore {
      * Handle events from the WebRTC service
      */
     handleRtcEvent = (eventType, data) => {
+
+        console.log(`[WRTC] handleRtcEvent for room: ${data.roomId}`, data);
+
         switch (eventType) {
             case 'streamUpdated':
                 this.setState({myStream: data.stream});
@@ -137,17 +140,17 @@ class RoomStore {
 
             case 'remoteStreamReceived':
                 // Find the room in roomsViewing and update its stream
-                console.log("Remote stream received for room:", data.roomId);
+                console.log(`[WRTC] Remote stream received for room: ${data.roomId}`, data);
 
                 const roomsViewing = [...this.state.roomsViewing];
                 const roomIndex = roomsViewing.findIndex(r => r.roomId === data.roomId);
 
                 if (roomIndex !== -1) {
-                    console.log("Updating stream for room:", data.roomId);
+                    console.log("[WRTC] Updating stream for room:", data.roomId);
                     roomsViewing[roomIndex].stream = data.stream;
                     this.setState({roomsViewing});
                 } else {
-                    console.warn("Received stream for room that's not in roomsViewing:", data.roomId);
+                    console.warn("[WRTC} Received stream for room that's not in roomsViewing:", data.roomId);
                 }
                 break;
 
@@ -369,16 +372,16 @@ class RoomStore {
             // Check if already viewing this room
             const existingRoom = this.state.roomsViewing.find(r => r.roomId === roomId);
             if (existingRoom) {
-                console.log("Already viewing room:", roomId);
+                console.log("[WRTC] Already viewing room:", roomId);
                 return {status: 'approved', roomId};
             }
 
             // Get persistent viewer ID
             const viewerId = this.getOrCreateViewerId();
-            console.log("Joining room with persistent viewerId:", viewerId);
+            console.log("[WRTC] Joining room with persistent viewerId:", viewerId);
 
             const result = await this.rtcService.joinRoom(roomId, viewerId);
-            console.log("Join room result:", result);
+            console.log("[WRTC] Join room result:", result);
 
             return result;
         } catch (error) {

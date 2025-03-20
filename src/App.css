@@ -516,7 +516,7 @@ margin-top: 10px !important;
 .videoArea header{
     background-color: transparent;
 }
-.videoArea header .MuiBox-root{
+.videoArea header > .MuiBox-root{
     min-height: 300px;
     border-radius: 10px;
     padding: 10px;

@@ -41,19 +41,19 @@ class VideoElement extends Component {
         }
 
         // Set up Firebase listener if roomId is provided
-        if (this.props.roomId && !prevState.listener) {
-            console.log(`Setting up Firebase listener for room ${this.props.roomId}`);
+        if (!this.state.listener && this.props.roomId) {
+            console.log(`[WRTC] Setting up Firebase listener for room ${this.props.roomId}`);
             const auxListener = window.fireDB.collection('rooms').doc(this.props.roomId).onSnapshot((snap) => {
                 if (snap.exists && snap.data()) {
                     this.setState({viewers: snap.data().viewers || 0});
-                    console.log(`Updated viewer count for room ${this.props.roomId}:`, snap.data().viewers);
+                    console.log(`[WRTC] Updated viewer count for room ${this.props.roomId}:`, snap.data().viewers);
                 }
             });
             this.setState({listener: auxListener});
         }
 
         if (prevProps.stream !== this.props.stream) {
-            console.log("Stream changed in VideoElement");
+            console.log("[WRTC] Stream changed in VideoElement");
             if (this.props.stream) {
                 WebRTCDiagnostics.logMediaStreamInfo(this.props.stream, "Video Element New Stream");
             }
@@ -71,7 +71,7 @@ class VideoElement extends Component {
             const hasVideoTracks = this.props.stream.getVideoTracks().length > 0;
             const hasAudioTracks = this.props.stream.getAudioTracks().length > 0;
 
-            console.log('Stream track status:', {
+            console.log('[WRTC] Stream track status:', {
                 streamId: this.props.stream.id,
                 videoTracks: hasVideoTracks ? this.props.stream.getVideoTracks().length : 0,
                 audioTracks: hasAudioTracks ? this.props.stream.getAudioTracks().length : 0,
@@ -87,7 +87,7 @@ class VideoElement extends Component {
                 (prevProps && prevProps.stream !== this.props.stream);
 
             if (needsUpdate) {
-                console.log('Updating video element with stream:', this.props.stream.id);
+                console.log('[WRTC] Updating video element with stream:', this.props.stream.id);
 
                 // Set the stream
                 this.vidEl.current.srcObject = this.props.stream;
@@ -110,16 +110,16 @@ class VideoElement extends Component {
                 // Monitor for track ended events
                 this.props.stream.getTracks().forEach(track => {
                     track.addEventListener('ended', () => {
-                        console.log(`Track ended in video element: ${track.kind}`);
+                        console.log(`[WRTC] Track ended in video element: ${track.kind}`);
                     });
                 });
             }
         } else if (this.vidEl.current.srcObject) {
             // Clear the video if we no longer have a stream
-            console.log('Clearing video element stream');
+            console.log('[WRTC] Clearing video element stream');
             this.vidEl.current.srcObject = null;
         } else {
-            console.log('Missing Stream!', this.props);
+            console.log('[WRTC] Missing Stream!', this.props);
         }
     }
 
@@ -156,7 +156,7 @@ class VideoElement extends Component {
 
     render() {
         // Add debugging info
-        console.log('VideoElement render, has stream:', !!this.props.stream,
+        console.log('[WRTC] VideoElement render, has stream:', !!this.props.stream,
             'stream ID:', this.props.stream?.id,
             'video tracks:', this.props.stream?.getVideoTracks()?.length,
             'audio tracks:', this.props.stream?.getAudioTracks()?.length);
